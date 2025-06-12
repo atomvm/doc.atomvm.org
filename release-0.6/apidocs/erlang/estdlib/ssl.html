@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module ssl &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/estdlib/ssl.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module string" href="string.html" />
+    <link rel="prev" title="Module socket" href="socket.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module ssl</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-ssl">
+<h1>Module ssl<a class="headerlink" href="#module-ssl" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p><strong>Behaviours:</strong> <a class="reference internal" href="gen_server.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">gen_server</span></code></span></a>.</p>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="client-option">
+<h3><a name="type-client_option">client_option()</a><a class="headerlink" href="#client-option" title="Link to this heading"></a></h3>
+<pre><code>
+client_option() = {server_name_indication, <a href="#type-sni">sni()</a>} | {verify, verify_none}
+</code></pre>
+</section>
+<section id="host">
+<h3><a name="type-host">host()</a><a class="headerlink" href="#host" title="Link to this heading"></a></h3>
+<pre><code>
+host() = <a href="#type-hostname">hostname()</a> | <a href="#type-ip_address">ip_address()</a>
+</code></pre>
+</section>
+<section id="hostname">
+<h3><a name="type-hostname">hostname()</a><a class="headerlink" href="#hostname" title="Link to this heading"></a></h3>
+<pre><code>
+hostname() = string()
+</code></pre>
+</section>
+<section id="ip-address">
+<h3><a name="type-ip_address">ip_address()</a><a class="headerlink" href="#ip-address" title="Link to this heading"></a></h3>
+<pre><code>
+ip_address() = <a href="/__w/AtomVM/AtomVM/build/doc/edoc/kernel/doc/inet.md#type-ip_address">inet:ip_address()</a>
+</code></pre>
+</section>
+<section id="reason">
+<h3><a name="type-reason">reason()</a><a class="headerlink" href="#reason" title="Link to this heading"></a></h3>
+<pre><code>
+reason() = any()
+</code></pre>
+</section>
+<section id="sni">
+<h3><a name="type-sni">sni()</a><a class="headerlink" href="#sni" title="Link to this heading"></a></h3>
+<pre><code>
+sni() = <a href="#type-hostname">hostname()</a> | disabled
+</code></pre>
+</section>
+<section id="socket-option">
+<h3><a name="type-socket_option">socket_option()</a><a class="headerlink" href="#socket-option" title="Link to this heading"></a></h3>
+<pre><code>
+socket_option() = <a href="/__w/AtomVM/AtomVM/build/doc/edoc/kernel/doc/gen_tcp.md#type-connect_option">gen_tcp:connect_option()</a> | <a href="/__w/AtomVM/AtomVM/build/doc/edoc/kernel/doc/gen_tcp.md#type-listen_option">gen_tcp:listen_option()</a>
+</code></pre>
+</section>
+<section id="sslsocket">
+<h3><a name="type-sslsocket">sslsocket()</a><a class="headerlink" href="#sslsocket" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">sslsocket()</span></code></p>
+</section>
+<section id="tls-client-option">
+<h3><a name="type-tls_client_option">tls_client_option()</a><a class="headerlink" href="#tls-client-option" title="Link to this heading"></a></h3>
+<pre><code>
+tls_client_option() = <a href="#type-client_option">client_option()</a> | <a href="#type-socket_option">socket_option()</a>
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#close-1">close/1</a></td><td></td></tr><tr><td valign="top"><a href="#connect-3">connect/3</a></td><td></td></tr><tr><td valign="top"><a href="#handle_call-3">handle_call/3</a></td><td></td></tr><tr><td valign="top"><a href="#handle_cast-2">handle_cast/2</a></td><td></td></tr><tr><td valign="top"><a href="#handle_info-2">handle_info/2</a></td><td></td></tr><tr><td valign="top"><a href="#init-1">init/1</a></td><td></td></tr><tr><td valign="top"><a href="#recv-2">recv/2</a></td><td></td></tr><tr><td valign="top"><a href="#send-2">send/2</a></td><td></td></tr><tr><td valign="top"><a href="#start-0">start/0</a></td><td></td></tr><tr><td valign="top"><a href="#stop-0">stop/0</a></td><td></td></tr><tr><td valign="top"><a href="#terminate-2">terminate/2</a></td><td></td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="close-1"></a></p>
+<section id="close-1">
+<h3>close/1<a class="headerlink" href="#close-1" title="Link to this heading"></a></h3>
+<pre><code>
+close(X1::<a href="#type-sslsocket">sslsocket()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><a name="connect-3"></a></p>
+</section>
+<section id="connect-3">
+<h3>connect/3<a class="headerlink" href="#connect-3" title="Link to this heading"></a></h3>
+<pre><code>
+connect(Host::<a href="#type-host">host()</a>, Port::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/kernel/doc/inet.md#type-port_number">inet:port_number()</a>, TLSOptions::[<a href="#type-tls_client_option">tls_client_option()</a>]) -&gt; {ok, <a href="#type-sslsocket">sslsocket()</a>} | {error, <a href="#type-reason">reason()</a>}
+</code></pre>
+<br />
+<p><a name="handle_call-3"></a></p>
+</section>
+<section id="handle-call-3">
+<h3>handle_call/3<a class="headerlink" href="#handle-call-3" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">handle_call(X1,</span> <span class="pre">From,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="handle_cast-2"></a></p>
+</section>
+<section id="handle-cast-2">
+<h3>handle_cast/2<a class="headerlink" href="#handle-cast-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">handle_cast(Msg,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="handle_info-2"></a></p>
+</section>
+<section id="handle-info-2">
+<h3>handle_info/2<a class="headerlink" href="#handle-info-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">handle_info(Msg,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="init-1"></a></p>
+</section>
+<section id="init-1">
+<h3>init/1<a class="headerlink" href="#init-1" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">init(X1)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="recv-2"></a></p>
+</section>
+<section id="recv-2">
+<h3>recv/2<a class="headerlink" href="#recv-2" title="Link to this heading"></a></h3>
+<pre><code>
+recv(Socket::<a href="#type-sslsocket">sslsocket()</a>, Length::non_neg_integer()) -&gt; ok | {error, <a href="#type-reason">reason()</a>}
+</code></pre>
+<br />
+<p><a name="send-2"></a></p>
+</section>
+<section id="send-2">
+<h3>send/2<a class="headerlink" href="#send-2" title="Link to this heading"></a></h3>
+<pre><code>
+send(Socket::<a href="#type-sslsocket">sslsocket()</a>, Data::iodata()) -&gt; ok | {error, <a href="#type-reason">reason()</a>}
+</code></pre>
+<br />
+<p><a name="start-0"></a></p>
+</section>
+<section id="start-0">
+<h3>start/0<a class="headerlink" href="#start-0" title="Link to this heading"></a></h3>
+<pre><code>
+start() -&gt; ok
+</code></pre>
+<br />
+<p><a name="stop-0"></a></p>
+</section>
+<section id="stop-0">
+<h3>stop/0<a class="headerlink" href="#stop-0" title="Link to this heading"></a></h3>
+<pre><code>
+stop() -&gt; ok
+</code></pre>
+<br />
+<p><a name="terminate-2"></a></p>
+</section>
+<section id="terminate-2">
+<h3>terminate/2<a class="headerlink" href="#terminate-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">terminate(Reason,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="socket.html" class="btn btn-neutral float-left" title="Module socket" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="string.html" class="btn btn-neutral float-right" title="Module string" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

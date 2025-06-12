@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module uart &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/eavmlib/uart.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="The alisp library" href="../alisp/README.html" />
+    <link rel="prev" title="Module timestamp_util" href="timestamp_util.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ahttp_client.html">Module ahttp_client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm.html">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="emscripten.html">Module emscripten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp.html">Module esp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp_adc.html">Module esp_adc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gpio.html">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="i2c.html">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ledc.html">Module ledc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network.html">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module uart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module uart</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-uart">
+<h1>Module uart<a class="headerlink" href="#module-uart" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="peripheral">
+<h3><a name="type-peripheral">peripheral()</a><a class="headerlink" href="#peripheral" title="Link to this heading"></a></h3>
+<pre><code>
+peripheral() = string() | binary()
+</code></pre>
+<p>The peripheral <code class="docutils literal notranslate"><span class="pre">Name</span></code> may be one of: <code class="docutils literal notranslate"><span class="pre">&quot;UART0&quot;</span></code> | <code class="docutils literal notranslate"><span class="pre">&quot;UART1&quot;</span></code> | <code class="docutils literal notranslate"><span class="pre">&quot;UART2&quot;</span></code> | <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;UART0&quot;&gt;&gt;</span></code> | <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;UART1&quot;&gt;&gt;</span></code> | <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;UART2&quot;&gt;&gt;</span></code>.</p>
+</section>
+<section id="uart-opts">
+<h3><a name="type-uart_opts">uart_opts()</a><a class="headerlink" href="#uart-opts" title="Link to this heading"></a></h3>
+<pre><code>
+uart_opts() = [{tx, Tx_pin::integer()} | {rx, Rx_pin::integer()} | {rts, Rts_pin::integer()} | {cts, Cts_pin::integer()} | {speed, Speed::pos_integer()} | {data_bits, 5..8} | {stop_bits, 1 | 2} | {event_queue_len, Qlen::pos_integer()} | {flow_control, none | hardware | software} | {parity, none | even | odd} | {peripheral, <a href="#type-peripheral">peripheral()</a>} | []]
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#close-1">close/1</a></td><td>    Close a port connection to the UART driver.</td></tr><tr><td valign="top"><a href="#open-1">open/1</a></td><td>    Open a connection to the UART driver default port.</td></tr><tr><td valign="top"><a href="#open-2">open/2</a></td><td>    Open a connection to the UART driver.</td></tr><tr><td valign="top"><a href="#read-1">read/1</a></td><td>    Read data from a UART port.</td></tr><tr><td valign="top"><a href="#read-2">read/2</a></td><td>    Read data from a UART port.</td></tr><tr><td valign="top"><a href="#write-2">write/2</a></td><td>    Write data to a UART port.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="close-1"></a></p>
+<section id="close-1">
+<h3>close/1<a class="headerlink" href="#close-1" title="Link to this heading"></a></h3>
+<pre><code>
+close(Pid::pid()) -&gt; ok | {error, _Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: of the uart port to be closed<br /></p>
+<p>returns: ok.</p>
+<p>Close a port connection to the UART driver</p>
+<p>This function will close the given port connection to the UART driver.</p>
+<p><a name="open-1"></a></p>
+</section>
+<section id="open-1">
+<h3>open/1<a class="headerlink" href="#open-1" title="Link to this heading"></a></h3>
+<pre><code>
+open(Opts::<a href="#type-uart_opts">uart_opts()</a>) -&gt; Pid::pid() | {error, _Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Opts</span></code>: uart configuration options<br /></p>
+<p>returns: Pid of the driver.</p>
+<p>Open a connection to the UART driver default port</p>
+<p>This function will open a connection to the UART driver.</p>
+<p><a name="open-2"></a></p>
+</section>
+<section id="open-2">
+<h3>open/2<a class="headerlink" href="#open-2" title="Link to this heading"></a></h3>
+<pre><code>
+open(Name::<a href="#type-peripheral">peripheral()</a>, Opts::<a href="#type-uart_opts">uart_opts()</a>) -&gt; Pid::pid() | {error, _Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: the uart peripheral to be opened<br /><code class="docutils literal notranslate"><span class="pre">Opts</span></code>: uart configuration options<br /></p>
+<p>returns: Pid of the driver.</p>
+<p>Open a connection to the UART driver</p>
+<p>This function will open a connection to the UART driver.</p>
+<p><a name="read-1"></a></p>
+</section>
+<section id="read-1">
+<h3>read/1<a class="headerlink" href="#read-1" title="Link to this heading"></a></h3>
+<pre><code>
+read(Pid::pid()) -&gt; {ok, Data::iodata()} | {error, _Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: of the uart port to be read<br /></p>
+<p>returns: {ok, Data} or {error, Reason}</p>
+<p>Read data from a UART port</p>
+<p>This function will return any data that is available, or return
+a <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">timeout}</span></code> tuple. The driver will sent the next available
+data from the UART driver to the process that made the last read.
+Example:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">           </span><span class="nt">Data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">case</span><span class="w"> </span><span class="nt">uart</span><span class="p">:</span><span class="nd">read</span><span class="o">(</span><span class="nt">Uart</span><span class="o">)</span><span class="w"> </span><span class="nt">of</span>
+<span class="w">               </span><span class="p">{</span><span class="err">ok,</span><span class="w"> </span><span class="err">Binary</span><span class="p">}</span><span class="w"> </span><span class="nt">-</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">Binary</span><span class="o">;</span>
+<span class="w">               </span><span class="p">{</span><span class="err">error,</span><span class="w"> </span><span class="err">timeout</span><span class="p">}</span><span class="w"> </span><span class="nt">-</span><span class="o">&gt;</span>
+<span class="w">                   </span><span class="nt">receive</span>
+<span class="w">                       </span><span class="p">{</span><span class="err">ok,</span><span class="w"> </span><span class="err">RecvBinary</span><span class="p">}</span><span class="w"> </span><span class="nt">-</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">RecvBinary</span><span class="o">;</span>
+<span class="w">                       </span><span class="nt">Error</span><span class="w"> </span><span class="nt">-</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">error</span><span class="o">(</span><span class="nt">Error</span><span class="o">)</span>
+<span class="w">                   </span><span class="nt">end</span><span class="o">;</span>
+<span class="w">               </span><span class="nt">Error</span><span class="w"> </span><span class="nt">-</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">error</span><span class="o">(</span><span class="nt">Error</span><span class="o">)</span>
+<span class="w">           </span><span class="nt">end</span><span class="o">,</span>
+</pre></div>
+</div>
+<p>Any attempt by another (or the same process) to read from uart before the
+next uart payload is sent by the driver will result in <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">ealready}</span></code>.</p>
+<p><a name="read-2"></a></p>
+</section>
+<section id="read-2">
+<h3>read/2<a class="headerlink" href="#read-2" title="Link to this heading"></a></h3>
+<pre><code>
+read(Pid::pid(), Timeout::pos_integer()) -&gt; {ok, Data::iodata()} | {error, _Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: of the uart port to be read<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: millisecond to wait for data to become available<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Data}</span></code>, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code></p>
+<p>Read data from a UART port</p>
+<p>This function will return any data that is available within the
+timeout period to the process. After the timeout has expired a new
+read command may be used regardless of whether the last read was
+sent a payload.
+Example:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">           </span><span class="nt">Data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">case</span><span class="w"> </span><span class="nt">uart</span><span class="p">:</span><span class="nd">read</span><span class="o">(</span><span class="nt">Uart</span><span class="o">,</span><span class="w"> </span><span class="nt">3000</span><span class="o">)</span><span class="w"> </span><span class="nt">of</span>
+<span class="w">               </span><span class="p">{</span><span class="err">ok,</span><span class="w"> </span><span class="err">Bin</span><span class="p">}</span><span class="w"> </span><span class="nt">-</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">Bin</span><span class="o">;</span>
+<span class="w">               </span><span class="p">{</span><span class="err">error,</span><span class="w"> </span><span class="err">timeout</span><span class="p">}</span><span class="w"> </span><span class="nt">-</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s2">&quot;&quot;</span><span class="o">&gt;&gt;;</span>
+<span class="w">               </span><span class="nt">Error</span><span class="w"> </span><span class="nt">-</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">error_handler_fun</span><span class="o">(</span><span class="nt">Uart</span><span class="o">,</span><span class="w"> </span><span class="nt">Error</span><span class="o">)</span>
+<span class="w">           </span><span class="nt">end</span><span class="o">,</span>
+</pre></div>
+</div>
+<p>Any data sent to the esp32 over uart between reads with a timeout will
+be lost, so be sure this is what you want. Most applications will want
+a single process to read from UART and continue to listen until a payload
+is received, and likely pass the payload off for processing and
+immediately begin another read.</p>
+<p><a name="write-2"></a></p>
+</section>
+<section id="write-2">
+<h3>write/2<a class="headerlink" href="#write-2" title="Link to this heading"></a></h3>
+<pre><code>
+write(Pid::pid(), Data::iodata()) -&gt; ok | {error, _Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: of the uart port to be written to<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: to be written to the given uart port<br /></p>
+<p>returns: ok or {error, Reason}</p>
+<p>Write data to a UART port</p>
+<p>This function will write the given data to the UART port.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="timestamp_util.html" class="btn btn-neutral float-left" title="Module timestamp_util" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../alisp/README.html" class="btn btn-neutral float-right" title="The alisp library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

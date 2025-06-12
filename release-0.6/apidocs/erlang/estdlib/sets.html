@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module sets &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/estdlib/sets.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module socket" href="socket.html" />
+    <link rel="prev" title="Module queue" href="queue.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module sets</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sets">
+<h1>Module sets<a class="headerlink" href="#module-sets" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="set">
+<h3><a name="type-set">set()</a><a class="headerlink" href="#set" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">set(Element)</span></code></p>
+</section>
+<section id="id1">
+<h3><a name="type-set">set()</a><a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<pre><code>
+set() = <a href="#type-set">set</a>(term())
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#add_element-2">add_element/2</a></td><td>    Return <code>Set1</code> with <code>Element</code> inserted in it.</td></tr><tr><td valign="top"><a href="#del_element-2">del_element/2</a></td><td>    Return <code>Set1</code> but with <code>Element</code> removed.</td></tr><tr><td valign="top"><a href="#filter-2">filter/2</a></td><td>    Filter Set with Fun.</td></tr><tr><td valign="top"><a href="#filtermap-2">filtermap/2</a></td><td>    Filters and maps elements in <code>Set1</code> with function <code>Fun</code>.</td></tr><tr><td valign="top"><a href="#fold-3">fold/3</a></td><td>    Fold function Fun over all elements in Set and return Accumulator.</td></tr><tr><td valign="top"><a href="#from_list-1">from_list/1</a></td><td>    Builds a set from the elements in <code>List</code>.</td></tr><tr><td valign="top"><a href="#from_list-2">from_list/2</a></td><td>    Builds a set from the elements in <code>List</code> using the specified version.</td></tr><tr><td valign="top"><a href="#intersection-1">intersection/1</a></td><td>    Return the intersection of the list of sets.</td></tr><tr><td valign="top"><a href="#intersection-2">intersection/2</a></td><td>    Return the intersection of <code>Set1</code> and <code>Set2</code>.</td></tr><tr><td valign="top"><a href="#is_disjoint-2">is_disjoint/2</a></td><td>    Check whether <code>Set1</code> and <code>Set2</code> are disjoint.</td></tr><tr><td valign="top"><a href="#is_element-2">is_element/2</a></td><td>    Return <code>true</code> if <code>Element</code> is an element of <code>Set</code>, else <code>false</code>.</td></tr><tr><td valign="top"><a href="#is_empty-1">is_empty/1</a></td><td>    Returns <code>true</code> if <code>Set</code> is an empty set, otherwise <code>false</code>.</td></tr><tr><td valign="top"><a href="#is_equal-2">is_equal/2</a></td><td>    Returns <code>true</code> if <code>Set1</code> and <code>Set2</code> are equal, that is when every element of one
+set is also a member of the respective other set, otherwise <code>false</code>.</td></tr><tr><td valign="top"><a href="#is_set-1">is_set/1</a></td><td>    Returns <code>true</code> if <code>Set</code> appears to be a set of elements, otherwise <code>false</code>.</td></tr><tr><td valign="top"><a href="#is_subset-2">is_subset/2</a></td><td>    Return 'true' when every element of Set1 is also a member of Set2, else 'false'.</td></tr><tr><td valign="top"><a href="#map-2">map/2</a></td><td>    Map Set with Fun.</td></tr><tr><td valign="top"><a href="#new-0">new/0</a></td><td>    Returns a new empty set using the v2 format (a map).</td></tr><tr><td valign="top"><a href="#new-1">new/1</a></td><td>    Returns a new empty set (only v2 format is supported).</td></tr><tr><td valign="top"><a href="#size-1">size/1</a></td><td>    Returns the number of elements in <code>Set</code>.</td></tr><tr><td valign="top"><a href="#subtract-2">subtract/2</a></td><td>    Return all and only the elements of Set1 which are not also in Set2.</td></tr><tr><td valign="top"><a href="#to_list-1">to_list/1</a></td><td>    Returns the elements of <code>Set</code> as a list.</td></tr><tr><td valign="top"><a href="#union-1">union/1</a></td><td>    Return the union of the list of sets.</td></tr><tr><td valign="top"><a href="#union-2">union/2</a></td><td>    Return the union of <code>Set1</code> and <code>Set2</code>.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="add_element-2"></a></p>
+<section id="add-element-2">
+<h3>add_element/2<a class="headerlink" href="#add-element-2" title="Link to this heading"></a></h3>
+<pre><code>
+add_element(Element, Set1) -&gt; Set2
+</code></pre>
+<ul class="definitions"><li><code>Set1 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Element</span></code>: the element to add<br /><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the set to add the element to<br /></p>
+<p>returns: Returns a new set formed from <code class="docutils literal notranslate"><span class="pre">Set1</span></code> with <code class="docutils literal notranslate"><span class="pre">Element</span></code> inserted.</p>
+<p>Return <code class="docutils literal notranslate"><span class="pre">Set1</span></code> with <code class="docutils literal notranslate"><span class="pre">Element</span></code> inserted in it.</p>
+<p><a name="del_element-2"></a></p>
+</section>
+<section id="del-element-2">
+<h3>del_element/2<a class="headerlink" href="#del-element-2" title="Link to this heading"></a></h3>
+<pre><code>
+del_element(Element, Set1) -&gt; Set2
+</code></pre>
+<ul class="definitions"><li><code>Set1 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Element</span></code>: the element to remove<br /><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the set to remove the element from<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">Set1</span></code>, but with <code class="docutils literal notranslate"><span class="pre">Element</span></code> removed.</p>
+<p>Return <code class="docutils literal notranslate"><span class="pre">Set1</span></code> but with <code class="docutils literal notranslate"><span class="pre">Element</span></code> removed.</p>
+<p><a name="filter-2"></a></p>
+</section>
+<section id="filter-2">
+<h3>filter/2<a class="headerlink" href="#filter-2" title="Link to this heading"></a></h3>
+<pre><code>
+filter(Pred, Set1) -&gt; Set2
+</code></pre>
+<ul class="definitions"><li><code>Pred = fun((Element) -&gt; boolean())</code></li><li><code>Set1 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Pred</span></code>: the boolean function to filter elements with<br /><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the set to filter<br /></p>
+<p>returns: Returns a set containing elements of <code class="docutils literal notranslate"><span class="pre">Set1</span></code> that satisfy the boolean
+function <code class="docutils literal notranslate"><span class="pre">Fun</span></code>. The evaluation order is undefined.</p>
+<p>Filter Set with Fun.</p>
+<p><a name="filtermap-2"></a></p>
+</section>
+<section id="filtermap-2">
+<h3>filtermap/2<a class="headerlink" href="#filtermap-2" title="Link to this heading"></a></h3>
+<pre><code>
+filtermap(Fun, Set1) -&gt; Set2
+</code></pre>
+<ul class="definitions"><li><code>Fun = fun((Element1) -&gt; boolean() | {true, Element2})</code></li><li><code>Set1 = <a href="#type-set">set</a>(Element1)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element1 | Element2)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the filter and map fun<br /><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the set to filter and map over<br /></p>
+<p>returns: Returns a set containing elements of <code class="docutils literal notranslate"><span class="pre">Set1</span></code> that are filtered and mapped using <code class="docutils literal notranslate"><span class="pre">Fun</span></code>.</p>
+<p>Filters and maps elements in <code class="docutils literal notranslate"><span class="pre">Set1</span></code> with function <code class="docutils literal notranslate"><span class="pre">Fun</span></code>.</p>
+<p><a name="fold-3"></a></p>
+</section>
+<section id="fold-3">
+<h3>fold/3<a class="headerlink" href="#fold-3" title="Link to this heading"></a></h3>
+<pre><code>
+fold(Function, Acc0, Set) -&gt; Acc1
+</code></pre>
+<ul class="definitions"><li><code>Function = fun((Element, AccIn) -&gt; AccOut)</code></li><li><code>Set = <a href="#type-set">set</a>(Element)</code></li><li><code>Acc0 = Acc</code></li><li><code>Acc1 = Acc</code></li><li><code>AccIn = Acc</code></li><li><code>AccOut = Acc</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set</span></code>: the set to fold over<br /></p>
+<p>returns: Returns the final value of the accumulator after folding the function
+over every element in the set.</p>
+<p>Fold function Fun over all elements in Set and return Accumulator.</p>
+<p><a name="from_list-1"></a></p>
+</section>
+<section id="from-list-1">
+<h3>from_list/1<a class="headerlink" href="#from-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+from_list(List) -&gt; Set
+</code></pre>
+<ul class="definitions"><li><code>List = [Element]</code></li><li><code>Set = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list of items that is used for building the set<br /></p>
+<p>returns: Returns a set of the elements in <code class="docutils literal notranslate"><span class="pre">List</span></code>.</p>
+<p>Builds a set from the elements in <code class="docutils literal notranslate"><span class="pre">List</span></code>.</p>
+<p><a name="from_list-2"></a></p>
+</section>
+<section id="from-list-2">
+<h3>from_list/2<a class="headerlink" href="#from-list-2" title="Link to this heading"></a></h3>
+<pre><code>
+from_list(List, Version::[{version, 2}]) -&gt; Set
+</code></pre>
+<ul class="definitions"><li><code>List = [Element]</code></li><li><code>Set = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list to be converted to a set<br /><code class="docutils literal notranslate"><span class="pre">Version</span></code>: only version 2 is supported<br /></p>
+<p>returns: Returns a set of the elements in <code class="docutils literal notranslate"><span class="pre">List</span></code> at the given version.</p>
+<p>Builds a set from the elements in <code class="docutils literal notranslate"><span class="pre">List</span></code> using the specified version. Only <code class="docutils literal notranslate"><span class="pre">v2</span></code>
+format is supported.</p>
+<p><a name="intersection-1"></a></p>
+</section>
+<section id="intersection-1">
+<h3>intersection/1<a class="headerlink" href="#intersection-1" title="Link to this heading"></a></h3>
+<pre><code>
+intersection(SetList) -&gt; Set
+</code></pre>
+<ul class="definitions"><li><code>SetList = [<a href="#type-set">set</a>(Element), ...]</code></li><li><code>Set = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">SetList</span></code>: the non-empty list of sets<br /></p>
+<p>returns: Returns the intersection of the non-empty list of sets.</p>
+<p>Return the intersection of the list of sets.</p>
+<p><a name="intersection-2"></a></p>
+</section>
+<section id="intersection-2">
+<h3>intersection/2<a class="headerlink" href="#intersection-2" title="Link to this heading"></a></h3>
+<pre><code>
+intersection(Set1, Set2) -&gt; Set3
+</code></pre>
+<ul class="definitions"><li><code>Set1 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set3 = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the first set<br /><code class="docutils literal notranslate"><span class="pre">Set2</span></code>: the second set<br /></p>
+<p>returns: Returns the intersection of <code class="docutils literal notranslate"><span class="pre">Set1</span></code> and <code class="docutils literal notranslate"><span class="pre">Set2</span></code>.</p>
+<p>Return the intersection of <code class="docutils literal notranslate"><span class="pre">Set1</span></code> and <code class="docutils literal notranslate"><span class="pre">Set2</span></code>.</p>
+<p><a name="is_disjoint-2"></a></p>
+</section>
+<section id="is-disjoint-2">
+<h3>is_disjoint/2<a class="headerlink" href="#is-disjoint-2" title="Link to this heading"></a></h3>
+<pre><code>
+is_disjoint(Set1, Set2) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Set1 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the first set<br /><code class="docutils literal notranslate"><span class="pre">Set2</span></code>: the second set<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Set1</span></code> and <code class="docutils literal notranslate"><span class="pre">Set2</span></code> are disjoint (have no elements in common),
+otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Check whether <code class="docutils literal notranslate"><span class="pre">Set1</span></code> and <code class="docutils literal notranslate"><span class="pre">Set2</span></code> are disjoint.</p>
+<p><a name="is_element-2"></a></p>
+</section>
+<section id="is-element-2">
+<h3>is_element/2<a class="headerlink" href="#is-element-2" title="Link to this heading"></a></h3>
+<pre><code>
+is_element(Element, Set) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Set = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Element</span></code>: the element to check<br /><code class="docutils literal notranslate"><span class="pre">Set</span></code>: the set to check against<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Element</span></code> is an element of <code class="docutils literal notranslate"><span class="pre">Set</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Element</span></code> is an element of <code class="docutils literal notranslate"><span class="pre">Set</span></code>, else <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p><a name="is_empty-1"></a></p>
+</section>
+<section id="is-empty-1">
+<h3>is_empty/1<a class="headerlink" href="#is-empty-1" title="Link to this heading"></a></h3>
+<pre><code>
+is_empty(Set) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Set = <a href="#type-set">set()</a></code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set</span></code>: the set to be checked for emptiness<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Set</span></code> is an empty set, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Set</span></code> is an empty set, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p><a name="is_equal-2"></a></p>
+</section>
+<section id="is-equal-2">
+<h3>is_equal/2<a class="headerlink" href="#is-equal-2" title="Link to this heading"></a></h3>
+<pre><code>
+is_equal(Set1, Set2) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Set1 = <a href="#type-set">set()</a></code></li><li><code>Set2 = <a href="#type-set">set()</a></code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: first set to be checked for equality<br /><code class="docutils literal notranslate"><span class="pre">Set2</span></code>: second set to be checked for equality<br /></p>
+<p>returns: Return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Set1</span></code> and <code class="docutils literal notranslate"><span class="pre">Set2</span></code> contain the same elements, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Set1</span></code> and <code class="docutils literal notranslate"><span class="pre">Set2</span></code> are equal, that is when every element of one
+set is also a member of the respective other set, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p><a name="is_set-1"></a></p>
+</section>
+<section id="is-set-1">
+<h3>is_set/1<a class="headerlink" href="#is-set-1" title="Link to this heading"></a></h3>
+<pre><code>
+is_set(Set) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Set = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set</span></code>: the term that will be checked<br /></p>
+<p>returns: Return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Set</span></code> is a set of elements, else <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Set</span></code> appears to be a set of elements, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Note that the test is shallow and will return <code class="docutils literal notranslate"><span class="pre">true</span></code> for any term that coincides with
+the possible representations of a set.</p>
+<p><a name="is_subset-2"></a></p>
+</section>
+<section id="is-subset-2">
+<h3>is_subset/2<a class="headerlink" href="#is-subset-2" title="Link to this heading"></a></h3>
+<pre><code>
+is_subset(Set1, Set2) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Set1 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the first set<br /><code class="docutils literal notranslate"><span class="pre">Set2</span></code>: the second set<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> when every element of <code class="docutils literal notranslate"><span class="pre">Set1</span></code> is also a member of <code class="docutils literal notranslate"><span class="pre">Set2</span></code>,
+otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Return ‘true’ when every element of Set1 is also a member of Set2, else ‘false’.</p>
+<p><a name="map-2"></a></p>
+</section>
+<section id="map-2">
+<h3>map/2<a class="headerlink" href="#map-2" title="Link to this heading"></a></h3>
+<pre><code>
+map(Fun, Set1) -&gt; Set2
+</code></pre>
+<ul class="definitions"><li><code>Fun = fun((Element1) -&gt; Element2)</code></li><li><code>Set1 = <a href="#type-set">set</a>(Element1)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element2)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the mapping function<br /><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the set to map over<br /></p>
+<p>returns: Returns a set containing elements of <code class="docutils literal notranslate"><span class="pre">Set1</span></code> that are mapped using <code class="docutils literal notranslate"><span class="pre">Fun</span></code>.</p>
+<p>Map Set with Fun.</p>
+<p><a name="new-0"></a></p>
+</section>
+<section id="new-0">
+<h3>new/0<a class="headerlink" href="#new-0" title="Link to this heading"></a></h3>
+<pre><code>
+new() -&gt; <a href="#type-set">set</a>(none())
+</code></pre>
+<br />
+<p>returns: Returns a new empty set.</p>
+<p>Returns a new empty set using the v2 format (a map).</p>
+<p><a name="new-1"></a></p>
+</section>
+<section id="new-1">
+<h3>new/1<a class="headerlink" href="#new-1" title="Link to this heading"></a></h3>
+<pre><code>
+new(Version::[{version, 2}]) -&gt; <a href="#type-set">set</a>(none())
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Version</span></code>: must be <code class="docutils literal notranslate"><span class="pre">{version,</span> <span class="pre">2}</span></code><br /></p>
+<p>returns: Returns a new empty set.</p>
+<p>Returns a new empty set (only v2 format is supported).</p>
+<p><a name="size-1"></a></p>
+</section>
+<section id="size-1">
+<h3>size/1<a class="headerlink" href="#size-1" title="Link to this heading"></a></h3>
+<pre><code>
+size(Set) -&gt; non_neg_integer()
+</code></pre>
+<ul class="definitions"><li><code>Set = <a href="#type-set">set()</a></code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set</span></code>: the set for which size will be returned<br /></p>
+<p>returns: Return the number of elements in <code class="docutils literal notranslate"><span class="pre">Set</span></code>.</p>
+<p>Returns the number of elements in <code class="docutils literal notranslate"><span class="pre">Set</span></code>.</p>
+<p><a name="subtract-2"></a></p>
+</section>
+<section id="subtract-2">
+<h3>subtract/2<a class="headerlink" href="#subtract-2" title="Link to this heading"></a></h3>
+<pre><code>
+subtract(Set1, Set2) -&gt; Set3
+</code></pre>
+<ul class="definitions"><li><code>Set1 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set3 = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the first set<br /><code class="docutils literal notranslate"><span class="pre">Set2</span></code>: the second set<br /></p>
+<p>returns: Returns only the elements of <code class="docutils literal notranslate"><span class="pre">Set1</span></code> that are not also elements of <code class="docutils literal notranslate"><span class="pre">Set2</span></code>.</p>
+<p>Return all and only the elements of Set1 which are not also in Set2.</p>
+<p><a name="to_list-1"></a></p>
+</section>
+<section id="to-list-1">
+<h3>to_list/1<a class="headerlink" href="#to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+to_list(Set) -&gt; List
+</code></pre>
+<ul class="definitions"><li><code>Set = <a href="#type-set">set</a>(Element)</code></li><li><code>List = [Element]</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set</span></code>: the set to be converted to a list<br /></p>
+<p>returns: Return the elements in Set as a list.</p>
+<p>Returns the elements of <code class="docutils literal notranslate"><span class="pre">Set</span></code> as a list. The order of the returned elements is
+undefined.</p>
+<p><a name="union-1"></a></p>
+</section>
+<section id="union-1">
+<h3>union/1<a class="headerlink" href="#union-1" title="Link to this heading"></a></h3>
+<pre><code>
+union(SetList) -&gt; Set
+</code></pre>
+<ul class="definitions"><li><code>SetList = [<a href="#type-set">set</a>(Element)]</code></li><li><code>Set = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">SetList</span></code>: the list of sets<br /></p>
+<p>returns: Returns the merged (union) set of the list of sets.</p>
+<p>Return the union of the list of sets.</p>
+<p><a name="union-2"></a></p>
+</section>
+<section id="union-2">
+<h3>union/2<a class="headerlink" href="#union-2" title="Link to this heading"></a></h3>
+<pre><code>
+union(Set1, Set2) -&gt; Set3
+</code></pre>
+<ul class="definitions"><li><code>Set1 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set2 = <a href="#type-set">set</a>(Element)</code></li><li><code>Set3 = <a href="#type-set">set</a>(Element)</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Set1</span></code>: the first set<br /><code class="docutils literal notranslate"><span class="pre">Set2</span></code>: the second set<br /></p>
+<p>returns: Returns the merged (union) set of <code class="docutils literal notranslate"><span class="pre">Set1</span></code> and <code class="docutils literal notranslate"><span class="pre">Set2</span></code>.</p>
+<p>Return the union of <code class="docutils literal notranslate"><span class="pre">Set1</span></code> and <code class="docutils literal notranslate"><span class="pre">Set2</span></code>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="queue.html" class="btn btn-neutral float-left" title="Module queue" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="socket.html" class="btn btn-neutral float-right" title="Module socket" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

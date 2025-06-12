@@ -1,0 +1,1331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AtomVM Internals &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/atomvm-internals.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Memory Management" href="memory-management.html" />
+    <link rel="prev" title="Build Instructions" href="build-instructions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AtomVM Internals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-an-abstract-machine">What is an Abstract Machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#atomvm-data-structures">AtomVM Data Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-globalcontext">The GlobalContext</a><ul>
+<li><a class="reference internal" href="#c.GlobalContext"><code class="docutils literal notranslate"><span class="pre">GlobalContext</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#process-management">Process Management</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#contexts">Contexts</a><ul>
+<li><a class="reference internal" href="#c.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-scheduler">The Scheduler</a><ul>
+<li><a class="reference internal" href="#c.sys_poll_events"><code class="docutils literal notranslate"><span class="pre">sys_poll_events()</span></code></a></li>
+<li><a class="reference internal" href="#c.sys_signal"><code class="docutils literal notranslate"><span class="pre">sys_signal()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tasks-and-synchronization-mechanisms">Tasks and synchronization mechanisms</a><ul>
+<li><a class="reference internal" href="#c.globalcontext_send_message"><code class="docutils literal notranslate"><span class="pre">globalcontext_send_message()</span></code></a></li>
+<li><a class="reference internal" href="#c.globalcontext_send_message_from_task"><code class="docutils literal notranslate"><span class="pre">globalcontext_send_message_from_task()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mailboxes-and-signals">Mailboxes and signals</a><ul>
+<li><a class="reference internal" href="#c.Message"><code class="docutils literal notranslate"><span class="pre">Message</span></code></a></li>
+<li><a class="reference internal" href="#c.Mailbox"><code class="docutils literal notranslate"><span class="pre">Mailbox</span></code></a></li>
+<li><a class="reference internal" href="#c.ContextFlags"><code class="docutils literal notranslate"><span class="pre">ContextFlags</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#stacktraces">Stacktraces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#line-numbers">Line Numbers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-line-refs-table">The line-refs table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-filenames-table">The filenames table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-line-ref-offsets-list">The line-ref-offsets list</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#atomvm-webassembly-port">AtomVM WebAssembly port</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nodejs-environment-build">NodeJS environment build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#web-environment-build">Web environment build</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">AtomVM Internals</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+ Copyright 2021-2022 Fred Dushin <fred@dushin.net>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section id="atomvm-internals">
+<h1>AtomVM Internals<a class="headerlink" href="#atomvm-internals" title="Link to this heading"></a></h1>
+<section id="what-is-an-abstract-machine">
+<h2>What is an Abstract Machine?<a class="headerlink" href="#what-is-an-abstract-machine" title="Link to this heading"></a></h2>
+<p>AtomVM is an “abstract” or “virtual” machine, in the sense that it simulates, in software, what a physical machine would do when executing machine instructions.  In a normal computing machine (e.g., a desktop computer), machine code instructions are generated by a tool called a compiler, allowing an application developer to write software in a high-level language (such as C).  (In rare cases, application developers will write instructions in assembly code, which is closer to the actual machine instructions, but which still requires a translation step, called “assembly”, to translate the assembly code into actual machine code.)  Machine code instructions are executed in hardware using the machine’s Central Processing Unit (CPU), which is specifically designed to efficiently execute machine instructions targeted for the specific machine architecture (e.g., Intel x86, ARM, Apple M-series, etc.)  As a result, machine code instructions are typically tightly packed, encoded instructions that require minimum effort (on the part of the machine) to unpack an interpret.  These a low level instructions unsuited for human interpretation, or at least for most humans.</p>
+<p>AtomVM and virtual machines generally (including, for example, the Java Virtual Machine) perform a similar task, except that i) the instructions are not machine code instructions, but rather what are typically called “bytecode” or sometimes “opcode” instructions; and ii) the generated instructions are themselves executed by a runtime execution engine written in software, a so-called “virtual” or sometimes “abstract” machine.  These bytecode instructions are generated by a compiler tailored specifically for the virtual machine.  For example, the <code class="docutils literal notranslate"><span class="pre">javac</span></code> compiler is used to translate Java source code into Java VM bytecode, and the <code class="docutils literal notranslate"><span class="pre">erlc</span></code> compiler is used to translate Erlang source code into BEAM opcodes.</p>
+<p>AtomVM is an abstract machine designed to implement the BEAM instruction set, the 170+ (and growing) set of virtual machine instructions implemented in the Erlang/OTP BEAM.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is no abstract specification of the BEAM abstract machine and instruction set.  Instead, the BEAM
+implementation by the Erlang/OTP team is the definitive specification of its behavior.</p>
+</div>
+<p>At a high level, the AtomVM abstract machine is responsible for:</p>
+<ul class="simple">
+<li><p>Loading and execution of the BEAM opcodes encoded in one or more BEAM files;</p></li>
+<li><p>Managing calls to internal and external functions, handling return values, exceptions, and crashes;</p></li>
+<li><p>Creation and destruction of Erlang “processes” within the AtomVM memory space, and communication between processes via message passing;</p></li>
+<li><p>Memory management (allocation and reclamation) of memory associated with Erlang “processes”</p></li>
+<li><p>Pre-emptive scheduling and interruption of Erlang “processes”</p></li>
+<li><p>Execution of user-defined native code (Nifs and Ports)</p></li>
+<li><p>Interfacing with the host operating system (or facsimile)</p></li>
+</ul>
+<p>This document provides a description of the AtomVM abstract machine, including its architecture and the major components and data structures that form the system.  It is intended for developers who want to get involved in bug fixing or implementing features for the VM, as well as for anyone interested in virtual machine internals targeted for BEAM-based languages, such as Erlang or Elixir.</p>
+</section>
+<section id="atomvm-data-structures">
+<h2>AtomVM Data Structures<a class="headerlink" href="#atomvm-data-structures" title="Link to this heading"></a></h2>
+<p>This section describes AtomVM internal data structures that are used to manage the load and runtime state of the virtual machine.  Since AtomVM is written in C, this discussion will largely be in the context of <a class="reference internal" href="apidocs/libatomvm/data_structures.html"><span class="std std-doc">native C data structures</span></a> (i.e., <code class="docutils literal notranslate"><span class="pre">structs</span></code>).  The descriptions will start at a fairly high level but drill down to some detail about the data structures, themselves.  This narrative is important, because memory is limited on the target architectures for AtomVM (i.e., micro-controllers), and it is important to always be aware of how memory is organized and used in a way that is as space-efficient as possible.</p>
+<section id="the-globalcontext">
+<h3>The GlobalContext<a class="headerlink" href="#the-globalcontext" title="Link to this heading"></a></h3>
+<p>We start with the top level data structure, the <code class="docutils literal notranslate"><span class="pre">GlobalContext</span></code> struct.  This object is a singleton object (currently, and for the foreseeable future), and represents the root of all data structures in the virtual machine.  It is in essence in 1..1 correspondence with instances of the virtual machine.</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.GlobalContext">
+<span class="target" id="libatomvmstruct_global_context"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GlobalContext</span></span></span><a class="headerlink" href="#c.GlobalContext" title="Link to this definition"></a><br /></dt>
+<dd><p>Collaboration diagram for GlobalContext:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-8e60938639e3c8deed6d60547c2aa9f337c54354.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;17&quot; [label=&quot;SpinLock&quot; tooltip=&quot;SpinLock&quot;]
+    &quot;9&quot; [label=&quot;ResourceType&quot; tooltip=&quot;ResourceType&quot;]
+    &quot;12&quot; [label=&quot;Module&quot; tooltip=&quot;Module&quot;]
+    &quot;11&quot; [label=&quot;ListHead&quot; tooltip=&quot;ListHead&quot;]
+    &quot;7&quot; [label=&quot;RefcBinaryQueueItem&quot; tooltip=&quot;RefcBinaryQueueItem&quot;]
+    &quot;1&quot; [label=&quot;GlobalContext&quot; tooltip=&quot;GlobalContext&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;6&quot; [label=&quot;HNodeGroup&quot; tooltip=&quot;HNodeGroup&quot;]
+    &quot;16&quot; [label=&quot;TimerList&quot; tooltip=&quot;TimerList&quot;]
+    &quot;14&quot; [label=&quot;LiteralEntry&quot; tooltip=&quot;LiteralEntry&quot;]
+    &quot;3&quot; [label=&quot;MailboxMessage&quot; tooltip=&quot;MailboxMessage&quot;]
+    &quot;2&quot; [label=&quot;MessageQueueItem&quot; tooltip=&quot;MessageQueueItem&quot;]
+    &quot;15&quot; [label=&quot;AtomsHashTable&quot; tooltip=&quot;AtomsHashTable&quot;]
+    &quot;8&quot; [label=&quot;RefcBinary&quot; tooltip=&quot;RefcBinary&quot;]
+    &quot;4&quot; [label=&quot;AtomTable&quot; tooltip=&quot;AtomTable&quot;]
+    &quot;13&quot; [label=&quot;ExportedFunction&quot; tooltip=&quot;ExportedFunction&quot;]
+    &quot;10&quot; [label=&quot;SyncList&quot; tooltip=&quot;SyncList&quot;]
+    &quot;5&quot; [label=&quot;HNode&quot; tooltip=&quot;HNode&quot;]
+    &quot;9&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;9&quot; -&gt; &quot;1&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;9&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;12&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;12&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;7&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;7&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;17&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;6&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;6&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;16&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;2&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;2&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;15&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;8&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;8&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;4&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;4&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;5&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.ready_processes">
+<span class="target" id="libatomvmstruct_global_context_1afc9b4c8b3a9d638c5face0568606df39"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ready_processes</span></span></span><a class="headerlink" href="#c.GlobalContext.ready_processes" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.running_processes">
+<span class="target" id="libatomvmstruct_global_context_1a88b27084121c625b64183aa4a67de6fd"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">running_processes</span></span></span><a class="headerlink" href="#c.GlobalContext.running_processes" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.waiting_processes">
+<span class="target" id="libatomvmstruct_global_context_1ad26d06d71d06c1d1bc7eaf47f3ebdfa9"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">waiting_processes</span></span></span><a class="headerlink" href="#c.GlobalContext.waiting_processes" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.processes_spinlock">
+<span class="target" id="libatomvmstruct_global_context_1a12ca12420125fa259f729acb824050c5"></span><span class="n"><span class="pre">SpinLock</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">processes_spinlock</span></span></span><a class="headerlink" href="#c.GlobalContext.processes_spinlock" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.message_queue">
+<span class="target" id="libatomvmstruct_global_context_1ab39e4517e206471ae77524bab7fc54f8"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">MessageQueueItem</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">message_queue</span></span></span><a class="headerlink" href="#c.GlobalContext.message_queue" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.refc_queue">
+<span class="target" id="libatomvmstruct_global_context_1ab7da580a8b492f6e4d911254f9bcb1ee"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">RefcBinaryQueueItem</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">refc_queue</span></span></span><a class="headerlink" href="#c.GlobalContext.refc_queue" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.refc_binaries">
+<span class="target" id="libatomvmstruct_global_context_1a08478f06a701056188e0d0ef934a1f06"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">SyncList</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">refc_binaries</span></span></span><a class="headerlink" href="#c.GlobalContext.refc_binaries" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.processes_table">
+<span class="target" id="libatomvmstruct_global_context_1abd1392115cdad4d5963f0b4f90e06eb4"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">SyncList</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">processes_table</span></span></span><a class="headerlink" href="#c.GlobalContext.processes_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.registered_processes">
+<span class="target" id="libatomvmstruct_global_context_1a0b3af5d22ae765df7e7e15a45e0ee431"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">SyncList</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">registered_processes</span></span></span><a class="headerlink" href="#c.GlobalContext.registered_processes" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.listeners">
+<span class="target" id="libatomvmstruct_global_context_1a9219a7e5d9396ea0141e1612cf5cff48"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">SyncList</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">listeners</span></span></span><a class="headerlink" href="#c.GlobalContext.listeners" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.resource_types">
+<span class="target" id="libatomvmstruct_global_context_1a24238166bfbce61c0d157bcebcaa06ba"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">SyncList</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resource_types</span></span></span><a class="headerlink" href="#c.GlobalContext.resource_types" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.select_events">
+<span class="target" id="libatomvmstruct_global_context_1aa3d9a3790d90d9ce4a476ff280be6321"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">SyncList</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">select_events</span></span></span><a class="headerlink" href="#c.GlobalContext.select_events" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.last_process_id">
+<span class="target" id="libatomvmstruct_global_context_1ae1231412b947b55064b923bdc9cc7bc3"></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">last_process_id</span></span></span><a class="headerlink" href="#c.GlobalContext.last_process_id" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.atom_table">
+<span class="target" id="libatomvmstruct_global_context_1a35ba26e70de2bccb21b3ac153e44783c"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">AtomTable</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">atom_table</span></span></span><a class="headerlink" href="#c.GlobalContext.atom_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.modules_table">
+<span class="target" id="libatomvmstruct_global_context_1a716f3183f425747796c3d40dc7d4292c"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">AtomsHashTable</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">modules_table</span></span></span><a class="headerlink" href="#c.GlobalContext.modules_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.modules_lock">
+<span class="target" id="libatomvmstruct_global_context_1ac9a178aa06a1c0628a0b3b7bdfb6ed5c"></span><span class="n"><span class="pre">RWLock</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">modules_lock</span></span></span><a class="headerlink" href="#c.GlobalContext.modules_lock" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.modules_by_index">
+<span class="target" id="libatomvmstruct_global_context_1a6c2730188c0e2420550cf146c2c50af8"></span><a class="reference internal" href="#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">modules_by_index</span></span></span><a class="headerlink" href="#c.GlobalContext.modules_by_index" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.loaded_modules_count">
+<span class="target" id="libatomvmstruct_global_context_1a4b8161b912d14156fcace3e7262813a8"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">loaded_modules_count</span></span></span><a class="headerlink" href="#c.GlobalContext.loaded_modules_count" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.avmpack_data">
+<span class="target" id="libatomvmstruct_global_context_1a0d278bfabb49a3282b8c74cacea9d072"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">SyncList</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_data</span></span></span><a class="headerlink" href="#c.GlobalContext.avmpack_data" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.timer_list">
+<span class="target" id="libatomvmstruct_global_context_1a5a1a9395a058f0c635c646d9fd72fc6a"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">TimerList</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">timer_list</span></span></span><a class="headerlink" href="#c.GlobalContext.timer_list" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.timer_spinlock">
+<span class="target" id="libatomvmstruct_global_context_1a17a536a0fa03f7c25beda79b9bf093e8"></span><span class="n"><span class="pre">SpinLock</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">timer_spinlock</span></span></span><a class="headerlink" href="#c.GlobalContext.timer_spinlock" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.ref_ticks">
+<span class="target" id="libatomvmstruct_global_context_1a92df2a2ab6d3401a339edd0b3a308935"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ref_ticks</span></span></span><a class="headerlink" href="#c.GlobalContext.ref_ticks" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.ref_ticks_spinlock">
+<span class="target" id="libatomvmstruct_global_context_1a3dbad821b6604c206eecfde22c886022"></span><span class="n"><span class="pre">SpinLock</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ref_ticks_spinlock</span></span></span><a class="headerlink" href="#c.GlobalContext.ref_ticks_spinlock" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.online_schedulers">
+<span class="target" id="libatomvmstruct_global_context_1a212d4255ff7c995c91505cb2cbb65aa2"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">online_schedulers</span></span></span><a class="headerlink" href="#c.GlobalContext.online_schedulers" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.running_schedulers">
+<span class="target" id="libatomvmstruct_global_context_1a2de1dc7fb080f73c3827dae8cb5be929"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">running_schedulers</span></span></span><a class="headerlink" href="#c.GlobalContext.running_schedulers" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.waiting_scheduler">
+<span class="target" id="libatomvmstruct_global_context_1a5b9d0ec2a9b8d9d7d2c56aac09c75fce"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">waiting_scheduler</span></span></span><a class="headerlink" href="#c.GlobalContext.waiting_scheduler" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.schedulers_mutex">
+<span class="target" id="libatomvmstruct_global_context_1a0803716e18c9e1000d82a0b4122c94ec"></span><span class="n"><span class="pre">Mutex</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">schedulers_mutex</span></span></span><a class="headerlink" href="#c.GlobalContext.schedulers_mutex" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.schedulers_cv">
+<span class="target" id="libatomvmstruct_global_context_1a326855093113510292459fd7675c162c"></span><span class="n"><span class="pre">CondVar</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">schedulers_cv</span></span></span><a class="headerlink" href="#c.GlobalContext.schedulers_cv" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.scheduler_stop_all">
+<span class="target" id="libatomvmstruct_global_context_1a22b7f8eae29a7f0b69c3bd5800202222"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">scheduler_stop_all</span></span></span><a class="headerlink" href="#c.GlobalContext.scheduler_stop_all" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.env_spinlock">
+<span class="target" id="libatomvmstruct_global_context_1ad6fe6e598234d0aa2a0c1e30a9145cec"></span><span class="n"><span class="pre">SpinLock</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">env_spinlock</span></span></span><a class="headerlink" href="#c.GlobalContext.env_spinlock" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.GlobalContext.platform_data">
+<span class="target" id="libatomvmstruct_global_context_1a6a45bd6ef1e87e2c39923f35610083d9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">platform_data</span></span></span><a class="headerlink" href="#c.GlobalContext.platform_data" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Given the design of the system, it is theoretically possible to run multiple instances of the AtomVM in one process
+space.  However, no current deployments make use of this capability.</p>
+</div>
+<p>In order to simplify the exposition of this structure, we break the fields of the structure into manageable subsets:</p>
+<ul class="simple">
+<li><p>Process management – fields associated with the management of Erlang (lightweight) “processes”</p></li>
+<li><p>Atoms management – fields associated with the storage of atoms</p></li>
+<li><p>Module Management – fields associated with the loading of BEAM modules</p></li>
+<li><p>Reference Counted Binaries – fields associated with the storage of binary data shared between processes</p></li>
+<li><p>Other data structures</p></li>
+</ul>
+<p>These subsets are described in more detail below.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Not all fields of the <code class="docutils literal notranslate"><span class="pre">GlobalContext</span></code> structure are described in this document.</p>
+</div>
+<section id="process-management">
+<h4>Process Management<a class="headerlink" href="#process-management" title="Link to this heading"></a></h4>
+<p>As a BEAM implementation, AtomVM must be capable of spawning and managing the lifecycle of Erlang lightweight processes.  Each of these processes is encapsulated in the <a class="reference internal" href="#contexts"><code class="docutils literal notranslate"><span class="pre">Context</span></code> structure</a>, described in more detail in subsequent sections.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">GlobalContext</span></code> structure maintains a list of running processes and contains the following fields for managing the running Erlang processes in the VM:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">processes_table</span></code> the list of all processes running in the system</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">waiting_processes</span></code> the subset of processes that are waiting to run (e.g., waiting for a message or timeout condition).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">running_processes</span></code> the subset of processes that are currently running.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ready_processes</span></code> the subset of processes that are ready to run.</p></li>
+</ul>
+<p>Processes are in either <code class="docutils literal notranslate"><span class="pre">waiting_processes</span></code>, <code class="docutils literal notranslate"><span class="pre">running_processes</span></code> or <code class="docutils literal notranslate"><span class="pre">ready_processes</span></code>.  A running process can technically be moved to the ready list while running to signify that if it yields, it will be eligible for being run again, typically if it receives a message.  Also, native handlers (ports) are never moved to the <code class="docutils literal notranslate"><span class="pre">running_processes</span></code> list but are in the <code class="docutils literal notranslate"><span class="pre">waiting_processes</span></code> list when they run (and can be moved to <code class="docutils literal notranslate"><span class="pre">ready_processes</span></code> list if they are made ready while running).</p>
+<p>Each of these fields are doubly-linked list (ring) structures, i.e, structs containing a <code class="docutils literal notranslate"><span class="pre">prev</span></code> and <code class="docutils literal notranslate"><span class="pre">next</span></code> pointer field.  The <code class="docutils literal notranslate"><span class="pre">Context</span></code> data structure begins with two such structures, the first of which links the <code class="docutils literal notranslate"><span class="pre">Context</span></code> struct in the <code class="docutils literal notranslate"><span class="pre">processes_table</span></code> field, and the second of which is used for either the <code class="docutils literal notranslate"><span class="pre">waiting_processes</span></code>, the <code class="docutils literal notranslate"><span class="pre">ready_processes</span></code> or the <code class="docutils literal notranslate"><span class="pre">running_processes</span></code> field.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The C programming language treats structures in memory as contiguous sequences of fields of given types.  Structures
+have no hidden preamble data, such as you might find in C++ or who knows what in even higher level languages.  The
+size of a struct, therefore, is determined simply by the size of the component fields.</p>
+</div>
+<p>The relationship between the <code class="docutils literal notranslate"><span class="pre">GlobalContext</span></code> fields that manage BEAM processes and the <code class="docutils literal notranslate"><span class="pre">Context</span></code> data structures that represent the processes, themselves, is illustrated in the following diagram:</p>
+<p><img alt="GlobalContext Processes" src="_images/globalcontext-processes.svg" /></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>The <a class="reference internal" href="#contexts">Context</a> data structure is described in more detail below.</p>
+</div>
+<!-- TODO: Document and uncomment sections below.
+#### Module Management
+
+#### An Aside: What's in a HashTable?
+
+### Modules
+-->
+</section>
+</section>
+<section id="contexts">
+<h3>Contexts<a class="headerlink" href="#contexts" title="Link to this heading"></a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>This section is under construction</p>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.Context">
+<span class="target" id="libatomvmstruct_context"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Context</span></span></span><a class="headerlink" href="#c.Context" title="Link to this definition"></a><br /></dt>
+<dd><p>Collaboration diagram for Context:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-9aec316b9432fefb9d2077022d3caffa04486f0e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;22&quot; [label=&quot;SpinLock&quot; tooltip=&quot;SpinLock&quot;]
+    &quot;18&quot; [label=&quot;ResourceType&quot; tooltip=&quot;ResourceType&quot;]
+    &quot;6&quot; [label=&quot;Module&quot; tooltip=&quot;Module&quot;]
+    &quot;5&quot; [label=&quot;ListHead&quot; tooltip=&quot;ListHead&quot;]
+    &quot;10&quot; [label=&quot;HeapFragment&quot; tooltip=&quot;HeapFragment&quot;]
+    &quot;16&quot; [label=&quot;RefcBinaryQueueItem&quot; tooltip=&quot;RefcBinaryQueueItem&quot;]
+    &quot;11&quot; [label=&quot;GlobalContext&quot; tooltip=&quot;GlobalContext&quot;]
+    &quot;15&quot; [label=&quot;HNodeGroup&quot; tooltip=&quot;HNodeGroup&quot;]
+    &quot;21&quot; [label=&quot;TimerList&quot; tooltip=&quot;TimerList&quot;]
+    &quot;8&quot; [label=&quot;LiteralEntry&quot; tooltip=&quot;LiteralEntry&quot;]
+    &quot;3&quot; [label=&quot;MailboxMessage&quot; tooltip=&quot;MailboxMessage&quot;]
+    &quot;9&quot; [label=&quot;Heap&quot; tooltip=&quot;Heap&quot;]
+    &quot;1&quot; [label=&quot;Context&quot; tooltip=&quot;Context&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;12&quot; [label=&quot;MessageQueueItem&quot; tooltip=&quot;MessageQueueItem&quot;]
+    &quot;20&quot; [label=&quot;AtomsHashTable&quot; tooltip=&quot;AtomsHashTable&quot;]
+    &quot;17&quot; [label=&quot;RefcBinary&quot; tooltip=&quot;RefcBinary&quot;]
+    &quot;2&quot; [label=&quot;Mailbox&quot; tooltip=&quot;Mailbox&quot;]
+    &quot;13&quot; [label=&quot;AtomTable&quot; tooltip=&quot;AtomTable&quot;]
+    &quot;7&quot; [label=&quot;ExportedFunction&quot; tooltip=&quot;ExportedFunction&quot;]
+    &quot;4&quot; [label=&quot;TimerListItem&quot; tooltip=&quot;TimerListItem&quot;]
+    &quot;19&quot; [label=&quot;SyncList&quot; tooltip=&quot;SyncList&quot;]
+    &quot;14&quot; [label=&quot;HNode&quot; tooltip=&quot;HNode&quot;]
+    &quot;18&quot; -&gt; &quot;19&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;18&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;18&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;6&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;6&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;5&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;16&quot; -&gt; &quot;17&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;16&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;19&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;20&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;21&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;22&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;15&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;15&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;21&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;9&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;1&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;12&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;12&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;20&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;17&quot; -&gt; &quot;18&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;17&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;2&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;13&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;13&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;4&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;19&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;14&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.global">
+<span class="target" id="libatomvmstruct_context_1a0686e56e3c983101aa2c30ce64874600"></span><a class="reference internal" href="#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">global</span></span></span><a class="headerlink" href="#c.Context.global" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.heap">
+<span class="target" id="libatomvmstruct_context_1a8e815b8d319337382fc61f942fb46a59"></span><span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">heap</span></span></span><a class="headerlink" href="#c.Context.heap" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.e">
+<span class="target" id="libatomvmstruct_context_1a4c60ad366f8f805cf5ecff919fd6cc31"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">e</span></span></span><a class="headerlink" href="#c.Context.e" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.x">
+<span class="target" id="libatomvmstruct_context_1a54c62db44f41fa7fd29c602ac69fd75f"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">x</span></span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">16</span></span><span class="w"> </span><span class="o"><span class="pre">+</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#c.Context.x" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.extended_x_regs">
+<span class="target" id="libatomvmstruct_context_1a005c0eb1c4af7e6f28ed377d22ad8056"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">extended_x_regs</span></span></span><a class="headerlink" href="#c.Context.extended_x_regs" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.processes_list_head">
+<span class="target" id="libatomvmstruct_context_1ad602f96c18d46115c6cbc51827eb3809"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">processes_list_head</span></span></span><a class="headerlink" href="#c.Context.processes_list_head" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.processes_table_head">
+<span class="target" id="libatomvmstruct_context_1a164a8e3ca1db4f37e899663e81cc01e8"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">processes_table_head</span></span></span><a class="headerlink" href="#c.Context.processes_table_head" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.process_id">
+<span class="target" id="libatomvmstruct_context_1ae42a6da3dbc6a8f0cfa9ec35312e32dc"></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">process_id</span></span></span><a class="headerlink" href="#c.Context.process_id" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.timer_list_head">
+<span class="target" id="libatomvmstruct_context_1a46e035db0faacb8c62dc1dd4284778b4"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">TimerListItem</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">timer_list_head</span></span></span><a class="headerlink" href="#c.Context.timer_list_head" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.monitors_head">
+<span class="target" id="libatomvmstruct_context_1a60423fe338828bff9a14ded5d34bb5b0"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">monitors_head</span></span></span><a class="headerlink" href="#c.Context.monitors_head" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.fr">
+<span class="target" id="libatomvmstruct_context_1ab94260ad13e4741d0fec0bdd9b9f247a"></span><span class="n"><span class="pre">avm_float_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">fr</span></span></span><a class="headerlink" href="#c.Context.fr" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.min_heap_size">
+<span class="target" id="libatomvmstruct_context_1aa72fc5a718a54be78b4a02607b56ffc9"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">min_heap_size</span></span></span><a class="headerlink" href="#c.Context.min_heap_size" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.max_heap_size">
+<span class="target" id="libatomvmstruct_context_1a9182737457d76114944ac3f53842f38c"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">max_heap_size</span></span></span><a class="headerlink" href="#c.Context.max_heap_size" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.heap_growth_strategy">
+<span class="target" id="libatomvmstruct_context_1a1c7e8c2ab35d6b4c68048760d85a6ec7"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="n"><span class="pre">HeapGrowthStrategy</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">heap_growth_strategy</span></span></span><a class="headerlink" href="#c.Context.heap_growth_strategy" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.cp">
+<span class="target" id="libatomvmstruct_context_1aeae2e25a8e84534d0dba31f08797691a"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cp</span></span></span><a class="headerlink" href="#c.Context.cp" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.saved_module">
+<span class="target" id="libatomvmstruct_context_1a5c62d2b89183efe97f521a54ae312ad6"></span><a class="reference internal" href="#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">saved_module</span></span></span><a class="headerlink" href="#c.Context.saved_module" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.saved_ip">
+<span class="target" id="libatomvmstruct_context_1a7fb0662185bce79f98568f9ffe787f62"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">saved_ip</span></span></span><a class="headerlink" href="#c.Context.saved_ip" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.restore_trap_handler">
+<span class="target" id="libatomvmstruct_context_1ae9942a065674962c131829f2d6498794"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">restore_trap_handler</span></span></span><a class="headerlink" href="#c.Context.restore_trap_handler" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.mailbox">
+<span class="target" id="libatomvmstruct_context_1ae38e253564b54ff94879c3ce89bb20bc"></span><a class="reference internal" href="#c.Mailbox" title="Mailbox"><span class="n"><span class="pre">Mailbox</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mailbox</span></span></span><a class="headerlink" href="#c.Context.mailbox" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.dictionary">
+<span class="target" id="libatomvmstruct_context_1a75e3c80303d13b257e1ea370cb95b1f4"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dictionary</span></span></span><a class="headerlink" href="#c.Context.dictionary" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.native_handler">
+<span class="target" id="libatomvmstruct_context_1aa77a5906553bf50e66cc182ec13e80e8"></span><span class="n"><span class="pre">native_handler_f</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">native_handler</span></span></span><a class="headerlink" href="#c.Context.native_handler" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.leader">
+<span class="target" id="libatomvmstruct_context_1ad77850973de5c0039da7cc4dcb00f130"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">leader</span></span></span><a class="headerlink" href="#c.Context.leader" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.has_min_heap_size">
+<span class="target" id="libatomvmstruct_context_1abd494edaadbc46a8bce8c137930e1c5f"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">has_min_heap_size</span></span></span><a class="headerlink" href="#c.Context.has_min_heap_size" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.has_max_heap_size">
+<span class="target" id="libatomvmstruct_context_1a3e09aad8cd47f67a712d48266ac3c277"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">has_max_heap_size</span></span></span><a class="headerlink" href="#c.Context.has_max_heap_size" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.trap_exit">
+<span class="target" id="libatomvmstruct_context_1adc2407ac05fe0a57ef7a7eaeb60487fa"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trap_exit</span></span></span><a class="headerlink" href="#c.Context.trap_exit" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.trace_calls">
+<span class="target" id="libatomvmstruct_context_1aff0d67c5a35410c5fbfb67a385d77a1e"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_calls</span></span></span><a class="headerlink" href="#c.Context.trace_calls" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.trace_call_args">
+<span class="target" id="libatomvmstruct_context_1a6a5562646544b79528beb229dc7367cd"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_call_args</span></span></span><a class="headerlink" href="#c.Context.trace_call_args" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.trace_returns">
+<span class="target" id="libatomvmstruct_context_1a05d91adde03bea58705cfd326ec4d6f7"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_returns</span></span></span><a class="headerlink" href="#c.Context.trace_returns" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.trace_send">
+<span class="target" id="libatomvmstruct_context_1af4100e2f0fa37ff023f316bb4b5c5cc9"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_send</span></span></span><a class="headerlink" href="#c.Context.trace_send" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.trace_receive">
+<span class="target" id="libatomvmstruct_context_1ac3478aeb7119d6e9725c8dcf85265e14"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trace_receive</span></span></span><a class="headerlink" href="#c.Context.trace_receive" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.flags">
+<span class="target" id="libatomvmstruct_context_1a2ec3cefa6ed0787cbe8f88414cbc0f65"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.ContextFlags" title="ContextFlags"><span class="n"><span class="pre">ContextFlags</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flags</span></span></span><a class="headerlink" href="#c.Context.flags" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.platform_data">
+<span class="target" id="libatomvmstruct_context_1a7d663b46991eb2b27ef2e2dcfae9323f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">platform_data</span></span></span><a class="headerlink" href="#c.Context.platform_data" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.group_leader">
+<span class="target" id="libatomvmstruct_context_1af1fdf13c2ec4006b6868c3ae722652c0"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">group_leader</span></span></span><a class="headerlink" href="#c.Context.group_leader" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.bs">
+<span class="target" id="libatomvmstruct_context_1a15873cff3f57383a3b8a220ecb00130a"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bs</span></span></span><a class="headerlink" href="#c.Context.bs" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.bs_offset">
+<span class="target" id="libatomvmstruct_context_1a68e420dbb90bd601833abd8cbc063e03"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bs_offset</span></span></span><a class="headerlink" href="#c.Context.bs_offset" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.exit_reason">
+<span class="target" id="libatomvmstruct_context_1a20c7ffe57c7f6f73e03d3eb865bf130b"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">exit_reason</span></span></span><a class="headerlink" href="#c.Context.exit_reason" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<!-- TODO: Document and uncomment sections below.
+## Runtime Execution Loop
+
+## Module Loading
+
+## Function Calls and Return Values
+
+## Exception Handling
+-->
+</section>
+</section>
+<section id="the-scheduler">
+<h2>The Scheduler<a class="headerlink" href="#the-scheduler" title="Link to this heading"></a></h2>
+<p>In SMP builds, AtomVM runs one scheduler thread per core.  Scheduler threads are actually started on demand.  The number of scheduler threads can be queried with <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#system-info-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:system_info/1</span></code></span></a> and be modified with <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#system-flag-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:system_flag/2</span></code></span></a>.  All scheduler threads are considered equal and there is no notion of main thread except when shutting down (main thread is shut down last).</p>
+<p>Each scheduler thread picks a ready process and execute it until it yields.  Erlang processes yield when they are waiting (for a message) and after a number of reductions elapsed.  Native processes yield when they are done consuming messages (when the handler returns).</p>
+<p>Once a scheduler thread is done executing a process, if no other thread is waiting into <code class="docutils literal notranslate"><span class="pre">sys_poll_events</span></code>, it calls <code class="docutils literal notranslate"><span class="pre">sys_poll_events</span></code> with a timeout that correspond to the time to wait for next execution.  If there are ready processes, the timeout is 0.  If there is no ready process, this scheduler thread will wait into <code class="docutils literal notranslate"><span class="pre">sys_poll_event</span></code> and depending on the platform implementation, the CPU usage can drop.</p>
+<blockquote>
+<div><dl class="c function">
+<dt class="sig sig-object c" id="c.sys_poll_events">
+<span class="target" id="libatomvmsys_8h_1a08afcd2c2575b364a30426ea0062b0e4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sys_poll_events</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">timeout_ms</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.sys_poll_events" title="Link to this definition"></a><br /></dt>
+<dd><p>Poll events (from drivers and select events), with a timeout (in ms), or until <code class="docutils literal notranslate"><span class="pre">sys_signal</span></code> is called. </p>
+<p>Depending on platforms, check all open file descriptors/queues and call drivers that should send messages to contexts (which will unblock them). With SMP builds, this function can be called from any scheduler.</p>
+<p>If selectable events are supported on the platform, this function should also:<ul class="simple">
+<li><p>call <code class="docutils literal notranslate"><span class="pre">select_event_destroy</span></code> on select events that have close set to 1</p></li>
+<li><p>include the set of ErlNifEvent that are marked for read or write in the select set, and if they are selected, call <code class="docutils literal notranslate"><span class="pre">select_event_notify</span></code> to send the notification.</p></li>
+</ul>
+</p>
+<p><code class="docutils literal notranslate"><span class="pre">select_event_count_and_destroy_closed</span></code> defined in resources.h can be used to process closed select events.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>glb</strong> – the global context. </p></li>
+<li><p><strong>timeout_ms</strong> – the number of ms to wait, <code class="docutils literal notranslate"><span class="pre">SYS_POLL_EVENTS_WAIT_FOREVER</span></code> to wait forever. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div></blockquote>
+<p>If there already is one thread in <code class="docutils literal notranslate"><span class="pre">sys_poll_events</span></code>, other scheduler threads pick the next ready process and if there is none, wait.  Other scheduler threads can also interrupt the wait in <code class="docutils literal notranslate"><span class="pre">sys_poll_events</span></code> if a process is made ready to run.  They do so using platform function <code class="docutils literal notranslate"><span class="pre">sys_signal</span></code>.</p>
+<blockquote>
+<div><dl class="c function">
+<dt class="sig sig-object c" id="c.sys_signal">
+<span class="target" id="libatomvmsys_8h_1ad373b27d5d7364accaf66a1762a1cd72"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sys_signal</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.sys_signal" title="Link to this definition"></a><br /></dt>
+<dd><p>Interrupt the wait in <code class="docutils literal notranslate"><span class="pre">sys_poll_events</span></code>. </p>
+<p>This function should signal the thread that is waiting in <code class="docutils literal notranslate"><span class="pre">sys_poll_events</span></code> so it returns before the timeout. It is mostly used for SMP builds, but also to abort sleep from driver callbacks on FreeRTOS.</p>
+<p>Please note that this function may be called while no thread is waiting in sys_poll_events and this should have no effect. This function is called in scheduler loop (internal function <code class="docutils literal notranslate"><span class="pre">scheduler_run0</span></code>) and when scheduling processes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>glb</strong> – the global context. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div></blockquote>
+</section>
+<section id="tasks-and-synchronization-mechanisms">
+<h2>Tasks and synchronization mechanisms<a class="headerlink" href="#tasks-and-synchronization-mechanisms" title="Link to this heading"></a></h2>
+<p>AtomVM SMP builds run on operating or runtime systems implementing tasks (FreeRTOS SMP on ESP32, Unix and WebAssembly) as well as on systems with no task implementation (Raspberry Pi Pico).</p>
+<p>On runtime systems with tasks, each scheduler thread is implemented as a task. On Pico, a scheduler thread runs on Core 0 and another one runs on Core 1, and they are effectively pinned to each core.</p>
+<p>For synchronization purposes, AtomVM uses mutexes, condition variables, RW locks, spinlocks and Atomics.</p>
+<p>Availability of RW Locks and atomics are verified at compile time using detection of symbols for RW Locks and <code class="docutils literal notranslate"><span class="pre">ATOMIC_*_LOCK_FREE</span></code> C11 macros for atomics.</p>
+<p>Mutexes and condition variables are provided by the SDK or the runtime system. If RW Locks are not available, AtomVM uses mutexes. Atomics are not available on Pico and are replaced by critical sections. Spinlocks are implemented by AtomVM on top of Atomics, or using mutexes on Pico.</p>
+<p>Importantly, locking synchronization mechanisms (mutexes, RW locks, spinlocks) are not interrupt-safe. Interrupt service routines must not try to lock as they could fail forever if interrupted code owns the lock. Atomics, including emulation on Pico, are interrupt-safe.</p>
+<p>Drivers can send messages from event callbacks typically called from FreeRTOS tasks using <code class="docutils literal notranslate"><span class="pre">globalcontext_send_message_from_task</span></code> or <code class="docutils literal notranslate"><span class="pre">port_send_message_from_task</span></code> functions instead of <code class="docutils literal notranslate"><span class="pre">globalcontext_send_message</span></code> or <code class="docutils literal notranslate"><span class="pre">port_send_message</span></code>. These functions try to acquire required locks and if they fail, enqueue sent message in a queue, so it is later processed when the scheduler performs context switching. The functions are undefined if option <code class="docutils literal notranslate"><span class="pre">AVM_DISABLE_TASK_DRIVER</span></code> is passed. Some platforms do not include support for task drivers. Define <code class="docutils literal notranslate"><span class="pre">AVM_TASK_DRIVER_ENABLED</span></code> can be checked to determine if these functions are available.</p>
+<blockquote>
+<div><dl class="c function">
+<dt class="sig sig-object c" id="c.globalcontext_send_message">
+<span class="target" id="libatomvmglobalcontext_8h_1a122570266744031d99e7043b14b955c9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_send_message</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">process_id</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.globalcontext_send_message" title="Link to this definition"></a><br /></dt>
+<dd><p>Send a message to a process identified by its id. </p>
+<p>Safely send a message to the process, doing nothing is the process cannot be found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>glb</strong> – the global context (that owns the process table). </p></li>
+<li><p><strong>process_id</strong> – the local process id. </p></li>
+<li><p><strong>t</strong> – the message to send. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div></blockquote>
+<blockquote>
+<div><dl class="c function">
+<dt class="sig sig-object c" id="c.globalcontext_send_message_from_task">
+<span class="target" id="libatomvmglobalcontext_8h_1a5f551c2a4838addcb446975fb410c49e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_send_message_from_task</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">process_id</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="n"><span class="pre">MessageType</span></span><span class="w"> </span><span class="n"><span class="pre">type</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.globalcontext_send_message_from_task" title="Link to this definition"></a><br /></dt>
+<dd><p>Send a message to a process identified by its id. This variant is to be used from task drivers. It tries to acquire the necessary locks and if it fails, it enqueues the message which will be delivered on the next scheduler context switch. </p>
+<p>Safely send a message to the process, doing nothing if the process cannot be found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>glb</strong> – the global context (that owns the process table). </p></li>
+<li><p><strong>process_id</strong> – the target process id. </p></li>
+<li><p><strong>type</strong> – the type of message to send, can be NormalMessage or a signal </p></li>
+<li><p><strong>t</strong> – the message to send. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div></blockquote>
+</section>
+<section id="mailboxes-and-signals">
+<h2>Mailboxes and signals<a class="headerlink" href="#mailboxes-and-signals" title="Link to this heading"></a></h2>
+<p>Erlang processes receive messages in a mailbox.  The mailbox is the interface with other processes.</p>
+<blockquote>
+<div><dl class="c struct">
+<dt class="sig sig-object c" id="c.Message">
+<span class="target" id="libatomvmstruct_message"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Message</span></span></span><a class="headerlink" href="#c.Message" title="Link to this definition"></a><br /></dt>
+<dd><p>Collaboration diagram for Message:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-4555d5cd046ae998cbefff912619eb662660548b.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;1&quot; [label=&quot;Message&quot; tooltip=&quot;Message&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;2&quot; [label=&quot;MailboxMessage&quot; tooltip=&quot;MailboxMessage&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;2&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Message.base">
+<span class="target" id="libatomvmstruct_message_1a9366d8e08eec43d6326ee92a0dce14c9"></span><span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">base</span></span></span><a class="headerlink" href="#c.Message.base" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Message.message">
+<span class="target" id="libatomvmstruct_message_1a40a61ae087846ebb34002bf9a21cd42b"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">message</span></span></span><a class="headerlink" href="#c.Message.message" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Message.heap_end">
+<span class="target" id="libatomvmstruct_message_1a85d9b90f5b97314a0df771f4d5a39a46"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">heap_end</span></span></span><a class="headerlink" href="#c.Message.heap_end" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Message.storage">
+<span class="target" id="libatomvmstruct_message_1ab002a0d6d74301e9a08ad02099ef82dd"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">storage</span></span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#c.Message.storage" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div></blockquote>
+<p>When a sender process sends a message to a recipient process, the message is first enqueued into an outer mailbox.  The recipient process eventually moves all messages from the outer mailbox to the inner mailbox.  The reason for the inner and outer mailbox is to use lock-free data structures using atomic CAS operations.</p>
+<blockquote>
+<div><dl class="c struct">
+<dt class="sig sig-object c" id="c.Mailbox">
+<span class="target" id="libatomvmstruct_mailbox"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Mailbox</span></span></span><a class="headerlink" href="#c.Mailbox" title="Link to this definition"></a><br /></dt>
+<dd><p>Collaboration diagram for Mailbox:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-425fe02d6bebb17f247b2e462c1598b85ee90dd7.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;2&quot; [label=&quot;MailboxMessage&quot; tooltip=&quot;MailboxMessage&quot;]
+    &quot;1&quot; [label=&quot;Mailbox&quot; tooltip=&quot;Mailbox&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;2&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Mailbox.outer_first">
+<span class="target" id="libatomvmstruct_mailbox_1afe6762adf11597d131775ad7561fae37"></span><span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">outer_first</span></span></span><a class="headerlink" href="#c.Mailbox.outer_first" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Mailbox.inner_first">
+<span class="target" id="libatomvmstruct_mailbox_1a06084d5dc46163f81f01d21f04ed180e"></span><span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">inner_first</span></span></span><a class="headerlink" href="#c.Mailbox.inner_first" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Mailbox.inner_last">
+<span class="target" id="libatomvmstruct_mailbox_1acef34308630c523e2b36a07472397233"></span><span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">inner_last</span></span></span><a class="headerlink" href="#c.Mailbox.inner_last" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Mailbox.receive_pointer">
+<span class="target" id="libatomvmstruct_mailbox_1ad4699aacd8e9bb39925e1948bf9caad5"></span><span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">receive_pointer</span></span></span><a class="headerlink" href="#c.Mailbox.receive_pointer" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Mailbox.receive_pointer_prev">
+<span class="target" id="libatomvmstruct_mailbox_1a79583551bc4e1870574efcd3020c2dec"></span><span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">receive_pointer_prev</span></span></span><a class="headerlink" href="#c.Mailbox.receive_pointer_prev" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div></blockquote>
+<p>Sometimes, Erlang processes need to query information from other processes but without sending a regular message, for example when using <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#process-info-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">process_info/1,2</span></code></span></a> nif.  This is handled by signals.  Signals are special messages that are enqueued in the outer mailbox of a process.  Signals are processed by the recipient process when regular messages from the outer mailbox are moved to the inner mailbox.  Signal processing code is part of the main loop and transparent to recipient processes.  Both native handlers and erlang processes can receive signals.  Signals are also used to run specific operation on other processes that cannot be done from another thread.  For example, signals are used to perform garbage collection on another process.</p>
+<p>When an Erlang process calls a nif that requires such an information from another process such as <code class="docutils literal notranslate"><span class="pre">process_info/1,2</span></code>, the nif returns a special value and set the <code class="docutils literal notranslate"><span class="pre">Trap</span></code> flag on the calling process.  The calling process is effectively blocked until the other process is scheduled and the information is sent back using another signal message.  This mechanism can also be used by nifs that want to block until a condition is true.</p>
+<blockquote>
+<div><dl class="c enum">
+<dt class="sig sig-object c" id="c.ContextFlags">
+<span class="target" id="libatomvmcontext_8h_1a5c9a39ccda8c700b8722f9027ef63f1d"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ContextFlags</span></span></span><a class="headerlink" href="#c.ContextFlags" title="Link to this definition"></a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.ContextFlags.NoFlags">
+<span class="target" id="libatomvmcontext_8h_1a5c9a39ccda8c700b8722f9027ef63f1da58023b588aa8366442fc981c45b9a1b0"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NoFlags</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.ContextFlags.NoFlags" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.ContextFlags.WaitingTimeout">
+<span class="target" id="libatomvmcontext_8h_1a5c9a39ccda8c700b8722f9027ef63f1da64b31d965dab08c31e97ea27023d3855"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WaitingTimeout</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><a class="headerlink" href="#c.ContextFlags.WaitingTimeout" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.ContextFlags.WaitingTimeoutExpired">
+<span class="target" id="libatomvmcontext_8h_1a5c9a39ccda8c700b8722f9027ef63f1da64a02d6602420acd0ff055eb26e0b2bf"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WaitingTimeoutExpired</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><a class="headerlink" href="#c.ContextFlags.WaitingTimeoutExpired" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.ContextFlags.Running">
+<span class="target" id="libatomvmcontext_8h_1a5c9a39ccda8c700b8722f9027ef63f1da2f5f2c4a8c4f4f0519d503dcdfbf55cb"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Running</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">4</span></span><a class="headerlink" href="#c.ContextFlags.Running" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.ContextFlags.Ready">
+<span class="target" id="libatomvmcontext_8h_1a5c9a39ccda8c700b8722f9027ef63f1da0e73e048b83849a411148a8dddc6dfcb"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Ready</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">8</span></span><a class="headerlink" href="#c.ContextFlags.Ready" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.ContextFlags.Killed">
+<span class="target" id="libatomvmcontext_8h_1a5c9a39ccda8c700b8722f9027ef63f1da741d60e636de9c1cae81d082f954b0eb"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Killed</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">16</span></span><a class="headerlink" href="#c.ContextFlags.Killed" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.ContextFlags.Trap">
+<span class="target" id="libatomvmcontext_8h_1a5c9a39ccda8c700b8722f9027ef63f1da178e499decd0c21272bc34e4b3056eab"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Trap</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">32</span></span><a class="headerlink" href="#c.ContextFlags.Trap" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div></blockquote>
+</section>
+<section id="stacktraces">
+<h2>Stacktraces<a class="headerlink" href="#stacktraces" title="Link to this heading"></a></h2>
+<p>Stacktraces are computed from information gathered at load time from BEAM modules loaded into the application, together with information in the runtime stack that is maintained during the execution of a program.  In addition, if a BEAM file contains a <code class="docutils literal notranslate"><span class="pre">Line</span></code> chunk, additional information is added to stack traces, including the file name (as defined at compile time), as well as the line number of a function call.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Adding line information to a BEAM file adds non-trivial memory overhead to applications and should only be used
+when necessary (e.g., during the development process).  For applications to make the best use of memory in tightly
+constrained environments, packagers should consider removing line information all together from BEAM files and rely
+instead on logging or other mechanisms for diagnosing problems in the field.</p>
+</div>
+<p>Newcomers to Erlang may find stacktraces slightly confusing, because some optimizations taken by the Erlang compiler and runtime can result in stack frames “missing” from stack traces.  For example, tail-recursive function calls, as well as function calls that occur as the last expression in a function clause, don’t involve the creation of frames in the runtime stack, and consequently will not appear in a stacktrace.</p>
+<section id="line-numbers">
+<h3>Line Numbers<a class="headerlink" href="#line-numbers" title="Link to this heading"></a></h3>
+<p>Including file and line number information in stacktraces adds considerable overhead to both the BEAM file data, as well as the memory consumed at module load time.  The data structures used to track line numbers and file names are described below and are only created if the associated BEAM file contains a <code class="docutils literal notranslate"><span class="pre">Line</span></code> chunk.</p>
+<section id="the-line-refs-table">
+<h4>The line-refs table<a class="headerlink" href="#the-line-refs-table" title="Link to this heading"></a></h4>
+<p>The line-refs table is an array of 16-bit integers, mapping line references (as they occur in BEAM instructions) to the actual line numbers in a file.  (Internally, BEAM instructions do not reference line numbers directly, but instead are indirected through a line index).  This table is stored on the <code class="docutils literal notranslate"><span class="pre">Module</span></code> structure.</p>
+<blockquote>
+<div><dl class="c struct">
+<dt class="sig sig-object c" id="c.Module">
+<span class="target" id="libatomvmstruct_module"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Module</span></span></span><a class="headerlink" href="#c.Module" title="Link to this definition"></a><br /></dt>
+<dd><p>Collaboration diagram for Module:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-71acb1b50773ff089a47856effafead13ab92a1b.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;1&quot; [label=&quot;Module&quot; tooltip=&quot;Module&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;3&quot; [label=&quot;LiteralEntry&quot; tooltip=&quot;LiteralEntry&quot;]
+    &quot;2&quot; [label=&quot;ExportedFunction&quot; tooltip=&quot;ExportedFunction&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.import_table">
+<span class="target" id="libatomvmstruct_module_1a824bcc902b13a06d73e26e55eb76e9ba"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">import_table</span></span></span><a class="headerlink" href="#c.Module.import_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.code">
+<span class="target" id="libatomvmstruct_module_1a7800255a49fb908d7b27ffaacfbbdcb9"></span><span class="n"><span class="pre">CodeChunk</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">code</span></span></span><a class="headerlink" href="#c.Module.code" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.export_table">
+<span class="target" id="libatomvmstruct_module_1a1a5f7a02727804c21f3012ef77238b9c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">export_table</span></span></span><a class="headerlink" href="#c.Module.export_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.local_table">
+<span class="target" id="libatomvmstruct_module_1a77e80a9cfc2a252579f2afec736c4221"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">local_table</span></span></span><a class="headerlink" href="#c.Module.local_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.atom_table">
+<span class="target" id="libatomvmstruct_module_1a90db7da51648667cc6cf849f50e03bdf"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">atom_table</span></span></span><a class="headerlink" href="#c.Module.atom_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.fun_table">
+<span class="target" id="libatomvmstruct_module_1af60b4aa79bbe1ec7e1a7f3473499baa8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">fun_table</span></span></span><a class="headerlink" href="#c.Module.fun_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.str_table">
+<span class="target" id="libatomvmstruct_module_1aa3ed2276e9d27c7483ec424d19bb726c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">str_table</span></span></span><a class="headerlink" href="#c.Module.str_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.str_table_len">
+<span class="target" id="libatomvmstruct_module_1aee7380ff1096be8347c0d351768aa6dd"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">str_table_len</span></span></span><a class="headerlink" href="#c.Module.str_table_len" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.line_refs_count">
+<span class="target" id="libatomvmstruct_module_1abdc78a537178f37ce5c904198e8f9bb0"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">line_refs_count</span></span></span><a class="headerlink" href="#c.Module.line_refs_count" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.line_refs_table">
+<span class="target" id="libatomvmstruct_module_1a9b16ee8f5c2ed16063dbf53702fcc58a"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">line_refs_table</span></span></span><a class="headerlink" href="#c.Module.line_refs_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.locations_count">
+<span class="target" id="libatomvmstruct_module_1a6c4f617a018cdebf6a38a49462499e65"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">locations_count</span></span></span><a class="headerlink" href="#c.Module.locations_count" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.locations_table">
+<span class="target" id="libatomvmstruct_module_1a193558d3f80dc356ec728c10ec492556"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">locations_table</span></span></span><a class="headerlink" href="#c.Module.locations_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.line_refs_offsets">
+<span class="target" id="libatomvmstruct_module_1a0f83b99270eab1f29ebd64dc10b061f9"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">line_refs_offsets</span></span></span><a class="headerlink" href="#c.Module.line_refs_offsets" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.line_refs_offsets_count">
+<span class="target" id="libatomvmstruct_module_1a4ccfa44e9db13b723243abc5fe493582"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">line_refs_offsets_count</span></span></span><a class="headerlink" href="#c.Module.line_refs_offsets_count" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.imported_funcs">
+<span class="target" id="libatomvmstruct_module_1a0edef38563da4b6286c01635d1b8d0e5"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ExportedFunction</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">imported_funcs</span></span></span><a class="headerlink" href="#c.Module.imported_funcs" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.labels">
+<span class="target" id="libatomvmstruct_module_1aa435f0e6e4f288ea939b7775dc987bdb"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">labels</span></span></span><a class="headerlink" href="#c.Module.labels" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.literals_data">
+<span class="target" id="libatomvmstruct_module_1af25acc2dae7e1a2f63630e3f9bfb63a4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">literals_data</span></span></span><a class="headerlink" href="#c.Module.literals_data" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.literals_table">
+<span class="target" id="libatomvmstruct_module_1a3d227af5edf0f6f820633894f2101dc1"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">LiteralEntry</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">literals_table</span></span></span><a class="headerlink" href="#c.Module.literals_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.local_atoms_to_global_table">
+<span class="target" id="libatomvmstruct_module_1a5965e24294a8f17710c584b9dcca5ebf"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">local_atoms_to_global_table</span></span></span><a class="headerlink" href="#c.Module.local_atoms_to_global_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.module_platform_data">
+<span class="target" id="libatomvmstruct_module_1a6cd4fe61c92aa82edcd4ec85871a7ec8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">module_platform_data</span></span></span><a class="headerlink" href="#c.Module.module_platform_data" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.module_index">
+<span class="target" id="libatomvmstruct_module_1a8cd453e547353ece3f1f8a30d20c22cd"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_index</span></span></span><a class="headerlink" href="#c.Module.module_index" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.end_instruction_ii">
+<span class="target" id="libatomvmstruct_module_1ac2d9c9dde1cbf7a23de0ce0fb7b75bf3"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">end_instruction_ii</span></span></span><a class="headerlink" href="#c.Module.end_instruction_ii" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.free_literals_data">
+<span class="target" id="libatomvmstruct_module_1a3e2d024b81328a87af532aebc9112260"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">free_literals_data</span></span></span><a class="headerlink" href="#c.Module.free_literals_data" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.mutex">
+<span class="target" id="libatomvmstruct_module_1a5b8a95fc182ea1ff74150407e3e13136"></span><span class="n"><span class="pre">Mutex</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">mutex</span></span></span><a class="headerlink" href="#c.Module.mutex" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div></blockquote>
+<p>This table is populated when the BEAM file is loaded.  The table is created from information in the <code class="docutils literal notranslate"><span class="pre">Line</span></code> chunk in the BEAM file, if it exists.  Note that if there is no <code class="docutils literal notranslate"><span class="pre">Line</span></code> chunk in a BEAM file, this table is not created.</p>
+<p>The memory cost of this table is <code class="docutils literal notranslate"><span class="pre">num_line_refs</span> <span class="pre">*</span> <span class="pre">2</span></code> bytes, for each loaded module, or 0, if there is no <code class="docutils literal notranslate"><span class="pre">Line</span></code> chunk in the associated BEAM file.</p>
+</section>
+<section id="the-filenames-table">
+<h4>The filenames table<a class="headerlink" href="#the-filenames-table" title="Link to this heading"></a></h4>
+<p>The filenames table is a table of (usually only 1?) file name.  This table maps filename indices to <code class="docutils literal notranslate"><span class="pre">ModuleFilename</span></code> structures, which is essentially a pointer and a length (of type <code class="docutils literal notranslate"><span class="pre">size_t</span></code>).  This table generally only contains 1 entry, the file name of the Erlang source code module from which the BEAM file was generated.  This table is stored on the <code class="docutils literal notranslate"><span class="pre">Module</span></code> structure.</p>
+<blockquote>
+<div><dl class="c struct">
+<dt class="sig sig-object c" id="c.ModuleFilename">
+<span class="target" id="libatomvmstruct_module_filename"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ModuleFilename</span></span></span><a class="headerlink" href="#c.ModuleFilename" title="Link to this definition"></a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.ModuleFilename.data">
+<span class="target" id="libatomvmstruct_module_filename_1a449760bc431a6c31720dd15842bf4a38"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">data</span></span></span><a class="headerlink" href="#c.ModuleFilename.data" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.ModuleFilename.len">
+<span class="target" id="libatomvmstruct_module_filename_1ae952780581225c48b605b3dcb4422e0f"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">len</span></span></span><a class="headerlink" href="#c.ModuleFilename.len" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div></blockquote>
+<p>Note that a <code class="docutils literal notranslate"><span class="pre">ModuleFilename</span></code> structure points to data directly in the <code class="docutils literal notranslate"><span class="pre">Line</span></code> chunk of the BEAM file.  Therefore, for ports of AtomVM that memory-map BEAM file data (e.g., ESP32), the actual file name data does not consume any memory.</p>
+<p>The memory cost of this table is <code class="docutils literal notranslate"><span class="pre">num_filenames</span> <span class="pre">*</span> <span class="pre">sizeof(struct</span> <span class="pre">ModuleFilename)</span></code>, where <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">ModuleFilename</span></code> is a pointer and length, for each loaded module, or 0, if there is no <code class="docutils literal notranslate"><span class="pre">Line</span></code> chunk in the associated BEAM file.</p>
+</section>
+<section id="the-line-ref-offsets-list">
+<h4>The line-ref-offsets list<a class="headerlink" href="#the-line-ref-offsets-list" title="Link to this heading"></a></h4>
+<p>The line-ref-offsets list is a sequence of <code class="docutils literal notranslate"><span class="pre">LineRefOffset</span></code> structures, where each structure contains a ListHead (for list book-keeping), a 16-bit line-ref, and an unsigned integer value designating the code offset at which the line reference occurs in the code chunk of the BEAM file.  This list is stored on the <code class="docutils literal notranslate"><span class="pre">Module</span></code> structure.</p>
+<blockquote>
+<div><dl class="c struct">
+<dt class="sig sig-object c" id="c.LineRefOffset">
+<span class="target" id="libatomvmstruct_line_ref_offset"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LineRefOffset</span></span></span><a class="headerlink" href="#c.LineRefOffset" title="Link to this definition"></a><br /></dt>
+<dd><p>Collaboration diagram for LineRefOffset:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-ba3af2706052d50b42cdd87bf422efd083c37479.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;1&quot; [label=&quot;LineRefOffset&quot; tooltip=&quot;LineRefOffset&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;2&quot; [label=&quot;ListHead&quot; tooltip=&quot;ListHead&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;2&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.LineRefOffset.head">
+<span class="target" id="libatomvmstruct_line_ref_offset_1a13058e7d2cbc3f6b0a2756bfe691b130"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">head</span></span></span><a class="headerlink" href="#c.LineRefOffset.head" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.LineRefOffset.offset">
+<span class="target" id="libatomvmstruct_line_ref_offset_1ae8440c1b1a78c448fb48eab6d4526839"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">offset</span></span></span><a class="headerlink" href="#c.LineRefOffset.offset" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div></blockquote>
+<p>This list is populated at code load time.  When a line reference is encountered during code loading, a <code class="docutils literal notranslate"><span class="pre">LineRefOffset</span></code> structure is allocated and added to the line-ref-offsets list.  This list is used at a later time to find the line number at which a stack frame is called, in a manner described below.</p>
+<p>The memory cost of this list is <code class="docutils literal notranslate"><span class="pre">num_line_refs</span> <span class="pre">*</span> <span class="pre">sizeof(struct</span> <span class="pre">LineRefOffset)</span></code>, for each loaded module, or 0, if there is no <code class="docutils literal notranslate"><span class="pre">Line</span></code> chunk in the associated BEAM file.</p>
+<!-- TODO: this sub-section can be expanded at a later date.
+### Raw Stacktraces
+-->
+</section>
+</section>
+</section>
+<section id="atomvm-webassembly-port">
+<h2>AtomVM WebAssembly port<a class="headerlink" href="#atomvm-webassembly-port" title="Link to this heading"></a></h2>
+<p>WebAssembly or Wasm port of AtomVM relies on Emscripten SDK and library. Even when SMP is disabled (with <code class="docutils literal notranslate"><span class="pre">-DAVM_DISABLE_SMP=On</span></code>), it uses pthread library to sleep when Erlang processes are not running (to not waste CPU cycles).</p>
+<section id="nodejs-environment-build">
+<h3>NodeJS environment build<a class="headerlink" href="#nodejs-environment-build" title="Link to this heading"></a></h3>
+<p>The NodeJS environment build of this port is relatively straightforward, featuring NODERAWFS which means it can access files directly like node does.</p>
+</section>
+<section id="web-environment-build">
+<h3>Web environment build<a class="headerlink" href="#web-environment-build" title="Link to this heading"></a></h3>
+<p>The Web environment build of this port is slightly more complex.</p>
+<p>Regarding files, <code class="docutils literal notranslate"><span class="pre">main</span></code> function can load modules (beam or AVM packages) using FetchAPI, which means they can be served by the same HTTP server. This is a fallback and users can preload files using Emscripten <code class="docutils literal notranslate"><span class="pre">file_packager</span></code> tool.</p>
+<p>The port also uses Emscripten’s proxy-to-pthread feature which means AtomVM’s <code class="docutils literal notranslate"><span class="pre">main</span></code> function is run in a web worker. The rationale is the browser thread (or main thread) with WebAssembly cannot run a loop such as AtomVM’s schedulers. Web workers typically cannot manipulate the DOM and do other things that only the browser’s main thread can do. For this purpose, Erlang processes can call <a class="reference internal" href="apidocs/erlang/eavmlib/emscripten.html#run-script-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">emscripten:run_script/2</span></code></span></a> function which dispatches the Javascript to execute to the main thread, waiting for completion (with <code class="docutils literal notranslate"><span class="pre">[main_thread]</span></code>) or not waiting for completion  (with <code class="docutils literal notranslate"><span class="pre">[main_thread,</span> <span class="pre">async]</span></code>). Waiting for completion of a script on the main thread does not block the Erlang scheduler, other Erlang processes can be scheduled. Execution of Javascript on the worker thread, however, does block the scheduler.</p>
+<p>Javascript code can also send messages to Erlang processes using <code class="docutils literal notranslate"><span class="pre">call</span></code> and <code class="docutils literal notranslate"><span class="pre">cast</span></code> functions from <code class="docutils literal notranslate"><span class="pre">main.c</span></code>. These functions are actually wrapped in <code class="docutils literal notranslate"><span class="pre">atomvm.pre.js</span></code>. Usage is demonstrated by <code class="docutils literal notranslate"><span class="pre">call_cast.html</span></code> example.</p>
+<p>Cast is straightforward: the message is enqueued and picked up by the scheduler. It is freed when it is processed.</p>
+<p>Call allows Javascript code to wait for the result and is based on Javascript promises (related to <code class="docutils literal notranslate"><span class="pre">async</span></code>/<code class="docutils literal notranslate"><span class="pre">await</span></code> syntax).</p>
+<ol class="arabic simple">
+<li><p>A promise is created (in the browser’s main thread) in a map to prevent Javascript garbage collection (this is done by Emscripten’s promise glue code).</p></li>
+<li><p>An Erlang resource is created to encapsulate the promise so it is properly destroyed when garbage collected</p></li>
+<li><p>A message is enqueued with the resource as well as the registered name of the target process and the content of the message</p></li>
+<li><p>C code returns the handle of the promise (actually the index in the map) to Javascript Module.call wrapper.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Module.call</span></code> wrapper converts the handle into a Promise object and returns it, so Javascript code can await on the promise.</p></li>
+<li><p>A scheduler dequeues the message with the resource, looks up the target process and sends it the resource as a term</p></li>
+<li><p>The target process eventually calls <a class="reference internal" href="apidocs/erlang/eavmlib/emscripten.html#promise-resolve-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">emscripten:promise_resolve/1,2</span></code></span></a> or <a class="reference internal" href="apidocs/erlang/eavmlib/emscripten.html#promise-reject-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">emscripten:promise_reject/1,2</span></code></span></a> to resolve or reject the promise.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">emscripten:promise_resolve/1,2</span></code> and <code class="docutils literal notranslate"><span class="pre">emscripten:promise_reject/1,2</span></code> nifs dispatch a message in the browser’s main thread.</p></li>
+<li><p>The dispatched function retrieves the promise from its index, resolves or rejects it, with the value passed to <code class="docutils literal notranslate"><span class="pre">emscripten:promise_resolve/2</span></code> or <code class="docutils literal notranslate"><span class="pre">emscripten:promise_reject/2</span></code> and destroys it.</p></li>
+</ol>
+<p>Values currently can only be integers or strings.</p>
+<p>If the scheduler cannot find the target process, the promise is rejected with “noproc” as a value. As the promise is encapsulated into an Erlang resource, if the resource object’s reference count reaches 0, the promise is rejected with “noproc” as the value.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="build-instructions.html" class="btn btn-neutral float-left" title="Build Instructions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="memory-management.html" class="btn btn-neutral float-right" title="Memory Management" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,470 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module spi &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/eavmlib/spi.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module timestamp_util" href="timestamp_util.html" />
+    <link rel="prev" title="Module port" href="port.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ahttp_client.html">Module ahttp_client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm.html">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="emscripten.html">Module emscripten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp.html">Module esp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp_adc.html">Module esp_adc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gpio.html">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="i2c.html">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ledc.html">Module ledc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network.html">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uart.html">Module uart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module spi</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-spi">
+<h1>Module spi<a class="headerlink" href="#module-spi" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>This module provides an interface into the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface">Serial Peripheral Interface</a> (SPI)
+supported on many devices.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module currently support the SPI “leader” (historically known as the “master”) interface, allowing
+the leader to connect to one or more “follower” (historically known as “slave”) devices.</p>
+<p>Users interact with this interface by creating an instance of the driver via the <code class="docutils literal notranslate"><span class="pre">open/1</span></code> function,
+with returns an opaque reference to the driver instance.  The <code class="docutils literal notranslate"><span class="pre">open/1</span></code> function takes a complex map
+structure, which configures the driver to connect to follower devices.  See the <code class="docutils literal notranslate"><span class="pre">open/1</span></code> documentation
+for details about the structure of this configuration map.</p>
+<p>Subsequent read and write operations use the SPI instance returned from the <code class="docutils literal notranslate"><span class="pre">open/1</span></code> function.  Users
+may read from a specific follower device at a specific address, write to the device at an address,
+or simultaneously read from and write to the device in a single transaction.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="address">
+<h3><a name="type-address">address()</a><a class="headerlink" href="#address" title="Link to this heading"></a></h3>
+<pre><code>
+address() = non_neg_integer()
+</code></pre>
+</section>
+<section id="bus-config">
+<h3><a name="type-bus_config">bus_config()</a><a class="headerlink" href="#bus-config" title="Link to this heading"></a></h3>
+<pre><code>
+bus_config() = [{poci, non_neg_integer()} | {pico, non_neg_integer()} | {miso, non_neg_integer()} | {mosi, non_neg_integer()} | {sclk, non_neg_integer()} | {peripheral, <a href="#type-peripheral">peripheral()</a>}]
+</code></pre>
+</section>
+<section id="device-config">
+<h3><a name="type-device_config">device_config()</a><a class="headerlink" href="#device-config" title="Link to this heading"></a></h3>
+<pre><code>
+device_config() = [{clock_speed_hz, non_neg_integer()} | {mode, 0..3} | {cs, non_neg_integer()} | {address_len_bits, 0..64} | {command_len_bits, 0..16}]
+</code></pre>
+</section>
+<section id="device-name">
+<h3><a name="type-device_name">device_name()</a><a class="headerlink" href="#device-name" title="Link to this heading"></a></h3>
+<pre><code>
+device_name() = atom()
+</code></pre>
+</section>
+<section id="params">
+<h3><a name="type-params">params()</a><a class="headerlink" href="#params" title="Link to this heading"></a></h3>
+<pre><code>
+params() = [{bus_config, <a href="#type-bus_config">bus_config()</a>}] | [{bus_config, <a href="#type-bus_config">bus_config()</a>} | {device_config, [{<a href="#type-device_name">device_name()</a>, <a href="#type-device_config">device_config()</a>}]}]
+</code></pre>
+</section>
+<section id="peripheral">
+<h3><a name="type-peripheral">peripheral()</a><a class="headerlink" href="#peripheral" title="Link to this heading"></a></h3>
+<pre><code>
+peripheral() = hspi | vspi | string() | binary()
+</code></pre>
+</section>
+<section id="spi">
+<h3><a name="type-spi">spi()</a><a class="headerlink" href="#spi" title="Link to this heading"></a></h3>
+<pre><code>
+spi() = pid()
+</code></pre>
+</section>
+<section id="transaction">
+<h3><a name="type-transaction">transaction()</a><a class="headerlink" href="#transaction" title="Link to this heading"></a></h3>
+<pre><code>
+transaction() = #{command =&gt; integer(), address =&gt; non_neg_integer(), write_data =&gt; binary(), write_bits =&gt; non_neg_integer(), read_bits =&gt; non_neg_integer()}
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#close-1">close/1</a></td><td>    Close the SPI driver.</td></tr><tr><td valign="top"><a href="#open-1">open/1</a></td><td>Open a connection to the SPI driver.</td></tr><tr><td valign="top"><a href="#read_at-4">read_at/4</a></td><td>    Read a value from and address on the device.</td></tr><tr><td valign="top"><a href="#write-3">write/3</a></td><td>    Write data to the SPI device, using the instructions encoded in the supplied transaction.</td></tr><tr><td valign="top"><a href="#write_at-5">write_at/5</a></td><td>    Write a value to and address on the device.</td></tr><tr><td valign="top"><a href="#write_read-3">write_read/3</a></td><td>    Write data to the SPI device, using the instructions encoded in the supplied transaction.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="close-1"></a></p>
+<section id="close-1">
+<h3>close/1<a class="headerlink" href="#close-1" title="Link to this heading"></a></h3>
+<pre><code>
+close(SPI::<a href="#type-spi">spi()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SPI</span></code>: SPI instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /></p>
+<p>Close the SPI driver.</p>
+<p>Close the SPI driver and free any resources in use by the driver.</p>
+<p>The SPI instance will no longer be valid and usable after this function has been called.</p>
+<p><a name="open-1"></a></p>
+</section>
+<section id="open-1">
+<h3>open/1<a class="headerlink" href="#open-1" title="Link to this heading"></a></h3>
+<pre><code>
+open(Params::<a href="#type-params">params()</a>) -&gt; <a href="#type-spi">spi()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Params</span></code>: Initialization parameters<br /></p>
+<p>returns: process id of the driver.</p>
+<p>throws <code class="docutils literal notranslate"><span class="pre">badarg</span></code></p>
+<p>Open a connection to the SPI driver</p>
+<p>This function will open a connection to the SPI driver.</p>
+<p>Supply a set of parameters to initialize the driver.</p>
+<p>The parameters list must contain an SPI Bus configuration, together with
+a properties list containing one or more device configurations.  This list must contain
+atom keys as names, which are used to identify the device in the subsequent read and
+write operations.  You may use any atom value of your choosing.</p>
+<p>The SPI Bus configuration is a properties list containing the following entries:</p>
+<table>
+<tr> <th>Key</th> <th>Type</th> <th>Default</th> <th>Description</th> </tr>
+<tr> <td><code>miso</code></td> <td><code>non_neg_integer()</code></td> <td>-</td> <td>MISO pin number</td></tr>
+<tr> <td><code>mosi</code></td> <td><code>non_neg_integer()</code></td> <td>-</td> <td>MOSI pin number</td></tr>
+<tr> <td><code>sclk</code></td> <td><code>non_neg_integer()</code></td> <td>-</td> <td>SCLK pin number</td></tr>
+<tr> <td><code>peripheral</code></td> <td><code>hspi | vspi</code></td> <td><code>hspi</code></td> <td>SPI Peripheral (ESP32 only)</td></tr>
+</table>
+<p>Each device configuration is a properties list containing the following entries:</p>
+<table>
+<tr> <th>Key</th> <th>Type</th> <th>Default</th> <th>Description</th> </tr>
+<tr> <td><code>clock_speed_hz</code></td> <td><code>non_neg_integer()</code></td> <td><code>1000000</code></td> <td>Clock speed for the SPI device (in hz)</td></tr>
+<tr> <td><code>mode</code></td> <td><code>0..3</code></td> <td><code>0</code></td> <td>SPI device mode</td></tr>
+<tr> <td><code>cs</code></td> <td><code>non_neg_integer()</code></td> <td>-</td> <td>SPI Chip Select pin number</td></tr>
+<tr> <td><code>address_len_bits</code></td> <td><code>non_neg_integer()</code></td> <td>8</td> <td>Number of bits in the device address</td></tr>
+</table>
+<p>Example:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  Params = [
+     {bus_config, [
+         {miso, 16},
+         {mosi, 17},
+         {sclk, 5}
+     },
+     {device_config, [
+         {device1, [
+             {cs, 18}
+         ]},
+         {device2, [
+             {cs, 19}
+         ]}
+     ]}
+  ]
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">device1</span></code> and <code class="docutils literal notranslate"><span class="pre">device2</span></code> are atom names used to identify the device for read and write operations.</p>
+<p>This function raises an Erlang exception with a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> reason, if initialization of the
+SPI Bus or any device fails.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">write/3</span></code> and <code class="docutils literal notranslate"><span class="pre">write_read/3</span></code> functions in this module are designed to provide the maximum mount of
+flexibility when interfacing with the SPI device.  The both make use of a map structure to encapsulate an SPI transaction.</p>
+<p>An SPI transaction may contain a command, and address, and/or a blob of data, each of which is optional and
+each of which depends on how users interact with the device.  Consult the data sheet for your SPI device to
+understand which fields should be used with your device.</p>
+<p>The fields of a transaction map are as follows:</p>
+<table>
+<tr><th>Key</th><th>Value Type</th><th>Description</th></tr>
+<tr><td><code>command</code></td><td><code>integer()</code> (16-bit)</td><td>SPI command.  The low-order <code>command_len_bits</code> are written to the device.</td></tr>
+<tr><td><code>address</code></td><td><code>integer()</code> (64-bit)</td><td>Device address.  The low-order <code>address_len_bits</code> are written to the device.</td></tr>
+<tr><td><code>write_data</code></td><td><code>binary()</code></td><td>Data to write</td></tr>
+<tr><td><code>write_bits</code></td><td><code>non_neg_integer()</code></td><td>Number of bits to write from <code>write_data</code>.  If not included, then all bits will be written.</td></tr>
+<tr><td><code>read_bits</code></td><td><code>non_neg_integer()</code></td><td>Number of bits to read from the SPI device.  If not included, then the same number of bits will be read as were written.</td></tr>
+</table>
+<p><a name="read_at-4"></a></p>
+</section>
+<section id="read-at-4">
+<h3>read_at/4<a class="headerlink" href="#read-at-4" title="Link to this heading"></a></h3>
+<pre><code>
+read_at(SPI::<a href="#type-spi">spi()</a>, DeviceName::<a href="#type-device_name">device_name()</a>, Address::<a href="#type-address">address()</a>, Len::non_neg_integer()) -&gt; {ok, integer()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SPI</span></code>: SPI instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">DeviceName</span></code>: device name from configuration<br /><code class="docutils literal notranslate"><span class="pre">Address</span></code>: SPI Address from which to read<br /><code class="docutils literal notranslate"><span class="pre">Len</span></code>: in bytes to read<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Value}</span></code> or <code class="docutils literal notranslate"><span class="pre">error</span></code></p>
+<p>Read a value from and address on the device.</p>
+<p><a name="write-3"></a></p>
+</section>
+<section id="write-3">
+<h3>write/3<a class="headerlink" href="#write-3" title="Link to this heading"></a></h3>
+<pre><code>
+write(SPI::<a href="#type-spi">spi()</a>, DeviceName::<a href="#type-device_name">device_name()</a>, Transaction::<a href="#type-transaction">transaction()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SPI</span></code>: SPI instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">DeviceName</span></code>: SPI device name (use key in <code class="docutils literal notranslate"><span class="pre">device_config</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">Transaction</span></code>: transaction map.<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if an error occurred.</p>
+<p>Write data to the SPI device, using the instructions encoded in the supplied transaction.</p>
+<p>The supplied <code class="docutils literal notranslate"><span class="pre">Transaction</span></code> encodes information about how data is to be written to the selected SPI device.
+See the description above for the fields that may be specified in this map.</p>
+<p>When a binary is supplied in the <code class="docutils literal notranslate"><span class="pre">write_data</span></code> field, the data is written to the
+SPI device in the natural order of the binary.  For example, if the
+input binary is <code class="docutils literal notranslate"><span class="pre">&lt;&lt;16#57,</span> <span class="pre">16#BA&gt;&gt;</span></code>, then the first
+byte is <code class="docutils literal notranslate"><span class="pre">0x57</span></code> and the second byte is <code class="docutils literal notranslate"><span class="pre">0xBA</span></code>.</p>
+<p>The value of the <code class="docutils literal notranslate"><span class="pre">write_bits</span></code> field, if specified, must be less than or equal to <code class="docutils literal notranslate"><span class="pre">8</span> <span class="pre">*</span> <span class="pre">byte_size(write_data)</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">write_bits</span></code> is less than <code class="docutils literal notranslate"><span class="pre">8</span> <span class="pre">*</span> <span class="pre">byte_size(write_data)</span></code>, only the first <code class="docutils literal notranslate"><span class="pre">write_bits</span></code> bits from <code class="docutils literal notranslate"><span class="pre">write_data</span></code> will be written.</p>
+<p>This function will return a tuple containing the <code class="docutils literal notranslate"><span class="pre">error</span></code> atom if an error occurred
+writing to the SPI device at the specified address.
+The returned reason term is implementation-defined.</p>
+<p><a name="write_at-5"></a></p>
+</section>
+<section id="write-at-5">
+<h3>write_at/5<a class="headerlink" href="#write-at-5" title="Link to this heading"></a></h3>
+<pre><code>
+write_at(SPI::<a href="#type-spi">spi()</a>, DeviceName::<a href="#type-device_name">device_name()</a>, Address::<a href="#type-address">address()</a>, Len::non_neg_integer(), Data::integer()) -&gt; {ok, integer()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SPI</span></code>: SPI instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">DeviceName</span></code>: device name from configuration<br /><code class="docutils literal notranslate"><span class="pre">Address</span></code>: SPI Address to which to write<br /><code class="docutils literal notranslate"><span class="pre">Len</span></code>: in bytes to read<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: byte(s) to write<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Value}</span></code> or <code class="docutils literal notranslate"><span class="pre">error</span></code></p>
+<p>Write a value to and address on the device.</p>
+<p>The value returned from this function is dependent on the device and address.
+Consult the documentation for the device to understand expected return
+values from this function.</p>
+<p><a name="write_read-3"></a></p>
+</section>
+<section id="write-read-3">
+<h3>write_read/3<a class="headerlink" href="#write-read-3" title="Link to this heading"></a></h3>
+<pre><code>
+write_read(SPI::<a href="#type-spi">spi()</a>, DeviceName::<a href="#type-device_name">device_name()</a>, Transaction::<a href="#type-transaction">transaction()</a>) -&gt; {ok, ReadData::binary()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SPI</span></code>: SPI instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">DeviceName</span></code>: SPI device name (use key in <code class="docutils literal notranslate"><span class="pre">device_config</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">Transaction</span></code>: transaction.<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">binary()}</span></code> or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if an error occurred.</p>
+<p>Write data to the SPI device, using the instructions encoded in the supplied transaction.
+device, and simultaneously read data back from the device, returning the read data in a binary.</p>
+<p>The supplied <code class="docutils literal notranslate"><span class="pre">Transaction</span></code> encodes information about how data is to be written to the selected SPI device.
+See the description above for the fields that may be specified in this map.</p>
+<p>When a binary is supplied in the <code class="docutils literal notranslate"><span class="pre">write_data</span></code> field, the data is written to the
+SPI device in the natural order of the binary.  For example, if the
+input binary is <code class="docutils literal notranslate"><span class="pre">&lt;&lt;16#57,</span> <span class="pre">16#BA&gt;&gt;</span></code>, then the first
+byte is <code class="docutils literal notranslate"><span class="pre">0x57</span></code> and the second byte is <code class="docutils literal notranslate"><span class="pre">0xBA</span></code>.</p>
+<p>The value of the <code class="docutils literal notranslate"><span class="pre">write_bits</span></code> field, if specified, must be less than or equal to <code class="docutils literal notranslate"><span class="pre">8</span> <span class="pre">*</span> <span class="pre">byte_size(write_data)</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">write_bits</span></code> is less than <code class="docutils literal notranslate"><span class="pre">8</span> <span class="pre">*</span> <span class="pre">byte_size(write_data)</span></code>, only the first <code class="docutils literal notranslate"><span class="pre">write_bits</span></code> bits from <code class="docutils literal notranslate"><span class="pre">write_data</span></code> will be written.</p>
+<p>The return value contains a sequence of bytes that have been read from the SPI device.  The number of
+bytes returned will be <code class="docutils literal notranslate"><span class="pre">ceil(read_bits</span> <span class="pre">/</span> <span class="pre">8)</span></code>.  Only the first <code class="docutils literal notranslate"><span class="pre">read_bits</span></code> will be populated.</p>
+<p>This function will return a tuple containing the <code class="docutils literal notranslate"><span class="pre">error</span></code> atom if an error occurred
+writing to the SPI device at the specified address.
+The returned reason term is implementation-defined.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="port.html" class="btn btn-neutral float-left" title="Module port" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timestamp_util.html" class="btn btn-neutral float-right" title="Module timestamp_util" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

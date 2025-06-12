@@ -1,0 +1,523 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module atomvm &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/eavmlib/atomvm.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module avm_pubsub" href="avm_pubsub.html" />
+    <link rel="prev" title="Module ahttp_client" href="ahttp_client.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ahttp_client.html">Module ahttp_client</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="emscripten.html">Module emscripten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp.html">Module esp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp_adc.html">Module esp_adc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gpio.html">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="i2c.html">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ledc.html">Module ledc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network.html">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uart.html">Module uart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module atomvm</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-atomvm">
+<h1>Module atomvm<a class="headerlink" href="#module-atomvm" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>AtomVM-specific APIs.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module contains functions that are specific to the AtomVM platform.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="avm-path">
+<h3><a name="type-avm_path">avm_path()</a><a class="headerlink" href="#avm-path" title="Link to this heading"></a></h3>
+<pre><code>
+avm_path() = iodata()
+</code></pre>
+</section>
+<section id="platform-name">
+<h3><a name="type-platform_name">platform_name()</a><a class="headerlink" href="#platform-name" title="Link to this heading"></a></h3>
+<pre><code>
+platform_name() = generic_unix | emscripten | esp32 | pico | stm32
+</code></pre>
+</section>
+<section id="posix-dir">
+<h3><a name="type-posix_dir">posix_dir()</a><a class="headerlink" href="#posix-dir" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">posix_dir()</span></code></p>
+</section>
+<section id="posix-error">
+<h3><a name="type-posix_error">posix_error()</a><a class="headerlink" href="#posix-error" title="Link to this heading"></a></h3>
+<pre><code>
+posix_error() = atom() | integer()
+</code></pre>
+</section>
+<section id="posix-fd">
+<h3><a name="type-posix_fd">posix_fd()</a><a class="headerlink" href="#posix-fd" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">posix_fd()</span></code></p>
+</section>
+<section id="posix-open-flag">
+<h3><a name="type-posix_open_flag">posix_open_flag()</a><a class="headerlink" href="#posix-open-flag" title="Link to this heading"></a></h3>
+<pre><code>
+posix_open_flag() = o_exec | o_rdonly | o_rdwr | o_search | o_wronly | o_append | o_cloexec | o_creat | o_directory | o_dsync | o_excl | o_noctty | o_nofollow | o_rsync | o_sync | o_trunc | o_tty_atom
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#add_avm_pack_binary-2">add_avm_pack_binary/2</a></td><td>    Add code from an AVM binary to your application.</td></tr><tr><td valign="top"><a href="#add_avm_pack_file-2">add_avm_pack_file/2</a></td><td>    Add code from an AVM binary to your application.</td></tr><tr><td valign="top"><a href="#close_avm_pack-2">close_avm_pack/2</a></td><td>    Close previously opened AVM binary from your application.</td></tr><tr><td valign="top"><a href="#get_start_beam-1">get_start_beam/1</a></td><td>    Get the start beam for a given avm.</td></tr><tr><td valign="top"><a href="#platform-0">platform/0</a></td><td>    Return the platform moniker.</td></tr><tr><td valign="top"><a href="#posix_clock_settime-2">posix_clock_settime/2</a></td><td>Set the system time.</td></tr><tr><td valign="top"><a href="#posix_close-1">posix_close/1</a></td><td>    Close a file that was opened with <code>posix_open/2,3</code></td></tr><tr><td valign="top"><a href="#posix_closedir-1">posix_closedir/1</a></td><td>    Close a directory that was opened with <code>posix_opendir/1</code></td></tr><tr><td valign="top"><a href="#posix_open-2">posix_open/2</a></td><td>    Open a file (on platforms that have <code>open(3)</code>).</td></tr><tr><td valign="top"><a href="#posix_open-3">posix_open/3</a></td><td>    Open a file (on platforms that have <code>open(3)</code>).</td></tr><tr><td valign="top"><a href="#posix_opendir-1">posix_opendir/1</a></td><td>    Open a file (on platforms that have <code>opendir(3)</code>).</td></tr><tr><td valign="top"><a href="#posix_read-2">posix_read/2</a></td><td>    Read at most <code>Count</code> bytes from a file.</td></tr><tr><td valign="top"><a href="#posix_readdir-1">posix_readdir/1</a></td><td>    Read a directory entry
+<code>eof</code> is returned if no more data can be read because the directory cursor
+reached the end.</td></tr><tr><td valign="top"><a href="#posix_write-2">posix_write/2</a></td><td>    Write data to a file.</td></tr><tr><td valign="top"><a href="#rand_bytes-1">rand_bytes/1</a></td><td>(<em>Deprecated</em>.)     Returns a binary containing random sequence of bytes of length Len.</td></tr><tr><td valign="top"><a href="#random-0">random/0</a></td><td>    Returns a random 32-bit integer value.</td></tr><tr><td valign="top"><a href="#read_priv-2">read_priv/2</a></td><td>    This function allows to fetch priv/ resources content.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="add_avm_pack_binary-2"></a></p>
+<section id="add-avm-pack-binary-2">
+<h3>add_avm_pack_binary/2<a class="headerlink" href="#add-avm-pack-binary-2" title="Link to this heading"></a></h3>
+<pre><code>
+add_avm_pack_binary(AVMData::binary(), Options::[{name, Name::atom()}]) -&gt; ok | {error, any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">AVMData</span></code>: AVM data.<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: Options, as a property list.<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Add code from an AVM binary to your application.</p>
+<p>This function will add the data in the <code class="docutils literal notranslate"><span class="pre">AVMData</span></code> parameter to
+your application.  The data is assumed to be valid AVM data (e.g, as
+generated by packbeam tooling).</p>
+<p>Failure to properly load AVM data is result in a runtime <code class="docutils literal notranslate"><span class="pre">error</span></code></p>
+<p><a name="add_avm_pack_file-2"></a></p>
+</section>
+<section id="add-avm-pack-file-2">
+<h3>add_avm_pack_file/2<a class="headerlink" href="#add-avm-pack-file-2" title="Link to this heading"></a></h3>
+<pre><code>
+add_avm_pack_file(AVMPath::<a href="#type-avm_path">avm_path()</a>, Options::[{name, Name::atom()}]) -&gt; ok | {error, any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">AVMPath</span></code>: Path to AVM data.<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: Options, as a property list.<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Add code from an AVM binary to your application.</p>
+<p>This function will add the data located in the <code class="docutils literal notranslate"><span class="pre">AVMPath</span></code> parameter to
+your application.  The data is assumed to be valid AVM data (e.g, as
+generated by packbeam tooling).</p>
+<p>On <code class="docutils literal notranslate"><span class="pre">generic_unix</span></code> platforms, the <code class="docutils literal notranslate"><span class="pre">AVMPath</span></code> may be a valid file system
+path to an AVM file.</p>
+<p>On <code class="docutils literal notranslate"><span class="pre">esp32</span></code> platforms, the <code class="docutils literal notranslate"><span class="pre">AVMPath</span></code> should be the name of an ESP32
+flash partition, prefixed with the string
+<code class="docutils literal notranslate"><span class="pre">/dev/partition/by-name/</span></code>.  Thus, for example, if you specify
+<code class="docutils literal notranslate"><span class="pre">/dev/partition/by-name/main2.app</span></code> as the <code class="docutils literal notranslate"><span class="pre">AVMPath</span></code>, the ESP32
+flash should contain a data partition with the
+name <code class="docutils literal notranslate"><span class="pre">main2.app</span></code></p>
+<p>Failure to properly load AVM path is result in a runtime <code class="docutils literal notranslate"><span class="pre">error</span></code></p>
+<p><a name="close_avm_pack-2"></a></p>
+</section>
+<section id="close-avm-pack-2">
+<h3>close_avm_pack/2<a class="headerlink" href="#close-avm-pack-2" title="Link to this heading"></a></h3>
+<pre><code>
+close_avm_pack(Name::atom(), Options::[]) -&gt; ok | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: the AVM name.<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: Options, as a property list.<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">|</span> <span class="pre">error</span></code></p>
+<p>Close previously opened AVM binary from your application.</p>
+<p>This function will close the data referenced by the <code class="docutils literal notranslate"><span class="pre">Name</span></code> parameter from
+your application.  The <code class="docutils literal notranslate"><span class="pre">Name</span></code> parameter must reference previously
+opened AVM data.</p>
+<p>Failure to close AVM data is result in a runtime <code class="docutils literal notranslate"><span class="pre">error</span></code></p>
+<p><a name="get_start_beam-1"></a></p>
+</section>
+<section id="get-start-beam-1">
+<h3>get_start_beam/1<a class="headerlink" href="#get-start-beam-1" title="Link to this heading"></a></h3>
+<pre><code>
+get_start_beam(AVM::atom()) -&gt; {ok, binary()} | {error, not_found}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">AVM</span></code>: Name of avm (atom)<br /></p>
+<p>returns: the name of the start module (with suffix)</p>
+<p>Get the start beam for a given avm</p>
+<p><a name="platform-0"></a></p>
+</section>
+<section id="platform-0">
+<h3>platform/0<a class="headerlink" href="#platform-0" title="Link to this heading"></a></h3>
+<pre><code>
+platform() -&gt; <a href="#type-platform_name">platform_name()</a>
+</code></pre>
+<br />
+<p>returns: The platform name.</p>
+<p>Return the platform moniker.
+You may use this function to uniquely identify the platform
+type on which your application is running.</p>
+<p><a name="posix_clock_settime-2"></a></p>
+</section>
+<section id="posix-clock-settime-2">
+<h3>posix_clock_settime/2<a class="headerlink" href="#posix-clock-settime-2" title="Link to this heading"></a></h3>
+<pre><code>
+posix_clock_settime(ClockId::realtime, ValueSinceUnixEpoch::{Seconds::integer(), Nanoseconds::integer()}) -&gt; ok | {error, Reason::<a href="#type-posix_error">posix_error()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ClockId</span></code>: The clock id<br /><code class="docutils literal notranslate"><span class="pre">ValueSinceUnixEpoch</span></code>: The value, in specified seconds and nanoseconds,
+since the UNIX epoch (Jan 1, 1970)<br /></p>
+<p>returns:  <code class="docutils literal notranslate"><span class="pre">ok</span></code> or an error tuple</p>
+<p>Set the system time.</p>
+<p>This function sets the system time to the specified value, expressed as a
+tuple containing seconds and nanoseconds since the UNIX epoch (Jan 1, 1970).
+Coordinates are all in UTC.</p>
+<p>Note.  Some systems may require special permissions to call this function.</p>
+<p><a name="posix_close-1"></a></p>
+</section>
+<section id="posix-close-1">
+<h3>posix_close/1<a class="headerlink" href="#posix-close-1" title="Link to this heading"></a></h3>
+<pre><code>
+posix_close(File::<a href="#type-posix_fd">posix_fd()</a>) -&gt; ok | {error, <a href="#type-posix_error">posix_error()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">File</span></code>: Descriptor to a file to close<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or an error tuple</p>
+<p>Close a file that was opened with <code class="docutils literal notranslate"><span class="pre">posix_open/2,3</span></code></p>
+<p><a name="posix_closedir-1"></a></p>
+</section>
+<section id="posix-closedir-1">
+<h3>posix_closedir/1<a class="headerlink" href="#posix-closedir-1" title="Link to this heading"></a></h3>
+<pre><code>
+posix_closedir(Dir::<a href="#type-posix_dir">posix_dir()</a>) -&gt; ok | {error, <a href="#type-posix_error">posix_error()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Dir</span></code>: Descriptor to a directory to close<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or an error tuple</p>
+<p>Close a directory that was opened with <code class="docutils literal notranslate"><span class="pre">posix_opendir/1</span></code></p>
+<p><a name="posix_open-2"></a></p>
+</section>
+<section id="posix-open-2">
+<h3>posix_open/2<a class="headerlink" href="#posix-open-2" title="Link to this heading"></a></h3>
+<pre><code>
+posix_open(Path::iodata(), Flags::[<a href="#type-posix_open_flag">posix_open_flag()</a>]) -&gt; {ok, <a href="#type-posix_fd">posix_fd()</a>} | {error, <a href="#type-posix_error">posix_error()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Path</span></code>: Path to the file to open<br /><code class="docutils literal notranslate"><span class="pre">Flags</span></code>: List of flags passed to <code class="docutils literal notranslate"><span class="pre">open(3)</span></code>.<br /></p>
+<p>returns: A tuple with a file descriptor or an error tuple.</p>
+<p>Open a file (on platforms that have <code class="docutils literal notranslate"><span class="pre">open(3)</span></code>).
+The file is automatically closed when the file descriptor is garbage
+collected.</p>
+<p>Files are automatically opened with <code class="docutils literal notranslate"><span class="pre">O_NONBLOCK</span></code>. Other flags can be passed.</p>
+<p><a name="posix_open-3"></a></p>
+</section>
+<section id="posix-open-3">
+<h3>posix_open/3<a class="headerlink" href="#posix-open-3" title="Link to this heading"></a></h3>
+<pre><code>
+posix_open(Path::iodata(), Flags::[<a href="#type-posix_open_flag">posix_open_flag()</a>], Mode::non_neg_integer()) -&gt; {ok, <a href="#type-posix_fd">posix_fd()</a>} | {error, <a href="#type-posix_error">posix_error()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Path</span></code>: Path to the file to open<br /><code class="docutils literal notranslate"><span class="pre">Flags</span></code>: List of flags passed to <code class="docutils literal notranslate"><span class="pre">open(3)</span></code>.<br /><code class="docutils literal notranslate"><span class="pre">Mode</span></code>: Mode passed to <code class="docutils literal notranslate"><span class="pre">open(3)</span></code> for created file.<br /></p>
+<p>returns: A tuple with a file descriptor or an error tuple.</p>
+<p>Open a file (on platforms that have <code class="docutils literal notranslate"><span class="pre">open(3)</span></code>).
+This variant can be used to specify the mode for new file.</p>
+<p><a name="posix_opendir-1"></a></p>
+</section>
+<section id="posix-opendir-1">
+<h3>posix_opendir/1<a class="headerlink" href="#posix-opendir-1" title="Link to this heading"></a></h3>
+<pre><code>
+posix_opendir(Path::iodata()) -&gt; {ok, <a href="#type-posix_dir">posix_dir()</a>} | {error, <a href="#type-posix_error">posix_error()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Path</span></code>: Path to the directory to open<br /></p>
+<p>returns: A tuple with a directory descriptor or an error tuple.</p>
+<p>Open a file (on platforms that have <code class="docutils literal notranslate"><span class="pre">opendir(3)</span></code>).</p>
+<p><a name="posix_read-2"></a></p>
+</section>
+<section id="posix-read-2">
+<h3>posix_read/2<a class="headerlink" href="#posix-read-2" title="Link to this heading"></a></h3>
+<pre><code>
+posix_read(File::<a href="#type-posix_fd">posix_fd()</a>, Count::non_neg_integer()) -&gt; {ok, binary()} | eof | {error, <a href="#type-posix_error">posix_error()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">File</span></code>: Descriptor to an open file<br /><code class="docutils literal notranslate"><span class="pre">Count</span></code>: Maximum number of bytes to read<br /></p>
+<p>returns: a tuple with read bytes, <code class="docutils literal notranslate"><span class="pre">eof</span></code> or an error tuple</p>
+<p>Read at most <code class="docutils literal notranslate"><span class="pre">Count</span></code> bytes from a file.
+Files are open non-blocking. ˋatomvm:posix_select_read/3’ can be used to
+determine if the file can be read.
+<code class="docutils literal notranslate"><span class="pre">eof</span></code> is returned if no more data can be read because the file cursor
+reached the end.</p>
+<p><a name="posix_readdir-1"></a></p>
+</section>
+<section id="posix-readdir-1">
+<h3>posix_readdir/1<a class="headerlink" href="#posix-readdir-1" title="Link to this heading"></a></h3>
+<pre><code>
+posix_readdir(Dir::<a href="#type-posix_dir">posix_dir()</a>) -&gt; {ok, {dirent, Inode::integer(), Name::binary()}} | eof | {error, <a href="#type-posix_error">posix_error()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Dir</span></code>: Descriptor to an open directory<br /></p>
+<p>returns: a <code class="docutils literal notranslate"><span class="pre">{dirent,</span> <span class="pre">InodeNo,</span> <span class="pre">Name}</span></code> tuple, <code class="docutils literal notranslate"><span class="pre">eof</span></code> or an error tuple</p>
+<p>Read a directory entry
+<code class="docutils literal notranslate"><span class="pre">eof</span></code> is returned if no more data can be read because the directory cursor
+reached the end.</p>
+<p><a name="posix_write-2"></a></p>
+</section>
+<section id="posix-write-2">
+<h3>posix_write/2<a class="headerlink" href="#posix-write-2" title="Link to this heading"></a></h3>
+<pre><code>
+posix_write(File::<a href="#type-posix_fd">posix_fd()</a>, Data::binary()) -&gt; {ok, non_neg_integer()} | {error, <a href="#type-posix_error">posix_error()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">File</span></code>: Descriptor to an open file<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: Data to write<br /></p>
+<p>returns: a tuple with the number of written bytes or an error tuple</p>
+<p>Write data to a file.
+Files are open non-blocking. ˋatomvm:posix_select_write/3’ can be used to
+determine if the file can be written.</p>
+<p><a name="rand_bytes-1"></a></p>
+</section>
+<section id="rand-bytes-1">
+<h3>rand_bytes/1<a class="headerlink" href="#rand-bytes-1" title="Link to this heading"></a></h3>
+<pre><code>
+rand_bytes(Len::non_neg_integer()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Len</span></code>: non-negative integer<br /></p>
+<p>returns: Binary containing random sequence of bytes of length Len.</p>
+<p><strong>This function is deprecated:</strong> Use crypto:strong_rand_bytes/1 instead.</p>
+<p>Returns a binary containing random sequence of bytes of length Len.
+Supplying a negative value will result in a badarg error.
+This function will use a cryptographically strong RNG if available.
+Otherwise, the random value is generated using a PRNG.</p>
+<p><a name="random-0"></a></p>
+</section>
+<section id="random-0">
+<h3>random/0<a class="headerlink" href="#random-0" title="Link to this heading"></a></h3>
+<pre><code>
+random() -&gt; integer()
+</code></pre>
+<br />
+<p>returns: random 32-bit integer.</p>
+<p>Returns a random 32-bit integer value.
+This function will use a cryptographically strong RNG if available.
+Otherwise, the random value is generated using a PRNG.</p>
+<p><a name="read_priv-2"></a></p>
+</section>
+<section id="read-priv-2">
+<h3>read_priv/2<a class="headerlink" href="#read-priv-2" title="Link to this heading"></a></h3>
+<pre><code>
+read_priv(App::atom(), Path::list()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">App</span></code>: application name.<br /><code class="docutils literal notranslate"><span class="pre">Path</span></code>: path to the resource.<br /></p>
+<p>returns: Binary containing the resource content.</p>
+<p>This function allows to fetch priv/ resources content.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ahttp_client.html" class="btn btn-neutral float-left" title="Module ahttp_client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="avm_pubsub.html" class="btn btn-neutral float-right" title="Module avm_pubsub" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

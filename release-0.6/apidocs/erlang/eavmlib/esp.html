@@ -1,0 +1,789 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module esp &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/eavmlib/esp.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module esp_adc" href="esp_adc.html" />
+    <link rel="prev" title="Module emscripten" href="emscripten.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ahttp_client.html">Module ahttp_client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm.html">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="emscripten.html">Module emscripten</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module esp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp_adc.html">Module esp_adc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gpio.html">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="i2c.html">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ledc.html">Module ledc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network.html">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uart.html">Module uart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module esp</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-esp">
+<h1>Module esp<a class="headerlink" href="#module-esp" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>ESP32-specific APIs.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module contains functions that are specific to the ESP32 platform.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="esp-partition">
+<h3><a name="type-esp_partition">esp_partition()</a><a class="headerlink" href="#esp-partition" title="Link to this heading"></a></h3>
+<pre><code>
+esp_partition() = {binary(), <a href="#type-esp_partition_type">esp_partition_type()</a>, <a href="#type-esp_partition_subtype">esp_partition_subtype()</a>, <a href="#type-esp_partition_address">esp_partition_address()</a>, <a href="#type-esp_partition_size">esp_partition_size()</a>, <a href="#type-esp_partition_props">esp_partition_props()</a>}
+</code></pre>
+</section>
+<section id="esp-partition-address">
+<h3><a name="type-esp_partition_address">esp_partition_address()</a><a class="headerlink" href="#esp-partition-address" title="Link to this heading"></a></h3>
+<pre><code>
+esp_partition_address() = 0..134217728
+</code></pre>
+</section>
+<section id="esp-partition-props">
+<h3><a name="type-esp_partition_props">esp_partition_props()</a><a class="headerlink" href="#esp-partition-props" title="Link to this heading"></a></h3>
+<pre><code>
+esp_partition_props() = []
+</code></pre>
+</section>
+<section id="esp-partition-size">
+<h3><a name="type-esp_partition_size">esp_partition_size()</a><a class="headerlink" href="#esp-partition-size" title="Link to this heading"></a></h3>
+<pre><code>
+esp_partition_size() = 0..134217728
+</code></pre>
+</section>
+<section id="esp-partition-subtype">
+<h3><a name="type-esp_partition_subtype">esp_partition_subtype()</a><a class="headerlink" href="#esp-partition-subtype" title="Link to this heading"></a></h3>
+<pre><code>
+esp_partition_subtype() = 0..254
+</code></pre>
+</section>
+<section id="esp-partition-type">
+<h3><a name="type-esp_partition_type">esp_partition_type()</a><a class="headerlink" href="#esp-partition-type" title="Link to this heading"></a></h3>
+<pre><code>
+esp_partition_type() = 0..254
+</code></pre>
+</section>
+<section id="esp-reset-reason">
+<h3><a name="type-esp_reset_reason">esp_reset_reason()</a><a class="headerlink" href="#esp-reset-reason" title="Link to this heading"></a></h3>
+<pre><code>
+esp_reset_reason() = esp_rst_unknown | esp_rst_poweron | esp_rst_ext | esp_rst_sw | esp_rst_panic | esp_rst_int_wdt | esp_rst_task_wdt | esp_rst_wdt | esp_rst_deepsleep | esp_rst_brownout | esp_rst_sdio
+</code></pre>
+</section>
+<section id="esp-wakeup-cause">
+<h3><a name="type-esp_wakeup_cause">esp_wakeup_cause()</a><a class="headerlink" href="#esp-wakeup-cause" title="Link to this heading"></a></h3>
+<pre><code>
+esp_wakeup_cause() = sleep_wakeup_ext0 | sleep_wakeup_ext1 | sleep_wakeup_timer | sleep_wakeup_touchpad | sleep_wakeup_ulp | sleep_wakeup_gpio | sleep_wakeup_uart | sleep_wakeup_wifi | sleep_wakeup_cocpu | sleep_wakeup_cocpu_trap_trig | sleep_wakeup_bt
+</code></pre>
+</section>
+<section id="interface">
+<h3><a name="type-interface">interface()</a><a class="headerlink" href="#interface" title="Link to this heading"></a></h3>
+<pre><code>
+interface() = wifi_sta | wifi_softap
+</code></pre>
+</section>
+<section id="mac">
+<h3><a name="type-mac">mac()</a><a class="headerlink" href="#mac" title="Link to this heading"></a></h3>
+<pre><code>
+mac() = binary()
+</code></pre>
+</section>
+<section id="mounted-fs">
+<h3><a name="type-mounted_fs">mounted_fs()</a><a class="headerlink" href="#mounted-fs" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">mounted_fs()</span></code></p>
+</section>
+<section id="task-wdt-config">
+<h3><a name="type-task_wdt_config">task_wdt_config()</a><a class="headerlink" href="#task-wdt-config" title="Link to this heading"></a></h3>
+<pre><code>
+task_wdt_config() = {TimeoutMS::pos_integer(), IdleCoreMask::non_neg_integer(), TriggerPanic::boolean()}
+</code></pre>
+</section>
+<section id="task-wdt-user-handle">
+<h3><a name="type-task_wdt_user_handle">task_wdt_user_handle()</a><a class="headerlink" href="#task-wdt-user-handle" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">task_wdt_user_handle()</span></code></p>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#deep_sleep-0">deep_sleep/0</a></td><td>Put the esp32 into deep sleep.</td></tr><tr><td valign="top"><a href="#deep_sleep-1">deep_sleep/1</a></td><td>Put the esp32 into deep sleep.</td></tr><tr><td valign="top"><a href="#deep_sleep_enable_gpio_wakeup-2">deep_sleep_enable_gpio_wakeup/2</a></td><td>Configure multiple gpio pins for wakeup from deep sleep.</td></tr><tr><td valign="top"><a href="#freq_hz-0">freq_hz/0</a></td><td>    Return the clock frequency on the chip.</td></tr><tr><td valign="top"><a href="#get_default_mac-0">get_default_mac/0</a></td><td>    Retrieve the default MAC address of the ESP32 device.</td></tr><tr><td valign="top"><a href="#get_mac-1">get_mac/1</a></td><td>    Return the network MAC address of the specified interface.</td></tr><tr><td valign="top"><a href="#mount-4">mount/4</a></td><td>    Mount a filesystem, and return a resource that can be used later for unmounting it.</td></tr><tr><td valign="top"><a href="#nvs_erase_all-0">nvs_erase_all/0</a></td><td>(<em>Deprecated</em>.) Equivalent to nvs_erase_all(?ATOMVM_NVS_NS).</td></tr><tr><td valign="top"><a href="#nvs_erase_all-1">nvs_erase_all/1</a></td><td>    Erase all values in the specified namespace.</td></tr><tr><td valign="top"><a href="#nvs_erase_key-1">nvs_erase_key/1</a></td><td>(<em>Deprecated</em>.) Equivalent to nvs_erase_key(?ATOMVM_NVS_NS, Key).</td></tr><tr><td valign="top"><a href="#nvs_erase_key-2">nvs_erase_key/2</a></td><td>    Erase the value associated with a key.</td></tr><tr><td valign="top"><a href="#nvs_fetch_binary-2">nvs_fetch_binary/2</a></td><td>    Get the binary value associated with a key, or undefined, if
+there is no value associated with this key.</td></tr><tr><td valign="top"><a href="#nvs_get_binary-1">nvs_get_binary/1</a></td><td>(<em>Deprecated</em>.) Equivalent to nvs_get_binary(?ATOMVM_NVS_NS, Key).</td></tr><tr><td valign="top"><a href="#nvs_get_binary-2">nvs_get_binary/2</a></td><td>    Get the binary value associated with a key, or undefined, if
+there is no value associated with this key.</td></tr><tr><td valign="top"><a href="#nvs_get_binary-3">nvs_get_binary/3</a></td><td>    Get the binary value associated with a key, or Default, if
+there is no value associated with this key.</td></tr><tr><td valign="top"><a href="#nvs_put_binary-3">nvs_put_binary/3</a></td><td>    Set an binary value associated with a key.</td></tr><tr><td valign="top"><a href="#nvs_reformat-0">nvs_reformat/0</a></td><td>    Reformat the entire NVS partition.</td></tr><tr><td valign="top"><a href="#nvs_set_binary-2">nvs_set_binary/2</a></td><td>(<em>Deprecated</em>.) Equivalent to nvs_set_binary(?ATOMVM_NVS_NS, Key, Value).</td></tr><tr><td valign="top"><a href="#nvs_set_binary-3">nvs_set_binary/3</a></td><td>(<em>Deprecated</em>.)     Set an binary value associated with a key.</td></tr><tr><td valign="top"><a href="#partition_list-0">partition_list/0</a></td><td>    Gets the list of partitions as tuples, such as {name, type, subtype,
+offset, size, props}.</td></tr><tr><td valign="top"><a href="#reset_reason-0">reset_reason/0</a></td><td>    Returns the reason for the restart.</td></tr><tr><td valign="top"><a href="#restart-0">restart/0</a></td><td>    Restarts the ESP device.</td></tr><tr><td valign="top"><a href="#rtc_slow_get_binary-0">rtc_slow_get_binary/0</a></td><td>    Get the binary currently stored in RTC slow memory.</td></tr><tr><td valign="top"><a href="#rtc_slow_set_binary-1">rtc_slow_set_binary/1</a></td><td>    Store a binary to RTC slow memory.</td></tr><tr><td valign="top"><a href="#sleep_disable_ext1_wakeup_io-1">sleep_disable_ext1_wakeup_io/1</a></td><td>Unconfigure one or more gpio pins for wakeup from deep sleep.</td></tr><tr><td valign="top"><a href="#sleep_enable_ext0_wakeup-2">sleep_enable_ext0_wakeup/2</a></td><td>Configure gpio wakeup from deep sleep.</td></tr><tr><td valign="top"><a href="#sleep_enable_ext1_wakeup-2">sleep_enable_ext1_wakeup/2</a></td><td>(<em>Deprecated</em>.) Configure multiple gpio pins for wakeup from deep sleep.</td></tr><tr><td valign="top"><a href="#sleep_enable_ext1_wakeup_io-2">sleep_enable_ext1_wakeup_io/2</a></td><td>Configure multiple gpio pins for wakeup from deep sleep.</td></tr><tr><td valign="top"><a href="#sleep_enable_ulp_wakeup-0">sleep_enable_ulp_wakeup/0</a></td><td></td></tr><tr><td valign="top"><a href="#sleep_get_wakeup_cause-0">sleep_get_wakeup_cause/0</a></td><td>    Returns the cause for the wakeup.</td></tr><tr><td valign="top"><a href="#task_wdt_add_user-1">task_wdt_add_user/1</a></td><td>    Register a user of the task watchdog timer.</td></tr><tr><td valign="top"><a href="#task_wdt_deinit-0">task_wdt_deinit/0</a></td><td>    Deinitialize the task watchdog timer
+Available with ESP-IDF 5.0 or higher.</td></tr><tr><td valign="top"><a href="#task_wdt_delete_user-1">task_wdt_delete_user/1</a></td><td>    Unsubscribe a given user from the task watchdog timer.</td></tr><tr><td valign="top"><a href="#task_wdt_init-1">task_wdt_init/1</a></td><td>    Initialize the task watchdog timer with a configuration
+Available with ESP-IDF 5.0 or higher.</td></tr><tr><td valign="top"><a href="#task_wdt_reconfigure-1">task_wdt_reconfigure/1</a></td><td>    Update the configuration of the task watchdog timer
+Available with ESP-IDF 5.0 or higher.</td></tr><tr><td valign="top"><a href="#task_wdt_reset_user-1">task_wdt_reset_user/1</a></td><td>    Reset the timer a previously registered user.</td></tr><tr><td valign="top"><a href="#umount-1">umount/1</a></td><td>    Unmounts filesystem located at given path.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="deep_sleep-0"></a></p>
+<section id="deep-sleep-0">
+<h3>deep_sleep/0<a class="headerlink" href="#deep-sleep-0" title="Link to this heading"></a></h3>
+<pre><code>
+deep_sleep() -&gt; no_return()
+</code></pre>
+<br />
+<p>Put the esp32 into deep sleep.
+This function never returns. Program is restarted and wake up reason can be
+inspected to determine how the esp32 was woken up.</p>
+<p><a name="deep_sleep-1"></a></p>
+</section>
+<section id="deep-sleep-1">
+<h3>deep_sleep/1<a class="headerlink" href="#deep-sleep-1" title="Link to this heading"></a></h3>
+<pre><code>
+deep_sleep(SleepMS::non_neg_integer()) -&gt; no_return()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SleepMS</span></code>: time to deep sleep in milliseconds<br /></p>
+<p>Put the esp32 into deep sleep.
+This function never returns. Program is restarted and wake up reason can be
+inspected to determine if the esp32 was woken by the timeout or by another
+cause.</p>
+<p><a name="deep_sleep_enable_gpio_wakeup-2"></a></p>
+</section>
+<section id="deep-sleep-enable-gpio-wakeup-2">
+<h3>deep_sleep_enable_gpio_wakeup/2<a class="headerlink" href="#deep-sleep-enable-gpio-wakeup-2" title="Link to this heading"></a></h3>
+<pre><code>
+deep_sleep_enable_gpio_wakeup(Mask::pos_integer(), Mode::0..1) -&gt; ok | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Mask</span></code>: bit mask of GPIO numbers which will cause wakeup<br /><code class="docutils literal notranslate"><span class="pre">Mode</span></code>:</p>
+<p>level that will trigger the wakeup.</p>
+<p>The available modes are:</p>
+<table><tr> <th>Mode</th> <th>Description</th> </tr><tr> <td><code>0</code></td> <td>ESP_GPIO_WAKEUP_GPIO_LOW</td></tr><tr> <td><code>1</code></td> <td>ESP_GPIO_WAKEUP_GPIO_HIGH</td></tr></table>
+<br />
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">|</span> <span class="pre">error</span></code></p>
+<p>Configure multiple gpio pins for wakeup from deep sleep.
+Implemented for SOCs that support it (ESP32C2, ESP32C3, ESP32C6, ESP32P4)</p>
+<p><a name="freq_hz-0"></a></p>
+</section>
+<section id="freq-hz-0">
+<h3>freq_hz/0<a class="headerlink" href="#freq-hz-0" title="Link to this heading"></a></h3>
+<pre><code>
+freq_hz() -&gt; non_neg_integer()
+</code></pre>
+<br />
+<p>returns: Clock frequency (in hz)</p>
+<p>Return the clock frequency on the chip</p>
+<p><a name="get_default_mac-0"></a></p>
+</section>
+<section id="get-default-mac-0">
+<h3>get_default_mac/0<a class="headerlink" href="#get-default-mac-0" title="Link to this heading"></a></h3>
+<pre><code>
+get_default_mac() -&gt; {ok, <a href="#type-mac">mac()</a>} | {error, atom()}
+</code></pre>
+<br />
+<p>returns: The default MAC address of the ESP32 device.</p>
+<p>Retrieve the default MAC address of the ESP32 device.
+This function accesses the EFUSE memory of the ESP32 and reads
+the factory-programmed MAC address.</p>
+<p>The mac address is returned as a 6-byte binary, per the
+IEEE 802 family of specifications.</p>
+<p><a name="get_mac-1"></a></p>
+</section>
+<section id="get-mac-1">
+<h3>get_mac/1<a class="headerlink" href="#get-mac-1" title="Link to this heading"></a></h3>
+<pre><code>
+get_mac(Interface::<a href="#type-interface">interface()</a>) -&gt; <a href="#type-mac">mac()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Interface</span></code>: the ESP32 network interface<br /></p>
+<p>returns: The network MAC address of the specified interface</p>
+<p>Return the network MAC address of the specified interface.</p>
+<p>The mac address is returned as a 6-byte binary, per the
+IEEE 802 family of specifications.</p>
+<p><a name="mount-4"></a></p>
+</section>
+<section id="mount-4">
+<h3>mount/4<a class="headerlink" href="#mount-4" title="Link to this heading"></a></h3>
+<pre><code>
+mount(Source::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-chardata">unicode:chardata()</a>, Target::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-chardata">unicode:chardata()</a>, FS::fat, Opts::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/proplists.md#type-proplist">proplists:proplist()</a> | #{atom() =&gt; term()}) -&gt; {ok, <a href="#type-mounted_fs">mounted_fs()</a>} | {error, term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Source</span></code>: the device that will be mounted<br /><code class="docutils literal notranslate"><span class="pre">Target</span></code>: the path where the filesystem will be mounted<br /><code class="docutils literal notranslate"><span class="pre">FS</span></code>: the filesystem, only fat is supported now<br /></p>
+<p>returns: either a tuple having <code class="docutils literal notranslate"><span class="pre">ok</span></code> and the mounted fs resource, or an error tuple</p>
+<p>Mount a filesystem, and return a resource that can be used later for unmounting it</p>
+<p><a name="nvs_erase_all-0"></a></p>
+</section>
+<section id="nvs-erase-all-0">
+<h3>nvs_erase_all/0<a class="headerlink" href="#nvs-erase-all-0" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_erase_all() -&gt; ok
+</code></pre>
+<br />
+<p><strong>This function is deprecated:</strong> Please do not use this function.</p>
+<p>Equivalent to nvs_erase_all(?ATOMVM_NVS_NS).</p>
+<p><a name="nvs_erase_all-1"></a></p>
+</section>
+<section id="nvs-erase-all-1">
+<h3>nvs_erase_all/1<a class="headerlink" href="#nvs-erase-all-1" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_erase_all(Namespace::atom()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Namespace</span></code>: NVS namespace<br /></p>
+<p>returns: ok</p>
+<p>Erase all values in the specified namespace.</p>
+<p><a name="nvs_erase_key-1"></a></p>
+</section>
+<section id="nvs-erase-key-1">
+<h3>nvs_erase_key/1<a class="headerlink" href="#nvs-erase-key-1" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_erase_key(Key::atom()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: NVS key<br /></p>
+<p>returns: ok</p>
+<p><strong>This function is deprecated:</strong> Please do not use this function.</p>
+<p>Equivalent to nvs_erase_key(?ATOMVM_NVS_NS, Key).</p>
+<p><a name="nvs_erase_key-2"></a></p>
+</section>
+<section id="nvs-erase-key-2">
+<h3>nvs_erase_key/2<a class="headerlink" href="#nvs-erase-key-2" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_erase_key(Namespace::atom(), Key::atom()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Namespace</span></code>: NVS namespace<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: NVS key<br /></p>
+<p>returns: ok</p>
+<p>Erase the value associated with a key.  If a value does not exist
+for the specified key, no action is performed.</p>
+<p><a name="nvs_fetch_binary-2"></a></p>
+</section>
+<section id="nvs-fetch-binary-2">
+<h3>nvs_fetch_binary/2<a class="headerlink" href="#nvs-fetch-binary-2" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_fetch_binary(Namespace::atom(), Key::atom()) -&gt; {ok, binary()} | {error, not_found} | {error, atom()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Namespace</span></code>: NVS namespace<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: NVS key<br /></p>
+<p>returns: tagged tuple with binary value associated with this key in NV
+storage, {error, not_found} if there is no value associated with
+this key, or in general {error, Reason} for any other error.</p>
+<p>Get the binary value associated with a key, or undefined, if
+there is no value associated with this key.</p>
+<p><a name="nvs_get_binary-1"></a></p>
+</section>
+<section id="nvs-get-binary-1">
+<h3>nvs_get_binary/1<a class="headerlink" href="#nvs-get-binary-1" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_get_binary(Key::atom()) -&gt; binary() | undefined
+</code></pre>
+<br />
+<p><strong>This function is deprecated:</strong> Please do not use this function.</p>
+<p>Equivalent to nvs_get_binary(?ATOMVM_NVS_NS, Key).</p>
+<p><a name="nvs_get_binary-2"></a></p>
+</section>
+<section id="nvs-get-binary-2">
+<h3>nvs_get_binary/2<a class="headerlink" href="#nvs-get-binary-2" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_get_binary(Namespace::atom(), Key::atom()) -&gt; binary() | undefined
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Namespace</span></code>: NVS namespace<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: NVS key<br /></p>
+<p>returns: binary value associated with this key in NV storage, or undefined
+if there is no value associated with this key.</p>
+<p>Get the binary value associated with a key, or undefined, if
+there is no value associated with this key.</p>
+<p><a name="nvs_get_binary-3"></a></p>
+</section>
+<section id="nvs-get-binary-3">
+<h3>nvs_get_binary/3<a class="headerlink" href="#nvs-get-binary-3" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_get_binary(Namespace::atom(), Key::atom(), Default::binary()) -&gt; binary() | undefined
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Namespace</span></code>: NVS namespace<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: NVS key<br /><code class="docutils literal notranslate"><span class="pre">Default</span></code>: default binary value, if Key is not set in Namespace<br /></p>
+<p>returns: binary value associated with this key in NV storage, or Default
+if there is no value associated with this key.</p>
+<p>Get the binary value associated with a key, or Default, if
+there is no value associated with this key.</p>
+<p><a name="nvs_put_binary-3"></a></p>
+</section>
+<section id="nvs-put-binary-3">
+<h3>nvs_put_binary/3<a class="headerlink" href="#nvs-put-binary-3" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_put_binary(Namespace::atom(), Key::atom(), Value::binary()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Namespace</span></code>: NVS namespace<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: NVS key<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: binary value<br /></p>
+<p>returns: ok</p>
+<p>Set an binary value associated with a key.  If a value exists
+for the specified key, it is over-written.</p>
+<p><a name="nvs_reformat-0"></a></p>
+</section>
+<section id="nvs-reformat-0">
+<h3>nvs_reformat/0<a class="headerlink" href="#nvs-reformat-0" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_reformat() -&gt; ok
+</code></pre>
+<br />
+<p>returns: ok</p>
+<p>Reformat the entire NVS partition.
+WARNING.  This will result in deleting all NVS data and should
+be used with extreme caution!</p>
+<p><a name="nvs_set_binary-2"></a></p>
+</section>
+<section id="nvs-set-binary-2">
+<h3>nvs_set_binary/2<a class="headerlink" href="#nvs-set-binary-2" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_set_binary(Key::atom(), Value::binary()) -&gt; ok
+</code></pre>
+<br />
+<p><strong>This function is deprecated:</strong> Please use nvs_put_binary instead.</p>
+<p>Equivalent to nvs_set_binary(?ATOMVM_NVS_NS, Key, Value).</p>
+<p><a name="nvs_set_binary-3"></a></p>
+</section>
+<section id="nvs-set-binary-3">
+<h3>nvs_set_binary/3<a class="headerlink" href="#nvs-set-binary-3" title="Link to this heading"></a></h3>
+<pre><code>
+nvs_set_binary(Namespace::atom(), Key::atom(), Value::binary()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Namespace</span></code>: NVS namespace<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: NVS key<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: binary value<br /></p>
+<p>returns: ok</p>
+<p><strong>This function is deprecated:</strong> Please use nvs_put_binary instead.</p>
+<p>Set an binary value associated with a key.  If a value exists
+for the specified key, it is over-written.</p>
+<p><a name="partition_list-0"></a></p>
+</section>
+<section id="partition-list-0">
+<h3>partition_list/0<a class="headerlink" href="#partition-list-0" title="Link to this heading"></a></h3>
+<pre><code>
+partition_list() -&gt; [<a href="#type-esp_partition">esp_partition()</a>]
+</code></pre>
+<br />
+<p>returns: List of partitions</p>
+<p>Gets the list of partitions as tuples, such as {name, type, subtype,
+offset, size, props}. Type and subtype are integers as described in
+esp-idf documentation.</p>
+<p><a name="reset_reason-0"></a></p>
+</section>
+<section id="reset-reason-0">
+<h3>reset_reason/0<a class="headerlink" href="#reset-reason-0" title="Link to this heading"></a></h3>
+<pre><code>
+reset_reason() -&gt; <a href="#type-esp_reset_reason">esp_reset_reason()</a>
+</code></pre>
+<br />
+<p>returns: the reason for the restart</p>
+<p>Returns the reason for the restart</p>
+<p><a name="restart-0"></a></p>
+</section>
+<section id="restart-0">
+<h3>restart/0<a class="headerlink" href="#restart-0" title="Link to this heading"></a></h3>
+<pre><code>
+restart() -&gt; ok
+</code></pre>
+<br />
+<p>Restarts the ESP device</p>
+<p><a name="rtc_slow_get_binary-0"></a></p>
+</section>
+<section id="rtc-slow-get-binary-0">
+<h3>rtc_slow_get_binary/0<a class="headerlink" href="#rtc-slow-get-binary-0" title="Link to this heading"></a></h3>
+<pre><code>
+rtc_slow_get_binary() -&gt; binary()
+</code></pre>
+<br />
+<p>returns: the currently stored binary in RTC slow memory.</p>
+<p>Get the binary currently stored in RTC slow memory. Must not be
+called unless the binary was stored with rtc_slow_set_binary/1.
+A limited checksum is ran and this function may throw badarg if
+the checksum is not valid.</p>
+<p><a name="rtc_slow_set_binary-1"></a></p>
+</section>
+<section id="rtc-slow-set-binary-1">
+<h3>rtc_slow_set_binary/1<a class="headerlink" href="#rtc-slow-set-binary-1" title="Link to this heading"></a></h3>
+<pre><code>
+rtc_slow_set_binary(Bin::binary()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Bin</span></code>: binary to be stored in RTC slow memory<br /></p>
+<p>returns: ok</p>
+<p>Store a binary to RTC slow memory. This memory is not erased on
+software reset and deep sleeps.</p>
+<p><a name="sleep_disable_ext1_wakeup_io-1"></a></p>
+</section>
+<section id="sleep-disable-ext1-wakeup-io-1">
+<h3>sleep_disable_ext1_wakeup_io/1<a class="headerlink" href="#sleep-disable-ext1-wakeup-io-1" title="Link to this heading"></a></h3>
+<pre><code>
+sleep_disable_ext1_wakeup_io(Mask::pos_integer()) -&gt; ok | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Mask</span></code>: bit mask of GPIO numbers to reset.<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">|</span> <span class="pre">error</span></code></p>
+<p>Unconfigure one or more gpio pins for wakeup from deep sleep.
+Implemented for SOCs that support it (ESP32, ESP32S2, ESP32S3, ESP32C6, ESP32H2).
+This function resets pins previously configured with <a class="reference internal" href="#sleep_enable_ext1_wakeup_io.md"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">sleep_enable_ext1_wakeup_io</span></code></span></a>.</p>
+<p><strong>Introduced in:</strong> ESP-IDF 5.3 and maybe 5.2.2</p>
+<p><a name="sleep_enable_ext0_wakeup-2"></a></p>
+</section>
+<section id="sleep-enable-ext0-wakeup-2">
+<h3>sleep_enable_ext0_wakeup/2<a class="headerlink" href="#sleep-enable-ext0-wakeup-2" title="Link to this heading"></a></h3>
+<pre><code>
+sleep_enable_ext0_wakeup(Pin::non_neg_integer(), Level::0..1) -&gt; ok | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to use as wakeup event<br /><code class="docutils literal notranslate"><span class="pre">Level</span></code>: is the state to trigger a wakeup<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">|</span> <span class="pre">error</span></code></p>
+<p>Configure gpio wakeup from deep sleep.
+Implemented for SOCs that support it (ESP32, ESP32S2, ESP32S3)</p>
+<p><a name="sleep_enable_ext1_wakeup-2"></a></p>
+</section>
+<section id="sleep-enable-ext1-wakeup-2">
+<h3>sleep_enable_ext1_wakeup/2<a class="headerlink" href="#sleep-enable-ext1-wakeup-2" title="Link to this heading"></a></h3>
+<pre><code>
+sleep_enable_ext1_wakeup(Mask::pos_integer(), Mode::0..3) -&gt; ok | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Mask</span></code>: bit mask of GPIO numbers which will cause wakeup<br /><code class="docutils literal notranslate"><span class="pre">Mode</span></code>:</p>
+<p>used to determine wakeup events</p>
+<p>The available modes are:</p>
+<table><tr> <th>Mode</th> <th>Description</th> </tr><tr> <td><code>0</code></td> <td>WAKEUP_ALL_LOW (ESP32)</td></tr><tr> <td><code>0</code></td> <td>WAKEUP_ANY_LOW (ESP32S2, ESP32S3, ESP32C6, ESP32H2)</td></tr><tr> <td><code>1</code></td> <td>WAKEUP_ANY_HIGH</td></tr></table>
+<br />
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">|</span> <span class="pre">error</span></code></p>
+<p><strong>This function is deprecated:</strong> This function will be removed in ESP-IDF 6.0. Use <a class="reference internal" href="#sleep_enable_ext1_wakeup_io.md"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">sleep_enable_ext1_wakeup_io</span></code></span></a> instead.</p>
+<p>Configure multiple gpio pins for wakeup from deep sleep.
+Implemented for SOCs that support it (ESP32, ESP32S2, ESP32S3, ESP32C6, ESP32H2).</p>
+<p><a name="sleep_enable_ext1_wakeup_io-2"></a></p>
+</section>
+<section id="sleep-enable-ext1-wakeup-io-2">
+<h3>sleep_enable_ext1_wakeup_io/2<a class="headerlink" href="#sleep-enable-ext1-wakeup-io-2" title="Link to this heading"></a></h3>
+<pre><code>
+sleep_enable_ext1_wakeup_io(Mask::pos_integer(), Mode::0..3) -&gt; ok | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Mask</span></code>: bit mask of GPIO numbers which will cause wakeup<br /><code class="docutils literal notranslate"><span class="pre">Mode</span></code>:</p>
+<p>used to determine wakeup events</p>
+<p>The available modes are:</p>
+<table><tr> <th>Mode</th> <th>Description</th> </tr><tr> <td><code>0</code></td> <td>WAKEUP_ALL_LOW (ESP32)</td></tr><tr> <td><code>0</code></td> <td>WAKEUP_ANY_LOW (ESP32S2, ESP32S3, ESP32C6, ESP32H2)</td></tr><tr> <td><code>1</code></td> <td>WAKEUP_ANY_HIGH</td></tr></table>
+<br />
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">|</span> <span class="pre">error</span></code></p>
+<p>Configure multiple gpio pins for wakeup from deep sleep.
+Implemented for SOCs that support it (ESP32, ESP32S2, ESP32S3, ESP32C6, ESP32H2).
+This function does not reset the previously set pins. On some SOCs (ESP32C6, ESP32H2),
+pins can be configured with different levels.</p>
+<p><strong>Introduced in:</strong> ESP-IDF 5.3 and maybe 5.2.2</p>
+<p><a name="sleep_enable_ulp_wakeup-0"></a></p>
+</section>
+<section id="sleep-enable-ulp-wakeup-0">
+<h3>sleep_enable_ulp_wakeup/0<a class="headerlink" href="#sleep-enable-ulp-wakeup-0" title="Link to this heading"></a></h3>
+<pre><code>
+sleep_enable_ulp_wakeup() -&gt; ok | error
+</code></pre>
+<br />
+<p>returns: Enable ulp wakeup</p>
+<p><a name="sleep_get_wakeup_cause-0"></a></p>
+</section>
+<section id="sleep-get-wakeup-cause-0">
+<h3>sleep_get_wakeup_cause/0<a class="headerlink" href="#sleep-get-wakeup-cause-0" title="Link to this heading"></a></h3>
+<pre><code>
+sleep_get_wakeup_cause() -&gt; undefined | <a href="#type-esp_wakeup_cause">esp_wakeup_cause()</a> | error
+</code></pre>
+<br />
+<p>returns: the cause for the wake up</p>
+<p>Returns the cause for the wakeup</p>
+<p><a name="task_wdt_add_user-1"></a></p>
+</section>
+<section id="task-wdt-add-user-1">
+<h3>task_wdt_add_user/1<a class="headerlink" href="#task-wdt-add-user-1" title="Link to this heading"></a></h3>
+<pre><code>
+task_wdt_add_user(Username::iodata()) -&gt; {ok, <a href="#type-task_wdt_user_handle">task_wdt_user_handle()</a>} | {error, any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Username</span></code>: name of the user<br /></p>
+<p>returns: the handle to use with <code class="docutils literal notranslate"><span class="pre">task_wdt_reset_user/1</span></code> or an error tuple.</p>
+<p>Register a user of the task watchdog timer.
+Available with ESP-IDF 5.0 or higher.</p>
+<p><a name="task_wdt_deinit-0"></a></p>
+</section>
+<section id="task-wdt-deinit-0">
+<h3>task_wdt_deinit/0<a class="headerlink" href="#task-wdt-deinit-0" title="Link to this heading"></a></h3>
+<pre><code>
+task_wdt_deinit() -&gt; ok | {error, any()}
+</code></pre>
+<br />
+<p>returns: ok or an error tuple if tasks are subscribed (beyond idle tasks) or
+if the timer is not initialized</p>
+<p>Deinitialize the task watchdog timer
+Available with ESP-IDF 5.0 or higher.</p>
+<p><a name="task_wdt_delete_user-1"></a></p>
+</section>
+<section id="task-wdt-delete-user-1">
+<h3>task_wdt_delete_user/1<a class="headerlink" href="#task-wdt-delete-user-1" title="Link to this heading"></a></h3>
+<pre><code>
+task_wdt_delete_user(UserHandle::<a href="#type-task_wdt_user_handle">task_wdt_user_handle()</a>) -&gt; ok | {error, any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">UserHandle</span></code>: handle for the user, obtained from <code class="docutils literal notranslate"><span class="pre">task_wdt_add_user/1</span></code><br /></p>
+<p>returns: ok or an error tuple</p>
+<p>Unsubscribe a given user from the task watchdog timer.
+Available with ESP-IDF 5.0 or higher.</p>
+<p><a name="task_wdt_init-1"></a></p>
+</section>
+<section id="task-wdt-init-1">
+<h3>task_wdt_init/1<a class="headerlink" href="#task-wdt-init-1" title="Link to this heading"></a></h3>
+<pre><code>
+task_wdt_init(Config::<a href="#type-task_wdt_config">task_wdt_config()</a>) -&gt; ok | {error, already_started} | {error, any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Config</span></code>: configuration for the watchdog timer<br /></p>
+<p>returns: ok or an error tuple</p>
+<p>Initialize the task watchdog timer with a configuration
+Available with ESP-IDF 5.0 or higher.</p>
+<p><a name="task_wdt_reconfigure-1"></a></p>
+</section>
+<section id="task-wdt-reconfigure-1">
+<h3>task_wdt_reconfigure/1<a class="headerlink" href="#task-wdt-reconfigure-1" title="Link to this heading"></a></h3>
+<pre><code>
+task_wdt_reconfigure(Config::<a href="#type-task_wdt_config">task_wdt_config()</a>) -&gt; ok | {error, noproc} | {error, any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Config</span></code>: configuration for the watchdog timer<br /></p>
+<p>returns: ok or an error tuple</p>
+<p>Update the configuration of the task watchdog timer
+Available with ESP-IDF 5.0 or higher.</p>
+<p><a name="task_wdt_reset_user-1"></a></p>
+</section>
+<section id="task-wdt-reset-user-1">
+<h3>task_wdt_reset_user/1<a class="headerlink" href="#task-wdt-reset-user-1" title="Link to this heading"></a></h3>
+<pre><code>
+task_wdt_reset_user(UserHandle::<a href="#type-task_wdt_user_handle">task_wdt_user_handle()</a>) -&gt; ok | {error, any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">UserHandle</span></code>: handle for the user, obtained from <code class="docutils literal notranslate"><span class="pre">task_wdt_add_user/1</span></code><br /></p>
+<p>returns: ok or an error tuple</p>
+<p>Reset the timer a previously registered user.
+Available with ESP-IDF 5.0 or higher.</p>
+<p><a name="umount-1"></a></p>
+</section>
+<section id="umount-1">
+<h3>umount/1<a class="headerlink" href="#umount-1" title="Link to this heading"></a></h3>
+<pre><code>
+umount(Target::<a href="#type-mounted_fs">mounted_fs()</a>) -&gt; ok | {error, term()}
+</code></pre>
+<br />
+<p>returns: either <code class="docutils literal notranslate"><span class="pre">ok</span></code> or an error tuple</p>
+<p>Unmounts filesystem located at given path</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="emscripten.html" class="btn btn-neutral float-left" title="Module emscripten" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="esp_adc.html" class="btn btn-neutral float-right" title="Module esp_adc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

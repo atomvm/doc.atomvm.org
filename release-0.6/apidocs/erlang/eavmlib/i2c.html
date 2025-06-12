@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module i2c &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/eavmlib/i2c.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module json_encoder" href="json_encoder.html" />
+    <link rel="prev" title="Module http_server" href="http_server.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ahttp_client.html">Module ahttp_client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm.html">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="emscripten.html">Module emscripten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp.html">Module esp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp_adc.html">Module esp_adc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gpio.html">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ledc.html">Module ledc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network.html">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uart.html">Module uart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module i2c</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-i2c">
+<h1>Module i2c<a class="headerlink" href="#module-i2c" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>AtomVM I2c interface.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module provides and interface into the AtomVM I2C driver.</p>
+<p>Use this module to communicate with devices connected to your ESP32
+device via the 2-wire I2C interface.</p>
+<p>Using this interface, you can read or write data to an I2C device
+at a given I2C address.  In addition, you may read from or write to
+specific registers on the I2C device.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="address">
+<h3><a name="type-address">address()</a><a class="headerlink" href="#address" title="Link to this heading"></a></h3>
+<pre><code>
+address() = non_neg_integer()
+</code></pre>
+</section>
+<section id="freq-hz">
+<h3><a name="type-freq_hz">freq_hz()</a><a class="headerlink" href="#freq-hz" title="Link to this heading"></a></h3>
+<pre><code>
+freq_hz() = non_neg_integer()
+</code></pre>
+</section>
+<section id="i2c">
+<h3><a name="type-i2c">i2c()</a><a class="headerlink" href="#i2c" title="Link to this heading"></a></h3>
+<pre><code>
+i2c() = pid()
+</code></pre>
+</section>
+<section id="param">
+<h3><a name="type-param">param()</a><a class="headerlink" href="#param" title="Link to this heading"></a></h3>
+<pre><code>
+param() = {scl, <a href="#type-pin">pin()</a>} | {sda, <a href="#type-pin">pin()</a>} | {clock_speed_hz, <a href="#type-freq_hz">freq_hz()</a>} | {peripheral, <a href="#type-peripheral">peripheral()</a>}
+</code></pre>
+</section>
+<section id="params">
+<h3><a name="type-params">params()</a><a class="headerlink" href="#params" title="Link to this heading"></a></h3>
+<pre><code>
+params() = [<a href="#type-param">param()</a>]
+</code></pre>
+</section>
+<section id="peripheral">
+<h3><a name="type-peripheral">peripheral()</a><a class="headerlink" href="#peripheral" title="Link to this heading"></a></h3>
+<pre><code>
+peripheral() = string() | binary()
+</code></pre>
+</section>
+<section id="pin">
+<h3><a name="type-pin">pin()</a><a class="headerlink" href="#pin" title="Link to this heading"></a></h3>
+<pre><code>
+pin() = non_neg_integer()
+</code></pre>
+</section>
+<section id="register">
+<h3><a name="type-register">register()</a><a class="headerlink" href="#register" title="Link to this heading"></a></h3>
+<pre><code>
+register() = non_neg_integer()
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#begin_transmission-2">begin_transmission/2</a></td><td>    Begin a transmission of I2C commands.</td></tr><tr><td valign="top"><a href="#close-1">close/1</a></td><td>    Closes the connection to the I2C driver.</td></tr><tr><td valign="top"><a href="#end_transmission-1">end_transmission/1</a></td><td>    End a transmission of I2C commands.</td></tr><tr><td valign="top"><a href="#open-1">open/1</a></td><td>    Open a connection to the I2C driver.</td></tr><tr><td valign="top"><a href="#read_bytes-3">read_bytes/3</a></td><td>    Read a block of bytes from the I2C device.</td></tr><tr><td valign="top"><a href="#read_bytes-4">read_bytes/4</a></td><td>    Read a block of bytes from the I2C device starting at a specified
+register address.</td></tr><tr><td valign="top"><a href="#write_byte-2">write_byte/2</a></td><td>    Write a byte to the device.</td></tr><tr><td valign="top"><a href="#write_bytes-2">write_bytes/2</a></td><td>    Write a sequence of bytes to the device.</td></tr><tr><td valign="top"><a href="#write_bytes-3">write_bytes/3</a></td><td>    Write a block of bytes to the I2C device.</td></tr><tr><td valign="top"><a href="#write_bytes-4">write_bytes/4</a></td><td>    Write a block of bytes to the I2C device starting at a specified
+register address.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="begin_transmission-2"></a></p>
+<section id="begin-transmission-2">
+<h3>begin_transmission/2<a class="headerlink" href="#begin-transmission-2" title="Link to this heading"></a></h3>
+<pre><code>
+begin_transmission(I2C::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">I2C</span></code>: I2C instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">Address</span></code>: I2C Address of the device (typically fixed for the device type)<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code></p>
+<p>Begin a transmission of I2C commands</p>
+<p>This command is typically followed by one or more calls to
+<code class="docutils literal notranslate"><span class="pre">write_byte/2</span></code> and then a call to <code class="docutils literal notranslate"><span class="pre">end_transmission/1</span></code></p>
+<p><a name="close-1"></a></p>
+</section>
+<section id="close-1">
+<h3>close/1<a class="headerlink" href="#close-1" title="Link to this heading"></a></h3>
+<pre><code>
+close(I2C::<a href="#type-i2c">i2c()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">I2C</span></code>: I2C instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> atom</p>
+<p>Closes the connection to the I2C driver</p>
+<p>This function will close the connection to the I2C driver and
+free any resources in use by it.</p>
+<p><a name="end_transmission-1"></a></p>
+</section>
+<section id="end-transmission-1">
+<h3>end_transmission/1<a class="headerlink" href="#end-transmission-1" title="Link to this heading"></a></h3>
+<pre><code>
+end_transmission(I2C::<a href="#type-i2c">i2c()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">I2C</span></code>: I2C instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code></p>
+<p>End a transmission of I2C commands</p>
+<p>This command is typically preceded by a call to <code class="docutils literal notranslate"><span class="pre">begin_transmission/2</span></code>
+and one or more calls to <code class="docutils literal notranslate"><span class="pre">write_byte/2</span></code>.</p>
+<p><a name="open-1"></a></p>
+</section>
+<section id="open-1">
+<h3>open/1<a class="headerlink" href="#open-1" title="Link to this heading"></a></h3>
+<pre><code>
+open(Param::<a href="#type-params">params()</a>) -&gt; <a href="#type-i2c">i2c()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Param</span></code>: Initialization parameters<br /></p>
+<p>returns: process id of the driver.</p>
+<p>Open a connection to the I2C driver</p>
+<p>This function will open a connection to the I2C driver.</p>
+<p><a name="read_bytes-3"></a></p>
+</section>
+<section id="read-bytes-3">
+<h3>read_bytes/3<a class="headerlink" href="#read-bytes-3" title="Link to this heading"></a></h3>
+<pre><code>
+read_bytes(I2C::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>, Count::non_neg_integer()) -&gt; {ok, Data::binary()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">I2C</span></code>: I2C instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">Address</span></code>: I2C Address of the device (typically fixed for the device type)<br /><code class="docutils literal notranslate"><span class="pre">Count</span></code>: The number of bytes to read<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Data}</span></code> which includes the read binary data or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code></p>
+<p>Read a block of bytes from the I2C device.</p>
+<p>This command is not wrapped in a <code class="docutils literal notranslate"><span class="pre">begin_transmission/2</span></code>
+and <code class="docutils literal notranslate"><span class="pre">end_transmission/1</span></code> call.</p>
+<p><a name="read_bytes-4"></a></p>
+</section>
+<section id="read-bytes-4">
+<h3>read_bytes/4<a class="headerlink" href="#read-bytes-4" title="Link to this heading"></a></h3>
+<pre><code>
+read_bytes(I2C::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>, Register::<a href="#type-register">register()</a>, Count::non_neg_integer()) -&gt; {ok, binary()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">I2C</span></code>: I2C instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">Address</span></code>: I2C Address of the device (typically fixed for the device type)<br /><code class="docutils literal notranslate"><span class="pre">Register</span></code>: The register address in the device from which to read data<br /><code class="docutils literal notranslate"><span class="pre">Count</span></code>: The number of bytes to read<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Data}</span></code> which includes the read binary data or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code></p>
+<p>Read a block of bytes from the I2C device starting at a specified
+register address</p>
+<p>This command is not wrapped in a <code class="docutils literal notranslate"><span class="pre">begin_transmission/2</span></code>
+and <code class="docutils literal notranslate"><span class="pre">end_transmission/1</span></code> call.</p>
+<p><a name="write_byte-2"></a></p>
+</section>
+<section id="write-byte-2">
+<h3>write_byte/2<a class="headerlink" href="#write-byte-2" title="Link to this heading"></a></h3>
+<pre><code>
+write_byte(I2C::<a href="#type-i2c">i2c()</a>, Byte::byte()) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">I2C</span></code>: I2C instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">Byte</span></code>: value to write<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code></p>
+<p>Write a byte to the device.</p>
+<p>This command must be wrapped in a <code class="docutils literal notranslate"><span class="pre">begin_transmission/2</span></code>
+and <code class="docutils literal notranslate"><span class="pre">end_transmission/1</span></code> call.</p>
+<p><a name="write_bytes-2"></a></p>
+</section>
+<section id="write-bytes-2">
+<h3>write_bytes/2<a class="headerlink" href="#write-bytes-2" title="Link to this heading"></a></h3>
+<pre><code>
+write_bytes(I2C::<a href="#type-i2c">i2c()</a>, Bytes::binary()) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">I2C</span></code>: I2C instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">Bytes</span></code>: value to write<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code></p>
+<p>Write a sequence of bytes to the device.</p>
+<p>This command must be wrapped in a <code class="docutils literal notranslate"><span class="pre">begin_transmission/2</span></code>
+and <code class="docutils literal notranslate"><span class="pre">end_transmission/1</span></code> call.</p>
+<p><a name="write_bytes-3"></a></p>
+</section>
+<section id="write-bytes-3">
+<h3>write_bytes/3<a class="headerlink" href="#write-bytes-3" title="Link to this heading"></a></h3>
+<pre><code>
+write_bytes(I2C::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>, BinOrInt::binary() | byte()) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">I2C</span></code>: I2C instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">Address</span></code>: I2C Address of the device (typically fixed for the device type)<br /><code class="docutils literal notranslate"><span class="pre">BinOrInt</span></code>: The binary or byte value to write<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code></p>
+<p>Write a block of bytes to the I2C device.</p>
+<p>This command is not wrapped in a <code class="docutils literal notranslate"><span class="pre">begin_transmission/2</span></code>
+and <code class="docutils literal notranslate"><span class="pre">end_transmission/1</span></code> call.</p>
+<p><a name="write_bytes-4"></a></p>
+</section>
+<section id="write-bytes-4">
+<h3>write_bytes/4<a class="headerlink" href="#write-bytes-4" title="Link to this heading"></a></h3>
+<pre><code>
+write_bytes(I2C::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>, Register::<a href="#type-register">register()</a>, BinOrInt::binary() | integer()) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">I2C</span></code>: I2C instance created via <code class="docutils literal notranslate"><span class="pre">open/1</span></code><br /><code class="docutils literal notranslate"><span class="pre">Address</span></code>: I2C Address of the device (typically fixed for the device type)<br /><code class="docutils literal notranslate"><span class="pre">Register</span></code>: The register address in the device to which to write data<br /><code class="docutils literal notranslate"><span class="pre">BinOrInt</span></code>: The binary or byte value to write<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code></p>
+<p>Write a block of bytes to the I2C device starting at a specified
+register address.</p>
+<p>This command is not wrapped in a <code class="docutils literal notranslate"><span class="pre">begin_transmission/2</span></code>
+and <code class="docutils literal notranslate"><span class="pre">end_transmission/1</span></code> call.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="http_server.html" class="btn btn-neutral float-left" title="Module http_server" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="json_encoder.html" class="btn btn-neutral float-right" title="Module json_encoder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

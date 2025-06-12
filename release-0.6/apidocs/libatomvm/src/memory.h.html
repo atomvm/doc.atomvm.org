@@ -1,0 +1,1147 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>memory.h &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/libatomvm/src/memory.h.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="module.c" href="module.c.html" />
+    <link rel="prev" title="memory.c" href="memory.c.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html">libAtomVM</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#libatomvm-source-files">libAtomVM source files</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="atom.c.html">atom.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom.h.html">atom.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.c.html">atom_table.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.h.html">atom_table.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomshashtable.c.html">atomshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomshashtable.h.html">atomshashtable.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm_version.h.html">atomvm_version.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.c.html">avmpack.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.h.html">avmpack.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.c.html">bif.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.h.html">bif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.c.html">bitstring.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.h.html">bitstring.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.c.html">context.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.h.html">context.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.c.html">debug.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.h.html">debug.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="defaultatoms.h.html">defaultatoms.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.c.html">dictionary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.h.html">dictionary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif.h.html">erl_nif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif_priv.h.html">erl_nif_priv.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exportedfunction.h.html">exportedfunction.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.c.html">externalterm.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.h.html">externalterm.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.c.html">globalcontext.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.h.html">globalcontext.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.c.html">iff.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.h.html">iff.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.c.html">inet.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.h.html">inet.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.c.html">interop.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.h.html">interop.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="listeners.h.html">listeners.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.c.html">mailbox.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.h.html">mailbox.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.c.html">memory.c</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">memory.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.c.html">module.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.h.html">module.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.c.html">nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.h.html">nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="opcodes.h.html">opcodes.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.c.html">otp_crypto.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.h.html">otp_crypto.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.c.html">otp_net.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.h.html">otp_net.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.c.html">otp_socket.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.h.html">otp_socket.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.c.html">otp_ssl.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.h.html">otp_ssl.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="overflow_helpers.h.html">overflow_helpers.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="platform_nifs.h.html">platform_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.c.html">port.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.h.html">port.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.c.html">posix_nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.h.html">posix_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.c.html">refc_binary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.h.html">refc_binary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.c.html">resources.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.h.html">resources.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scheduler.h.html">scheduler.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smp.h.html">smp.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.c.html">stacktrace.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.h.html">stacktrace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="synclist.h.html">synclist.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys.h.html">sys.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys_mbedtls.h.html">sys_mbedtls.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.c.html">term.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.h.html">term.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term_typedef.h.html">term_typedef.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.c.html">timer_list.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.h.html">timer_list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.h.html">utils.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.h.html">valueshashtable.h</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">libAtomVM</a></li>
+      <li class="breadcrumb-item active">memory.h</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="memory-h">
+<h1>memory.h<a class="headerlink" href="#memory-h" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>Include dependency graph for memory.h:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-0f96d7ce15c3d5f36cd74d3214c23524ded80491.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;6&quot; [label=&quot;assert.h&quot; tooltip=&quot;assert.h&quot;]
+    &quot;9&quot; [label=&quot;utils.h&quot; tooltip=&quot;utils.h&quot;]
+    &quot;2&quot; [label=&quot;stdint.h&quot; tooltip=&quot;stdint.h&quot;]
+    &quot;3&quot; [label=&quot;stdlib.h&quot; tooltip=&quot;stdlib.h&quot;]
+    &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.h&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;10&quot; [label=&quot;stddef.h&quot; tooltip=&quot;stddef.h&quot;]
+    &quot;4&quot; [label=&quot;erl_nif.h&quot; tooltip=&quot;erl_nif.h&quot;]
+    &quot;7&quot; [label=&quot;limits.h&quot; tooltip=&quot;limits.h&quot;]
+    &quot;5&quot; [label=&quot;term_typedef.h&quot; tooltip=&quot;term_typedef.h&quot;]
+    &quot;11&quot; [label=&quot;stdio.h&quot; tooltip=&quot;stdio.h&quot;]
+    &quot;8&quot; [label=&quot;inttypes.h&quot; tooltip=&quot;inttypes.h&quot;]
+    &quot;9&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;4&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;5&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;5&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;5&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;5&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;include&quot;]
+}</p></object></div>
+</div>
+</figure>
+<p>This graph shows which files directly or indirectly include memory.h:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-69a83c930f37f429f74110a0b5e53054dfae4f1d.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;25&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.c&quot;]
+    &quot;9&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.c&quot;]
+    &quot;31&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.h&quot;]
+    &quot;2&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/erl_nif_priv.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/erl_nif_priv.h&quot;]
+    &quot;15&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
+    &quot;19&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.h&quot;]
+    &quot;39&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.h&quot;]
+    &quot;53&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot;]
+    &quot;45&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.c&quot;]
+    &quot;46&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.h&quot;]
+    &quot;3&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot;]
+    &quot;21&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot;]
+    &quot;26&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.h&quot;]
+    &quot;27&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.h&quot;]
+    &quot;32&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_crypto.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_crypto.c&quot;]
+    &quot;40&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_crypto.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_crypto.h&quot;]
+    &quot;5&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.c&quot;]
+    &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.h&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;38&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot;]
+    &quot;28&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot;]
+    &quot;34&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.h&quot;]
+    &quot;13&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_net.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_net.c&quot;]
+    &quot;41&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_net.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_net.h&quot;]
+    &quot;10&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot;]
+    &quot;18&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.h&quot;]
+    &quot;12&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.c&quot;]
+    &quot;33&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot;]
+    &quot;11&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.h&quot;]
+    &quot;20&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot;]
+    &quot;47&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot;]
+    &quot;30&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.c&quot;]
+    &quot;29&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.h&quot;]
+    &quot;24&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.c&quot;]
+    &quot;49&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.h&quot;]
+    &quot;52&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.c&quot;]
+    &quot;51&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.h&quot;]
+    &quot;4&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot;]
+    &quot;50&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.h&quot;]
+    &quot;35&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot;]
+    &quot;23&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot;]
+    &quot;22&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot;]
+    &quot;54&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/overflow_helpers.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/overflow_helpers.h&quot;]
+    &quot;44&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/scheduler.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/scheduler.h&quot;]
+    &quot;6&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot;]
+    &quot;42&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.h&quot;]
+    &quot;37&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot;]
+    &quot;36&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot;]
+    &quot;7&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.c&quot;]
+    &quot;43&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.h&quot;]
+    &quot;8&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.c&quot;]
+    &quot;48&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.h&quot;]
+    &quot;14&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.c&quot;]
+    &quot;17&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.c&quot;]
+    &quot;16&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.h&quot;]
+    &quot;31&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;31&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;31&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;31&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;31&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;31&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;31&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;31&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;31&quot; -&gt; &quot;33&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;40&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;41&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;42&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;43&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;45&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;37&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;45&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;39&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;44&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;36&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;33&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;27&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;27&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;27&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;40&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;37&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;38&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;38&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;38&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;38&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;38&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;38&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;34&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;34&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;34&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;34&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;34&quot; -&gt; &quot;36&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;34&quot; -&gt; &quot;38&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;34&quot; -&gt; &quot;33&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;41&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;45&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;46&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;47&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;49&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;50&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;54&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;48&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;36&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;33&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;47&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;47&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;47&quot; -&gt; &quot;39&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;47&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;47&quot; -&gt; &quot;48&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;29&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;29&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;52&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;51&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;53&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;41&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;42&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;43&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;48&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;44&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;37&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;50&quot; -&gt; &quot;38&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;35&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;23&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;44&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;44&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;44&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;44&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;42&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;42&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;36&quot; -&gt; &quot;37&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;43&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;48&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;48&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;48&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;48&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;16&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;16&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;16&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;16&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;16&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;16&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.HEAP_NEED_GC_SHRINK_THRESHOLD_COEFF">
+<span class="target" id="libatomvmmemory_8h_1a6e19e7344fa8c340e30976838118f837"></span><span class="sig-name descname"><span class="n"><span class="pre">HEAP_NEED_GC_SHRINK_THRESHOLD_COEFF</span></span></span> <span class="pre">64</span><a class="headerlink" href="#c.libAtomVM.memory.h.HEAP_NEED_GC_SHRINK_THRESHOLD_COEFF" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MIN_FREE_SPACE_SIZE">
+<span class="target" id="libatomvmmemory_8h_1acdb2934a78e531d44de65870ae822e8a"></span><span class="sig-name descname"><span class="n"><span class="pre">MIN_FREE_SPACE_SIZE</span></span></span> <span class="pre">16</span><a class="headerlink" href="#c.libAtomVM.memory.h.MIN_FREE_SPACE_SIZE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.TYPEDEF_CONTEXT">
+<span class="target" id="libatomvmmemory_8h_1aa00cc9554ecc1111be8ff0734d298498"></span><span class="sig-name descname"><span class="n"><span class="pre">TYPEDEF_CONTEXT</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.TYPEDEF_CONTEXT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.TYPEDEF_GLOBALCONTEXT">
+<span class="target" id="libatomvmmemory_8h_1ae255fde495724a05463b14aaafe1cb94"></span><span class="sig-name descname"><span class="n"><span class="pre">TYPEDEF_GLOBALCONTEXT</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.TYPEDEF_GLOBALCONTEXT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.TYPEDEF_HEAP">
+<span class="target" id="libatomvmmemory_8h_1a0dbd68b9ca478035d468e30c9a55cce9"></span><span class="sig-name descname"><span class="n"><span class="pre">TYPEDEF_HEAP</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.TYPEDEF_HEAP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.BEGIN_WITH_STACK_HEAP">
+<span class="target" id="libatomvmmemory_8h_1a463c0748c9bf32c6ec2566a4f1de0fcf"></span><span class="sig-name descname"><span class="n"><span class="pre">BEGIN_WITH_STACK_HEAP</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size</span></span>, <span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span> <p><span class="pre">struct</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<p><span class="pre">{</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<a class="reference internal" href="#libatomvmstruct_heap_fragment"><span class="std std-ref"><span class="pre">HeapFragment</span></span></a><p><span class="pre">*next;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<p><span class="pre">union</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<p><span class="pre">{</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<a class="reference internal" href="../types.html#libatomvmterm__typedef_8h_1a603769ce1e8eeb1faa458d7e6cf904d8"><span class="std std-ref"><span class="pre">term</span></span></a> <span class="pre">mso_list;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <a class="reference internal" href="../types.html#libatomvmterm__typedef_8h_1a603769ce1e8eeb1faa458d7e6cf904d8"><span class="std std-ref"><span class="pre">term</span></span></a><p><span class="pre">*heap_end;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<p><span class="pre">};</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<a class="reference internal" href="../types.html#libatomvmterm__typedef_8h_1a603769ce1e8eeb1faa458d7e6cf904d8"><span class="std std-ref"><span class="pre">term</span></span></a><p><span class="pre">storage[size];</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<p><span class="pre">}</span> <span class="pre">name##__root__;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<a class="reference internal" href="#libatomvmstruct_heap"><span class="std std-ref"><span class="pre">Heap</span></span></a> <span class="pre">name;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span>
+&#160;&#160;&#160; <a class="reference internal" href="#libatomvmmemory_8h_1aed7cb8e677736e46afa7fe2ef4313658"><span class="std std-ref"><span class="pre">memory_init_heap_root_fragment</span></span></a><span class="pre">(&amp;name,</span> <span class="pre">(</span><a class="reference internal" href="#libatomvmstruct_heap_fragment"><span class="std std-ref"><span class="pre">HeapFragment</span></span></a> <span class="pre">*)</span> <span class="pre">&amp;(name##__root__),</span> <span class="pre">size);</span><a class="headerlink" href="#c.libAtomVM.memory.h.BEGIN_WITH_STACK_HEAP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.END_WITH_STACK_HEAP">
+<span class="target" id="libatomvmmemory_8h_1a375cdc3af6416b703783478ffebfd534"></span><span class="sig-name descname"><span class="n"><span class="pre">END_WITH_STACK_HEAP</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">global</span></span><span class="sig-paren">)</span> <a class="reference internal" href="#libatomvmmemory_8h_1af565e796d744e507378935dfad5b89f1"><span class="std std-ref"><span class="pre">memory_sweep_mso_list</span></span></a><p><span class="pre">(name.root-&gt;mso_list,</span> <span class="pre">global,</span> <span class="pre">true);</span> <span class="pre">\</span></p>
+<p><span class="pre">if</span> <span class="pre">(name.root-&gt;next)</span> <span class="pre">{</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<a class="reference internal" href="#libatomvmmemory_8h_1ade74d76c3a55d11745f5221874ca847c"><span class="std std-ref"><span class="pre">memory_destroy_heap_fragment</span></span></a><p><span class="pre">(name.root-&gt;next);</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
+<p><span class="pre">}</span></p>
+<a class="headerlink" href="#c.libAtomVM.memory.h.END_WITH_STACK_HEAP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.STORAGE_MSO_LIST_INDEX">
+<span class="target" id="libatomvmmemory_8h_1a8eff7c68aacc3c8a1b7cd49529ddbec6"></span><span class="sig-name descname"><span class="n"><span class="pre">STORAGE_MSO_LIST_INDEX</span></span></span> <span class="pre">0</span><a class="headerlink" href="#c.libAtomVM.memory.h.STORAGE_MSO_LIST_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.STORAGE_HEAP_START_INDEX">
+<span class="target" id="libatomvmmemory_8h_1a1c8a34237a05bec977cb044ca8b2bb6a"></span><span class="sig-name descname"><span class="n"><span class="pre">STORAGE_HEAP_START_INDEX</span></span></span> <span class="pre">1</span><a class="headerlink" href="#c.libAtomVM.memory.h.STORAGE_HEAP_START_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.Context">
+<span class="target" id="libatomvmmemory_8h_1a7925e3baf84a3c60ae7f4ac180c2fd85"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Context</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.Context" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.GlobalContext">
+<span class="target" id="libatomvmmemory_8h_1ae21a02a8cb159bd3d9eeba3a1dc89580"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GlobalContext</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.GlobalContext" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.HeapFragment">
+<span class="target" id="libatomvmmemory_8h_1a72e25f246c00c73366703f9e45899906"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.HeapFragment" title="HeapFragment"><span class="n"><span class="pre">HeapFragment</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HeapFragment</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.HeapFragment" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.Heap">
+<span class="target" id="libatomvmmemory_8h_1a705af815969c97892c0aaaa658f6c88c"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Heap</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.Heap" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MemoryGCResult">
+<span class="target" id="libatomvmmemory_8h_1a3d8bef9f86e567a8516760e56fdf085c"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MemoryGCResult</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.MemoryGCResult" title="Link to this definition"></a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MemoryGCResult.MEMORY_GC_OK">
+<span class="target" id="libatomvmmemory_8h_1a3d8bef9f86e567a8516760e56fdf085ca7d6e25e0c92a6286a02975ec516ebc6a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MEMORY_GC_OK</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.libAtomVM.memory.h.MemoryGCResult.MEMORY_GC_OK" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MemoryGCResult.MEMORY_GC_ERROR_FAILED_ALLOCATION">
+<span class="target" id="libatomvmmemory_8h_1a3d8bef9f86e567a8516760e56fdf085ca51b59d5108a68a8b43146d0ffc508daa"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MEMORY_GC_ERROR_FAILED_ALLOCATION</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><a class="headerlink" href="#c.libAtomVM.memory.h.MemoryGCResult.MEMORY_GC_ERROR_FAILED_ALLOCATION" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MemoryGCResult.MEMORY_GC_DENIED_ALLOCATION">
+<span class="target" id="libatomvmmemory_8h_1a3d8bef9f86e567a8516760e56fdf085ca8fdda43fabb9c2f2b1dbb948c59bf52d"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MEMORY_GC_DENIED_ALLOCATION</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><a class="headerlink" href="#c.libAtomVM.memory.h.MemoryGCResult.MEMORY_GC_DENIED_ALLOCATION" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MemoryAllocMode">
+<span class="target" id="libatomvmmemory_8h_1aff62723a68c8c946c7d115a1cfaa4628"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MemoryAllocMode</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.MemoryAllocMode" title="Link to this definition"></a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MemoryAllocMode.MEMORY_NO_SHRINK">
+<span class="target" id="libatomvmmemory_8h_1aff62723a68c8c946c7d115a1cfaa4628a4f22a4c14101be7b3fe4fa54adcadd1c"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MEMORY_NO_SHRINK</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.libAtomVM.memory.h.MemoryAllocMode.MEMORY_NO_SHRINK" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MemoryAllocMode.MEMORY_CAN_SHRINK">
+<span class="target" id="libatomvmmemory_8h_1aff62723a68c8c946c7d115a1cfaa4628a60f35c55b5fa2d4850516dcbd5a63427"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MEMORY_CAN_SHRINK</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><a class="headerlink" href="#c.libAtomVM.memory.h.MemoryAllocMode.MEMORY_CAN_SHRINK" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MemoryAllocMode.MEMORY_FORCE_SHRINK">
+<span class="target" id="libatomvmmemory_8h_1aff62723a68c8c946c7d115a1cfaa4628a9205a5d2be2260c281bf467b6c45936f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MEMORY_FORCE_SHRINK</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><a class="headerlink" href="#c.libAtomVM.memory.h.MemoryAllocMode.MEMORY_FORCE_SHRINK" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.MemoryAllocMode.MEMORY_NO_GC">
+<span class="target" id="libatomvmmemory_8h_1aff62723a68c8c946c7d115a1cfaa4628af1796476054aa3c08ef77a3d8914dd10"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MEMORY_NO_GC</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">3</span></span><a class="headerlink" href="#c.libAtomVM.memory.h.MemoryAllocMode.MEMORY_NO_GC" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_init_heap_root_fragment">
+<span class="target" id="libatomvmmemory_8h_1aed7cb8e677736e46afa7fe2ef4313658"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_init_heap_root_fragment</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="#c.libAtomVM.memory.h.HeapFragment" title="HeapFragment"><span class="n"><span class="pre">HeapFragment</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">root</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_init_heap_root_fragment" title="Link to this definition"></a><br /></dt>
+<dd><p>Setup heap from its root. Set the <code class="docutils literal notranslate"><span class="pre">mso_list</span></code> to NIL and initialize <code class="docutils literal notranslate"><span class="pre">heap_ptr</span></code>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heap</strong> – heap to initialize. </p></li>
+<li><p><strong>root</strong> – fragment root. </p></li>
+<li><p><strong>size</strong> – capacity of the heap to create, not including the mso_list. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_init_heap">
+<span class="target" id="libatomvmmemory_8h_1aa34223a2c1aa426b283afb1e2461414a"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.MemoryGCResult" title="MemoryGCResult"><span class="n"><span class="pre">MemoryGCResult</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_init_heap</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_init_heap" title="Link to this definition"></a><br /></dt>
+<dd><p>Initialize a root heap. </p>
+<p>This function should be balanced with <code class="docutils literal notranslate"><span class="pre">memory_destroy_heap</span></code> or <code class="docutils literal notranslate"><span class="pre">memory_destroy_heap_from_task</span></code> if the heap is created by a driver task.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heap</strong> – heap to initialize. </p></li>
+<li><p><strong>size</strong> – capacity of the heap to create, not including the mso_list. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>MEMORY_GC_OK or MEMORY_GC_ERROR_FAILED_ALLOCATION depending on the outcome. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_heap_fragment_memory_size">
+<span class="target" id="libatomvmmemory_8h_1a4f911891bc8a45ef8d2d14ff9da4f4e7"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_heap_fragment_memory_size</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.HeapFragment" title="HeapFragment"><span class="n"><span class="pre">HeapFragment</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">fragment</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_heap_fragment_memory_size" title="Link to this definition"></a><br /></dt>
+<dd><p>return the total memory size of a heap fragment and its children. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fragment</strong> – the root fragment to get the size of </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the size in terms </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_heap_youngest_size">
+<span class="target" id="libatomvmmemory_8h_1a6019397e16f32cc31520c0fe0fc43b90"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_heap_youngest_size</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_heap_youngest_size" title="Link to this definition"></a><br /></dt>
+<dd><p>return the size of the youngest generation of the heap. </p>
+<p>in some condition, this function returns the size of a fragment where the stack is not. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heap</strong> – the heap to get the youngest size of </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the size in terms </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_heap_memory_size">
+<span class="target" id="libatomvmmemory_8h_1aab51840a661674f77e48788465c1fc2d"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_heap_memory_size</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_heap_memory_size" title="Link to this definition"></a><br /></dt>
+<dd><p>return the total memory size of a heap, including fragments. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heap</strong> – the heap to get the size of </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the size in terms </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_heap_alloc">
+<span class="target" id="libatomvmmemory_8h_1a76a217579d014230ba1103cefabd5971"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">memory_heap_alloc</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_heap_alloc" title="Link to this definition"></a><br /></dt>
+<dd><p>allocates space for a certain amount of terms on the heap </p>
+<p>allocates space for a certain amount of terms on the heap, GC will be performed when needed, any existing term might be invalid after this call. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heap</strong> – heap to initialize. </p></li>
+<li><p><strong>size</strong> – the amount of terms that will be allocated. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a pointer to the newly allocated memory block. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_heap_trim">
+<span class="target" id="libatomvmmemory_8h_1ae5220e2172c972f217c30aee483cfb1c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_heap_trim</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_heap_trim" title="Link to this definition"></a><br /></dt>
+<dd><p>shrinks the heap by size units </p>
+<p>this function is used when resizing the last item allocated on the heap. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heap</strong> – the heap that will be shrinked </p></li>
+<li><p><strong>size</strong> – the number of terms that will be removed </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_copy_term_tree">
+<span class="target" id="libatomvmmemory_8h_1a4f2333ae6f2bceb4fb7c1effde5f648d"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_copy_term_tree</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">new_heap</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_copy_term_tree" title="Link to this definition"></a><br /></dt>
+<dd><p>copies a term to a destination heap </p>
+<p>deep copies a term to a destination heap, once finished old memory can be freed. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_heap</strong> – the destination heap where terms will be copied. </p></li>
+<li><p><strong>t</strong> – term to copy </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a new term that is stored on the new heap. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_ensure_free_with_roots">
+<span class="target" id="libatomvmmemory_8h_1ab1c63baf9bf2506407bcbb487536b0d5"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.MemoryGCResult" title="MemoryGCResult"><span class="n"><span class="pre">MemoryGCResult</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_ensure_free_with_roots</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">num_roots</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">roots</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.MemoryAllocMode" title="MemoryAllocMode"><span class="n"><span class="pre">MemoryAllocMode</span></span></a><span class="w"> </span><span class="n"><span class="pre">alloc_mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_ensure_free_with_roots" title="Link to this definition"></a><br /></dt>
+<dd><p>makes sure that the given context has given free memory. </p>
+<p>this function makes sure at least size terms are available. Optionally, it can allocate a fragment or shrink the heap to the specified size, depending on allocation strategy. The function can also be passed roots to update during any garbage collection. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> – the target context. </p></li>
+<li><p><strong>size</strong> – needed available memory. </p></li>
+<li><p><strong>num_roots</strong> – number of roots </p></li>
+<li><p><strong>roots</strong> – roots to preserve </p></li>
+<li><p><strong>alloc_mode</strong> – constraint on allocation of additional memory </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_ensure_free_opt">
+<span class="target" id="libatomvmmemory_8h_1a8d4d6914011e91b774a9a7570417940c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.MemoryGCResult" title="MemoryGCResult"><span class="n"><span class="pre">MemoryGCResult</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_ensure_free_opt</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.MemoryAllocMode" title="MemoryAllocMode"><span class="n"><span class="pre">MemoryAllocMode</span></span></a><span class="w"> </span><span class="n"><span class="pre">alloc_mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_ensure_free_opt" title="Link to this definition"></a><br /></dt>
+<dd><p>makes sure that the given context has given free memory. </p>
+<p>this function makes sure at least size terms are available. Optionally, it can shrink the heap to the specified size, depending on allocation strategy. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> – the target context. </p></li>
+<li><p><strong>size</strong> – needed available memory. </p></li>
+<li><p><strong>alloc_mode</strong> – constraint on allocation of additional memory </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_ensure_free">
+<span class="target" id="libatomvmmemory_8h_1a96e64e33b1f307ba80b69630eb53f55c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.MemoryGCResult" title="MemoryGCResult"><span class="n"><span class="pre">MemoryGCResult</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_ensure_free</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_ensure_free" title="Link to this definition"></a><br /></dt>
+<dd><p>makes sure that the given context has given free memory </p>
+<p>this function makes sure that at least size terms are available, when not available gc will be performed, any existing term might be invalid after this call. It does not shrink the heap, so if this function is called with a given value N and it is later called with a smaller value n, the actual amount of available free memory is N. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> – the target context. </p></li>
+<li><p><strong>size</strong> – needed available memory. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_erl_nif_env_ensure_free">
+<span class="target" id="libatomvmmemory_8h_1a691d603e669393202b0fa9b99c404437"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.MemoryGCResult" title="MemoryGCResult"><span class="n"><span class="pre">MemoryGCResult</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_erl_nif_env_ensure_free</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">env</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_erl_nif_env_ensure_free" title="Link to this definition"></a><br /></dt>
+<dd><p>makes sure that the given nif environment has given free memory </p>
+<p>this function makes sure that at least size terms are available. When not available, a new fragment will be allocated. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> – the target environment. </p></li>
+<li><p><strong>size</strong> – needed available memory. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_copy_term_tree_to_storage">
+<span class="target" id="libatomvmmemory_8h_1a6c3684abaa77ca5d5b07ba3960622b22"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_copy_term_tree_to_storage</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">storage</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap_end</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_copy_term_tree_to_storage" title="Link to this definition"></a><br /></dt>
+<dd><p>copies a term to a storage, typically for mailbox messages </p>
+<p>deep copies a term to a destination heap, once finished old memory can be freed. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>storage</strong> – storage for the copied data, should be large enough </p></li>
+<li><p><strong>heap_end</strong> – on output, pointer to the end of the term. </p></li>
+<li><p><strong>t</strong> – term to copy </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a boxed term pointer to the new term content that is stored in the storage. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_estimate_usage">
+<span class="target" id="libatomvmmemory_8h_1af2ce659c9162754c8515fbd1b170fc9e"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_estimate_usage</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_estimate_usage" title="Link to this definition"></a><br /></dt>
+<dd><p>calculates term memory usage </p>
+<p>perform an used memory calculation using given term as root, shared memory (that is not part of the memory block) is not accounted. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – root term on which used memory calculation will be performed. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>used memory terms count in term units output parameter. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_heap_append_fragment">
+<span class="target" id="libatomvmmemory_8h_1ac3585e49af06865398260c71ac8dead3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_heap_append_fragment</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="#c.libAtomVM.memory.h.HeapFragment" title="HeapFragment"><span class="n"><span class="pre">HeapFragment</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">fragment</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">mso_list</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_heap_append_fragment" title="Link to this definition"></a><br /></dt>
+<dd><p>append a fragment to a heap. The MSO list is merged. The fragment will then be owned by the heap. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heap</strong> – the heap to append the fragment to </p></li>
+<li><p><strong>fragment</strong> – the fragment to add </p></li>
+<li><p><strong>mso_list</strong> – associated mso list or nil </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_heap_append_heap">
+<span class="target" id="libatomvmmemory_8h_1a9948be973990822a05e6faa6d1d2de3a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_heap_append_heap</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">target</span></span>, <a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">source</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_heap_append_heap" title="Link to this definition"></a><br /></dt>
+<dd><p>append a heap to another heap. The MSO list is merged. The fragments of the source heap will be owned by the target heap. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> – the heap to append the heap’s fragments to </p></li>
+<li><p><strong>source</strong> – the heap to add </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_sweep_mso_list">
+<span class="target" id="libatomvmmemory_8h_1af565e796d744e507378935dfad5b89f1"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_sweep_mso_list</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">mso_list</span></span>, <a class="reference internal" href="#c.libAtomVM.memory.h.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">from_task</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_sweep_mso_list" title="Link to this definition"></a><br /></dt>
+<dd><p>Sweep any unreferenced binaries in the “Mark Sweep Object” (MSO) list. </p>
+<p>The MSO list is a list of term (references) in a heap. Currently, the elements of this list are referenced to reference-counted binaries or match binaries that themselves reference reference counted binaries. This function will iterate over the binaries in this list, and decrement the reference count of any elements that have not been marked for move (e.g., into a new heap). If the reference count reaches 0, then memory associated with the referenced binary will be freed.In a typical GC event, the terms in this list are within in the old heap or potentially in a heap fragment. However, this function may be called in a copy even, such as in a process spawn, or in the copy of a term to or from a process mailbox. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mso_list</strong> – the list of mark-sweep object in a heap “space” </p></li>
+<li><p><strong>global</strong> – the global context </p></li>
+<li><p><strong>from_task</strong> – boolean, true if called from a task, false otherwise </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_destroy_heap_fragment">
+<span class="target" id="libatomvmmemory_8h_1ade74d76c3a55d11745f5221874ca847c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_destroy_heap_fragment</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.HeapFragment" title="HeapFragment"><span class="n"><span class="pre">HeapFragment</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">fragment</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_destroy_heap_fragment" title="Link to this definition"></a><br /></dt>
+<dd><p>Destroy a chain of heap fragments. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fragment</strong> – fragment to destroy. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_destroy_heap">
+<span class="target" id="libatomvmmemory_8h_1a6be1d019f3d975240ad75f863ad27379"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_destroy_heap</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="#c.libAtomVM.memory.h.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_destroy_heap" title="Link to this definition"></a><br /></dt>
+<dd><p>Destroy a root heap. First sweep its mso list. </p>
+<p>This function shall only be called from a scheduler thread (native handler or listener) because it decrements the reference count of refc binaries and may call resource destructors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heap</strong> – the heap to destroy </p></li>
+<li><p><strong>global</strong> – the global context </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.memory_destroy_heap_from_task">
+<span class="target" id="libatomvmmemory_8h_1a8e80d162b0f8848a55206e71ec64bc4f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_destroy_heap_from_task</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.memory.h.Heap" title="Heap"><span class="n"><span class="pre">Heap</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="#c.libAtomVM.memory.h.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.memory.h.memory_destroy_heap_from_task" title="Link to this definition"></a><br /></dt>
+<dd><p>Destroy a root heap. First sweep its mso list. </p>
+<p>This variant is safer and is meant for driver tasks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heap</strong> – the heap to destroy </p></li>
+<li><p><strong>global</strong> – the global context </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmstruct_heap_fragment"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HeapFragment</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;memory.h&gt;</em></div>
+<p>Collaboration diagram for HeapFragment:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-568c4cebce8ed573c70b64a005cf5fe7b3e0b5c6.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;1&quot; [label=&quot;HeapFragment&quot; tooltip=&quot;HeapFragment&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;1&quot; -&gt; &quot;1&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.HeapFragment.next">
+<span class="target" id="libatomvmstruct_heap_fragment_1ae79dea89d799d22b0ee98540464810a4"></span><a class="reference internal" href="#c.libAtomVM.memory.h.HeapFragment" title="HeapFragment"><span class="n"><span class="pre">HeapFragment</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">next</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.HeapFragment.next" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.HeapFragment.mso_list">
+<span class="target" id="libatomvmstruct_heap_fragment_1aceae969aa36b38ec25508805812c51ed"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mso_list</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.HeapFragment.mso_list" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.HeapFragment.heap_end">
+<span class="target" id="libatomvmstruct_heap_fragment_1ad1b068c355b1db4486a6352c1c82bd49"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">heap_end</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.HeapFragment.heap_end" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.HeapFragment.&#64;8">
+<span class="target" id="libatomvmstruct_heap_fragment_1ad2d65488cbe91d6b3fc442670504415e"></span><span class="k"><span class="pre">union</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.memory.h.HeapFragment" title="HeapFragment"><span class="n"><span class="pre">HeapFragment</span></span></a><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">[anonymous]</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">[anonymous]</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.HeapFragment.@8" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.HeapFragment.storage">
+<span class="target" id="libatomvmstruct_heap_fragment_1a0fdd2039a6caf9cbf2f0a4370240fb07"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">storage</span></span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#c.libAtomVM.memory.h.HeapFragment.storage" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmstruct_heap"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Heap</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;memory.h&gt;</em></div>
+<p>Collaboration diagram for Heap:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-790b221f6d88d9cb9e30a0ddac8a981bd9e5ef5a.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;2&quot; [label=&quot;HeapFragment&quot; tooltip=&quot;HeapFragment&quot;]
+    &quot;1&quot; [label=&quot;Heap&quot; tooltip=&quot;Heap&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;2&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.Heap.root">
+<span class="target" id="libatomvmstruct_heap_1a79504dbfd38ec7157003274f3f8586e9"></span><a class="reference internal" href="#c.libAtomVM.memory.h.HeapFragment" title="HeapFragment"><span class="n"><span class="pre">HeapFragment</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">root</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.Heap.root" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.Heap.heap_start">
+<span class="target" id="libatomvmstruct_heap_1a1f296c2c0164e547825d7f3bff7d6ffb"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">heap_start</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.Heap.heap_start" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.Heap.heap_ptr">
+<span class="target" id="libatomvmstruct_heap_1a7fd6770bc105eaf1e5be0944bd6e95f0"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">heap_ptr</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.Heap.heap_ptr" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.memory.h.Heap.heap_end">
+<span class="target" id="libatomvmstruct_heap_1a2cc7da3405d24ff958597a3f7f844057"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">heap_end</span></span></span><a class="headerlink" href="#c.libAtomVM.memory.h.Heap.heap_end" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="memory.c.html" class="btn btn-neutral float-left" title="memory.c" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="module.c.html" class="btn btn-neutral float-right" title="module.c" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

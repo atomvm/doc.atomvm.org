@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module proplists &mdash; AtomVM 0.6.6+git.553980f7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/estdlib/proplists.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=22a22bf0"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module queue" href="queue.html" />
+    <link rel="prev" title="Module net" href="net.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module proplists</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-proplists">
+<h1>Module proplists<a class="headerlink" href="#module-proplists" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>An implementation of the Erlang/OTP proplists interface.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module implements a strict subset of the Erlang/OTP proplists
+interface.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="property">
+<h3><a name="type-property">property()</a><a class="headerlink" href="#property" title="Link to this heading"></a></h3>
+<pre><code>
+property() = atom() | {term(), term()}
+</code></pre>
+</section>
+<section id="proplist">
+<h3><a name="type-proplist">proplist()</a><a class="headerlink" href="#proplist" title="Link to this heading"></a></h3>
+<pre><code>
+proplist() = [<a href="#type-property">property()</a>]
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compact-1">compact/1</a></td><td>    Minimizes the representation of all entries in the list.</td></tr><tr><td valign="top"><a href="#delete-2">delete/2</a></td><td>    Deletes all entries associated with <code>Key</code> from <code>List</code>.</td></tr><tr><td valign="top"><a href="#from_map-1">from_map/1</a></td><td>    Converts the map <code>Map</code> to a property list.</td></tr><tr><td valign="top"><a href="#get_all_values-2">get_all_values/2</a></td><td>    Similar to <code>get_value/2</code>, but returns the list of values for _all_ entries
+<code>{Key, Value}</code> in <code>List</code>.</td></tr><tr><td valign="top"><a href="#get_bool-2">get_bool/2</a></td><td>    Returns the value of a boolean key/value option.</td></tr><tr><td valign="top"><a href="#get_value-2">get_value/2</a></td><td>    Get a value from a property list.</td></tr><tr><td valign="top"><a href="#get_value-3">get_value/3</a></td><td>    Get a value from a property list.</td></tr><tr><td valign="top"><a href="#is_defined-2">is_defined/2</a></td><td>    Returns <code>true</code> if <code>List</code> contains at least one entry associated with <code>Key</code>, otherwise
+<code>false</code>.</td></tr><tr><td valign="top"><a href="#lookup-2">lookup/2</a></td><td>    Returns the first entry associated with <code>Key</code> in <code>List</code>, if one exists,
+otherwise returns <code>none</code>.</td></tr><tr><td valign="top"><a href="#lookup_all-2">lookup_all/2</a></td><td>    Returns the list of all entries associated with <code>Key</code> in <code>List</code>.</td></tr><tr><td valign="top"><a href="#property-1">property/1</a></td><td>    Creates a normal form (minimal) representation of a property.</td></tr><tr><td valign="top"><a href="#property-2">property/2</a></td><td>    Creates a normal form (minimal) representation of a simple key/value property.</td></tr><tr><td valign="top"><a href="#to_map-1">to_map/1</a></td><td>    Converts the property list <code>List</code> to a map.</td></tr><tr><td valign="top"><a href="#unfold-1">unfold/1</a></td><td>    Unfolds all occurrences of atoms in <code>ListIn</code> to tuples <code>{Atom, true}</code>.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="compact-1"></a></p>
+<section id="compact-1">
+<h3>compact/1<a class="headerlink" href="#compact-1" title="Link to this heading"></a></h3>
+<pre><code>
+compact(ListIn) -&gt; ListOut
+</code></pre>
+<ul class="definitions"><li><code>ListIn = [<a href="#type-property">property()</a>]</code></li><li><code>ListOut = [<a href="#type-property">property()</a>]</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">ListIn</span></code>: the list will be compacted, such as <code class="docutils literal notranslate"><span class="pre">[{key,</span> <span class="pre">true}]</span></code><br /></p>
+<p>returns: the compacted list, such as <code class="docutils literal notranslate"><span class="pre">[key]</span></code></p>
+<p>Minimizes the representation of all entries in the list. This is equivalent to
+<code class="docutils literal notranslate"><span class="pre">[property(P)</span> <span class="pre">||</span> <span class="pre">P</span> <span class="pre">&lt;-</span> <span class="pre">ListIn]</span></code>.
+See also <code class="docutils literal notranslate"><span class="pre">property/1</span></code>, <code class="docutils literal notranslate"><span class="pre">unfold/1</span></code>.</p>
+<p><a name="delete-2"></a></p>
+</section>
+<section id="delete-2">
+<h3>delete/2<a class="headerlink" href="#delete-2" title="Link to this heading"></a></h3>
+<pre><code>
+delete(Key, List) -&gt; List
+</code></pre>
+<ul class="definitions"><li><code>Key = term()</code></li><li><code>List = [term()]</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the item key that will be deleted<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the property list from which items will be deleted<br /></p>
+<p>returns: A list without items having key <code class="docutils literal notranslate"><span class="pre">Key</span></code></p>
+<p>Deletes all entries associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code> from <code class="docutils literal notranslate"><span class="pre">List</span></code>.</p>
+<p><a name="from_map-1"></a></p>
+</section>
+<section id="from-map-1">
+<h3>from_map/1<a class="headerlink" href="#from-map-1" title="Link to this heading"></a></h3>
+<pre><code>
+from_map(Map) -&gt; List
+</code></pre>
+<ul class="definitions"><li><code>Map = #{Key =&gt; Value}</code></li><li><code>List = [{Key, Value}]</code></li><li><code>Key = term()</code></li><li><code>Value = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map that will be converted, such as <code class="docutils literal notranslate"><span class="pre">#{key</span> <span class="pre">=&gt;</span> <span class="pre">true}</span></code><br /></p>
+<p>returns: the map converted to list, such as <code class="docutils literal notranslate"><span class="pre">[{key,</span> <span class="pre">true}]</span></code></p>
+<p>Converts the map <code class="docutils literal notranslate"><span class="pre">Map</span></code> to a property list.</p>
+<p><a name="get_all_values-2"></a></p>
+</section>
+<section id="get-all-values-2">
+<h3>get_all_values/2<a class="headerlink" href="#get-all-values-2" title="Link to this heading"></a></h3>
+<pre><code>
+get_all_values(Key, List) -&gt; [term()]
+</code></pre>
+<ul class="definitions"><li><code>Key = term()</code></li><li><code>List = [term()]</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key with which to find the values<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the property list from which to get the value<br /></p>
+<p>returns: a list of values for all entries having <code class="docutils literal notranslate"><span class="pre">Key</span></code> as key</p>
+<p>Similar to <code class="docutils literal notranslate"><span class="pre">get_value/2</span></code>, but returns the list of values for <em>all</em> entries
+<code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">Value}</span></code> in <code class="docutils literal notranslate"><span class="pre">List</span></code>. If no such entry exists, the result is the empty list.</p>
+<p><a name="get_bool-2"></a></p>
+</section>
+<section id="get-bool-2">
+<h3>get_bool/2<a class="headerlink" href="#get-bool-2" title="Link to this heading"></a></h3>
+<pre><code>
+get_bool(Key, List) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Key = term()</code></li><li><code>List = [term()]</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key that will be searched<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list where key is searched<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code> when exists an option with given key that is <code class="docutils literal notranslate"><span class="pre">true</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+<p>Returns the value of a boolean key/value option. If
+<a class="reference internal" href="#%60lookup/2%60"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">lookup(Key,</span> <span class="pre">List)</span></code></span></a> would yield <code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">true}</span></code>, this function
+returns <code class="docutils literal notranslate"><span class="pre">true</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.
+See also <code class="docutils literal notranslate"><span class="pre">get_value/2</span></code>, <code class="docutils literal notranslate"><span class="pre">lookup/2</span></code>.</p>
+<p><a name="get_value-2"></a></p>
+</section>
+<section id="get-value-2">
+<h3>get_value/2<a class="headerlink" href="#get-value-2" title="Link to this heading"></a></h3>
+<pre><code>
+get_value(Key::term(), List::[<a href="#type-property">property()</a>]) -&gt; term() | true | undefined
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#get_value-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">get_value(Key,</span> <span class="pre">List,</span> <span class="pre">undefined)</span></code></span></a>.</p>
+<p>Get a value from a property list.</p>
+<p><a name="get_value-3"></a></p>
+</section>
+<section id="get-value-3">
+<h3>get_value/3<a class="headerlink" href="#get-value-3" title="Link to this heading"></a></h3>
+<pre><code>
+get_value(Key::term(), List::[<a href="#type-property">property()</a>], Default::term()) -&gt; term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key with which to find the value<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the property list from which to get the value<br /><code class="docutils literal notranslate"><span class="pre">Default</span></code>: the default value to return, if Key is not in the property list.<br /></p>
+<p>returns: the value in the property list under the key, or Default, if Key is
+not in List.</p>
+<p>Get a value from a property list.</p>
+<p>Returns the value under the specified key, or the specified Default,
+if the Key is not in the supplied List.  If the Key corresponds to
+an entry in the property list that is just a single atom, this
+function returns the atom true.</p>
+<p><a name="is_defined-2"></a></p>
+</section>
+<section id="is-defined-2">
+<h3>is_defined/2<a class="headerlink" href="#is-defined-2" title="Link to this heading"></a></h3>
+<pre><code>
+is_defined(Key, List) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Key = term()</code></li><li><code>List = [term()]</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key that will be searched<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list where key is searched<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Key</span></code> is defined, otherwise false</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">List</span></code> contains at least one entry associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code>, otherwise
+<code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p><a name="lookup-2"></a></p>
+</section>
+<section id="lookup-2">
+<h3>lookup/2<a class="headerlink" href="#lookup-2" title="Link to this heading"></a></h3>
+<pre><code>
+lookup(Key, List) -&gt; none | tuple()
+</code></pre>
+<ul class="definitions"><li><code>Key = term()</code></li><li><code>List = [term()]</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key with which to find the entry<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the property list from which to get the entry<br /></p>
+<p>returns: Either the found entry (always as a tuple) or <code class="docutils literal notranslate"><span class="pre">none</span></code></p>
+<p>Returns the first entry associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code> in <code class="docutils literal notranslate"><span class="pre">List</span></code>, if one exists,
+otherwise returns <code class="docutils literal notranslate"><span class="pre">none</span></code>. For an atom <code class="docutils literal notranslate"><span class="pre">A</span></code> in the list, the tuple <code class="docutils literal notranslate"><span class="pre">{A,</span> <span class="pre">true}</span></code> is
+the entry associated with <code class="docutils literal notranslate"><span class="pre">A</span></code>.
+See also <code class="docutils literal notranslate"><span class="pre">get_bool/2</span></code>, <code class="docutils literal notranslate"><span class="pre">get_value/2</span></code>, <code class="docutils literal notranslate"><span class="pre">lookup_all/2</span></code>.</p>
+<p><a name="lookup_all-2"></a></p>
+</section>
+<section id="lookup-all-2">
+<h3>lookup_all/2<a class="headerlink" href="#lookup-all-2" title="Link to this heading"></a></h3>
+<pre><code>
+lookup_all(Key, List) -&gt; [tuple()]
+</code></pre>
+<ul class="definitions"><li><code>Key = term()</code></li><li><code>List = [term()]</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key with which to find the entries<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the property list from which to get the entries<br /></p>
+<p>returns: all entries having <code class="docutils literal notranslate"><span class="pre">Key</span></code> as key</p>
+<p>Returns the list of all entries associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code> in <code class="docutils literal notranslate"><span class="pre">List</span></code>. If no such
+entry exists, the result is the empty list.
+See also <code class="docutils literal notranslate"><span class="pre">lookup/2</span></code>.</p>
+<p><a name="property-1"></a></p>
+</section>
+<section id="property-1">
+<h3>property/1<a class="headerlink" href="#property-1" title="Link to this heading"></a></h3>
+<pre><code>
+property(PropertyIn) -&gt; PropertyOut
+</code></pre>
+<ul class="definitions"><li><code>PropertyIn = <a href="#type-property">property()</a></code></li><li><code>PropertyOut = <a href="#type-property">property()</a></code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">PropertyIn</span></code>: a property<br /></p>
+<p>returns: the same property in normal form</p>
+<p>Creates a normal form (minimal) representation of a property. If <code class="docutils literal notranslate"><span class="pre">PropertyIn</span></code> is
+<code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">true}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Key</span></code> is an atom, <code class="docutils literal notranslate"><span class="pre">Key</span></code> is returned, otherwise the whole
+term <code class="docutils literal notranslate"><span class="pre">PropertyIn</span></code> is returned.
+See also <code class="docutils literal notranslate"><span class="pre">property/2</span></code>.</p>
+<p><a name="property-2"></a></p>
+</section>
+<section id="property-2">
+<h3>property/2<a class="headerlink" href="#property-2" title="Link to this heading"></a></h3>
+<pre><code>
+property(Key, Value) -&gt; Property
+</code></pre>
+<ul class="definitions"><li><code>Key = term()</code></li><li><code>Value = term()</code></li><li><code>Property = atom() | {term(), term()}</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the property key<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: the property value<br /></p>
+<p>returns: Creates a property in normal form</p>
+<p>Creates a normal form (minimal) representation of a simple key/value property.
+Returns <code class="docutils literal notranslate"><span class="pre">Key</span></code> if <code class="docutils literal notranslate"><span class="pre">Value</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">Key</span></code> is an atom, otherwise a tuple
+<code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">Value}</span></code> is returned.
+See also <code class="docutils literal notranslate"><span class="pre">property/1</span></code>.</p>
+<p><a name="to_map-1"></a></p>
+</section>
+<section id="to-map-1">
+<h3>to_map/1<a class="headerlink" href="#to-map-1" title="Link to this heading"></a></h3>
+<pre><code>
+to_map(List) -&gt; Map
+</code></pre>
+<ul class="definitions"><li><code>List = [Shorthand | {Key, Value} | term()]</code></li><li><code>Map = #{Shorthand =&gt; true, Key =&gt; Value}</code></li><li><code>Shorthand = atom()</code></li><li><code>Key = term()</code></li><li><code>Value = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list will be converted to a map, such as <code class="docutils literal notranslate"><span class="pre">[key,</span> <span class="pre">{one,</span> <span class="pre">1}]</span></code><br /></p>
+<p>returns: the list converted as a map, such as <code class="docutils literal notranslate"><span class="pre">#{key</span> <span class="pre">=&gt;</span> <span class="pre">true,</span> <span class="pre">one</span> <span class="pre">=&gt;</span> <span class="pre">1}</span></code></p>
+<p>Converts the property list <code class="docutils literal notranslate"><span class="pre">List</span></code> to a map</p>
+<p>Shorthand atom values in <code class="docutils literal notranslate"><span class="pre">List</span></code> will be expanded to an association of the form
+<code class="docutils literal notranslate"><span class="pre">Atom</span> <span class="pre">=&gt;</span> <span class="pre">true</span></code>. Tuples of the form <code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">Value}</span></code> in <code class="docutils literal notranslate"><span class="pre">List</span></code> will be converted to
+an association of the form <code class="docutils literal notranslate"><span class="pre">Key</span> <span class="pre">=&gt;</span> <span class="pre">Value</span></code>. Anything else will be silently
+ignored.</p>
+<p>If the same key appears in <code class="docutils literal notranslate"><span class="pre">List</span></code> multiple times, the value of the one appearing
+nearest to the head of <code class="docutils literal notranslate"><span class="pre">List</span></code> will be in the result map, that is the value that
+would be returned by a call to <a class="reference internal" href="#%60get_value/2%60"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">get_value(Key,</span> <span class="pre">List)</span></code></span></a>.</p>
+<p><a name="unfold-1"></a></p>
+</section>
+<section id="unfold-1">
+<h3>unfold/1<a class="headerlink" href="#unfold-1" title="Link to this heading"></a></h3>
+<pre><code>
+unfold(ListIn) -&gt; ListOut
+</code></pre>
+<ul class="definitions"><li><code>ListIn = [term()]</code></li><li><code>ListOut = [term()]</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">ListIn</span></code>: the list that will be unfolded, such as <code class="docutils literal notranslate"><span class="pre">[key]</span></code><br /></p>
+<p>returns: the unfolded list, such as <code class="docutils literal notranslate"><span class="pre">{key,</span> <span class="pre">true}</span></code></p>
+<p>Unfolds all occurrences of atoms in <code class="docutils literal notranslate"><span class="pre">ListIn</span></code> to tuples <code class="docutils literal notranslate"><span class="pre">{Atom,</span> <span class="pre">true}</span></code>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="net.html" class="btn btn-neutral float-left" title="Module net" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="queue.html" class="btn btn-neutral float-right" title="Module queue" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      release-0.6 branch (unreleased)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/doc/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/doc/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/doc/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/doc/main/">main branch (unstable)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/doc/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/doc/release-0.6/pdf/AtomVM-release-0.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/doc/release-0.6/epub/AtomVM-release-0.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
