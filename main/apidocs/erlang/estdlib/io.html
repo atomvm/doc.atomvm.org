@@ -1,0 +1,475 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module io &mdash; AtomVM 0.7.0-dev+git.10429ba9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/io.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=9ae9fb0b"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module io_lib" href="io_lib.html" />
+    <link rel="prev" title="Module init" href="init.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="application.html">Module application</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dist_util.html">Module dist_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_epmd.html">Module erl_epmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erpc.html">Module erpc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets.html">Module ets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="init.html">Module init</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html">Module kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net_kernel.html">Module net_kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net_kernel_sup.html">Module net_kernel_sup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket_dist.html">Module socket_dist</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket_dist_controller.html">Module socket_dist_controller</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module io</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-io">
+<h1>Module io<a class="headerlink" href="#module-io" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>An implementation of the Erlang/OTP io interface.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module implements a strict subset of the Erlang/OTP io interface.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="device">
+<h3><a name="type-device">device()</a><a class="headerlink" href="#device" title="Link to this heading"></a></h3>
+<pre><code>
+device() = atom() | pid() | <a href="#type-standard_io">standard_io()</a> | <a href="#type-standard_error">standard_error()</a> | <a href="#type-user">user()</a>
+</code></pre>
+</section>
+<section id="format">
+<h3><a name="type-format">format()</a><a class="headerlink" href="#format" title="Link to this heading"></a></h3>
+<pre><code>
+format() = atom() | string() | binary()
+</code></pre>
+</section>
+<section id="getopt">
+<h3><a name="type-getopt">getopt()</a><a class="headerlink" href="#getopt" title="Link to this heading"></a></h3>
+<pre><code>
+getopt() = {echo, boolean()} | {binary, boolean()} | {encoding, unicode} | {terminal, boolean()} | {stdin, boolean()} | {stdout, boolean()} | {stderr, boolean()}
+</code></pre>
+</section>
+<section id="standard-error">
+<h3><a name="type-standard_error">standard_error()</a><a class="headerlink" href="#standard-error" title="Link to this heading"></a></h3>
+<pre><code>
+standard_error() = standard_error
+</code></pre>
+</section>
+<section id="standard-io">
+<h3><a name="type-standard_io">standard_io()</a><a class="headerlink" href="#standard-io" title="Link to this heading"></a></h3>
+<pre><code>
+standard_io() = standard_io
+</code></pre>
+</section>
+<section id="user">
+<h3><a name="type-user">user()</a><a class="headerlink" href="#user" title="Link to this heading"></a></h3>
+<pre><code>
+user() = user
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#columns-0">columns/0</a></td><td>Returns the number of columns for standard I/O.</td></tr><tr><td valign="top"><a href="#columns-1">columns/1</a></td><td>Returns the number of columns for passed I/O device.</td></tr><tr><td valign="top"><a href="#format-1">format/1</a></td><td>Equivalent to <a href="#fwrite-1"><tt>fwrite(Format)</tt></a>.</td></tr><tr><td valign="top"><a href="#format-2">format/2</a></td><td>Equivalent to <a href="#fwrite-2"><tt>fwrite(Format, Data)</tt></a>.</td></tr><tr><td valign="top"><a href="#format-3">format/3</a></td><td>Equivalent to <a href="#fwrite-3"><tt>fwrite(IODevice, Format, Data)</tt></a>.</td></tr><tr><td valign="top"><a href="#fwrite-1">fwrite/1</a></td><td>Equivalent to <a href="#fwrite-2"><tt>fwrite(Format, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#fwrite-2">fwrite/2</a></td><td>Equivalent to <a href="#fwrite-3"><tt>fwrite(standard_io, Format, Data)</tt></a>.</td></tr><tr><td valign="top"><a href="#fwrite-3">fwrite/3</a></td><td>    Format string and data to IO device.</td></tr><tr><td valign="top"><a href="#get_line-1">get_line/1</a></td><td>    Read string from console with prompt.</td></tr><tr><td valign="top"><a href="#getopts-0">getopts/0</a></td><td>Get all options for standard I/O.</td></tr><tr><td valign="top"><a href="#getopts-1">getopts/1</a></td><td>Get all options for a given IODevice.</td></tr><tr><td valign="top"><a href="#printable_range-0">printable_range/0</a></td><td>Returns the user-requested range of printable Unicode characters.</td></tr><tr><td valign="top"><a href="#put_chars-1">put_chars/1</a></td><td>    Writes the given character(s) to the console.</td></tr><tr><td valign="top"><a href="#put_chars-2">put_chars/2</a></td><td>    Writes the given character(s) to the given device.</td></tr><tr><td valign="top"><a href="#requests-1">requests/1</a></td><td></td></tr><tr><td valign="top"><a href="#scan_erl_exprs-4">scan_erl_exprs/4</a></td><td>    Reads data from IODevice with a given prompt.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="columns-0"></a></p>
+<section id="columns-0">
+<h3>columns/0<a class="headerlink" href="#columns-0" title="Link to this heading"></a></h3>
+<pre><code>
+columns() -&gt; {ok, pos_integer()} | {error, enotsup}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#columns-1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">columns(standard_io)</span></code></span></a>.</p>
+<p>Returns the number of columns for standard I/O.</p>
+<p><a name="columns-1"></a></p>
+</section>
+<section id="columns-1">
+<h3>columns/1<a class="headerlink" href="#columns-1" title="Link to this heading"></a></h3>
+<pre><code>
+columns(IODevice::<a href="#type-device">device()</a>) -&gt; {ok, pos_integer()} | {error, enotsup}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">IODevice</span></code>: IO device to get columns of<br /></p>
+<p>Returns the number of columns for passed I/O device.</p>
+<p><a name="format-1"></a></p>
+</section>
+<section id="format-1">
+<h3>format/1<a class="headerlink" href="#format-1" title="Link to this heading"></a></h3>
+<pre><code>
+format(Format::<a href="#type-format">format()</a>) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#fwrite-1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">fwrite(Format)</span></code></span></a>.</p>
+<p><a name="format-2"></a></p>
+</section>
+<section id="format-2">
+<h3>format/2<a class="headerlink" href="#format-2" title="Link to this heading"></a></h3>
+<pre><code>
+format(Format::<a href="#type-format">format()</a>, Data::[term()]) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#fwrite-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">fwrite(Format,</span> <span class="pre">Data)</span></code></span></a>.</p>
+<p><a name="format-3"></a></p>
+</section>
+<section id="format-3">
+<h3>format/3<a class="headerlink" href="#format-3" title="Link to this heading"></a></h3>
+<pre><code>
+format(IODevice::<a href="#type-device">device()</a>, Format::<a href="#type-format">format()</a>, Data::[term()]) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#fwrite-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">fwrite(IODevice,</span> <span class="pre">Format,</span> <span class="pre">Data)</span></code></span></a>.</p>
+<p><a name="fwrite-1"></a></p>
+</section>
+<section id="fwrite-1">
+<h3>fwrite/1<a class="headerlink" href="#fwrite-1" title="Link to this heading"></a></h3>
+<pre><code>
+fwrite(Format::<a href="#type-format">format()</a>) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#fwrite-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">fwrite(Format,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="fwrite-2"></a></p>
+</section>
+<section id="fwrite-2">
+<h3>fwrite/2<a class="headerlink" href="#fwrite-2" title="Link to this heading"></a></h3>
+<pre><code>
+fwrite(Format::<a href="#type-format">format()</a>, Data::[term()]) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#fwrite-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">fwrite(standard_io,</span> <span class="pre">Format,</span> <span class="pre">Data)</span></code></span></a>.</p>
+<p><a name="fwrite-3"></a></p>
+</section>
+<section id="fwrite-3">
+<h3>fwrite/3<a class="headerlink" href="#fwrite-3" title="Link to this heading"></a></h3>
+<pre><code>
+fwrite(IODevice::<a href="#type-device">device()</a>, Format::string(), Args::list()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">IODevice</span></code>: device to write to<br /><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /></p>
+<p>returns: ok</p>
+<p>Format string and data to IO device.
+See io_lib:format/2 for information about
+formatting capabilities.</p>
+<p><a name="get_line-1"></a></p>
+</section>
+<section id="get-line-1">
+<h3>get_line/1<a class="headerlink" href="#get-line-1" title="Link to this heading"></a></h3>
+<pre><code>
+get_line(Prompt::string()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Prompt</span></code>: prompt for user input<br /></p>
+<p>returns: string</p>
+<p>Read string from console with prompt.</p>
+<p><a name="getopts-0"></a></p>
+</section>
+<section id="getopts-0">
+<h3>getopts/0<a class="headerlink" href="#getopts-0" title="Link to this heading"></a></h3>
+<pre><code>
+getopts() -&gt; [<a href="#type-getopt">getopt()</a>] | {error, Reason::any()}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#getopts-1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getopts(standard_io)</span></code></span></a>.</p>
+<p>Get all options for standard I/O</p>
+<p><a name="getopts-1"></a></p>
+</section>
+<section id="getopts-1">
+<h3>getopts/1<a class="headerlink" href="#getopts-1" title="Link to this heading"></a></h3>
+<pre><code>
+getopts(IODevice::<a href="#type-device">device()</a>) -&gt; [<a href="#type-getopt">getopt()</a>] | {error, Reason::any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">IODevice</span></code>: IO device to get options for<br /></p>
+<p>Get all options for a given IODevice</p>
+<p><a name="printable_range-0"></a></p>
+</section>
+<section id="printable-range-0">
+<h3>printable_range/0<a class="headerlink" href="#printable-range-0" title="Link to this heading"></a></h3>
+<pre><code>
+printable_range() -&gt; unicode | latin1
+</code></pre>
+<br />
+<p>Returns the user-requested range of printable Unicode characters.
+Currently always returns <code class="docutils literal notranslate"><span class="pre">unicode</span></code></p>
+<p><a name="put_chars-1"></a></p>
+</section>
+<section id="put-chars-1">
+<h3>put_chars/1<a class="headerlink" href="#put-chars-1" title="Link to this heading"></a></h3>
+<pre><code>
+put_chars(Chars::list() | binary()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Chars</span></code>: character(s) to write to console<br /></p>
+<p>returns: ok</p>
+<p>Equivalent to <a class="reference internal" href="#put_chars-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">put_chars(standard_io,</span> <span class="pre">Chars)</span></code></span></a>.</p>
+<p>Writes the given character(s) to the console.</p>
+<p><a name="put_chars-2"></a></p>
+</section>
+<section id="put-chars-2">
+<h3>put_chars/2<a class="headerlink" href="#put-chars-2" title="Link to this heading"></a></h3>
+<pre><code>
+put_chars(Device::<a href="#type-device">device()</a>, Chars::list() | binary()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Device</span></code>: device to send characters to<br /><code class="docutils literal notranslate"><span class="pre">Chars</span></code>: character(s) to write to device<br /></p>
+<p>returns: ok</p>
+<p>Writes the given character(s) to the given device.</p>
+<p><a name="requests-1"></a></p>
+</section>
+<section id="requests-1">
+<h3>requests/1<a class="headerlink" href="#requests-1" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">requests(Requests)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="scan_erl_exprs-4"></a></p>
+</section>
+<section id="scan-erl-exprs-4">
+<h3>scan_erl_exprs/4<a class="headerlink" href="#scan-erl-exprs-4" title="Link to this heading"></a></h3>
+<pre><code>
+scan_erl_exprs(IODevice::<a href="#type-device">device()</a>, Prompt::atom() | <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-chardata">unicode:chardata()</a>, StartLocation::any(), Options::any()) -&gt; {ok, Tokens::any(), EndLocation::any()} | {eof, EndLocation::any()} | eof | {error, any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">IODevice</span></code>: device to read from<br /><code class="docutils literal notranslate"><span class="pre">Prompt</span></code>: prompt to print<br /><code class="docutils literal notranslate"><span class="pre">StartLocation</span></code>: start location for reading<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: options for tokenizing<br /></p>
+<p>returns: read tokens or an error</p>
+<p>Reads data from IODevice with a given prompt</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="init.html" class="btn btn-neutral float-left" title="Module init" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="io_lib.html" class="btn btn-neutral float-right" title="Module io_lib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/pdf/AtomVM-main.pdf">pdf</a></dd>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

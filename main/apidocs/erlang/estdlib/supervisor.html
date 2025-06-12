@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module supervisor &mdash; AtomVM 0.7.0-dev+git.10429ba9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/supervisor.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=9ae9fb0b"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module timer" href="timer.html" />
+    <link rel="prev" title="Module string" href="string.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="application.html">Module application</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dist_util.html">Module dist_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_epmd.html">Module erl_epmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erpc.html">Module erpc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets.html">Module ets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="init.html">Module init</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html">Module kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net_kernel.html">Module net_kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net_kernel_sup.html">Module net_kernel_sup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket_dist.html">Module socket_dist</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket_dist_controller.html">Module socket_dist_controller</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module supervisor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-supervisor">
+<h1>Module supervisor<a class="headerlink" href="#module-supervisor" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="child-spec">
+<h3><a name="type-child_spec">child_spec()</a><a class="headerlink" href="#child-spec" title="Link to this heading"></a></h3>
+<pre><code>
+child_spec() = #{id =&gt; any(), start =&gt; {module(), atom(), [any()]}, restart =&gt; <a href="#type-restart">restart()</a>, shutdown =&gt; <a href="#type-shutdown">shutdown()</a>, type =&gt; <a href="#type-child_type">child_type()</a>, modules =&gt; [module()] | dynamic} | {Id::any(), StartFunc::{module(), atom(), [any()]}, Restart::<a href="#type-restart">restart()</a>, Shutdown::<a href="#type-shutdown">shutdown()</a>, Type::<a href="#type-child_type">child_type()</a>, Modules::[module()] | dynamic}
+</code></pre>
+</section>
+<section id="child-type">
+<h3><a name="type-child_type">child_type()</a><a class="headerlink" href="#child-type" title="Link to this heading"></a></h3>
+<pre><code>
+child_type() = worker | supervisor
+</code></pre>
+</section>
+<section id="restart">
+<h3><a name="type-restart">restart()</a><a class="headerlink" href="#restart" title="Link to this heading"></a></h3>
+<pre><code>
+restart() = permanent | transient | temporary | {terminating, permanent | transient | temporary, <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/gen_server.md#type-from">gen_server:from()</a>}
+</code></pre>
+</section>
+<section id="shutdown">
+<h3><a name="type-shutdown">shutdown()</a><a class="headerlink" href="#shutdown" title="Link to this heading"></a></h3>
+<pre><code>
+shutdown() = brutal_kill | timeout()
+</code></pre>
+</section>
+<section id="strategy">
+<h3><a name="type-strategy">strategy()</a><a class="headerlink" href="#strategy" title="Link to this heading"></a></h3>
+<pre><code>
+strategy() = one_for_all | one_for_one
+</code></pre>
+</section>
+<section id="sup-flags">
+<h3><a name="type-sup_flags">sup_flags()</a><a class="headerlink" href="#sup-flags" title="Link to this heading"></a></h3>
+<pre><code>
+sup_flags() = #{strategy =&gt; <a href="#type-strategy">strategy()</a>, intensity =&gt; non_neg_integer(), period =&gt; pos_integer()} | {RestartStrategy::<a href="#type-strategy">strategy()</a>, Intensity::non_neg_integer(), Period::pos_integer()}
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#delete_child-2">delete_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#handle_call-3">handle_call/3</a></td><td></td></tr><tr><td valign="top"><a href="#handle_cast-2">handle_cast/2</a></td><td></td></tr><tr><td valign="top"><a href="#handle_info-2">handle_info/2</a></td><td></td></tr><tr><td valign="top"><a href="#init-1">init/1</a></td><td></td></tr><tr><td valign="top"><a href="#restart_child-2">restart_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_child-2">start_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-2">start_link/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td></td></tr><tr><td valign="top"><a href="#terminate_child-2">terminate_child/2</a></td><td></td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="delete_child-2"></a></p>
+<section id="delete-child-2">
+<h3>delete_child/2<a class="headerlink" href="#delete-child-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">delete_child(Supervisor,</span> <span class="pre">ChildId)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="handle_call-3"></a></p>
+</section>
+<section id="handle-call-3">
+<h3>handle_call/3<a class="headerlink" href="#handle-call-3" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">handle_call(X1,</span> <span class="pre">From,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="handle_cast-2"></a></p>
+</section>
+<section id="handle-cast-2">
+<h3>handle_cast/2<a class="headerlink" href="#handle-cast-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">handle_cast(Msg,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="handle_info-2"></a></p>
+</section>
+<section id="handle-info-2">
+<h3>handle_info/2<a class="headerlink" href="#handle-info-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">handle_info(Msg,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="init-1"></a></p>
+</section>
+<section id="init-1">
+<h3>init/1<a class="headerlink" href="#init-1" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">init(X1)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="restart_child-2"></a></p>
+</section>
+<section id="restart-child-2">
+<h3>restart_child/2<a class="headerlink" href="#restart-child-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">restart_child(Supervisor,</span> <span class="pre">ChildId)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="start_child-2"></a></p>
+</section>
+<section id="start-child-2">
+<h3>start_child/2<a class="headerlink" href="#start-child-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">start_child(Supervisor,</span> <span class="pre">ChildSpec)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="start_link-2"></a></p>
+</section>
+<section id="start-link-2">
+<h3>start_link/2<a class="headerlink" href="#start-link-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">start_link(Module,</span> <span class="pre">Args)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="start_link-3"></a></p>
+</section>
+<section id="start-link-3">
+<h3>start_link/3<a class="headerlink" href="#start-link-3" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">start_link(SupName,</span> <span class="pre">Module,</span> <span class="pre">Args)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="terminate_child-2"></a></p>
+</section>
+<section id="terminate-child-2">
+<h3>terminate_child/2<a class="headerlink" href="#terminate-child-2" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">terminate_child(Supervisor,</span> <span class="pre">ChildId)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="string.html" class="btn btn-neutral float-left" title="Module string" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timer.html" class="btn btn-neutral float-right" title="Module timer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/pdf/AtomVM-main.pdf">pdf</a></dd>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

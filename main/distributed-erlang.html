@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Distributed Erlang &mdash; AtomVM 0.7.0-dev+git.10429ba9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/distributed-erlang.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9ae9fb0b"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Build Instructions" href="build-instructions.html" />
+    <link rel="prev" title="Network Programming Guide" href="network-programming-guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Distributed Erlang</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#starting-and-stopping-distribution">Starting and stopping distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#epmd"><code class="docutils literal notranslate"><span class="pre">epmd</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#erlang-otp-compatibility">Erlang/OTP compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#security">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alternative-carrier">Alternative carrier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distribution-features">Distribution features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Distributed Erlang</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+ Copyright 2025 Paul Guyot <pguyot@kallisys.net>
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section id="distributed-erlang">
+<h1>Distributed Erlang<a class="headerlink" href="#distributed-erlang" title="Link to this heading"></a></h1>
+<p>For a generic introduction to Distributed Erlang Systems, please refer to the <a class="reference external" href="https://www.erlang.org/doc/system/distributed.html">dedicated section</a> of Erlang/OTP documentation.</p>
+<p>AtomVM provides an implementation of Erlang distribution protocol and AtomVM nodes can take part in clusters with both AtomVM and BEAM nodes.</p>
+<p>Distribution is currently available on all platforms with TCP/IP communication, namely:</p>
+<ul class="simple">
+<li><p>Generic Unix</p></li>
+<li><p>ESP32</p></li>
+<li><p>RP2 (Pico)</p></li>
+</ul>
+<p>Two examples are provided:</p>
+<ul class="simple">
+<li><p>disterl in <code class="docutils literal notranslate"><span class="pre">examples/erlang/disterl.erl</span></code>: distribution on Unix systems</p></li>
+<li><p>epmd_disterl in <code class="docutils literal notranslate"><span class="pre">examples/esp32/epmd_disterl.erl</span></code>: distribution on ESP32 devices</p></li>
+</ul>
+<section id="starting-and-stopping-distribution">
+<h2>Starting and stopping distribution<a class="headerlink" href="#starting-and-stopping-distribution" title="Link to this heading"></a></h2>
+<p>Distribution has to be started programmatically. Following Erlang/OTP, distribution relies on <code class="docutils literal notranslate"><span class="pre">kernel</span></code> which needs to be started.</p>
+<p>The following lines will start distribution on Unix systems with long name <code class="docutils literal notranslate"><span class="pre">atomvm&#64;127.0.0.1</span></code>.</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">KernelPid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="p">[]),</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">NetKernelPid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;atomvm@127.0.0.1&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">}),</span>
+<span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nb">set_cookie</span><span class="p">(</span><span class="o">&lt;&lt;</span><span class="s">&quot;AtomVM&quot;</span><span class="o">&gt;&gt;</span><span class="p">).</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">net_kernel:stop/0</span></code> can be used to stop distribution.</p>
+</section>
+<section id="epmd">
+<h2><code class="docutils literal notranslate"><span class="pre">epmd</span></code><a class="headerlink" href="#epmd" title="Link to this heading"></a></h2>
+<p>AtomVM nodes can use Erlang/OTP’s epmd on Unix systems. AtomVM is also bundled with a pure Erlang implementation of <code class="docutils literal notranslate"><span class="pre">epmd</span></code> which can be used on all platforms. Module is called <code class="docutils literal notranslate"><span class="pre">epmd</span></code>, to be distinguished from <code class="docutils literal notranslate"><span class="pre">erl_epmd</span></code> which is the client.</p>
+<p>AtomVM’s epmd daemon can be started with:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">EPMDPid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">epmd</span><span class="p">:</span><span class="nf">start_link</span><span class="p">([]).</span>
+</pre></div>
+</div>
+<p>This has to be called before invoking <code class="docutils literal notranslate"><span class="pre">net_kernel:start/2</span></code>.</p>
+</section>
+<section id="erlang-otp-compatibility">
+<h2>Erlang/OTP compatibility<a class="headerlink" href="#erlang-otp-compatibility" title="Link to this heading"></a></h2>
+<p>AtomVM can connect to Erlang/OTP 24 and higher.</p>
+</section>
+<section id="security">
+<h2>Security<a class="headerlink" href="#security" title="Link to this heading"></a></h2>
+<p>AtomVM supports cookie authentication. However, distribution over TLS is not supported yet.</p>
+</section>
+<section id="alternative-carrier">
+<h2>Alternative carrier<a class="headerlink" href="#alternative-carrier" title="Link to this heading"></a></h2>
+<p>Following Erlang/OTP, AtomVM supports alternative carriers with distribution modules. Please refer to <a class="reference external" href="https://www.erlang.org/doc/apps/erts/alt_dist#distribution-module">Erlang/OTP’s dedicated documentation</a>.</p>
+<p>The main difference is that packets exchanged by <code class="docutils literal notranslate"><span class="pre">f_recv</span></code> and <code class="docutils literal notranslate"><span class="pre">f_send</span></code> handlers must be binaries instead of list of integers, for memory usage reasons.</p>
+<p>AtomVM’s <code class="docutils literal notranslate"><span class="pre">f_send</span></code> has the following signature:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="k">fun</span><span class="w"> </span><span class="p">(</span><span class="nv">DistCtrlr</span><span class="p">,</span><span class="w"> </span><span class="nv">Data</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">binary</span><span class="p">())</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="nv">Error</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>AtomVM’s <code class="docutils literal notranslate"><span class="pre">f_recv</span></code> has the following signature:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="k">fun</span><span class="w"> </span><span class="p">(</span><span class="nv">DistCtrlr</span><span class="p">,</span><span class="w"> </span><span class="nv">Length</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">pos_integer</span><span class="p">(),</span><span class="w"> </span><span class="nv">Timeout</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">timeout</span><span class="p">())</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="nv">Packet</span><span class="p">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="nv">Reason</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>AtomVM’s distribution is based on <code class="docutils literal notranslate"><span class="pre">socket_dist</span></code> and <code class="docutils literal notranslate"><span class="pre">socket_dist_controller</span></code> modules which can also be used with BEAM by definining <code class="docutils literal notranslate"><span class="pre">BEAM_INTERFACE</span></code> to adjust for the difference.</p>
+</section>
+<section id="distribution-features">
+<h2>Distribution features<a class="headerlink" href="#distribution-features" title="Link to this heading"></a></h2>
+<p>Distribution implementation is (very) partial. The most basic features are available:</p>
+<ul class="simple">
+<li><p>serialization of all types</p></li>
+<li><p>epmd protocol (client and server)</p></li>
+<li><p>message passing</p></li>
+<li><p>monitoring processes</p></li>
+<li><p>I/O distribution (“group leader”).</p></li>
+</ul>
+<p>RPC (remote procedure call) from Erlang/OTP to AtomVM is also supported.
+Shell is not supported yet.</p>
+<p>Please do not hesitate to file issues or pull requests for additional features.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="network-programming-guide.html" class="btn btn-neutral float-left" title="Network Programming Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="build-instructions.html" class="btn btn-neutral float-right" title="Build Instructions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/pdf/AtomVM-main.pdf">pdf</a></dd>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1003 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog &mdash; AtomVM 0.7.0-dev+git.10429ba9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9ae9fb0b"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributor Covenant Code of Conduct" href="CODE_OF_CONDUCT.html" />
+    <link rel="prev" title="Contributing" href="CONTRIBUTING.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#unreleased">Unreleased</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#added">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changed">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixed">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">[0.6.6] - Unreleased</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">[0.6.5] - 2024-10-15</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">[0.6.4] - 2024-08-18</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Added</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">[0.6.3] - 2024-07-20</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">[0.6.2] - 25-05-2024</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">[0.6.1] - 2024-04-17</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id20">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id22">[0.6.0] - 2024-03-05</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id23">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#rc-0-2024-03-03">[0.6.0-rc.0] - 2024-03-03</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id24">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#beta-1-2024-02-28">[0.6.0-beta.1] - 2024-02-28</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id26">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id27">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id28">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#beta-0-2024-02-08">[0.6.0-beta.0] - 2024-02-08</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id29">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id30">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id31">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#alpha-2-2023-12-10">[0.6.0-alpha.2] - 2023-12-10</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id32">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id33">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id34">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removed">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#alpha-1-2023-10-09">[0.6.0-alpha.1] - 2023-10-09</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id35">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id36">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id37">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#alpha-0-2023-08-13">[0.6.0-alpha.0] - 2023-08-13</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id38">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id39">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#breaking-changes">Breaking Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id40">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id41">[0.5.1] - Unreleased</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id42">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id43">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id44">[0.5.0] - 2022-03-22</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Changelog</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading"></a></h1>
+<p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on <a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
+and this project adheres to <a class="reference external" href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<section id="unreleased">
+<h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading"></a></h2>
+<section id="added">
+<h3>Added<a class="headerlink" href="#added" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added a limited implementation of the OTP <code class="docutils literal notranslate"><span class="pre">ets</span></code> interface</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">code:all_loaded/0</span></code> and <code class="docutils literal notranslate"><span class="pre">code:all_available/0</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">erlang:split_binary/2</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">inet:getaddr/2</span></code></p></li>
+<li><p>Added support for external pids and encoded pids in external terms</p></li>
+<li><p>Added support for external refs and encoded refs in external terms</p></li>
+<li><p>Introduce ports to represent native processes and added support for external ports and encoded ports in external terms</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">atomvm:get_creation/0</span></code>, equivalent to <code class="docutils literal notranslate"><span class="pre">erts_internal:get_creation/0</span></code></p></li>
+<li><p>Added menuconfig option for enabling USE_USB_SERIAL, eg. serial over USB for certain ESP32-S2 boards etc.</p></li>
+<li><p>Partial support for <code class="docutils literal notranslate"><span class="pre">erlang:fun_info/2</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:fun_info/1</span></code></p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">registered_name</span></code> in <code class="docutils literal notranslate"><span class="pre">erlang:process_info/2</span></code> and <code class="docutils literal notranslate"><span class="pre">Process.info/2</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">net:gethostname/0</span></code> on platforms with gethostname(3).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">socket:getopt/2</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">supervisor:terminate_child/2</span></code>, <code class="docutils literal notranslate"><span class="pre">supervisor:restart_child/2</span></code> and <code class="docutils literal notranslate"><span class="pre">supervisor:delete_child/2</span></code></p></li>
+<li><p>Added support for ‘erlang:–/2’.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">esp:partition_read/3</span></code>, and documentation for <code class="docutils literal notranslate"><span class="pre">esp:partition_erase_range/2/3</span></code> and <code class="docutils literal notranslate"><span class="pre">esp:partition_write/3</span></code></p></li>
+<li><p>Added support for list insertion in ‘ets:insert/2’.</p></li>
+<li><p>Support to OTP-28</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">atomvm:subprocess/4</span></code> to perform pipe/fork/execve on POSIX platforms</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">externalterm_to_term_with_roots</span></code> to efficiently preserve roots when allocating memory for external terms.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">erl_epmd</span></code> client implementation to epmd using <code class="docutils literal notranslate"><span class="pre">socket</span></code> module</p></li>
+<li><p>Added support for socket asynchronous API for <code class="docutils literal notranslate"><span class="pre">recv</span></code>, <code class="docutils literal notranslate"><span class="pre">recvfrom</span></code> and <code class="docutils literal notranslate"><span class="pre">accept</span></code>.</p></li>
+<li><p>Added support for UDP multicast with socket API.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">ets:update_counter/3</span></code> and <code class="docutils literal notranslate"><span class="pre">ets:update_counter/4</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">erlang:+/1</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">lists:append/1</span></code> and <code class="docutils literal notranslate"><span class="pre">lists:append/2</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">erlang:spawn_monitor/1</span></code>, <code class="docutils literal notranslate"><span class="pre">erlang:spawn_monitor/3</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">lists:dropwhile/2</span></code>.</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">float/1</span></code> BIF.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">erlang:get/0</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:erase/0</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">erlang:unique_integer/0</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:unique_integer/1</span></code></p></li>
+<li><p>Added support for ‘ets:delete/1’.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">lists:flatmap/2</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">io:fwrite/1,2,3</span></code> and <code class="docutils literal notranslate"><span class="pre">io:format/3</span></code> as well as few io functions required by remote shell</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">code:is_loaded/1</span></code> and <code class="docutils literal notranslate"><span class="pre">code:which/1</span></code></p></li>
+<li><p>Added several <code class="docutils literal notranslate"><span class="pre">io_lib</span></code> functions including <code class="docutils literal notranslate"><span class="pre">io_lib:fwrite/2</span></code> and <code class="docutils literal notranslate"><span class="pre">io_lib:write_atom/1</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">init:get_argument/1</span></code>, <code class="docutils literal notranslate"><span class="pre">init:get_plain_arguments/0</span></code> and <code class="docutils literal notranslate"><span class="pre">init:notify_when_started/1</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">application:get_env/2</span></code></p></li>
+<li><p>Added CodeQL analysis to esp32, stm32, pico, and wasm workflows</p></li>
+<li><p>Added Function.ex and Protocol.ex improving Elixir 1.18 support</p></li>
+<li><p>Added WiFi support for ESP32P4 via esp-wifi-external for build with ESP-IDF v5.4 and later</p></li>
+<li><p>Added Process.link/1 and unlink/1 to Elixir Process.ex</p></li>
+</ul>
+</section>
+<section id="changed">
+<h3>Changed<a class="headerlink" href="#changed" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">externalterm_to_term_copy</span></code> added in [0.6.5] and introduced flags to <code class="docutils literal notranslate"><span class="pre">externalterm_to_term</span></code> to perform copy.</p></li>
+<li><p>Release images for ESP32 chips are built with ESP-IDF v5.4</p></li>
+<li><p>ESP32: SPI peripheral defaults to <code class="docutils literal notranslate"><span class="pre">&quot;spi2&quot;</span></code> instead of deprecated <code class="docutils literal notranslate"><span class="pre">hspi</span></code></p></li>
+</ul>
+</section>
+<section id="fixed">
+<h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>ESP32: improved sntp sync speed from a cold boot.</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">gen_server</span></code> internal messages to match OTP so it works across erlang distribution</p></li>
+<li><p>Utilize reserved <code class="docutils literal notranslate"><span class="pre">phy_init</span></code> partition on ESP32 to store wifi calibration for faster connections.</p></li>
+<li><p>Support for zero count in <code class="docutils literal notranslate"><span class="pre">lists:duplicate/2</span></code>.</p></li>
+<li><p>packbeam: fix memory leak preventing building with address sanitizer</p></li>
+</ul>
+</section>
+</section>
+<section id="id1">
+<h2>[0.6.6] - Unreleased<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="id2">
+<h3>Added<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added the ability to run beams from the CLI for Generic Unix platform (it was already possible
+with nodejs and emscripten)</p></li>
+<li><p>Added preliminary support for ESP32P4 (no networking support yet).</p></li>
+<li><p>Added memory info in <code class="docutils literal notranslate"><span class="pre">out_of_memory</span></code> crash logs to help developers fix memory issues.</p></li>
+<li><p>Added documentation and function specs for uart driver</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">uart:read/2</span></code> with a timeout parameter.</p></li>
+<li><p>Missing <code class="docutils literal notranslate"><span class="pre">erlang:is_function/2</span></code> BIF</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">erlang:is_record/2</span></code></p></li>
+<li><p>Added ability to set per-interface <code class="docutils literal notranslate"><span class="pre">dhcp_hostname</span></code> on Pico W if present in config.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Fixed<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fixed specifications of nifs from <code class="docutils literal notranslate"><span class="pre">esp_adc</span></code> module</p></li>
+<li><p>ESP32: fix <code class="docutils literal notranslate"><span class="pre">gpio:init/1</span></code> on GPIO &gt;= 32</p></li>
+<li><p>Adding missing check, passing a non numeric argument to a function expecting a floating point
+might lead to a crash in certain situations.</p></li>
+<li><p>Fixed several bugs in <code class="docutils literal notranslate"><span class="pre">http_server</span></code> (#1366)</p></li>
+<li><p>Fixed generic_unix <code class="docutils literal notranslate"><span class="pre">socket_driver</span></code> to return <code class="docutils literal notranslate"><span class="pre">{gen_tcp,</span> <span class="pre">closed}</span></code> when socket is closed on Linux
+instead of <code class="docutils literal notranslate"><span class="pre">{gen_tcp,</span> <span class="pre">{recv,</span> <span class="pre">104}}</span></code></p></li>
+<li><p>Fixed a memory leak where modules were not properly destroyed when the global context is destroyd</p></li>
+<li><p>alisp: fix support to variables that are not binaries or integers.</p></li>
+<li><p>Fixed destruction of ssl-related resources</p></li>
+<li><p>Fixed corruption when dealing with specific situations that involve more than 16 x registers when
+certain VM instructions are used.</p></li>
+<li><p>Fixed ESP32 GPIO interrupt trigger <code class="docutils literal notranslate"><span class="pre">none</span></code></p></li>
+<li><p>Fixed an issue where a timeout would occur immediately in a race condition</p></li>
+<li><p>Fixed SPI close command</p></li>
+<li><p>Added missing lock on socket structure</p></li>
+<li><p>Fixed a race condition affecting multi-core MCUs where a timeout would not be properly cleared</p></li>
+<li><p>Fixed a double free when esp32 uart driver was closed, yielding an assert abort</p></li>
+<li><p>Fixed compilation with latest debian gcc-arm-none-eabi</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">network:stop/0</span></code> on ESP32 so the network can be started again</p></li>
+<li><p>Fixed a memory corruption caused by <code class="docutils literal notranslate"><span class="pre">binary:split/2,3</span></code></p></li>
+<li><p>Fixed deadlock in socket code</p></li>
+<li><p>Fixed bug in opcode implementation (<code class="docutils literal notranslate"><span class="pre">select_val</span></code>): when selecting a value among many others a
+shallow comparison was performed, so it was working just for plain values such as atoms and small
+integers</p></li>
+<li><p>Fixed support for setting esp32 boot_path in NVS.</p></li>
+<li><p>Fixed race conditions in network:start/stop.</p></li>
+<li><p>Fixed crash calling network:sta_rssi(), when network not up.</p></li>
+<li><p>Fixed error handling when calling <code class="docutils literal notranslate"><span class="pre">min</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> with code compiled before OTP-26: there was a
+bug when handling errors from BIFs used as NIFs (when called with <code class="docutils literal notranslate"><span class="pre">CALL_EXT</span></code> and similar opcodes)</p></li>
+<li><p>Fixed matching of binaries on unaligned boundaries for code compiled with older versions of OTP</p></li>
+<li><p>Added missing out of memory handling in binary_to_atom</p></li>
+<li><p>Fixed call to funs such as fun erlang:’not’/1, that make use of BIFs</p></li>
+<li><p>Fixed potential crashes or memory leaks caused by a mistake in calculation of reference counts
+and a race condition in otp_socket code</p></li>
+<li><p>Fixed an out of memory issue by forcing GC to copy data from message fragments</p></li>
+<li><p>Fixed a bug where calling repeatedly <code class="docutils literal notranslate"><span class="pre">process_info</span></code> on a stopped process could cause an out of
+memory error</p></li>
+<li><p>Fixed possible concurrency problems in ESP32 UART driver</p></li>
+<li><p>Fixed concurrency and memory leak related to links and monitors</p></li>
+<li><p>Fixed issues with parsing of line references for stack traces</p></li>
+<li><p>Fixed memory corruption issue with <code class="docutils literal notranslate"><span class="pre">erlang:make_tuple/2</span></code></p></li>
+<li><p>Fix potential use after free with code generated from OTP &lt;= 24</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">is_function/2</span></code> guard</p></li>
+<li><p>Fixed segfault when calling <code class="docutils literal notranslate"><span class="pre">lists:reverse/1</span></code> (#1600)</p></li>
+<li><p>Fixed nif_atomvm_posix_read GC bug</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">erlang:is_number/1</span></code> function, now returns true also for floats</p></li>
+<li><p>Fixed unlink protocol and add support for <code class="docutils literal notranslate"><span class="pre">link/1</span></code> on ports</p></li>
+<li><p>Do not abort when an out of memory happens while loading a literal value</p></li>
+<li><p>Fixed potential memory corruption when handling integer immediates that are stored as boxed
+integer (this never happens with integers &lt; 28 bits)</p></li>
+<li><p>Correctly set Pico-W unique dhcp hostname when using the default, previously all rp2040 devices
+used the same “PicoW” dhcp hostname, causing collisions when multiple rp2040 are on the same
+network. (See issue #1094)</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Changed<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>ESP32 UART driver no longer aborts because of badargs in configuration, instead raising an error</p></li>
+<li><p>ESP32: <code class="docutils literal notranslate"><span class="pre">v0.6.6</span></code> uses esp-idf v5.4.1 for pre-built images and <code class="docutils literal notranslate"><span class="pre">v5.4.x</span></code> is the suggested release
+also for custom builds</p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>[0.6.5] - 2024-10-15<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<section id="id6">
+<h3>Added<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>ESP32: add a new Elixir release “flavor” with a bigger boot.avm partition that has room for
+Elixir standard library modules</p></li>
+<li><p>ESP32: <code class="docutils literal notranslate"><span class="pre">--boot</span></code> option to mkimage.sh tool</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">erlang:atom_to_binary/1</span></code> that is equivalent to <code class="docutils literal notranslate"><span class="pre">erlang:atom_to_binary(Atom,</span> <span class="pre">utf8)</span></code></p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">String.Chars</span></code> protocol, now functions such as <code class="docutils literal notranslate"><span class="pre">Enum.join</span></code> are able to take
+also non string parameters (e.g. <code class="docutils literal notranslate"><span class="pre">Enum.join([1,</span> <span class="pre">2],</span> <span class="pre">&quot;,&quot;)</span></code></p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">Enum.at/3</span></code></p></li>
+<li><p>Add support for <code class="docutils literal notranslate"><span class="pre">is_bitstring/1</span></code> construct which is used in Elixir protocols runtime.</p></li>
+<li><p>Add support to Elixir <code class="docutils literal notranslate"><span class="pre">Enumerable</span></code> protocol also for <code class="docutils literal notranslate"><span class="pre">Enum.all?</span></code>, <code class="docutils literal notranslate"><span class="pre">Enum.any?</span></code>, <code class="docutils literal notranslate"><span class="pre">Enum.each</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Enum.filter</span></code>, <code class="docutils literal notranslate"><span class="pre">Enum.flat_map</span></code>, <code class="docutils literal notranslate"><span class="pre">Enum.reject</span></code>, <code class="docutils literal notranslate"><span class="pre">Enum.chunk_by</span></code> and <code class="docutils literal notranslate"><span class="pre">Enum.chunk_while</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">maps:merge_with/3</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">lists:last/1</span></code> and <code class="docutils literal notranslate"><span class="pre">lists:mapfoldl/3</span></code></p></li>
+<li><p>Add support to Elixir for <code class="docutils literal notranslate"><span class="pre">Process.send/2</span></code> <code class="docutils literal notranslate"><span class="pre">Process.send_after/3/4</span></code> and <code class="docutils literal notranslate"><span class="pre">Process.cancel_timer/1</span></code></p></li>
+<li><p>Add support for <code class="docutils literal notranslate"><span class="pre">handle_continue</span></code> callback in <code class="docutils literal notranslate"><span class="pre">gen_server</span></code></p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">List.Chars</span></code> protocol</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">gen_server:start_monitor/3,4</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">code:ensure_loaded/1</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">io_lib:latin1_char_list/1</span></code></p></li>
+<li><p>Add support to Elixir for <code class="docutils literal notranslate"><span class="pre">Keyword.split/2</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">binary:split/3</span></code> and <code class="docutils literal notranslate"><span class="pre">string:find/2,3</span></code></p></li>
+<li><p>Support for large tuples (more than 255 elements) in external terms.</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">io:put_chars/2</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">lists:nthtail/2</span></code></p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">IO.chardata_to_string/1</span></code></p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">List.duplicate/2</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">binary:copy/1,2</span></code></p></li>
+<li><p>Support for directory listing using POSIX APIs: (<code class="docutils literal notranslate"><span class="pre">atomvm:posix_opendir/1</span></code>,
+<code class="docutils literal notranslate"><span class="pre">atomvm:posix_readdir/1</span></code>, <code class="docutils literal notranslate"><span class="pre">atomvm:posix_closedir/1</span></code>).</p></li>
+<li><p>ESP32: add support for <code class="docutils literal notranslate"><span class="pre">esp_adc</span></code> ADC driver, with Erlang and Elixir examples</p></li>
+<li><p>Add handler for ESP32 network driver STA mode <code class="docutils literal notranslate"><span class="pre">beacon_timeout</span></code> (event: 21), see issue
+<a class="reference external" href="https://github.com/atomvm/AtomVM/issues/1100">#1100</a></p></li>
+<li><p>Support for mounting/unmounting storage on ESP32 (such as SD or internal flash) using
+<code class="docutils literal notranslate"><span class="pre">esp:mount/4</span></code> and <code class="docutils literal notranslate"><span class="pre">esp:umount/1</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">binary_to_integer/2</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">binary:decode_hex/1</span></code> and <code class="docutils literal notranslate"><span class="pre">binary:encode_hex/1,2</span></code></p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">Base.decode16/2</span></code> and <code class="docutils literal notranslate"><span class="pre">Base.encode16/2</span></code></p></li>
+<li><p>Make external term serialize functions available without using <code class="docutils literal notranslate"><span class="pre">externalterm_to_binary</span></code> so terms
+can be written directly to a buffer.</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">erlang:list_to_integer/2</span></code></p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">externalterm_to_term_copy</span></code> that can be safely used from NIFs taking temporary buffers</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Changed<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>ESP32: Elixir library is not shipped anymore with <code class="docutils literal notranslate"><span class="pre">esp32boot.avm</span></code>. Use <code class="docutils literal notranslate"><span class="pre">elixir_esp32boot.avm</span></code>
+instead</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Enum.find_index</span></code> and <code class="docutils literal notranslate"><span class="pre">Enum.find_value</span></code> support Enumerable and not just lists</p></li>
+<li><p>Install AtomVM libraries source code and binaries for better dialyzer integration</p></li>
+<li><p>Made the <code class="docutils literal notranslate"><span class="pre">device_config</span></code> properties list in <code class="docutils literal notranslate"><span class="pre">spi:open/1</span></code> optional (defaults to <code class="docutils literal notranslate"><span class="pre">[]</span></code>), so you can use the function with only a <code class="docutils literal notranslate"><span class="pre">bus_config</span></code></p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Fixed<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>ESP32: content of <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> partition is not truncated anymore</p></li>
+<li><p>ESP32: <code class="docutils literal notranslate"><span class="pre">Fixed</span> <span class="pre">gpio:set_int</span></code> to accept any pin, not only pin 2</p></li>
+<li><p>Fix memory corruption in <code class="docutils literal notranslate"><span class="pre">unicode:characters_to_binary</span></code></p></li>
+<li><p>Fix handling of large literal indexes and large extended literal indexes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unicode:characters_to_list</span></code>: fixed bogus out_of_memory error on some platforms such as ESP32</p></li>
+<li><p>Fix crash in Elixir library when doing <code class="docutils literal notranslate"><span class="pre">inspect(:atom)</span></code></p></li>
+<li><p>General inspect() compliance with Elixir behavior (but there are still some minor differences)</p></li>
+<li><p>Fix several uses of free on prevously released memory on ESP32, under certain error condition using
+<code class="docutils literal notranslate"><span class="pre">network:start/1</span></code>, that would lead to a hard crash of the VM.</p></li>
+<li><p>Fix a bug in ESP32 network driver where the low level driver was not being stopped and resoureces were not freed
+when <code class="docutils literal notranslate"><span class="pre">network:stop/0</span></code> was used, see issue <a class="reference external" href="https://github.com/atomvm/AtomVM/issues/643">#643</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uart:open/1,2</span></code> now works with uppercase peripheral names</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2>[0.6.4] - 2024-08-18<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<section id="id10">
+<h3>Added<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">gpio:init/1</span></code> on esp32 to initialize pins for GPIO usage, which some pins
+require depending on default function and bootloader code</p></li>
+<li><p>Implement missing opcode 161 (raw_raise), that looks more likely to be generated with Elixir code</p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">Map.replace/3</span></code> and <code class="docutils literal notranslate"><span class="pre">Map.replace!/3</span></code></p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">Kernel.struct</span></code> and <code class="docutils literal notranslate"><span class="pre">Kernel.struct!</span></code></p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">IO.iodata_to_binary/1</span></code></p></li>
+<li><p>Support for Elixir exceptions: <code class="docutils literal notranslate"><span class="pre">Exception</span></code> module and the other error related modules such as
+<code class="docutils literal notranslate"><span class="pre">ArgumentError</span></code>, <code class="docutils literal notranslate"><span class="pre">UndefinedFunctionError</span></code>, etc…</p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">Enumerable</span></code> and <code class="docutils literal notranslate"><span class="pre">Collectable</span></code> protocol</p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">Enum</span></code> functions: <code class="docutils literal notranslate"><span class="pre">split_with</span></code>, <code class="docutils literal notranslate"><span class="pre">join</span></code>, <code class="docutils literal notranslate"><span class="pre">map_join</span></code>, <code class="docutils literal notranslate"><span class="pre">into</span></code>, <code class="docutils literal notranslate"><span class="pre">reverse</span></code>,
+<code class="docutils literal notranslate"><span class="pre">slice</span></code> and <code class="docutils literal notranslate"><span class="pre">to_list</span></code></p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">MapSet</span></code> module</p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">Range</span></code> module</p></li>
+<li><p>Support for Elixir <code class="docutils literal notranslate"><span class="pre">Kernel.min</span></code> and <code class="docutils literal notranslate"><span class="pre">Kernel.max</span></code></p></li>
+<li><p>Support (as stub) for <code class="docutils literal notranslate"><span class="pre">erlang:error/3</span></code> (that is required from Elixir code)</p></li>
+</ul>
+</section>
+</section>
+<section id="id11">
+<h2>[0.6.3] - 2024-07-20<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<section id="id12">
+<h3>Added<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Simple http client, that can be used for different use case such as downloading OTA updates</p></li>
+<li><p>Elixir support for <code class="docutils literal notranslate"><span class="pre">Keyword.merge</span></code> <code class="docutils literal notranslate"><span class="pre">Keyword.take</span></code> <code class="docutils literal notranslate"><span class="pre">Keyword.pop(!)</span></code> <code class="docutils literal notranslate"><span class="pre">Keyword.keyword?</span></code> <code class="docutils literal notranslate"><span class="pre">Keyword.has_key?</span></code> functions.</p></li>
+<li><p>Support for ESP32-H2</p></li>
+<li><p>lists:keytake/3 implemented.</p></li>
+<li><p>Support for setting channel used by network driver wifi access point.</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">maps:iterator/2</span></code> and <code class="docutils literal notranslate"><span class="pre">~kp</span></code> with <code class="docutils literal notranslate"><span class="pre">io_lib:format/2</span></code> that were introduced with OTP26.</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">erlang:apply/2</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">lists:keystore/4</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">erlang:size/1</span></code> bif</p></li>
+<li><p>Support for USB serial output on ESP32 (needs to be manually enabled)</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">lists:filtermap/2</span></code></p></li>
+<li><p>Support for standard library <code class="docutils literal notranslate"><span class="pre">queue</span></code> module</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">maps:from_keys/2</span></code> NIF</p></li>
+<li><p>Support for standard library <code class="docutils literal notranslate"><span class="pre">sets</span></code> module</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>Changed<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>ESP32 network driver messages for event 40 (home channel change events) are now suppressed, but the
+details for the channel changes can be observed in the console log if “debug” level logging is enabled
+in ESP-IDF Kconfig options.</p></li>
+<li><p>Default size of ESP32 RTC slow memory from 4086 to 4096, except on ESP32-H2 where it’s 3072</p></li>
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">byte_size/1</span></code> and <code class="docutils literal notranslate"><span class="pre">bit_size/1</span></code> to implement OTP27 match context reuse optimization OTP-18987.</p></li>
+</ul>
+</section>
+<section id="id14">
+<h3>Fixed<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fix bug (with code compiled with OTP-21) with binary pattern matching: the fix introduced with
+<code class="docutils literal notranslate"><span class="pre">02411048</span></code> was not completely right, and it was converting match context to bogus binaries.</p></li>
+<li><p>Fix creation of multiple links for the same process and not removing link at trapped exits.
+See issue <a class="reference external" href="https://github.com/atomvm/AtomVM/issues/1193">#1193</a>.</p></li>
+<li><p>Fix error that is raised when a function is undefined</p></li>
+<li><p>Fix a bug that could yield crashes when functions are sent in messages</p></li>
+<li><p>Fix bug where failing guards would corrupt x0 and x1</p></li>
+<li><p>Fix a memory leak when raising out of memory error while executing PUT_MAP_ASSOC instruction</p></li>
+</ul>
+</section>
+</section>
+<section id="id15">
+<h2>[0.6.2] - 25-05-2024<a class="headerlink" href="#id15" title="Link to this heading"></a></h2>
+<section id="id16">
+<h3>Added<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Support for DragonFly BSD (generic_unix platform).</p></li>
+<li><p>Added guards <code class="docutils literal notranslate"><span class="pre">is_even</span></code> and <code class="docutils literal notranslate"><span class="pre">is_odd</span></code> to the <code class="docutils literal notranslate"><span class="pre">Integer</span></code> module</p></li>
+<li><p>Add a number of functions to proplists module, such as <code class="docutils literal notranslate"><span class="pre">delete/2</span></code>, <code class="docutils literal notranslate"><span class="pre">from/to_map/1</span></code>, etc…</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">esp:deep_sleep_enable_gpio_wakeup/2</span></code> to allow wakeup from deep sleep for ESP32C3 and ESP32C6.</p></li>
+<li><p>Obtain RSSI of the current connection with <code class="docutils literal notranslate"><span class="pre">network:sta_rssi/0</span></code> on ESP32.</p></li>
+<li><p>Pico-W support for <code class="docutils literal notranslate"><span class="pre">network:sta_rssi/0</span></code>.</p></li>
+<li><p>Add support to ESP32C2</p></li>
+</ul>
+</section>
+<section id="id17">
+<h3>Fixed<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fix invalid read after free in ssl code, see also issue
+<a class="reference external" href="https://github.com/atomvm/AtomVM/issues/1115">#1115</a>.</p></li>
+<li><p>Fix semantic of <code class="docutils literal notranslate"><span class="pre">ssl:recv(Socket,</span> <span class="pre">0)</span></code> to return all available bytes, matching what OTP does.</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">binary</span></code> option handling in <code class="docutils literal notranslate"><span class="pre">ssl:connect/3</span></code> so <code class="docutils literal notranslate"><span class="pre">binary</span></code> can be used instead of
+<code class="docutils literal notranslate"><span class="pre">{binary,</span> <span class="pre">true}</span></code>.</p></li>
+<li><p>Fix scheduling of trapped process that were wrongly immediately rescheduled before being signaled.</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">gen_tcp</span></code> and <code class="docutils literal notranslate"><span class="pre">ssl</span></code> types.</p></li>
+<li><p>Fix documentation and specification of <code class="docutils literal notranslate"><span class="pre">esp:sleep_enable_ext0_wakeup/2</span></code> and <code class="docutils literal notranslate"><span class="pre">esp:sleep_enable_ext1_wakeup/2</span></code>.</p></li>
+</ul>
+</section>
+<section id="id18">
+<h3>Changed<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Stacktraces are included by default on Pico devices.</p></li>
+<li><p>Changed ssl default from <code class="docutils literal notranslate"><span class="pre">{active,</span> <span class="pre">false}</span></code> to <code class="docutils literal notranslate"><span class="pre">{active,</span> <span class="pre">true}</span></code> in order to have same behavior as
+OTP. Since active mode is not supported right now, <code class="docutils literal notranslate"><span class="pre">active</span></code> must be explicitly set to false:
+<code class="docutils literal notranslate"><span class="pre">ssl:connect(...,</span> <span class="pre">...,</span> <span class="pre">[{active,</span> <span class="pre">false},</span> <span class="pre">...])</span></code>, otherwise it will crash.</p></li>
+</ul>
+</section>
+</section>
+<section id="id19">
+<h2>[0.6.1] - 2024-04-17<a class="headerlink" href="#id19" title="Link to this heading"></a></h2>
+<section id="id20">
+<h3>Added<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added experimental optimized GC mode that makes use of C realloc instead of copying data around,
+it can be enabled with <code class="docutils literal notranslate"><span class="pre">-DENABLE_REALLOC_GC=On</span></code>.</p></li>
+</ul>
+</section>
+<section id="id21">
+<h3>Fixed<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">erlang:ref_to_list/1</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:display/1</span></code>: the unique integer was truncated on some
+32-bit architectures</p></li>
+<li><p>Stop hardcoding <code class="docutils literal notranslate"><span class="pre">erl_eval</span></code> as module name in both display and fun_to_list</p></li>
+<li><p>Correctly display and convert to list funs such as <code class="docutils literal notranslate"><span class="pre">fun</span> <span class="pre">m:f/a</span></code></p></li>
+<li><p>Fixed bug in STM32 cmake that could cause builds with multiple jobs to fail due to incorrect artifact dependency</p></li>
+<li><p>Fix crash on macOS due to missing call to <code class="docutils literal notranslate"><span class="pre">psa_crypto_init</span></code> for TLS 1.3</p></li>
+<li><p>Fix crypto test on rp2040</p></li>
+</ul>
+</section>
+</section>
+<section id="id22">
+<h2>[0.6.0] - 2024-03-05<a class="headerlink" href="#id22" title="Link to this heading"></a></h2>
+<section id="id23">
+<h3>Fixed<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fix a bug that broke sockets on ESP32-C3 and other single core ESP32 devices, that may also
+cause other issues. The bug has been introduced with messages from tasks change between beta.1
+and rc.0</p></li>
+<li><p>Fixed several issues related to Esp32 socket_driver that made it unreliable, especially with
+single core MCUs</p></li>
+</ul>
+</section>
+</section>
+<section id="rc-0-2024-03-03">
+<h2>[0.6.0-rc.0] - 2024-03-03<a class="headerlink" href="#rc-0-2024-03-03" title="Link to this heading"></a></h2>
+<section id="id24">
+<h3>Added<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">BOOTLOADER_OFFSET</span></code> for all current Esp32 models.</p></li>
+<li><p>Added API to send messages from FreeRTOS tasks or pthreads, typically to
+easily support integration with Esp32 callbacks</p></li>
+</ul>
+</section>
+<section id="id25">
+<h3>Fixed<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">BOOTLOADER_OFFSET</span></code> was incorrect for Esp32-C6 and Esp32-S2.</p></li>
+<li><p>Fixed a bug that would fail to set DHCP hostname in STA+AP mode on all ESP32 platforms.</p></li>
+<li><p>ESP32-S3: crash in network driver caused by a smaller stack size for scheduler threads, when
+calling <code class="docutils literal notranslate"><span class="pre">esp_wifi_init()</span></code>. See also issue <a class="reference external" href="https://github.com/atomvm/AtomVM/issues/1059">#1059</a>.</p></li>
+<li><p>Fixed Esp32 network driver on non-SMP builds</p></li>
+<li><p>ESP32: fixed bug in <code class="docutils literal notranslate"><span class="pre">gpio:stop/0</span></code> and <code class="docutils literal notranslate"><span class="pre">gpio:close/1</span></code> that would cause the VM to crash.</p></li>
+</ul>
+</section>
+</section>
+<section id="beta-1-2024-02-28">
+<h2>[0.6.0-beta.1] - 2024-02-28<a class="headerlink" href="#beta-1-2024-02-28" title="Link to this heading"></a></h2>
+<section id="id26">
+<h3>Added<a class="headerlink" href="#id26" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Support for utf8 encoding to <code class="docutils literal notranslate"><span class="pre">*_to_atom</span></code> and <code class="docutils literal notranslate"><span class="pre">atom_to_*</span></code> functions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary_to_atom/1</span></code> and <code class="docutils literal notranslate"><span class="pre">atom_to_binary/1</span></code> that default to utf8 (they were introduced with OTP23)</p></li>
+<li><p>Added Pico cmake option <code class="docutils literal notranslate"><span class="pre">AVM_WAIT_BOOTSEL_ON_EXIT</span></code> (default <code class="docutils literal notranslate"><span class="pre">ON</span></code>) to allow tools to use automated <code class="docutils literal notranslate"><span class="pre">BOOTSEL</span></code> mode after main application exits</p></li>
+<li><p>Use UTF-8 encoding for atoms when using <code class="docutils literal notranslate"><span class="pre">erlang:term_to_binary/1</span></code>, in conformance with OTP-26</p></li>
+<li><p>Pico: Wait for USB serial connection <code class="docutils literal notranslate"><span class="pre">cmake</span></code> configuration option <code class="docutils literal notranslate"><span class="pre">AVM_USB_WAIT_SECONDS</span></code> added with 20 second default.</p></li>
+<li><p>Support for code that makes use of more than 16 live registers, such as functions with &gt; 16
+parameters and complex pattern matchings.</p></li>
+</ul>
+</section>
+<section id="id27">
+<h3>Fixed<a class="headerlink" href="#id27" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>ESP32: fix i2c_driver_acquire and i2c_driver_release functions, that were working only once.</p></li>
+<li><p>Sending messages to registered processes using the <code class="docutils literal notranslate"><span class="pre">!</span></code> operator now works.</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">OP_SEND</span></code> that would accept sending a message to any integer or term without raising an error.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary_to_term</span></code> checks atom encoding validity, and fix latin1 support (when non-ASCII chars are
+used)</p></li>
+<li><p>ESP32: fixed bug in <code class="docutils literal notranslate"><span class="pre">gpio:set_pin_mode/2</span></code> and <code class="docutils literal notranslate"><span class="pre">gpio:set_direction/3</span></code> that would accept any atom for the mode parameter without an error.</p></li>
+<li><p>ESP32: GPIO driver fix bug that would accept invalid <code class="docutils literal notranslate"><span class="pre">pull</span></code> direction, and silently set <code class="docutils literal notranslate"><span class="pre">pull</span></code> direction to <code class="docutils literal notranslate"><span class="pre">floating</span></code> without issuing an error.</p></li>
+<li><p>ESP32: fixed bug in gpio driver that would accept invalid pin numbers (either negative, or too large)</p></li>
+<li><p>RP2040: fixed bug in <code class="docutils literal notranslate"><span class="pre">gpio:set_pin_pull/2</span></code> that would accept any parameter as a valid <code class="docutils literal notranslate"><span class="pre">pull</span></code> mode.</p></li>
+<li><p>Support to function with 10 or more parameters</p></li>
+<li><p>Very unlikely but possible corruption caused by generated code that uses 16 live registers</p></li>
+</ul>
+</section>
+<section id="id28">
+<h3>Changed<a class="headerlink" href="#id28" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">binary_to_atom/2</span></code> validates utf8 strings</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*_to_atom</span></code> and <code class="docutils literal notranslate"><span class="pre">atom_to_*</span></code> properly convert latin1 (not just ASCII) to utf8 and viceversa</p></li>
+<li><p>ESP32: use esp-idf v5.1.3 for building release binaries</p></li>
+</ul>
+</section>
+</section>
+<section id="beta-0-2024-02-08">
+<h2>[0.6.0-beta.0] - 2024-02-08<a class="headerlink" href="#beta-0-2024-02-08" title="Link to this heading"></a></h2>
+<section id="id29">
+<h3>Added<a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">esp:get_default_mac/0</span></code> for retrieving the default MAC address on ESP32.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">pico</span></code> and <code class="docutils literal notranslate"><span class="pre">poci</span></code> as an alternative to <code class="docutils literal notranslate"><span class="pre">mosi</span></code> and <code class="docutils literal notranslate"><span class="pre">miso</span></code> for SPI</p></li>
+<li><p>ESP32: Added support to SPI peripherals other than hspi and vspi</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">gpio:set_int/4</span></code>, with the 4th parameter being the pid() or registered name of the process to receive interrupt messages</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">lists:split/2</span></code></p></li>
+<li><p>Added ESP32 API for allowing coexistence of native and Erlang I2C drivers</p></li>
+</ul>
+</section>
+<section id="id30">
+<h3>Changed<a class="headerlink" href="#id30" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Shorten SPI config options, such as <code class="docutils literal notranslate"><span class="pre">sclk_io_num</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">sclk</span></code></p></li>
+<li><p>Shorten I2C config options, such as <code class="docutils literal notranslate"><span class="pre">scl_io_num</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">scl</span></code></p></li>
+<li><p>Shorten UART config options, such as <code class="docutils literal notranslate"><span class="pre">tx_pin</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">tx</span></code></p></li>
+<li><p>Introduced support to non-integer peripheral names, <code class="docutils literal notranslate"><span class="pre">&quot;i2c0&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;uart1&quot;</span></code> (instead of just <code class="docutils literal notranslate"><span class="pre">0</span></code> and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, which now they are deprecated)</p></li>
+<li><p>New atom table, which uses less memory, has improved performances and better code.</p></li>
+<li><p>SPI: when gpio number is not provided for <code class="docutils literal notranslate"><span class="pre">miso</span></code> or <code class="docutils literal notranslate"><span class="pre">mosi</span></code> default to disabled</p></li>
+<li><p>Change port call tuple format to the same format as gen_server, so casts can be supported too</p></li>
+</ul>
+</section>
+<section id="id31">
+<h3>Fixed<a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fix several missing memory allocation checks in libAtomVM.</p></li>
+<li><p>Fixed a possible memory leak in libAtomVM/module.c <code class="docutils literal notranslate"><span class="pre">module_destroy</span></code>.</p></li>
+<li><p>Fix possibile bug in random number generator on ESP32 and RPi2040</p></li>
+<li><p>Fixed interpretation of live for opcodes, thus altering GC semantics for nifs. See also <a class="reference internal" href="UPDATING.html"><span class="std std-doc">UPDATING</span></a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="alpha-2-2023-12-10">
+<h2>[0.6.0-alpha.2] - 2023-12-10<a class="headerlink" href="#alpha-2-2023-12-10" title="Link to this heading"></a></h2>
+<section id="id32">
+<h3>Fixed<a class="headerlink" href="#id32" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fixed a bug where guards would raise exceptions instead of just being false</p></li>
+<li><p>Fixed support for big endian CPUs (such as some MIPS CPUs).</p></li>
+<li><p>Fixed STM32 not aborting when <code class="docutils literal notranslate"><span class="pre">AVM_ABORT()</span></code> is used</p></li>
+<li><p>Fixed a bug that would leave the STM32 trapped in a loop on hard faults, rather than aborting</p></li>
+<li><p>Fixed a bug that would make the VM to loop and failing to process selected fds on Linux</p></li>
+<li><p>Fixed classes of exceptions in estdlib.</p></li>
+<li><p>Fixed STM32 code that was hard coded to the default target device, now configured based on the <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">-DDEVICE=</span></code> parameter</p></li>
+<li><p>Fixed hard fault on STM32 durung malloc on boards with more than one bank of sram</p></li>
+<li><p>Fixed invalid src_clk error on ESP-IDF &gt;= 5.0</p></li>
+<li><p>Fixed changed default to <code class="docutils literal notranslate"><span class="pre">AVM_USE_32BIT_FLOAT=on</span></code> for STM32 platform to enable use of single precision hardware FPU on F4/F7 devices.</p></li>
+<li><p>Fixed a bug where emscripten <code class="docutils literal notranslate"><span class="pre">register_*_callback/1</span></code> functions would use x[1] as second argument</p></li>
+<li><p>Fixed precision of integers used with timers which could yield to halts and wait times smaller than expected</p></li>
+<li><p>Add support for ESP32-C6</p></li>
+</ul>
+</section>
+<section id="id33">
+<h3>Changed<a class="headerlink" href="#id33" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Crypto functions on generic_unix platform now rely on MbedTLS instead of OpenSSL</p></li>
+<li><p>Platform function providing time used by timers was changed from <code class="docutils literal notranslate"><span class="pre">sys_monotonic_millis</span></code> to <code class="docutils literal notranslate"><span class="pre">sys_monotonic_time_u64</span></code>, <code class="docutils literal notranslate"><span class="pre">sys_monotonic_time_u64_to_ms</span></code> and <code class="docutils literal notranslate"><span class="pre">sys_monotonic_time_ms_to_u64</span></code>.</p></li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">atomvm:random/0</span></code> and <code class="docutils literal notranslate"><span class="pre">atomvm:rand_bytes/1</span></code> on top of <code class="docutils literal notranslate"><span class="pre">crypto:strong_rand_bytes/1</span></code> on
+generic_unix, ESP32 and RP2040 platforms.</p></li>
+<li><p>Performance improvements</p></li>
+</ul>
+</section>
+<section id="id34">
+<h3>Added<a class="headerlink" href="#id34" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added support for the OTP <code class="docutils literal notranslate"><span class="pre">socket</span></code> interface.</p></li>
+<li><p>Enhancd performance of STM32 by enabling flash cache and i-cache with branch prediction.</p></li>
+<li><p>Added cmake configuration option <code class="docutils literal notranslate"><span class="pre">AVM_CONFIG_REBOOT_ON_NOT_OK</span></code> for STM32</p></li>
+<li><p>New gpio driver for STM32 with nif and port support for read and write functions.</p></li>
+<li><p>Added support for interrupts to STM32 GPIO port driver.</p></li>
+<li><p>Added suppoprt for PicoW extra gpio pins (led) to the gpio driver.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">net:getaddrinfo/1,2</span></code></p></li>
+<li><p>Added minimal support for the OTP <code class="docutils literal notranslate"><span class="pre">ssl</span></code> interface.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">crypto:one_time/4,5</span></code> on Unix and Pico as well as for <code class="docutils literal notranslate"><span class="pre">crypto:hash/2</span></code> on Pico</p></li>
+<li><p>Added ability to configure STM32 Nucleo boards onboard UART-&gt;USB-COM using the <code class="docutils literal notranslate"><span class="pre">-DBOARD=nucleo</span></code> cmake option</p></li>
+<li><p>Added STM32 cmake option <code class="docutils literal notranslate"><span class="pre">-DAVM_CFG_CONSOLE=</span></code> to select a different uart peripheral for the system console</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">crypto:strong_rand_bytes/1</span></code> using Mbed-TLS (only on generic_unix, ESP32 and RP2040
+platforms)</p></li>
+<li><p>Added support for setting the default receive buffer size for sockets via <code class="docutils literal notranslate"><span class="pre">socket:setopt/3</span></code></p></li>
+<li><p>Added support for pattern matching binaries containing 32 and 64 bit floating point values, but
+only when aligned to byte boundaries (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;&lt;0:4,</span> <span class="pre">F:32/float&gt;&gt;</span> <span class="pre">=</span> <span class="pre">Bin</span></code> is not supported).</p></li>
+<li><p>Added experimental backend to <code class="docutils literal notranslate"><span class="pre">get_tcp</span></code> and <code class="docutils literal notranslate"><span class="pre">get_udp</span></code> based on the new <code class="docutils literal notranslate"><span class="pre">socket</span></code> interface</p></li>
+<li><p>Added API for managing ESP32 watchdog (only on <code class="docutils literal notranslate"><span class="pre">esp-idf</span></code> &gt;= v5.x)</p></li>
+</ul>
+</section>
+<section id="removed">
+<h3>Removed<a class="headerlink" href="#removed" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>OpenSSL support, Mbed-TLS is required instead.</p></li>
+</ul>
+</section>
+</section>
+<section id="alpha-1-2023-10-09">
+<h2>[0.6.0-alpha.1] - 2023-10-09<a class="headerlink" href="#alpha-1-2023-10-09" title="Link to this heading"></a></h2>
+<section id="id35">
+<h3>Added<a class="headerlink" href="#id35" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added erlang:spawn_link/1,3</p></li>
+<li><p>Added erlang:exit/2</p></li>
+<li><p>Added links to process_info/2</p></li>
+<li><p>Added lists:usort/1,2</p></li>
+<li><p>Added missing documentation and specifications for available nifs</p></li>
+<li><p>Added configurable logging macros to stm32 platform</p></li>
+<li><p>Added support for ULP wakeup on ESP32</p></li>
+<li><p>Added heap growth strategies as a fine-tuning option to <code class="docutils literal notranslate"><span class="pre">spawn_opt/2,4</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">crypto:crypto_one_time/4,5</span></code> on ESP32</p></li>
+<li><p>Improved nif and port support on STM32</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">atomvm:posix_clock_settime/2</span></code></p></li>
+<li><p>Added support for creations of binaries with unaligned strings</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">-h</span></code> and <code class="docutils literal notranslate"><span class="pre">-v</span></code> flags to generic_unix AtomVM command</p></li>
+<li><p>Removed support to ESP32 NVS from network module in order to make it generic. See also <a class="reference internal" href="UPDATING.html"><span class="std std-doc">UPDATING</span></a>.</p></li>
+<li><p>Added initial support for Pico-W: on-board LED, Wifi (STA and AP modes).</p></li>
+</ul>
+</section>
+<section id="id36">
+<h3>Changed<a class="headerlink" href="#id36" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Changed offset of atomvmlib and of program on Pico. See also <a class="reference internal" href="UPDATING.html"><span class="std std-doc">UPDATING</span></a>.</p></li>
+</ul>
+</section>
+<section id="id37">
+<h3>Fixed<a class="headerlink" href="#id37" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fixed incorrect exit reason for exceptions of class exit</p></li>
+<li><p>Fixed several incorrect type specifications</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">esp:nvs_set_binary</span></code> functions.</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">monotonic_time/1</span></code> and <code class="docutils literal notranslate"><span class="pre">system_time/1</span></code> functions for Raspberry Pi Pico</p></li>
+<li><p>Fixed race conditions in atoms table.</p></li>
+<li><p>Fixed a bug in the STM32 port that caused the final result to never be returned.</p></li>
+<li><p>Fix bug when building a binary using a 64-bit integer on a 32-bit CPU.</p></li>
+<li><p>Fix (using ‘auto’ option)  SPI on ESP32 models other than ESP32, such as ESP32S2, ESP32C3, …</p></li>
+</ul>
+</section>
+</section>
+<section id="alpha-0-2023-08-13">
+<h2>[0.6.0-alpha.0] - 2023-08-13<a class="headerlink" href="#alpha-0-2023-08-13" title="Link to this heading"></a></h2>
+<section id="id38">
+<h3>Added<a class="headerlink" href="#id38" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Added the ability to specify the HSPI or VSPI ESP32 hardware interfaces when initializing the
+SPI Bus.</p></li>
+<li><p>Added support for the <code class="docutils literal notranslate"><span class="pre">spi:close/1</span></code> function.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">AVM_VERBOSE_ABORT</span></code> CMake define, which when set to on, will print the C module and line
+number when a VM abort occurs.  This define is off by default.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">spi:write/3</span></code> and <code class="docutils literal notranslate"><span class="pre">spi:write_read/3</span></code> functions to support generalized SPI transactions
+and arbitrary-length reads and writes from SPI devices.</p></li>
+<li><p>Added support for building ESP32 port with all currently supported versions of Espressif ESP-IDF,
+version 4.1.x through 4.4.x.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">controlling_process/2</span></code> in <code class="docutils literal notranslate"><span class="pre">gen_udp</span></code> and <code class="docutils literal notranslate"><span class="pre">gen_tcp</span></code> modules.</p></li>
+<li><p>Added ability to get the atomvm version via <code class="docutils literal notranslate"><span class="pre">erlang:system_info</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">erlang:is_boolean/1</span></code> Bif.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">esp:partition_erase_range/2</span></code></p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">i2c:close/1</span></code></p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">erlang:unregister/1</span></code></p></li>
+<li><p>Added Elixir ESP32 LEDC driver and example</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">uart:close/1</span></code></p></li>
+<li><p>Added Bitwise support for Elixir</p></li>
+<li><p>Added support for esp32-s2, esp32-s3, and esp32-c3 chips.</p></li>
+<li><p>Added Elixir I2C driver and example</p></li>
+<li><p>Added the ability to specify the I2C port</p></li>
+<li><p>Added support for the OTP <code class="docutils literal notranslate"><span class="pre">math</span></code> module</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">erlang:integer_to_list/2</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:integer_to_binary/2</span></code></p></li>
+<li><p>Added functions <code class="docutils literal notranslate"><span class="pre">esp:sleep_enable_ext0_wakeup/2</span></code> and <code class="docutils literal notranslate"><span class="pre">esp:sleep_enable_ext1_wakeup/2.</span></code></p></li>
+<li><p>Added support for FP opcodes 94-102 thus removing the need for <code class="docutils literal notranslate"><span class="pre">AVM_DISABLE_FP=On</span></code> with OTP-22+</p></li>
+<li><p>Added support for stacktraces</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">utf-8</span></code>, <code class="docutils literal notranslate"><span class="pre">utf-16</span></code>, and <code class="docutils literal notranslate"><span class="pre">utf-32</span></code> bit syntax modifiers (put and match)</p></li>
+<li><p>Added support for Erlang <code class="docutils literal notranslate"><span class="pre">gpio:close/1</span></code> and Elixir <code class="docutils literal notranslate"><span class="pre">GPIO.close/1</span></code> for ESP32</p></li>
+<li><p>Added support for the Erlang <code class="docutils literal notranslate"><span class="pre">gen_event</span></code> module</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">start_link</span></code> support for the <code class="docutils literal notranslate"><span class="pre">network</span></code> module</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">erlang:monotonic_time/1</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">start_link</span></code> support for the <code class="docutils literal notranslate"><span class="pre">gen_statem</span></code> module</p></li>
+<li><p>Added support for serializing floats in erlang external term encoding</p></li>
+<li><p>Added support for the <code class="docutils literal notranslate"><span class="pre">SMALL_BIG_EXT</span></code> erlang external term encoding</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">erlang:memory(binary)</span></code></p></li>
+<li><p>Added support for callbacks on SNTP updates</p></li>
+<li><p>Multithreading support (SMP)</p></li>
+<li><p>Added support for code:load_abs/1, code:load_binary/3</p></li>
+<li><p>Added support for loading / closing AVMPacks at runtime</p></li>
+<li><p>Added support for ESP-IDF v5.x</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">calendar:system_time_to_universal_time/2</span></code></p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">calendar:datetime_to_gregorian_seconds/1</span></code></p></li>
+<li><p>Added support for Raspberry Pi Pico</p></li>
+<li><p>Added support for nodejs with Wasm</p></li>
+<li><p>Added support for a subset of the OTP logger interface</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">esp:partition_list/0</span></code> function</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">esp:nvs_fetch_binary/2</span></code> and <code class="docutils literal notranslate"><span class="pre">nvs_put_binary/3</span></code> functions (<code class="docutils literal notranslate"><span class="pre">esp:nvs_set_binary</span></code> and
+functions that default to <code class="docutils literal notranslate"><span class="pre">?ATOMVM_NVS_NS</span></code> are deprecated now).</p></li>
+<li><p>Added most format possibilities to <code class="docutils literal notranslate"><span class="pre">io:format/2</span></code> and <code class="docutils literal notranslate"><span class="pre">io_lib:format/2</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">unicode</span></code> module with <code class="docutils literal notranslate"><span class="pre">characters_to_list/1,2</span></code> and <code class="docutils literal notranslate"><span class="pre">characters_to_binary/1,2,3</span></code> functions</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">crypto:hash/2</span></code> (ESP32 and generic_unix with openssl)</p></li>
+</ul>
+</section>
+<section id="id39">
+<h3>Fixed<a class="headerlink" href="#id39" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fixed issue with formatting integers with io:format() on STM32 platform</p></li>
+<li><p>Fixed a bug in the order of child initialization in the <code class="docutils literal notranslate"><span class="pre">supervisor</span></code> module</p></li>
+<li><p>Fixed a bug in the evaluation of <code class="docutils literal notranslate"><span class="pre">receive</span> <span class="pre">...</span> <span class="pre">after</span> <span class="pre">infinity</span> <span class="pre">-&gt;</span> <span class="pre">...</span></code> expressions</p></li>
+<li><p>Fixed a bug in when putting integers in bit syntax with integer field sizes</p></li>
+<li><p>Fixed numerous bugs in memory allocations that could crash the VM</p></li>
+<li><p>Fixed SNTP support that had been broken in IDF 4.x builds</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">erlang:send/2</span></code> not sending to registered name</p></li>
+</ul>
+</section>
+<section id="breaking-changes">
+<h3>Breaking Changes<a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h3>
+<blockquote>
+<div><p>IMPORTANT: These changes are incompatible with previous releases of AtomVM.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Changed the configuration model of the SPI driver, in order to allow for multiple “follower”
+devices to be attached to the same SPI Bus.</p></li>
+<li><p>Changed the return value from <code class="docutils literal notranslate"><span class="pre">erlang:system_info(esp32_chip_info)</span></code> from a tuple to a map, with
+additional information.</p></li>
+<li><p>Changed the return type of the <code class="docutils literal notranslate"><span class="pre">network:start</span></code> function to return the tuple <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Pid}</span></code> on a
+successful call, instead of the bare atom <code class="docutils literal notranslate"><span class="pre">ok</span></code>.  Applications that use <code class="docutils literal notranslate"><span class="pre">network:start</span></code> and
+check the return value will need to be modified.</p></li>
+<li><p>The return type of <code class="docutils literal notranslate"><span class="pre">i2c:read_bytes</span></code> has changed from returning just a binary to
+returning the tuple <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Binary}</span></code> when successful.</p></li>
+<li><p>The return type of many <code class="docutils literal notranslate"><span class="pre">i2c</span></code> operations under error conditions has changed from
+<code class="docutils literal notranslate"><span class="pre">error</span></code> to <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, for improved diagnostics.</p></li>
+<li><p>The eavmlib logger interface has been removed</p></li>
+</ul>
+</section>
+<section id="id40">
+<h3>Removed<a class="headerlink" href="#id40" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>ESP-IDF v3.x support.</p></li>
+</ul>
+</section>
+</section>
+<section id="id41">
+<h2>[0.5.1] - Unreleased<a class="headerlink" href="#id41" title="Link to this heading"></a></h2>
+<section id="id42">
+<h3>Added<a class="headerlink" href="#id42" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>New function for atom comparison, useful when writing 3rd party components.</p></li>
+<li><p>New function for translating an atom term to an int value, according to a given translation table.
+This function can be used for translating an atom term to an enum const before doing a switch.</p></li>
+<li><p>New no-op <code class="docutils literal notranslate"><span class="pre">ATOM_STR(...)</span></code> macro for avoiding issues with clang-format.</p></li>
+<li><p>[ESP32] <code class="docutils literal notranslate"><span class="pre">REGISTER_PORT_DRIVER</span></code> for registering additional port drivers without editing any
+source file. This allows adding new components by just copying them to the components directory.</p></li>
+<li><p>[ESP32] <code class="docutils literal notranslate"><span class="pre">REGISTER_NIF_COLLECTION</span></code> for registering additional NIFs sets without editing any
+source file. This allows adding new NIFs by just copying them to the components directory.</p></li>
+<li><p>New function for getting a map or proplist value using an atom string without poluting the atom
+table.</p></li>
+</ul>
+</section>
+<section id="id43">
+<h3>Fixed<a class="headerlink" href="#id43" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">gen_statem</span></code>: Cancel outstanding timers during state transitions in
+order to prevent spurious timeout messages from being sent to <code class="docutils literal notranslate"><span class="pre">gen_statem</span></code>
+process.</p></li>
+<li><p>Fix missing Elixir libraries: examvlib was not packed into atomvmlib.avm</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">bs_context_to_binary</span></code>: match offset wasn’t used, leading in certain situations to infinite loops
+while matching binaries.</p></li>
+<li><p>Fix how <code class="docutils literal notranslate"><span class="pre">start</span></code> option was handled from <code class="docutils literal notranslate"><span class="pre">bs_restore2</span></code> instruction: last saved match offset was
+used instead of match starting offset, causing some bytes being skipped.</p></li>
+<li><p>Fix another potential bug when doing pattern matching using code compiled with OTP 21.</p></li>
+<li><p>[ESP32] [UART]: Allow using different pins for rx, tx, cts and rts.</p></li>
+<li><p>[ESP32] [UART]: Replace custom UART handling with esp-idf UART event queues, hence other UARTs
+than UART0 are supported, with better performances and stability.</p></li>
+<li><p>Fix binaries concat (<code class="docutils literal notranslate"><span class="pre">bs_append</span></code> instruction) that was adding some extra zeroes at the end of
+built binaries.</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">gen_tcp</span></code> that prevents an accepting socket from inheriting settings on the listening socket.</p></li>
+<li><p>Fixed a bug in packing and unpacking integers into and from binaries when the
+bit length is not a multiple of 8.</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">esp:deep_sleep/1</span></code> that did not accept values above 31 minutes.</p></li>
+<li><p>Fixed a bug that could cause processes to hang indefinitely when calling ports that have terminated.</p></li>
+<li><p>Fixed potential VM crash when parsing external terms.</p></li>
+<li><p>Fixed the enforcement of <code class="docutils literal notranslate"><span class="pre">min_free_space</span></code> process option.</p></li>
+</ul>
+</section>
+</section>
+<section id="id44">
+<h2>[0.5.0] - 2022-03-22<a class="headerlink" href="#id44" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CONTRIBUTING.html" class="btn btn-neutral float-left" title="Contributing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CODE_OF_CONDUCT.html" class="btn btn-neutral float-right" title="Contributor Covenant Code of Conduct" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/pdf/AtomVM-main.pdf">pdf</a></dd>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

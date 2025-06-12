@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network Programming Guide &mdash; AtomVM 0.7.0-dev+git.10429ba9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/network-programming-guide.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9ae9fb0b"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Distributed Erlang" href="distributed-erlang.html" />
+    <link rel="prev" title="Programmers Guide" href="programmers-guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Network Programming Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#station-sta-mode">Station (STA) mode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sta-mode-convenience-functions">STA Mode Convenience Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ap-mode">AP mode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ap-mode-convenience-functions">AP Mode Convenience Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sta-ap-mode">STA+AP mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sntp-support">SNTP Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nvs-credentials">NVS Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stopping-the-network">Stopping the Network</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Network Programming Guide</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+ Copyright 2020-2022 Fred Dushin <fred@dushin.net>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section id="network-programming-guide">
+<h1>Network Programming Guide<a class="headerlink" href="#network-programming-guide" title="Link to this heading"></a></h1>
+<p>One of the exciting features of the ESP32 and the Pico W/Pico 2 W is their support for WiFi networking, allowing ESP32 and Pico W/Pico 2 W micro-controllers to communicate with the outside world over common IP networking protocols, such as TCP or IDP.  The ESP32 and the Pico W/Pico 2 W can be configured in station mode (STA), whereby the devices connect to an existing access point, as well as “softAP” mode (AP), whereby they function as an access point, to which other stations can connect. The ESP32 also supports a combined STA+softAP mode, which allows the device to function in both STA and softAP mode simultaneously.</p>
+<p>AtomVM provides an Erlang API interface for interacting with the WiFi networking layer on ESP32 and Pico W/Pico 2 W devices, providing support for configuring your ESP32 or Pico W/Pico 2 W device in STA mode, AP mode, or a combined STA+AP mode, allowing Erlang/Elixir applications to send and receive data from other devices on a network.  This interface is encapsulated in the <a class="reference internal" href="apidocs/erlang/eavmlib/network.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">network</span></code> module</span></a>, which implements a simple interface for connecting to existing WiFi networks or for functioning as a WiFi access point. The same <code class="docutils literal notranslate"><span class="pre">network</span></code> module is used for both the ESP32 and the Pico W/Pico 2 W.</p>
+<p>Once the network has been set up (in STA or AP mode), AtomVM can use various socket interfaces to interact with the socket layer to create a client or server application.  For example, on ESP32, AtomVM supports the <a class="reference internal" href="apidocs/erlang/estdlib/gen_udp.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">gen_udp</span></code></span></a> and <a class="reference internal" href="apidocs/erlang/estdlib/gen_tcp.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">gen_tcp</span></code></span></a> APIs, while AtomVM extensions may support HTTP, MQTT, and other protocols built over low-level networking interfaces.</p>
+<p>The AtomVM networking API leverages callback functions, allowing applications to be responsive to changes in the underlying network, which can frequently occur in embedded applications, where devices can easily lose and then regain network connectivity.  In such cases, it is important for applications to be resilient to changes in network availability, by closing or re-opening socket connections in response to disconnections and re-connections in the underlying network.</p>
+<p>This document describes the basic design of the AtomVM network interfaces, and how to interact programmatically with it.</p>
+<section id="station-sta-mode">
+<h2>Station (STA) mode<a class="headerlink" href="#station-sta-mode" title="Link to this heading"></a></h2>
+<p>In STA mode, the ESP32 or the Pico W/Pico 2 W connect to an existing WiFi network.</p>
+<p>In this case, the input configuration should be a properties list containing a tuple of the form <code class="docutils literal notranslate"><span class="pre">{sta,</span> <span class="pre">&lt;sta-properties&gt;}</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;sta-properties&gt;</span></code> is a property list containing configuration properties for the device in station mode.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;sta-properties&gt;</span></code> property list should contain the following entries:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{ssid,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code>  The SSID to which the device should connect.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{psk,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code> The password required to authenticate to the network, if required.</p></li>
+</ul>
+<p>The <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#start-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:start/1</span></code></span></a> will immediately return <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Pid}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Pid</span></code> is the process ID of the network server instance, if the network was properly initialized, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if there was an error in configuration.  However, the application may want to wait for the device to connect to the target network and obtain an IP address, for example, before starting clients or services that require network access.</p>
+<p>Applications can specify callback functions, which get triggered as events emerge from the network layer, including connection to and disconnection from the target network, as well as IP address acquisition.</p>
+<p>Callback functions can be specified by the following configuration parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{connected,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device connects to the target network.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{disconnected,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device disconnects from the target network.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{got_ip,</span> <span class="pre">fun((ip_info())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device obtains an IP address.  In this case, the IPv4 IP address, net mask, and gateway are provided as a parameter to the callback function.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>IPv6 addresses are not yet supported in AtomVM.</p>
+</div>
+<p>Callback functions are optional, but are highly recommended for building robust WiFi applications.  The return value from callback functions is ignored, and AtomVM provides no guarantees about the execution context (i.e., BEAM process) in which these functions are invoked.</p>
+<p>In addition, the following optional parameters can be specified to configure the AP network (ESP32 only):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{dhcp_hostname,</span> <span class="pre">string()|binary()}</span></code> The DHCP hostname as which the device should register (<code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;atomvm-&lt;hexmac&gt;&quot;&gt;&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;hexmac&gt;</span></code> is the hexadecimal representation of the factory-assigned MAC address of the device).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{beacon_timeout,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device does not receive a beacon frame from the connected access point during the “inactive time” (6 second default, currently not configurable).</p></li>
+</ul>
+<p>The following example illustrates initialization of the WiFi network in STA mode.  The example program will configure the network to connect to a specified network.  Events that occur during the lifecycle of the network will trigger invocations of the specified callback functions.</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="n">sta</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="n">ssid</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;myssid&quot;</span><span class="o">&gt;&gt;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">psk</span><span class="p">,</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="s">&quot;mypsk&quot;</span><span class="o">&gt;&gt;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">connected</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">connected</span><span class="o">/</span><span class="mi">0</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">got_ip</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">got_ip</span><span class="o">/</span><span class="mi">1</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">disconnected</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">disconnected</span><span class="o">/</span><span class="mi">0</span><span class="p">}</span>
+<span class="w">        </span><span class="p">{</span><span class="n">dhcp_hostname</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;myesp32&quot;</span><span class="o">&gt;&gt;</span><span class="p">}</span>
+<span class="w">    </span><span class="p">]}</span>
+<span class="p">],</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="nv">Pid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="nv">Config</span><span class="p">),</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>The following callback functions will be called when the corresponding events occur during the lifetime of the network connection.</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nf">connected</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Connected to AP.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">).</span>
+
+<span class="nf">gotIp</span><span class="p">(</span><span class="nv">IpInfo</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Got IP: </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">IpInfo</span><span class="p">]).</span>
+
+<span class="nf">disconnected</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Disconnected from AP.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">).</span>
+</pre></div>
+</div>
+<p>In a typical application, the network should be configured and an IP address should be acquired first, before starting clients or services that have a dependency on the network.</p>
+<section id="sta-mode-convenience-functions">
+<h3>STA Mode Convenience Functions<a class="headerlink" href="#sta-mode-convenience-functions" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module supports the <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#wait-for-sta-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:wait_for_sta/1,2</span></code></span></a> convenience functions for applications that do not need robust connection management.  These functions are synchronous and will wait until the device is connected to the specified AP.  Supply the properties list specified in the <code class="docutils literal notranslate"><span class="pre">{sta,</span> <span class="pre">[...]}</span></code> component of the above configuration, in addition to an optional timeout (in milliseconds).</p>
+<p>For example:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="n">ssid</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;myssid&quot;</span><span class="o">&gt;&gt;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="n">psk</span><span class="p">,</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="s">&quot;mypsk&quot;</span><span class="o">&gt;&gt;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="n">dhcp_hostname</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;mydevice&quot;</span><span class="o">&gt;&gt;</span><span class="p">}</span>
+<span class="p">],</span>
+<span class="k">case</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">wait_for_sta</span><span class="p">(</span><span class="nv">Config</span><span class="p">,</span><span class="w"> </span><span class="mi">15000</span><span class="p">)</span><span class="w"> </span><span class="k">of</span>
+<span class="w">    </span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nv">Address</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">Netmask</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">Gateway</span><span class="p">}}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Acquired IP address: </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Address</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="nv">Reason</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Network initialization failed: </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Reason</span><span class="p">])</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>To obtain the signal strength (in decibels) of the connection to the associated access point use <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#sta-rssi-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:sta_rssi/0</span></code></span></a>.</p>
+</section>
+</section>
+<section id="ap-mode">
+<h2>AP mode<a class="headerlink" href="#ap-mode" title="Link to this heading"></a></h2>
+<p>In AP mode, the ESP32 starts a WiFi network to which other devices (laptops, mobile devices, other ESP32 devices, etc) can connect.  The ESP32 will create an IPv4 network, and will assign itself the address <code class="docutils literal notranslate"><span class="pre">192.168.4.1</span></code>.  Devices that attach to the ESP32 in AP mode will be assigned sequential addresses in the <code class="docutils literal notranslate"><span class="pre">192.168.4.0/24</span></code> range, e.g., <code class="docutils literal notranslate"><span class="pre">192.168.4.2</span></code>, <code class="docutils literal notranslate"><span class="pre">192.168.4.3</span></code>, etc.</p>
+<p>To initialize the ESP32 device in AP mode, the input configuration should be a properties list containing a tuple of the form <code class="docutils literal notranslate"><span class="pre">{ap,</span> <span class="pre">&lt;ap-properties&gt;}</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;ap-properties&gt;</span></code> is a property list containing configuration properties for the device in AP mode.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;ap-properties&gt;</span></code> property list may contain the following entries:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{ssid,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code>  The SSID to which the device should connect.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{psk,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code> The password required to authenticate to the network, if required.  Note that this password must be a minimum of 8 characters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{ap_channel,</span> <span class="pre">wifi_channel()}</span></code> The channel the access point should use.</p></li>
+</ul>
+<p>If the SSID is omitted in configuration, the SSID name <code class="docutils literal notranslate"><span class="pre">atomvm-&lt;hexmac&gt;</span></code> will be created, where <code class="docutils literal notranslate"><span class="pre">&lt;hexmac&gt;</span></code> is the hexadecimal representation of the factory-assigned MAC address of the device.  This name should be sufficiently unique to disambiguate it from other reachable ESP32 devices, but it may also be difficult to read or remember.</p>
+<p>If the password is omitted, then an <em>open network</em> will be created, and a warning will be printed to the console.  Otherwise, the AP network will be started using WPA+WPA2 authentication.</p>
+<p>If the channel is omitted the default chanel for esp32 is <code class="docutils literal notranslate"><span class="pre">1</span></code>. This setting is only used while a device is operation is AP mode only. If <code class="docutils literal notranslate"><span class="pre">ap_channel</span></code> is configured, it will be temporarily changed to match the associated access point if AP + STA mode is used and the station is associated with an access point. This is a hardware limitation due to the modem radio only being able to operate on a single channel (frequency) at a time.</p>
+<p>The <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#start-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:start/1</span></code></span></a> will immediately return <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Pid}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Pid</span></code> is the process id of the network server, if the network was properly initialized, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if there was an error in configuration.  However, the application may want to wait for the device to to be ready to accept connections from other devices, or to be notified when other devices connect to this AP.</p>
+<p>Applications can specify callback functions, which get triggered as events emerge from the network layer, including when a station connects or disconnects from the AP, as well as when a station is assigned an IP address.</p>
+<p>Callback functions can be specified by the following configuration parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{ap_started,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the AP endpoint has started and is ready to be connected to.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{sta_connected,</span> <span class="pre">fun((Mac::binary())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when a device connects to the AP.  The MAC address of the connected station, as a 6-byte binary, is passed to the callback function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{sta_disconnected,</span> <span class="pre">fun((Mac::binary())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when a device disconnects from the AP.  The MAC address of the disconnected station, as a 6-byte binary, is passed to the callback function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{sta_ip_assigned,</span> <span class="pre">fun((ipv4_address())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the AP assigns an IP address to a station.  The assigned IP address is passed to the callback function.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>IPv6 addresses are not yet supported in AtomVM.</p>
+</div>
+<p>Callback functions are completely optional, but are highly recommended for building robust WiFi applications.  The return value from callback functions is ignored, and AtomVM provides no guarantees about the execution context (i.e., BEAM process) in which these functions are invoked.</p>
+<p>In addition, the following optional parameters can be specified to configure the AP network:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{ssid_hidden,</span> <span class="pre">boolean()}</span></code> Whether the AP network should be not be broadcast (false, by default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{max_connections,</span> <span class="pre">non_neg_integer()}</span></code> The maximum number of devices that can connect to this network (by default, 4)</p></li>
+</ul>
+<p>The following example illustrates initialization of the WiFi network in AP mode.  The example program will configure the network to connect to start a WiFi network with the name <code class="docutils literal notranslate"><span class="pre">myssid</span></code> and password <code class="docutils literal notranslate"><span class="pre">mypsk</span></code>.  Events that occur during the lifecycle of the network will trigger invocations of the specified callback functions.</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="n">ap</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="n">ssid</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;myssid&quot;</span><span class="o">&gt;&gt;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">psk</span><span class="p">,</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="s">&quot;mypsk&quot;</span><span class="o">&gt;&gt;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">ap_started</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">ap_started</span><span class="o">/</span><span class="mi">0</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">sta_connected</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">sta_connected</span><span class="o">/</span><span class="mi">1</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">sta_ip_assigned</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">sta_ip_assigned</span><span class="o">/</span><span class="mi">1</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">sta_disconnected</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">sta_disconnected</span><span class="o">/</span><span class="mi">1</span><span class="p">},</span>
+<span class="w">    </span><span class="p">]}</span>
+<span class="p">],</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="nv">Pid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="nv">Config</span><span class="p">),</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>The following callback functions will be called when the corresponding events occur during the lifetime of the network connection.</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nf">ap_started</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;AP started.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">).</span>
+
+<span class="nf">sta_connected</span><span class="p">(</span><span class="nv">Mac</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;STA connected with mac </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Mac</span><span class="p">]).</span>
+
+<span class="nf">sta_disconnected</span><span class="p">(</span><span class="nv">Mac</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;STA disconnected with mac </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Mac</span><span class="p">]).</span>
+
+<span class="nf">sta_ip_assigned</span><span class="p">(</span><span class="nv">Address</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;STA assigned address </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Address</span><span class="p">]).</span>
+</pre></div>
+</div>
+<p>In a typical application, the network should be configured and the application should wait for the AP to report that it has started, before starting clients or services that have a dependency on the network.</p>
+<section id="ap-mode-convenience-functions">
+<h3>AP Mode Convenience Functions<a class="headerlink" href="#ap-mode-convenience-functions" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module supports the <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#wait-for-ap-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:wait_for_ap/1,2</span></code></span></a> convenience functions for applications that do not need robust connection management.  These functions are synchronous and will wait until the device is successfully starts an AP.  Supply the properties list specified in the <code class="docutils literal notranslate"><span class="pre">{ap,</span> <span class="pre">[...]}</span></code> component of the above configuration, in addition to an optional timeout (in milliseconds).</p>
+<p>For example:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="n">psk</span><span class="p">,</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="s">&quot;mypsk&quot;</span><span class="o">&gt;&gt;</span><span class="p">}</span>
+<span class="p">],</span>
+<span class="k">case</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">wait_for_ap</span><span class="p">(</span><span class="nv">Config</span><span class="p">,</span><span class="w"> </span><span class="mi">15000</span><span class="p">)</span><span class="w"> </span><span class="k">of</span>
+<span class="w">    </span><span class="n">ok</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;AP network started at 192.168.4.1</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="nv">Reason</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Network initialization failed: </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Reason</span><span class="p">])</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="sta-ap-mode">
+<h2>STA+AP mode<a class="headerlink" href="#sta-ap-mode" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module can be started in both STA and AP mode.  In this case, the ESP32 device will both connect to an access point in its STA mode, and will simultaneously serve as an access point in its role in AP mode.</p>
+<p>In order to enable both STA and AP mode, simply provide valid configuration for both modes in the configuration structure supplied to the <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#start-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:start/1</span></code></span></a> function.</p>
+</section>
+<section id="sntp-support">
+<h2>SNTP Support<a class="headerlink" href="#sntp-support" title="Link to this heading"></a></h2>
+<p>You may configure the networking layer to automatically synchronize time on the ESP32 with an NTP server accessible on the network.</p>
+<p>To synchronize time with an NTP server, add a property list with the tag <code class="docutils literal notranslate"><span class="pre">sntp</span></code> at the top level configuration passed into the <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> function.  Specify the NTP hostname or IP address with which your device should sync using the <code class="docutils literal notranslate"><span class="pre">host</span></code> property tag.  The <code class="docutils literal notranslate"><span class="pre">host</span></code> value can be a string or binary.</p>
+<p>You can also specify a callback function that will get called when the clock is synchronized with the SNTP server via the <code class="docutils literal notranslate"><span class="pre">synchronized</span></code> property tag.  This function takes a tuple with the updated time in seconds and microseconds.</p>
+<p>For example:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">sntp</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="n">host</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;pool.ntp.org&quot;</span><span class="o">&gt;&gt;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="n">synchronized</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">sntp_synchronized</span><span class="o">/</span><span class="mi">1</span><span class="p">}</span>
+<span class="p">]}</span>
+</pre></div>
+</div>
+<p>where the <code class="docutils literal notranslate"><span class="pre">sntp_synchronized/1</span></code> function is defined as:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nf">sntp_synchronized</span><span class="p">({</span><span class="nv">TVSec</span><span class="p">,</span><span class="w"> </span><span class="nv">TVUsec</span><span class="p">})</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Synchronized time with SNTP server. TVSec=</span><span class="si">~p</span><span class="s"> TVUsec=</span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">TVSec</span><span class="p">,</span><span class="w"> </span><span class="nv">TVUsec</span><span class="p">]).</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The device must be in STA mode and connected to an access point in order to use an SNTP server on your network
+or on the internet.</p>
+</div>
+</section>
+<section id="nvs-credentials">
+<h2>NVS Credentials<a class="headerlink" href="#nvs-credentials" title="Link to this heading"></a></h2>
+<p>It can become tiresome to enter an SSID and password for every application, and in general it is bad security practice to hard-wire WiFi credentials in your application source code.</p>
+<p>You may instead store an STA or AP SSID and PSK in <a class="reference internal" href="programmers-guide.html#non-volatile-storage"><span class="std std-ref">non-volatile storage (NVS)</span></a> on and ESP32 device.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Credentials are stored un-encrypted and in plaintext and should not be considered secure.  Future versions may use
+encrypted NVS storage.</p>
+</div>
+</section>
+<section id="stopping-the-network">
+<h2>Stopping the Network<a class="headerlink" href="#stopping-the-network" title="Link to this heading"></a></h2>
+<p>To stop the network and free any resources in use, issue the <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#stop-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">stop/0</span></code></span></a> function:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nn">network</span><span class="p">:</span><span class="nf">stop</span><span class="p">().</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Stop is currently unimplemented.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="programmers-guide.html" class="btn btn-neutral float-left" title="Programmers Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="distributed-erlang.html" class="btn btn-neutral float-right" title="Distributed Erlang" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/pdf/AtomVM-main.pdf">pdf</a></dd>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

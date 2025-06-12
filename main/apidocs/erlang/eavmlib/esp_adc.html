@@ -1,0 +1,626 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module esp_adc &mdash; AtomVM 0.7.0-dev+git.10429ba9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/eavmlib/esp_adc.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=9ae9fb0b"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module gpio" href="gpio.html" />
+    <link rel="prev" title="Module esp" href="esp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ahttp_client.html">Module ahttp_client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm.html">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="emscripten.html">Module emscripten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="epmd.html">Module epmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp.html">Module esp</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module esp_adc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gpio.html">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="i2c.html">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ledc.html">Module ledc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdns.html">Module mdns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network.html">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uart.html">Module uart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="websocket.html">Module websocket</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module esp_adc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-esp-adc">
+<h1>Module esp_adc<a class="headerlink" href="#module-esp-adc" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>Analog to digital peripheral support.</p>
+<p><strong>Behaviours:</strong> <a class="reference internal" href="#gen_server.md"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">gen_server</span></code></span></a>.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>Use this module to take ADC (analog voltage) readings. Currently this driver
+only supports the esp32 family of chips, but support for other platforms is
+planned in the future. On an ESP32 device ADC unit 1 allows taking reading from
+pins 32-39. ADC unit2 is disabled by default for the ESP32 classic, but when
+enabled in the build configuration allows pins 0, 2, 4, 12-15, and 25-27 to be
+used as long as WiFi is not required by the application. Unit 2 is disabled for
+ESP32C3 due to its inaccurate results. ADC unit 2 is enabled for all other ESP32
+series with more than one ADC unit; there is an arbitrator peripheral that allows
+ADC unit 2 to be used while WiFI is active.  The pins available for ADC use vary
+by device, check your datasheet for specific hardware support.</p>
+<p>There are two sets of APIs for interacting with the ADC hardware, only one set
+of API may be used by an application.</p>
+<p>The core functionality is provided by the low level resource based nif functions.
+To use the resource based nifs <code class="docutils literal notranslate"><span class="pre">esp_adc:init/0</span></code> and <code class="docutils literal notranslate"><span class="pre">esp_adc:deinit/1</span></code> will acquire and
+release the adc <code class="docutils literal notranslate"><span class="pre">unit</span></code> resource needed for all other functions. A <code class="docutils literal notranslate"><span class="pre">channel</span></code> resource
+used to take measurements from a pin can be obtained using <code class="docutils literal notranslate"><span class="pre">esp_adc:acquire/4</span></code>, and
+released using <code class="docutils literal notranslate"><span class="pre">esp_adc:release_channel/1</span></code>. ADC measurements are taken using <code class="docutils literal notranslate"><span class="pre">sample/3</span></code>.</p>
+<p>For convenience a gen_server managed set of APIs using pin numbers are also available.
+A pin may be configured using <code class="docutils literal notranslate"><span class="pre">esp_adc:start/1,2</span></code>, measurements are taken using
+<code class="docutils literal notranslate"><span class="pre">esp_adc:read/1,2</span></code>, pins can be released individually with <code class="docutils literal notranslate"><span class="pre">esp_adc:stop/1</span></code>, or the driver
+can be stopped completely using <code class="docutils literal notranslate"><span class="pre">esp_adc:stop/0</span></code>.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="adc-pin">
+<h3><a name="type-adc_pin">adc_pin()</a><a class="headerlink" href="#adc-pin" title="Link to this heading"></a></h3>
+<pre><code>
+adc_pin() = non_neg_integer()
+</code></pre>
+<p>ADC capable pins vary by chipset. Consult your datasheet.</p>
+</section>
+<section id="adc-rsrc">
+<h3><a name="type-adc_rsrc">adc_rsrc()</a><a class="headerlink" href="#adc-rsrc" title="Link to this heading"></a></h3>
+<pre><code>
+adc_rsrc() = {$adc, Resource::binary(), Ref::reference()}
+</code></pre>
+</section>
+<section id="attenuation">
+<h3><a name="type-attenuation">attenuation()</a><a class="headerlink" href="#attenuation" title="Link to this heading"></a></h3>
+<pre><code>
+attenuation() = db_0 | db_2_5 | db_6 | db_11 | db_12
+</code></pre>
+<p>The decibel gain determines the maximum safe voltage to be measured. Default is <code class="docutils literal notranslate"><span class="pre">db_11</span></code>. The specific range of
+voltages supported by each setting varies by device. Typical voltage ranges are depicted in the table below:</p>
+<table>
+<tr> <th> Attenuation </th><th> Min Millivolts </th><th> Max Millivolts </th></tr>
+<tr> <td><code>db_0</code></td> <td>0-100</td> <td>750-950</td></tr>
+<tr> <td><code>db_2_5</code></td> <td>0-100</td> <td>1050-1250</td></tr>
+<tr> <td><code>db_6</code></td> <td>0-150</td> <td>1300-1750</td></tr>
+<tr> <td><code>bd_11</code> | <code>db_12</code> </td> <td>0-150</td> <td>2450-2500</td></tr>
+</table>
+<p>Consult the datasheet for your device to determine the exact voltage ranges supported by each gain setting.
+The option <code class="docutils literal notranslate"><span class="pre">db_11</span></code> has been superseded by <code class="docutils literal notranslate"><span class="pre">db_12</span></code>. The option<code class="docutils literal notranslate"><span class="pre">db_11</span></code> and will be deprecated in a future release,
+applications should be updated to use <code class="docutils literal notranslate"><span class="pre">db_12</span></code> (except for builds with ESP-IDF versions prior to v5.2). To Continue
+to support older IDF version builds, the default will remain <code class="docutils literal notranslate"><span class="pre">db_11</span></code>, which is the maximum tolerated voltage on
+all builds, as <code class="docutils literal notranslate"><span class="pre">db_12</span></code> supported builds will automatically use <code class="docutils literal notranslate"><span class="pre">db_12</span></code> in place of <code class="docutils literal notranslate"><span class="pre">db_11</span></code>, when <code class="docutils literal notranslate"><span class="pre">db_11</span></code> is
+deprecated in all builds the default will be changed to <code class="docutils literal notranslate"><span class="pre">db_12</span></code>.</p>
+</section>
+<section id="bit-width">
+<h3><a name="type-bit_width">bit_width()</a><a class="headerlink" href="#bit-width" title="Link to this heading"></a></h3>
+<pre><code>
+bit_width() = bit_9 | bit_10 | bit_11 | bit_12 | bit_13 | bit_max
+</code></pre>
+<p>The default <code class="docutils literal notranslate"><span class="pre">bit_max</span></code> will select the highest value supported by the chipset. Some models only support a single
+fixed bit width.</p>
+</section>
+<section id="pin-option">
+<h3><a name="type-pin_option">pin_option()</a><a class="headerlink" href="#pin-option" title="Link to this heading"></a></h3>
+<pre><code>
+pin_option() = {bitwidth, Width::<a href="#type-bit_width">bit_width()</a>} | {atten, Decibels::<a href="#type-attenuation">attenuation()</a>}
+</code></pre>
+</section>
+<section id="pin-options">
+<h3><a name="type-pin_options">pin_options()</a><a class="headerlink" href="#pin-options" title="Link to this heading"></a></h3>
+<pre><code>
+pin_options() = [<a href="#type-pin_option">pin_option()</a>]
+</code></pre>
+</section>
+<section id="raw-value">
+<h3><a name="type-raw_value">raw_value()</a><a class="headerlink" href="#raw-value" title="Link to this heading"></a></h3>
+<pre><code>
+raw_value() = 0..511 | 0..1023 | 0..2047 | 0..4095 | 0..8191 | undefined
+</code></pre>
+<p>The maximum analog value is determined by <code class="docutils literal notranslate"><span class="pre">bit_width()</span></code>.</p>
+</section>
+<section id="read-option">
+<h3><a name="type-read_option">read_option()</a><a class="headerlink" href="#read-option" title="Link to this heading"></a></h3>
+<pre><code>
+read_option() = raw | voltage | {samples, 1..100000}
+</code></pre>
+<p>The value of the <code class="docutils literal notranslate"><span class="pre">samples</span></code> key is the number of samples to be taken and averaged when returning a measurement,
+default is 64. For optimal stable readings use a 100nF ceramic capacitor input filter, for more info consult
+Espressif’s “ADC Calibration Driver” documentation.
+The keys <code class="docutils literal notranslate"><span class="pre">raw</span></code> and <code class="docutils literal notranslate"><span class="pre">voltage</span></code> determine if these values are included in the results or returned as <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+</section>
+<section id="read-options">
+<h3><a name="type-read_options">read_options()</a><a class="headerlink" href="#read-options" title="Link to this heading"></a></h3>
+<pre><code>
+read_options() = [<a href="#type-read_option">read_option()</a>]
+</code></pre>
+</section>
+<section id="reading">
+<h3><a name="type-reading">reading()</a><a class="headerlink" href="#reading" title="Link to this heading"></a></h3>
+<pre><code>
+reading() = {<a href="#type-raw_value">raw_value()</a> | undefined, <a href="#type-voltage_reading">voltage_reading()</a> | undefined}
+</code></pre>
+</section>
+<section id="voltage-reading">
+<h3><a name="type-voltage_reading">voltage_reading()</a><a class="headerlink" href="#voltage-reading" title="Link to this heading"></a></h3>
+<pre><code>
+voltage_reading() = 0..3300 | undefined
+</code></pre>
+<p>The maximum safe millivolt value that can be measured is determined by <code class="docutils literal notranslate"><span class="pre">attenuation()</span></code>, this value should never
+exceed the chips maximum input tolerance.</p>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#acquire-2">acquire/2</a></td><td>    Nif to initialize an ADC pin.</td></tr><tr><td valign="top"><a href="#acquire-4">acquire/4</a></td><td>    Nif to initialize an ADC pin.</td></tr><tr><td valign="top"><a href="#deinit-1">deinit/1</a></td><td>    Nif to release the ADC unit resource returned from init/0.</td></tr><tr><td valign="top"><a href="#init-0">init/0</a></td><td>    Nif to initialize the ADC unit hardware.</td></tr><tr><td valign="top"><a href="#read-1">read/1</a></td><td>    Take a reading using default values from an ADC pin.</td></tr><tr><td valign="top"><a href="#read-2">read/2</a></td><td>    Take a reading from an ADC pin using the supplied options.</td></tr><tr><td valign="top"><a href="#release_channel-1">release_channel/1</a></td><td>    Nif to deinitialize the specified ADC channel.</td></tr><tr><td valign="top"><a href="#sample-2">sample/2</a></td><td>    Nif to take a reading using default values from an ADC channel.</td></tr><tr><td valign="top"><a href="#sample-3">sample/3</a></td><td>    Nif to take a reading from an ADC channel.</td></tr><tr><td valign="top"><a href="#start-0">start/0</a></td><td>    Optionally initialize a gen_server managed ADC driver without a pin.</td></tr><tr><td valign="top"><a href="#start-1">start/1</a></td><td>    Initialize a gen_server managed ADC pin with default options.</td></tr><tr><td valign="top"><a href="#start-2">start/2</a></td><td>    Initialize a gen_server managed ADC pin with the supplied options.</td></tr><tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>    Stop the ADC driver and release all resources.</td></tr><tr><td valign="top"><a href="#stop-1">stop/1</a></td><td>    De-initialize the specified ADC pin.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="acquire-2"></a></p>
+<section id="acquire-2">
+<h3>acquire/2<a class="headerlink" href="#acquire-2" title="Link to this heading"></a></h3>
+<pre><code>
+acquire(Pin::<a href="#type-adc_pin">adc_pin()</a>, UnitHandle::<a href="#type-adc_rsrc">adc_rsrc()</a>) -&gt; {ok, Channel::<a href="#type-adc_rsrc">adc_rsrc()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: Pin to configure as ADC<br /><code class="docutils literal notranslate"><span class="pre">UnitHandle</span></code>: The unit handle returned from <code class="docutils literal notranslate"><span class="pre">init/0</span></code><br /></p>
+<p>returns: {ok, Channel::adc_rsrc()} | {error, Reason}</p>
+<p>Equivalent to <a class="reference internal" href="#acquire-4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">acquire(Pin,</span> <span class="pre">UnitHandle,</span> <span class="pre">bit_max,</span> <span class="pre">db_11)</span></code></span></a>.</p>
+<p>Nif to initialize an ADC pin.</p>
+<p>Initializes an ADC pin and returns a channel handle resources.</p>
+<p>This is a low level nif that cannot be used in an application that uses the
+convenience functions.</p>
+<p><a name="acquire-4"></a></p>
+</section>
+<section id="acquire-4">
+<h3>acquire/4<a class="headerlink" href="#acquire-4" title="Link to this heading"></a></h3>
+<pre><code>
+acquire(Pin::<a href="#type-adc_pin">adc_pin()</a>, UnitHandle::<a href="#type-adc_rsrc">adc_rsrc()</a>, BitWidth::<a href="#type-bit_width">bit_width()</a>, Attenuation::<a href="#type-attenuation">attenuation()</a>) -&gt; {ok, Channel::<a href="#type-adc_rsrc">adc_rsrc()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: Pin to configure as ADC<br /><code class="docutils literal notranslate"><span class="pre">UnitHandle</span></code>: The unit handle returned from <code class="docutils literal notranslate"><span class="pre">init/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">BitWidth</span></code>: Resolution in bit to measure<br /><code class="docutils literal notranslate"><span class="pre">Attenuation</span></code>: Decibel gain for voltage range<br /></p>
+<p>returns: {ok, Channel::adc_rsrc()} | {error, Reason}</p>
+<p>Nif to initialize an ADC pin.</p>
+<p>The BitWidth value <code class="docutils literal notranslate"><span class="pre">bit_max</span></code> may be used to automatically select the highest
+sample rate supported by your ESP chip-set, or choose from a bit width supported
+by the device.</p>
+<p>The Attenuation value can be used to adust the gain, and therefore safe
+measurement range on voltage the exact range of voltages supported by each
+db gain varies by chip, consult the data sheet for exact range of your model.
+For more information see the <code class="docutils literal notranslate"><span class="pre">attenuation()</span></code> type specification.</p>
+<p>Use the returned <code class="docutils literal notranslate"><span class="pre">Channel</span></code> reference in subsequent ADC operations on
+the same pin.</p>
+<p>This is a low level nif that cannot be used in an application that uses the
+convenience functions.</p>
+<p><a name="deinit-1"></a></p>
+</section>
+<section id="deinit-1">
+<h3>deinit/1<a class="headerlink" href="#deinit-1" title="Link to this heading"></a></h3>
+<pre><code>
+deinit(UnitResource::<a href="#type-adc_rsrc">adc_rsrc()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">UnitResource</span></code>: returned from init/0<br /></p>
+<p>returns: ok | {error, Reason}</p>
+<p>Nif to release the ADC unit resource returned from init/0.</p>
+<p>Stop the ADC driver and free the unit resource. All active ADC channels should
+be released using <code class="docutils literal notranslate"><span class="pre">release_channel/1</span></code> to free each configured channel before
+freeing the unit resource.</p>
+<p>This is a low level nif that cannot be used in an application that uses the
+convenience functions.</p>
+<p><a name="init-0"></a></p>
+</section>
+<section id="init-0">
+<h3>init/0<a class="headerlink" href="#init-0" title="Link to this heading"></a></h3>
+<pre><code>
+init() -&gt; {ok, ADCUnit::<a href="#type-adc_rsrc">adc_rsrc()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p>returns: {ok, ADCUnit :: adc_rsrc()} | {error, Reason}</p>
+<p>Nif to initialize the ADC unit hardware.</p>
+<p>The returned ADC unit handle resource must be supplied for all future ADC operations.</p>
+<p>This is a low level nif that cannot be used in an application that uses the
+convenience functions.</p>
+<p><a name="read-1"></a></p>
+</section>
+<section id="read-1">
+<h3>read/1<a class="headerlink" href="#read-1" title="Link to this heading"></a></h3>
+<pre><code>
+read(Pin::<a href="#type-adc_pin">adc_pin()</a>) -&gt; {ok, <a href="#type-reading">reading()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: The pin from which to take ADC measurement<br /></p>
+<p>returns: {ok, {RawValue, MilliVolts}} | {error, Reason}</p>
+<p>Equivalent to <a class="reference internal" href="#read-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">read(Pin,</span> <span class="pre">[raw,</span> <span class="pre">voltage,</span> <span class="pre">{samples,</span> <span class="pre">64}])</span></code></span></a>.</p>
+<p>Take a reading using default values from an ADC pin.</p>
+<p>This convenience function is used to take a measurement from a previously
+started adc pin.</p>
+<p>This function cannot be used in an application that uses the low level
+nif APIs.</p>
+<p><a name="read-2"></a></p>
+</section>
+<section id="read-2">
+<h3>read/2<a class="headerlink" href="#read-2" title="Link to this heading"></a></h3>
+<pre><code>
+read(Pin::<a href="#type-adc_pin">adc_pin()</a>, ReadOptions::<a href="#type-read_options">read_options()</a>) -&gt; {ok, Result::<a href="#type-reading">reading()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: The pin from which to take ADC measurement<br /><code class="docutils literal notranslate"><span class="pre">ReadOptions</span></code>: Extra options<br /></p>
+<p>returns: {ok, {RawValue, MilliVolts}} | {error, Reason}</p>
+<p>Take a reading from an ADC pin using the supplied options.</p>
+<p>This convenience function is used to take a measurement from a previously
+started adc pin, using the supplied read options parameter.</p>
+<p>The Options parameter may be used to specify the behavior of the read
+operation.</p>
+<p>If the ReadOptions contains the atom <code class="docutils literal notranslate"><span class="pre">raw</span></code>, then the raw value will be returned
+in the first element of the returned tuple.  Otherwise, this element will be the
+atom <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<p>If the ReadOptions contains the atom <code class="docutils literal notranslate"><span class="pre">voltage</span></code>, then the voltage value will be returned
+in millivolts in the second element of the returned tuple.  Otherwise, this element will
+be the atom <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<p>You may specify the number of samples to be taken and averaged over using the tuple
+<code class="docutils literal notranslate"><span class="pre">{samples,</span> <span class="pre">Samples::pos_integer()}</span></code>, the default is <code class="docutils literal notranslate"><span class="pre">64</span></code>.</p>
+<p>If the error <code class="docutils literal notranslate"><span class="pre">Reason</span></code> is timeout and the adc channel is on unit 2 then WiFi is
+likely enabled and adc2 readings may be blocked until there is less network
+traffic. On and ESP32 classic the results for unit 2 will always be
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">timeout}</span></code> if wifi is enabled.</p>
+<p>This function cannot be used in an application that uses the low level nif APIs.</p>
+<p><a name="release_channel-1"></a></p>
+</section>
+<section id="release-channel-1">
+<h3>release_channel/1<a class="headerlink" href="#release-channel-1" title="Link to this heading"></a></h3>
+<pre><code>
+release_channel(ChannelResource::<a href="#type-adc_rsrc">adc_rsrc()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ChannelResource</span></code>: of the pin returned from acquire/4<br /></p>
+<p>returns: ok | {error, Reason}</p>
+<p>Nif to deinitialize the specified ADC channel.</p>
+<p>In the case that an error is returned it is safe to “drop” the <code class="docutils literal notranslate"><span class="pre">ChannelResource</span></code>
+handle from use. After there are no remaining processes with references to
+the channel resource handle, the calibration profile and any remaining resources
+associated with the channel will be released as part of the next garbage
+collection event.</p>
+<p>This is a low level nif that cannot be used in an application that uses the
+convenience functions.</p>
+<p><a name="sample-2"></a></p>
+</section>
+<section id="sample-2">
+<h3>sample/2<a class="headerlink" href="#sample-2" title="Link to this heading"></a></h3>
+<pre><code>
+sample(ChannelResource::<a href="#type-adc_rsrc">adc_rsrc()</a>, UnitResource::<a href="#type-adc_rsrc">adc_rsrc()</a>) -&gt; {ok, <a href="#type-reading">reading()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ChannelResource</span></code>: of the pin returned from acquire/4<br /><code class="docutils literal notranslate"><span class="pre">UnitResource</span></code>: of the pin returned from init/0<br /></p>
+<p>returns: {ok, {RawValue, MilliVolts}} | {error, Reason}</p>
+<p>Equivalent to <a class="reference internal" href="#sample-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">sample(ChannelResource,UnitResource,[raw,</span> <span class="pre">voltage,</span> <span class="pre">{samples,</span> <span class="pre">64}])</span></code></span></a>.</p>
+<p>Nif to take a reading using default values from an ADC channel.</p>
+<p>This is a low level nif that cannot be used in an application that uses the
+convenience functions.</p>
+<p><a name="sample-3"></a></p>
+</section>
+<section id="sample-3">
+<h3>sample/3<a class="headerlink" href="#sample-3" title="Link to this heading"></a></h3>
+<pre><code>
+sample(ChannelResource::<a href="#type-adc_rsrc">adc_rsrc()</a>, UnitResource::<a href="#type-adc_rsrc">adc_rsrc()</a>, ReadOptions::<a href="#type-read_options">read_options()</a>) -&gt; {ok, Result::<a href="#type-reading">reading()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ChannelResource</span></code>: of the pin returned from acquire/4<br /><code class="docutils literal notranslate"><span class="pre">UnitResource</span></code>: of the pin returned from init/0<br /><code class="docutils literal notranslate"><span class="pre">ReadOptions</span></code>: extra list of options to override defaults.<br /></p>
+<p>returns: {ok, {RawValue, MilliVolts}} | {error, Reason}</p>
+<p>Nif to take a reading from an ADC channel.</p>
+<p>The Options parameter may be used to specify the behavior of the read
+operation.</p>
+<p>If the ReadOptions contains the atom <code class="docutils literal notranslate"><span class="pre">raw</span></code>, then the raw value will be returned
+in the first element of the returned tuple.  Otherwise, this element will be
+the atom <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<p>If the ReadOptions contains the atom <code class="docutils literal notranslate"><span class="pre">voltage</span></code>, then the voltage value will be
+returned in millivolts in the second element of the returned tuple.  Otherwise,
+this element will be the atom <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<p>You may specify the number of samples to be taken and averaged over using the
+tuple <code class="docutils literal notranslate"><span class="pre">{samples,</span> <span class="pre">Samples::pos_integer()}</span></code>.</p>
+<p>If the error <code class="docutils literal notranslate"><span class="pre">Reason</span></code> is timeout and the adc channel is on unit 2 then WiFi is
+likely enabled and adc2 readings may be blocked until there is less network
+traffic. On and ESP32 classic the results for unit 2 will always be
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">timeout}</span></code> if wifi is enabled.</p>
+<p>This is a low level nif that cannot be used in an application that uses the
+convenience functions.</p>
+<p><a name="start-0"></a></p>
+</section>
+<section id="start-0">
+<h3>start/0<a class="headerlink" href="#start-0" title="Link to this heading"></a></h3>
+<pre><code>
+start() -&gt; {ok, Pid::pid()}
+</code></pre>
+<br />
+<p>returns: {ok, Pid}</p>
+<p>Optionally initialize a gen_server managed ADC driver without a pin.</p>
+<p>Use of this function is optional, but may be desired if the drivers pid is needed,
+or it is desireable to start the driver without configuring an initial ADC channel.</p>
+<p>Note: since only one instance of the driver is allowed it is registered with the
+name <code class="docutils literal notranslate"><span class="pre">adc_driver</span></code>, which also may be used to directly call the gen_server.</p>
+<p>This convenience function cannot be used in an application that uses the low level
+nif APIs.</p>
+<p><a name="start-1"></a></p>
+</section>
+<section id="start-1">
+<h3>start/1<a class="headerlink" href="#start-1" title="Link to this heading"></a></h3>
+<pre><code>
+start(Pin::<a href="#type-adc_pin">adc_pin()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: Pin to configure as ADC<br /></p>
+<p>returns: ok | {error, Reason}</p>
+<p>Equivalent to <a class="reference internal" href="#start-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">start(Pin,</span> <span class="pre">[{bitwidth,</span> <span class="pre">bit_max},</span> <span class="pre">{atten,</span> <span class="pre">db_11}])</span></code></span></a>.</p>
+<p>Initialize a gen_server managed ADC pin with default options.</p>
+<p>This convenience function configures an ADC pin with the default options for
+use with the optional <code class="docutils literal notranslate"><span class="pre">gen_server</span></code> APIs.  Default options are:
+<code class="docutils literal notranslate"><span class="pre">[{bitwidth,</span> <span class="pre">bit_max},</span> <span class="pre">{atten,</span> <span class="pre">db_11}]</span></code></p>
+<p>This function cannot be used in an application that uses the low level
+nif APIs.</p>
+<p><a name="start-2"></a></p>
+</section>
+<section id="start-2">
+<h3>start/2<a class="headerlink" href="#start-2" title="Link to this heading"></a></h3>
+<pre><code>
+start(Pin::<a href="#type-adc_pin">adc_pin()</a>, Options::<a href="#type-pin_options">pin_options()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: Pin to configure as ADC<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: List of options to override default settings<br /></p>
+<p>returns: ok | {error, Reason}</p>
+<p>Initialize a gen_server managed ADC pin with the supplied options.</p>
+<p>This convenience function configures an ADC pin with the provided options to
+override the default configuration: <code class="docutils literal notranslate"><span class="pre">[{bitwidth,</span> <span class="pre">bit_max},</span> <span class="pre">{atten,</span> <span class="pre">db_11}]</span></code>.</p>
+<p>For more details about these options see the <code class="docutils literal notranslate"><span class="pre">attenuation()</span></code> and <code class="docutils literal notranslate"><span class="pre">bit_width()</span></code>
+type specifications.</p>
+<p>This function cannot be used in an application that uses the low level nif APIs.</p>
+<p><a name="stop-0"></a></p>
+</section>
+<section id="stop-0">
+<h3>stop/0<a class="headerlink" href="#stop-0" title="Link to this heading"></a></h3>
+<pre><code>
+stop() -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p>returns: ok | {error, Reason}</p>
+<p>Stop the ADC driver and release all resources.</p>
+<p>This convenience function is used to completely stop the gen_server managed
+ADC driver and release all resources.</p>
+<p>Note: if an error is returned, a full shutdown of the ADC peripheral should
+still occur, and any remaining resources freed with next VM garbage collection
+event. Regardless the gen_server will exit normally and the adc peripheral
+will no longer be usable.</p>
+<p>This function cannot be used in an application that uses the low level nif APIs.</p>
+<p><a name="stop-1"></a></p>
+</section>
+<section id="stop-1">
+<h3>stop/1<a class="headerlink" href="#stop-1" title="Link to this heading"></a></h3>
+<pre><code>
+stop(Pin::<a href="#type-adc_pin">adc_pin()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: the pin to be released<br /></p>
+<p>returns: ok | {error, Reason}</p>
+<p>De-initialize the specified ADC pin.</p>
+<p>This convenience function is used to release a pin from the gen_server managed
+ADC driver. If an error is returned the ADC channel will still be stopped and
+release internal resources during the next VM garbage collection event, the pin
+will immediately no longer be useable in any case.</p>
+<p>This function cannot be used in an application that uses the low level nif APIs.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="esp.html" class="btn btn-neutral float-left" title="Module esp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gpio.html" class="btn btn-neutral float-right" title="Module gpio" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/pdf/AtomVM-main.pdf">pdf</a></dd>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

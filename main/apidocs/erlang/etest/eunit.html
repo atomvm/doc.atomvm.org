@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module eunit &mdash; AtomVM 0.7.0-dev+git.10429ba9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/etest/eunit.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=9ae9fb0b"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="libAtomVM" href="../../libatomvm/index.html" />
+    <link rel="prev" title="Module etest" href="etest.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The etest library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="etest.html">Module etest</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module eunit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module eunit</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-eunit">
+<h1>Module eunit<a class="headerlink" href="#module-eunit" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description"><span class="xref myst">Description</span></a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>This modules provides an eunit-compatible API for AtomVM generating
+an output that can be parsed by dut.expect_unity_test_output.</p>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="option">
+<h3><a name="type-option">option()</a><a class="headerlink" href="#option" title="Link to this heading"></a></h3>
+<pre><code>
+option() = exact_execution | {exact_execution, boolean()}
+</code></pre>
+</section>
+<section id="test">
+<h3><a name="type-test">test()</a><a class="headerlink" href="#test" title="Link to this heading"></a></h3>
+<pre><code>
+test() = fun(() -&gt; term()) | atom() | {module, atom()} | {test, ModuleName::atom(), FunctionName::atom()} | {Line::pos_integer(), fun(() -&gt; term())} | {generator, GenFun::fun(() -&gt; <a href="#type-test">test()</a>)} | {generator, ModuleName::atom(), FunctionName::atom()} | {Title::string(), <a href="#type-test">test()</a>} | [<a href="#type-test">test()</a>]
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#start-0">start/0</a></td><td></td></tr><tr><td valign="top"><a href="#test-1">test/1</a></td><td>Equivalent to <a href="#test-2"><tt>test(Tests, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#test-2">test/2</a></td><td>    Run tests print result using io:format in a format compatible with
+<code>dut.expect_unity_test_output</code>.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="start-0"></a></p>
+<section id="start-0">
+<h3>start/0<a class="headerlink" href="#start-0" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">start()</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="test-1"></a></p>
+</section>
+<section id="test-1">
+<h3>test/1<a class="headerlink" href="#test-1" title="Link to this heading"></a></h3>
+<pre><code>
+test(Tests::<a href="#type-test">test()</a>) -&gt; ok | {error, {failures, pos_integer()}}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#test-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">test(Tests,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="test-2"></a></p>
+</section>
+<section id="test-2">
+<h3>test/2<a class="headerlink" href="#test-2" title="Link to this heading"></a></h3>
+<pre><code>
+test(Tests::<a href="#type-test">test()</a>, Options::[<a href="#type-option">option()</a>]) -&gt; ok | {error, {failures, pos_integer()}}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Tests</span></code>: tests or module to run tests from<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: options. If <code class="docutils literal notranslate"><span class="pre">exact_execution</span></code> is true and Tests is a module
+name, tests from the module with _tests suffix are not collected.<br /></p>
+<p>returns: ok if all of the tests pass, or the atom fail, if any of the tests
+failed.</p>
+<p>Run tests print result using io:format in a format compatible with
+<code class="docutils literal notranslate"><span class="pre">dut.expect_unity_test_output</span></code>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="etest.html" class="btn btn-neutral float-left" title="Module etest" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../libatomvm/index.html" class="btn btn-neutral float-right" title="libAtomVM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/pdf/AtomVM-main.pdf">pdf</a></dd>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

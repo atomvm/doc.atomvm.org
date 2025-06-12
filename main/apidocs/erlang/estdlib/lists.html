@@ -1,0 +1,765 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module lists &mdash; AtomVM 0.7.0-dev+git.10429ba9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/lists.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=9ae9fb0b"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module logger" href="logger.html" />
+    <link rel="prev" title="Module kernel" href="kernel.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="application.html">Module application</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dist_util.html">Module dist_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_epmd.html">Module erl_epmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erpc.html">Module erpc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets.html">Module ets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="init.html">Module init</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html">Module kernel</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net_kernel.html">Module net_kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net_kernel_sup.html">Module net_kernel_sup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket_dist.html">Module socket_dist</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket_dist_controller.html">Module socket_dist_controller</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module lists</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-lists">
+<h1>Module lists<a class="headerlink" href="#module-lists" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>An implementation of the Erlang/OTP lists interface.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module implements a strict subset of the Erlang/OTP lists
+interface.<a name="index"></a></p>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#all-2">all/2</a></td><td>    Evaluates to true iff Fun(E) =:= true, for all E in List.</td></tr><tr><td valign="top"><a href="#any-2">any/2</a></td><td>    Evaluates to true iff Fun(E) =:= true, for some E in List.</td></tr><tr><td valign="top"><a href="#append-1">append/1</a></td><td>    Returns a list in which all the sublists of <code>ListOfLists</code> have been appended.</td></tr><tr><td valign="top"><a href="#append-2">append/2</a></td><td>    Returns a new list <code>List3</code>, which is made from the elements of <code>List1</code> followed by the elements of <code>List2</code>.</td></tr><tr><td valign="top"><a href="#delete-2">delete/2</a></td><td>    Remove E from L.</td></tr><tr><td valign="top"><a href="#dropwhile-2">dropwhile/2</a></td><td>    Drops elements Elem from List1 while Pred(Elem) returns true and returns
+the remaining list.</td></tr><tr><td valign="top"><a href="#duplicate-2">duplicate/2</a></td><td>    Duplicate an element.</td></tr><tr><td valign="top"><a href="#filter-2">filter/2</a></td><td>    Filter a list by a predicate, returning the list of elements
+for which the predicate is true.</td></tr><tr><td valign="top"><a href="#filtermap-2">filtermap/2</a></td><td>    Calls <code>Fun(Elem)</code> on successive elements <code>Elem</code> of <code>List1</code> in order to update or
+remove elements from <code>List1</code>.</td></tr><tr><td valign="top"><a href="#flatmap-2">flatmap/2</a></td><td>    Map elements of list L by applying F, and append the results.</td></tr><tr><td valign="top"><a href="#flatten-1">flatten/1</a></td><td>    recursively flattens elements of L into a single list.</td></tr><tr><td valign="top"><a href="#foldl-3">foldl/3</a></td><td>    Fold over a list of terms, from left to right, applying Fun(E, Accum)
+to each successive element in List.</td></tr><tr><td valign="top"><a href="#foldr-3">foldr/3</a></td><td>    Fold over a list of terms, from right to left, applying Fun(E, Accum)
+to each successive element in List.</td></tr><tr><td valign="top"><a href="#foreach-2">foreach/2</a></td><td>    Applies given fun to each list element.</td></tr><tr><td valign="top"><a href="#join-2">join/2</a></td><td>    Inserts Sep between every element of List.</td></tr><tr><td valign="top"><a href="#keydelete-3">keydelete/3</a></td><td>    Delete the entry in L whose Ith element matches K.</td></tr><tr><td valign="top"><a href="#keyfind-3">keyfind/3</a></td><td>    Find the entry in L whose Ith element matches K.</td></tr><tr><td valign="top"><a href="#keymember-3">keymember/3</a></td><td>    Returns true if a Ith element matches K.</td></tr><tr><td valign="top"><a href="#keyreplace-4">keyreplace/4</a></td><td>    Returns the result of replacing NewTuple for the first element in L with who's Ith element matches K.</td></tr><tr><td valign="top"><a href="#keystore-4">keystore/4</a></td><td>    Searches the list of tuples <code>TupleList</code> for a tuple whose <code>N</code>th
+element compares equal to <code>Key</code>, replaces it with <code>NewTuple</code> if
+found.</td></tr><tr><td valign="top"><a href="#keytake-3">keytake/3</a></td><td>    Searches the list of tuples <code>TupleList1</code> for a tuple whose <code>N</code>th element
+compares equal to <code>Key</code>.</td></tr><tr><td valign="top"><a href="#last-1">last/1</a></td><td>    Get the last item of a list.</td></tr><tr><td valign="top"><a href="#map-2">map/2</a></td><td>    Map a list of terms, applying Fun(E).</td></tr><tr><td valign="top"><a href="#mapfoldl-3">mapfoldl/3</a></td><td>    Combine <code>map/2</code> and <code>foldl/3</code> in one pass.</td></tr><tr><td valign="top"><a href="#member-2">member/2</a></td><td>    Determine whether a term is a member of a list.</td></tr><tr><td valign="top"><a href="#nth-2">nth/2</a></td><td>    Get the value in a list at position N.</td></tr><tr><td valign="top"><a href="#nthtail-2">nthtail/2</a></td><td>    Get the sublist of list L starting after the element N.</td></tr><tr><td valign="top"><a href="#reverse-1">reverse/1</a></td><td>Erlang/OTP implementation of this function actually handles few simple
+cases and calls <code>lists:reverse/2</code> for the more generic case.</td></tr><tr><td valign="top"><a href="#reverse-2">reverse/2</a></td><td>    Reverse the elements of L, followed by T.</td></tr><tr><td valign="top"><a href="#search-2">search/2</a></td><td>    If there is a Value in List such that Pred(Value) returns true,
+returns {value, Value} for the first such Value, otherwise returns false.</td></tr><tr><td valign="top"><a href="#seq-2">seq/2</a></td><td>    Returns a sequence of integers in a specified range.</td></tr><tr><td valign="top"><a href="#seq-3">seq/3</a></td><td>    Returns a sequence of integers in a specified range incremented by a specified value.</td></tr><tr><td valign="top"><a href="#sort-1">sort/1</a></td><td>    Returns a sorted list, using <code><</code> operator to determine sort order.</td></tr><tr><td valign="top"><a href="#sort-2">sort/2</a></td><td>    Returns a sorted list, using Fun(A, B) to determine sort order.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>    Splits List1 into List2 and List3.</td></tr><tr><td valign="top"><a href="#sublist-2">sublist/2</a></td><td>    Return a sublist made of the first <code>Len</code> elements of <code>List</code>.</td></tr><tr><td valign="top"><a href="#usort-1">usort/1</a></td><td>    Returns a unique, sorted list, using <code><</code> operator to determine sort order.</td></tr><tr><td valign="top"><a href="#usort-2">usort/2</a></td><td>    Returns a unique, sorted list.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="all-2"></a></p>
+<section id="all-2">
+<h3>all/2<a class="headerlink" href="#all-2" title="Link to this heading"></a></h3>
+<pre><code>
+all(Fun::fun((Elem::term()) -&gt; boolean()), List::list()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the predicate to evaluate<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list over which to evaluate elements<br /></p>
+<p>returns: true if Fun(E) evaluates to true, for all elements in List</p>
+<p>Evaluates to true iff Fun(E) =:= true, for all E in List</p>
+<p><a name="any-2"></a></p>
+</section>
+<section id="any-2">
+<h3>any/2<a class="headerlink" href="#any-2" title="Link to this heading"></a></h3>
+<pre><code>
+any(Fun::fun((Elem::term()) -&gt; boolean()), List::list()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the predicate to evaluate<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list over which to evaluate elements<br /></p>
+<p>returns: true if Fun(E) evaluates to true, for at least one in List</p>
+<p>Evaluates to true iff Fun(E) =:= true, for some E in List</p>
+<p><a name="append-1"></a></p>
+</section>
+<section id="append-1">
+<h3>append/1<a class="headerlink" href="#append-1" title="Link to this heading"></a></h3>
+<pre><code>
+append(ListOfLists) -&gt; List1
+</code></pre>
+<ul class="definitions"><li><code>ListOfLists = [List]</code></li><li><code>List = [T]</code></li><li><code>List1 = [T]</code></li><li><code>T = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">ListOfLists</span></code>: a list of lists to make the general list from<br /></p>
+<p>returns: a list made of the sublists of <code class="docutils literal notranslate"><span class="pre">ListOfLists</span></code>.</p>
+<p>Returns a list in which all the sublists of <code class="docutils literal notranslate"><span class="pre">ListOfLists</span></code> have been appended.</p>
+<p><a name="append-2"></a></p>
+</section>
+<section id="append-2">
+<h3>append/2<a class="headerlink" href="#append-2" title="Link to this heading"></a></h3>
+<pre><code>
+append(List1, List2) -&gt; List3
+</code></pre>
+<ul class="definitions"><li><code>List1 = [T]</code></li><li><code>List2 = [T]</code></li><li><code>List3 = [T]</code></li><li><code>T = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">List1</span></code>: a list<br /><code class="docutils literal notranslate"><span class="pre">List2</span></code>: a list<br /></p>
+<p>returns: a list made of the elements of <code class="docutils literal notranslate"><span class="pre">List1</span></code> and <code class="docutils literal notranslate"><span class="pre">List2</span></code>.</p>
+<p>Returns a new list <code class="docutils literal notranslate"><span class="pre">List3</span></code>, which is made from the elements of <code class="docutils literal notranslate"><span class="pre">List1</span></code> followed by the elements of <code class="docutils literal notranslate"><span class="pre">List2</span></code>.</p>
+<p><a name="delete-2"></a></p>
+</section>
+<section id="delete-2">
+<h3>delete/2<a class="headerlink" href="#delete-2" title="Link to this heading"></a></h3>
+<pre><code>
+delete(E::term(), L::list()) -&gt; Result::list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">E</span></code>: the member to delete<br /><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list from which to delete the value<br /></p>
+<p>returns: the result of removing E from L, if it exists in L; otherwise, L.</p>
+<p>Remove E from L</p>
+<p><a name="dropwhile-2"></a></p>
+</section>
+<section id="dropwhile-2">
+<h3>dropwhile/2<a class="headerlink" href="#dropwhile-2" title="Link to this heading"></a></h3>
+<pre><code>
+dropwhile(Pred, List1) -&gt; List2
+</code></pre>
+<ul class="definitions"><li><code>Pred = fun((Elem::T) -&gt; boolean())</code></li><li><code>List1 = [T]</code></li><li><code>List2 = [T]</code></li><li><code>T = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Pred</span></code>: the predicate to check against elements in List1<br /></p>
+<p>returns: List List1 tail at the point predicate returned false for a element</p>
+<p>Drops elements Elem from List1 while Pred(Elem) returns true and returns
+the remaining list. The Pred function must return a boolean.</p>
+<p><a name="duplicate-2"></a></p>
+</section>
+<section id="duplicate-2">
+<h3>duplicate/2<a class="headerlink" href="#duplicate-2" title="Link to this heading"></a></h3>
+<pre><code>
+duplicate(Count::integer(), Elem) -&gt; [Elem]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Count</span></code>: the number of times to duplicate the element<br /><code class="docutils literal notranslate"><span class="pre">Elem</span></code>: the element to duplicate<br /></p>
+<p>returns: a list made of Elem duplicate Count times</p>
+<p>Duplicate an element</p>
+<p><a name="filter-2"></a></p>
+</section>
+<section id="filter-2">
+<h3>filter/2<a class="headerlink" href="#filter-2" title="Link to this heading"></a></h3>
+<pre><code>
+filter(Pred::fun((Elem::term()) -&gt; boolean()), List::list()) -&gt; list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pred</span></code>: the predicate to apply to elements in List<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: list<br /></p>
+<p>returns: all values in L for which Pred is true.</p>
+<p>Filter a list by a predicate, returning the list of elements
+for which the predicate is true.</p>
+<p><a name="filtermap-2"></a></p>
+</section>
+<section id="filtermap-2">
+<h3>filtermap/2<a class="headerlink" href="#filtermap-2" title="Link to this heading"></a></h3>
+<pre><code>
+filtermap(Fun, List1) -&gt; List2
+</code></pre>
+<ul class="definitions"><li><code>Fun = fun((Elem) -&gt; boolean() | {true, Value})</code></li><li><code>List1 = [Elem]</code></li><li><code>List2 = [Elem | Value]</code></li><li><code>Elem = term()</code></li><li><code>Value = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the filter/map fun<br /><code class="docutils literal notranslate"><span class="pre">List1</span></code>: the list where given fun will be applied<br /></p>
+<p>returns: Returns the result of application of given fun over given list items</p>
+<p>Calls <code class="docutils literal notranslate"><span class="pre">Fun(Elem)</span></code> on successive elements <code class="docutils literal notranslate"><span class="pre">Elem</span></code> of <code class="docutils literal notranslate"><span class="pre">List1</span></code> in order to update or
+remove elements from <code class="docutils literal notranslate"><span class="pre">List1</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Fun/1</span></code> must return either a Boolean or a tuple <code class="docutils literal notranslate"><span class="pre">{true,</span> <span class="pre">Value}</span></code>. The function
+returns the list of elements for which <code class="docutils literal notranslate"><span class="pre">Fun</span></code> returns a new value, where a value
+of <code class="docutils literal notranslate"><span class="pre">true</span></code> is synonymous with <code class="docutils literal notranslate"><span class="pre">{true,</span> <span class="pre">Elem}</span></code>.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">lists:filtermap(fun(X)</span> <span class="pre">-&gt;</span> <span class="pre">case</span> <span class="pre">X</span> <span class="pre">rem</span> <span class="pre">2</span> <span class="pre">of</span> <span class="pre">0</span> <span class="pre">-&gt;</span> <span class="pre">{true,</span> <span class="pre">X</span> <span class="pre">div</span> <span class="pre">2};</span> <span class="pre">_</span> <span class="pre">-&gt;</span> <span class="pre">false</span> <span class="pre">end</span> <span class="pre">end,</span> <span class="pre">[1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[1,2]</span></code></p>
+<p><a name="flatmap-2"></a></p>
+</section>
+<section id="flatmap-2">
+<h3>flatmap/2<a class="headerlink" href="#flatmap-2" title="Link to this heading"></a></h3>
+<pre><code>
+flatmap(F::fun((Elem::term()) -&gt; [term()]), List::[term()]) -&gt; [term()]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">F</span></code>: the function to apply to elements of L<br /></p>
+<p>returns: List of mapped elements, appended</p>
+<p>Map elements of list L by applying F, and append the results. F should
+return a list.</p>
+<p><a name="flatten-1"></a></p>
+</section>
+<section id="flatten-1">
+<h3>flatten/1<a class="headerlink" href="#flatten-1" title="Link to this heading"></a></h3>
+<pre><code>
+flatten(L::list()) -&gt; list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list to flatten<br /></p>
+<p>returns: flattened list</p>
+<p>recursively flattens elements of L into a single list</p>
+<p><a name="foldl-3"></a></p>
+</section>
+<section id="foldl-3">
+<h3>foldl/3<a class="headerlink" href="#foldl-3" title="Link to this heading"></a></h3>
+<pre><code>
+foldl(Fun::fun((Elem::term(), AccIn::term()) -&gt; AccOut::term()), Acc0::term(), List::list()) -&gt; Acc1::term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the function to apply<br /><code class="docutils literal notranslate"><span class="pre">Acc0</span></code>: the initial accumulator<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list over which to fold<br /></p>
+<p>returns: the result of folding Fun over L</p>
+<p>Fold over a list of terms, from left to right, applying Fun(E, Accum)
+to each successive element in List</p>
+<p><a name="foldr-3"></a></p>
+</section>
+<section id="foldr-3">
+<h3>foldr/3<a class="headerlink" href="#foldr-3" title="Link to this heading"></a></h3>
+<pre><code>
+foldr(Fun::fun((Elem::term(), AccIn::term()) -&gt; AccOut::term()), Acc0::term(), List::list()) -&gt; Acc1::term()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#foldl-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">foldl(Fun,</span> <span class="pre">Acc0,</span> <span class="pre">reverse(List))</span></code></span></a>.</p>
+<p>Fold over a list of terms, from right to left, applying Fun(E, Accum)
+to each successive element in List</p>
+<p><a name="foreach-2"></a></p>
+</section>
+<section id="foreach-2">
+<h3>foreach/2<a class="headerlink" href="#foreach-2" title="Link to this heading"></a></h3>
+<pre><code>
+foreach(Fun::fun((Elem::term()) -&gt; term()), List::list()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the predicate to evaluate<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list over which to evaluate elements<br /></p>
+<p>returns: ok</p>
+<p>Applies given fun to each list element</p>
+<p><a name="join-2"></a></p>
+</section>
+<section id="join-2">
+<h3>join/2<a class="headerlink" href="#join-2" title="Link to this heading"></a></h3>
+<pre><code>
+join(Sep::any(), List::list()) -&gt; list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Sep</span></code>: the separator<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: list<br /></p>
+<p>returns: the result of inserting Sep between every element of List.</p>
+<p>Inserts Sep between every element of List.</p>
+<p><a name="keydelete-3"></a></p>
+</section>
+<section id="keydelete-3">
+<h3>keydelete/3<a class="headerlink" href="#keydelete-3" title="Link to this heading"></a></h3>
+<pre><code>
+keydelete(K::term(), I::pos_integer(), L::list()) -&gt; list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">K</span></code>: the key to match<br /><code class="docutils literal notranslate"><span class="pre">I</span></code>: the position in the tuple to compare (1..tuple_size)<br /><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list from which to delete the element<br /></p>
+<p>returns: the result of deleting any element in L who’s Ith element matches K</p>
+<p>Delete the entry in L whose Ith element matches K.</p>
+<p><a name="keyfind-3"></a></p>
+</section>
+<section id="keyfind-3">
+<h3>keyfind/3<a class="headerlink" href="#keyfind-3" title="Link to this heading"></a></h3>
+<pre><code>
+keyfind(K::term(), I::pos_integer(), L::[tuple()]) -&gt; tuple() | false
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">K</span></code>: the key to match<br /><code class="docutils literal notranslate"><span class="pre">I</span></code>: the position in the tuple to compare (1..tuple_size)<br /><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list from which to find the element<br /></p>
+<p>returns: the tuple in L who’s Ith element matches K; the atom false, otherwise</p>
+<p>Find the entry in L whose Ith element matches K.</p>
+<p><a name="keymember-3"></a></p>
+</section>
+<section id="keymember-3">
+<h3>keymember/3<a class="headerlink" href="#keymember-3" title="Link to this heading"></a></h3>
+<pre><code>
+keymember(K::term(), I::pos_integer(), L::[tuple()]) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">K</span></code>: the key to match<br /><code class="docutils literal notranslate"><span class="pre">I</span></code>: the position in the tuple to compare (1..tuple_size)<br /><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list from which to find the element<br /></p>
+<p>returns: true if there is a tuple in L who’s Ith element matches K; the atom false, otherwise</p>
+<p>Returns true if a Ith element matches K.</p>
+<p><a name="keyreplace-4"></a></p>
+</section>
+<section id="keyreplace-4">
+<h3>keyreplace/4<a class="headerlink" href="#keyreplace-4" title="Link to this heading"></a></h3>
+<pre><code>
+keyreplace(Key::term(), N::pos_integer(), TupleList::[tuple()], NewTuple::tuple()) -&gt; [tuple()]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">NewTuple</span></code>: tuple containing the new key to replace param <code class="docutils literal notranslate"><span class="pre">K</span></code><br /></p>
+<p>returns: result of replacing the first element in L who’s Ith element matches K with the contents of NewTuple.</p>
+<p>Returns the result of replacing NewTuple for the first element in L with who’s Ith element matches K.</p>
+<p><a name="keystore-4"></a></p>
+</section>
+<section id="keystore-4">
+<h3>keystore/4<a class="headerlink" href="#keystore-4" title="Link to this heading"></a></h3>
+<pre><code>
+keystore(Key::term(), N::pos_integer(), TupleList::[tuple()], NewTuple::tuple()) -&gt; [tuple()]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key to match<br /><code class="docutils literal notranslate"><span class="pre">N</span></code>: the position in the tuple to compare (1..tuple_size)<br /><code class="docutils literal notranslate"><span class="pre">TupleList</span></code>: the list of tuples from which to find the element<br /><code class="docutils literal notranslate"><span class="pre">NewTuple</span></code>: the tuple to add to the list<br /></p>
+<p>returns: An updated TupleList where the first occurrence of <code class="docutils literal notranslate"><span class="pre">Key</span></code> has been
+replaced with <code class="docutils literal notranslate"><span class="pre">NewTuple</span></code>.</p>
+<p>Searches the list of tuples <code class="docutils literal notranslate"><span class="pre">TupleList</span></code> for a tuple whose <code class="docutils literal notranslate"><span class="pre">N</span></code>th
+element compares equal to <code class="docutils literal notranslate"><span class="pre">Key</span></code>, replaces it with <code class="docutils literal notranslate"><span class="pre">NewTuple</span></code> if
+found. If not found, append <code class="docutils literal notranslate"><span class="pre">NewTuple</span></code> to <code class="docutils literal notranslate"><span class="pre">TupleList</span></code>.</p>
+<p><a name="keytake-3"></a></p>
+</section>
+<section id="keytake-3">
+<h3>keytake/3<a class="headerlink" href="#keytake-3" title="Link to this heading"></a></h3>
+<pre><code>
+keytake(Key, N, TupleList1) -&gt; {value, Tuple, TupleList2} | false
+</code></pre>
+<ul class="definitions"><li><code>Key = term()</code></li><li><code>N = pos_integer()</code></li><li><code>TupleList1 = [tuple()]</code></li><li><code>TupleList2 = [tuple()]</code></li><li><code>Tuple = tuple()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key to match<br /><code class="docutils literal notranslate"><span class="pre">N</span></code>: the position in the tuple to compare (1..tuple_size)<br /><code class="docutils literal notranslate"><span class="pre">TupleList1</span></code>: the list of tuples from which to find the element<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{value,</span> <span class="pre">Tuple,</span> <span class="pre">TupleList2}</span></code> if such a tuple is found, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.
+<code class="docutils literal notranslate"><span class="pre">TupleList2</span></code> is a copy of <code class="docutils literal notranslate"><span class="pre">TupleList1</span></code> where the first
+occurrence of <code class="docutils literal notranslate"><span class="pre">Tuple</span></code> has been removed.</p>
+<p>Searches the list of tuples <code class="docutils literal notranslate"><span class="pre">TupleList1</span></code> for a tuple whose <code class="docutils literal notranslate"><span class="pre">N</span></code>th element
+compares equal to <code class="docutils literal notranslate"><span class="pre">Key</span></code>.</p>
+<p><a name="last-1"></a></p>
+</section>
+<section id="last-1">
+<h3>last/1<a class="headerlink" href="#last-1" title="Link to this heading"></a></h3>
+<pre><code>
+last(L::[E, ...]) -&gt; E
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">L</span></code>: the proper list from which to get the last item<br /></p>
+<p>returns: the last item of the list.</p>
+<p>Get the last item of a list.</p>
+<p><a name="map-2"></a></p>
+</section>
+<section id="map-2">
+<h3>map/2<a class="headerlink" href="#map-2" title="Link to this heading"></a></h3>
+<pre><code>
+map(Fun::fun((Elem::term()) -&gt; Out::term()), List::list()) -&gt; OutList::term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the function to apply<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list over which to map<br /></p>
+<p>returns: the result of mapping over L</p>
+<p>Map a list of terms, applying Fun(E)</p>
+<p><a name="mapfoldl-3"></a></p>
+</section>
+<section id="mapfoldl-3">
+<h3>mapfoldl/3<a class="headerlink" href="#mapfoldl-3" title="Link to this heading"></a></h3>
+<pre><code>
+mapfoldl(Fun::fun((A, Acc) -&gt; {B, Acc}), Acc, List1::[A]) -&gt; {[B], Acc}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the function to apply<br /></p>
+<p>returns: the result of mapping and folding Fun over L</p>
+<p>Combine <code class="docutils literal notranslate"><span class="pre">map/2</span></code> and <code class="docutils literal notranslate"><span class="pre">foldl/3</span></code> in one pass.</p>
+<p><a name="member-2"></a></p>
+</section>
+<section id="member-2">
+<h3>member/2<a class="headerlink" href="#member-2" title="Link to this heading"></a></h3>
+<pre><code>
+member(E::term(), L::list()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">E</span></code>: the member to search for<br /><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list from which to get the value<br /></p>
+<p>returns: true if E is a member of L; false, otherwise.</p>
+<p>Determine whether a term is a member of a list.</p>
+<p><a name="nth-2"></a></p>
+</section>
+<section id="nth-2">
+<h3>nth/2<a class="headerlink" href="#nth-2" title="Link to this heading"></a></h3>
+<pre><code>
+nth(N::non_neg_integer(), L::list()) -&gt; term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">N</span></code>: the index in the list to get<br /><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list from which to get the value<br /></p>
+<p>returns: the value in the list at position N.</p>
+<p>Get the value in a list at position N.</p>
+<p>Returns the value at the specified position in the list.
+The behavior of this function is undefined if N is outside of the
+{1..length(L)}.</p>
+<p><a name="nthtail-2"></a></p>
+</section>
+<section id="nthtail-2">
+<h3>nthtail/2<a class="headerlink" href="#nthtail-2" title="Link to this heading"></a></h3>
+<pre><code>
+nthtail(N::non_neg_integer(), L::list()) -&gt; list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">N</span></code>: the index to start the sublist from<br /><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list from which to extract a tail<br /></p>
+<p>returns: a sublist of list starting from position N.</p>
+<p>Get the sublist of list L starting after the element N.</p>
+<p>The behavior of this function is undefined if N is outside of the
+{0..length(L)}.</p>
+<p><a name="reverse-1"></a></p>
+</section>
+<section id="reverse-1">
+<h3>reverse/1<a class="headerlink" href="#reverse-1" title="Link to this heading"></a></h3>
+<pre><code>
+reverse(L::list()) -&gt; list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list to reverse<br /></p>
+<p>returns: the elements of L in reverse order</p>
+<p>Equivalent to <a class="reference internal" href="#reverse-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">lists:reverse(L,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p>Erlang/OTP implementation of this function actually handles few simple
+cases and calls <code class="docutils literal notranslate"><span class="pre">lists:reverse/2</span></code> for the more generic case. Consequently,
+calling <code class="docutils literal notranslate"><span class="pre">lists:reverse/1</span></code> without a list or with an improper list of two
+elements will fail with a function clause exception on Erlang/OTP and with a
+badarg exception with this implementation.</p>
+<p><a name="reverse-2"></a></p>
+</section>
+<section id="reverse-2">
+<h3>reverse/2<a class="headerlink" href="#reverse-2" title="Link to this heading"></a></h3>
+<pre><code>
+reverse(L::[E, ...], T::[E]) -&gt; [E, ...]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list to reverse<br /><code class="docutils literal notranslate"><span class="pre">T</span></code>: the tail to append to the reversed list<br /></p>
+<pre><code>
+reverse(L::nonempty_list(), T::any()) -&gt; maybe_improper_list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list to reverse<br /><code class="docutils literal notranslate"><span class="pre">T</span></code>: the tail to append to the reversed list<br /></p>
+<pre><code>
+reverse(L::[], T) -&gt; T
+</code></pre>
+<ul class="definitions"><li><code>T = any()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list to reverse<br /><code class="docutils literal notranslate"><span class="pre">T</span></code>: the tail to append to the reversed list<br /></p>
+<p>returns: the elements of L in reverse order followed by T</p>
+<p>Reverse the elements of L, followed by T.
+If T is not a list or not a proper list, it is appended anyway and the result
+will be an improper list.</p>
+<p>If L is not a proper list, the function fails with badarg.</p>
+<p>Following Erlang/OTP tradition, <code class="docutils literal notranslate"><span class="pre">lists:reverse/1,2</span></code> is a nif. It computes
+the length and then allocates memory for the list at once (2 * n terms).</p>
+<p>While this is much faster with AtomVM as allocations are expensive with
+default heap growth strategy, it can consume more memory until the list
+passed is garbage collected, as opposed to a recursive implementation where
+the process garbage collect part of the input list during the reversal.</p>
+<p>Consequently, tail-recursive implementations calling <code class="docutils literal notranslate"><span class="pre">lists:reverse/2</span></code>
+can be as expensive or more expensive in memory than list comprehensions or
+non-tail recursive versions depending on the number of terms saved on the
+stack between calls.</p>
+<p>For example, a non-tail recursive join/2 implementation requires two terms
+on stack for each iteration, so when it returns it will use
+<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">*</span> <span class="pre">3</span></code> (stack) + <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">*</span> <span class="pre">4</span></code> (result list)
+a tail recursive version will use, on last iteration:
+<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">*</span> <span class="pre">4</span></code> (reversed list) + n * 4’ (result list)</p>
+<p><a name="search-2"></a></p>
+</section>
+<section id="search-2">
+<h3>search/2<a class="headerlink" href="#search-2" title="Link to this heading"></a></h3>
+<pre><code>
+search(Pred::fun((Elem::term()) -&gt; boolean()), List::list()) -&gt; {value, Value::term()} | false
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pred</span></code>: the predicate to apply to elements in List<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: search<br /></p>
+<p>returns: the first {value, Val}, if Pred(Val); false, otherwise.</p>
+<p>If there is a Value in List such that Pred(Value) returns true,
+returns {value, Value} for the first such Value, otherwise returns false.</p>
+<p><a name="seq-2"></a></p>
+</section>
+<section id="seq-2">
+<h3>seq/2<a class="headerlink" href="#seq-2" title="Link to this heading"></a></h3>
+<pre><code>
+seq(From::integer(), To::integer()) -&gt; list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">From</span></code>: from integer<br /><code class="docutils literal notranslate"><span class="pre">To</span></code>: to Integer<br /></p>
+<p>returns: list of integers from [From..To]</p>
+<p>Returns a sequence of integers in a specified range.</p>
+<p>This function is equivalent to <code class="docutils literal notranslate"><span class="pre">lists:seq(From,</span> <span class="pre">To,</span> <span class="pre">1)</span></code>.</p>
+<p><a name="seq-3"></a></p>
+</section>
+<section id="seq-3">
+<h3>seq/3<a class="headerlink" href="#seq-3" title="Link to this heading"></a></h3>
+<pre><code>
+seq(From::integer(), To::integer(), Incr::integer()) -&gt; list()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">From</span></code>: from integer<br /><code class="docutils literal notranslate"><span class="pre">To</span></code>: to Integer<br /><code class="docutils literal notranslate"><span class="pre">Incr</span></code>: increment value<br /></p>
+<p>returns: list of integers <code class="docutils literal notranslate"><span class="pre">[From,</span> <span class="pre">From+Incr,</span> <span class="pre">...,</span> <span class="pre">N]</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the largest integer <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> <code class="docutils literal notranslate"><span class="pre">To</span></code> incremented by <code class="docutils literal notranslate"><span class="pre">Incr</span></code></p>
+<p>Returns a sequence of integers in a specified range incremented by a specified value.</p>
+<p><a name="sort-1"></a></p>
+</section>
+<section id="sort-1">
+<h3>sort/1<a class="headerlink" href="#sort-1" title="Link to this heading"></a></h3>
+<pre><code>
+sort(List::[T]) -&gt; [T]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: a list<br /></p>
+<p>returns: Sorted list, ordered by <code class="docutils literal notranslate"><span class="pre">&lt;</span></code></p>
+<p>Returns a sorted list, using <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> operator to determine sort order.</p>
+<p><a name="sort-2"></a></p>
+</section>
+<section id="sort-2">
+<h3>sort/2<a class="headerlink" href="#sort-2" title="Link to this heading"></a></h3>
+<pre><code>
+sort(Fun::fun((T, T) -&gt; boolean()), List::[T]) -&gt; [T]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: sort function<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: a list<br /></p>
+<p>returns: Sorted list, ordered by Fun(A, B) : boolean() such that A “less than” B.</p>
+<p>Returns a sorted list, using Fun(A, B) to determine sort order.</p>
+<p><a name="split-2"></a></p>
+</section>
+<section id="split-2">
+<h3>split/2<a class="headerlink" href="#split-2" title="Link to this heading"></a></h3>
+<pre><code>
+split(N, List1) -&gt; {List2, List3}
+</code></pre>
+<ul class="definitions"><li><code>N = non_neg_integer()</code></li><li><code>List1 = [T]</code></li><li><code>List2 = [T]</code></li><li><code>List3 = [T]</code></li><li><code>T = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">N</span></code>: elements non negative Integer<br /><code class="docutils literal notranslate"><span class="pre">List1</span></code>: list to split<br /></p>
+<p>returns: Tuple with the two lists</p>
+<p>Splits List1 into List2 and List3. List2 contains the first N elements
+and List3 the remaining elements (the Nth tail).</p>
+<p><a name="sublist-2"></a></p>
+</section>
+<section id="sublist-2">
+<h3>sublist/2<a class="headerlink" href="#sublist-2" title="Link to this heading"></a></h3>
+<pre><code>
+sublist(List::[Elem], Len::integer()) -&gt; [Elem]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: list to take the sublist from<br /><code class="docutils literal notranslate"><span class="pre">Len</span></code>: the number of elements to get from List<br /></p>
+<p>returns: a list made of the first <code class="docutils literal notranslate"><span class="pre">Len</span></code> elements of <code class="docutils literal notranslate"><span class="pre">List</span></code></p>
+<p>Return a sublist made of the first <code class="docutils literal notranslate"><span class="pre">Len</span></code> elements of <code class="docutils literal notranslate"><span class="pre">List</span></code>.
+It is not an error for <code class="docutils literal notranslate"><span class="pre">Len</span></code> to be larger than the length of <code class="docutils literal notranslate"><span class="pre">List</span></code>.</p>
+<p><a name="usort-1"></a></p>
+</section>
+<section id="usort-1">
+<h3>usort/1<a class="headerlink" href="#usort-1" title="Link to this heading"></a></h3>
+<pre><code>
+usort(List::[T]) -&gt; [T]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: a list<br /></p>
+<p>returns: Sorted list with duplicates removed, ordered by <code class="docutils literal notranslate"><span class="pre">&lt;</span></code></p>
+<p>Returns a unique, sorted list, using <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> operator to determine sort order.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#sort-1"><span class="xref myst">sort/1</span></a>.</p>
+<p><a name="usort-2"></a></p>
+</section>
+<section id="usort-2">
+<h3>usort/2<a class="headerlink" href="#usort-2" title="Link to this heading"></a></h3>
+<pre><code>
+usort(Fun::fun((T, T) -&gt; boolean()), List::[T]) -&gt; [T]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: sort function<br /><code class="docutils literal notranslate"><span class="pre">List</span></code>: a list<br /></p>
+<p>returns: Sorted list with duplicates removed, ordered by Fun.</p>
+<p>Returns a unique, sorted list.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#sort-2"><span class="xref myst">sort/2</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kernel.html" class="btn btn-neutral float-left" title="Module kernel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="logger.html" class="btn btn-neutral float-right" title="Module logger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/feature/bigint/">feature/bigint branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/pdf/AtomVM-main.pdf">pdf</a></dd>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
