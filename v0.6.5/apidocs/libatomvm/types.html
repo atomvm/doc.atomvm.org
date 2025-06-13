@@ -1,0 +1,448 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Types &mdash; AtomVM 0.6.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/libatomvm/types.html" />
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=7c79bee4"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="MACROS" href="macros.html" />
+    <link rel="prev" title="Data Structures" href="data_structures.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">libAtomVM</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html">Data Structures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#enumerations">Enumerations</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="macros.html">MACROS</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#libatomvm-source-files">libAtomVM source files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../api-reference-documentation.html">API Reference Documentation</a></li>
+          <li class="breadcrumb-item"><a href="index.html">libAtomVM</a></li>
+      <li class="breadcrumb-item active">Types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="types">
+<h1>Types<a class="headerlink" href="#types" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.atom_ref_t">
+<span class="target" id="libatomvmatom__table_8h_1ad1fb624bb5e98ffc9ceb09a42238d1f6"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">atom_ref_t</span></span></span><a class="headerlink" href="#c.libAtomVM.types.atom_ref_t" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.AtomString">
+<span class="target" id="libatomvmatom_8h_1ad65688322910ef2b4658ffac1f9d8b81"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">AtomString</span></span></span><a class="headerlink" href="#c.libAtomVM.types.AtomString" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.avm_float_t">
+<span class="target" id="libatomvmterm__typedef_8h_1a5437f0376d8656682c0f780435836d2b"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avm_float_t</span></span></span><a class="headerlink" href="#c.libAtomVM.types.avm_float_t" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.avm_int64_t">
+<span class="target" id="libatomvmterm__typedef_8h_1a31523cec641956b7718202cff7615cdf"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avm_int64_t</span></span></span><a class="headerlink" href="#c.libAtomVM.types.avm_int64_t" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.avm_int_t">
+<span class="target" id="libatomvmterm__typedef_8h_1a48b57dd60b663632fb7fd748aa0574f5"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">intptr_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avm_int_t</span></span></span><a class="headerlink" href="#c.libAtomVM.types.avm_int_t" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.avm_uint64_t">
+<span class="target" id="libatomvmterm__typedef_8h_1a706412ebf2d91cc584ba37354de7fa03"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avm_uint64_t</span></span></span><a class="headerlink" href="#c.libAtomVM.types.avm_uint64_t" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.avm_uint_t">
+<span class="target" id="libatomvmterm__typedef_8h_1a29e710c3900a880d8017c4da2a2de810"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">uintptr_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avm_uint_t</span></span></span><a class="headerlink" href="#c.libAtomVM.types.avm_uint_t" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.avmpack_fold_fun">
+<span class="target" id="libatomvmavmpack_8h_1a6c4e59ae55feeb84bf748db015dd72ad"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_fold_fun</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">accum</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">section_ptr</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">section_size</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">beam_ptr</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">section_name</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.libAtomVM.types.avmpack_fold_fun" title="Link to this definition"></a><br /></dt>
+<dd><p>callback function for AVMPack section fold. </p>
+<p>Instances of this function are supplied to the avmpack_fold function, in order to provide a callback mechanism for folding over the contents of the AVM binary. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param accum<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The accumulator supplied by the application. </p>
+</dd>
+<dt class="field-even">Param section_ptr<span class="colon">:</span></dt>
+<dd class="field-even"><p>a pointer to the start of the AVM section (including the module header). </p>
+</dd>
+<dt class="field-odd">Param section_size<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the size of the entire section (including the module header). </p>
+</dd>
+<dt class="field-even">Param beam_ptr<span class="colon">:</span></dt>
+<dd class="field-even"><p>the start of the beam module portion of the section. This pointers starts immediately after the (aligned) header. </p>
+</dd>
+<dt class="field-odd">Param flags<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the section flags, as defined in the module header. </p>
+</dd>
+<dt class="field-even">Param section_name<span class="colon">:</span></dt>
+<dd class="field-even"><p>the section name, as defined in the module header. </p>
+</dd>
+<dt class="field-odd">Return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an accumulator, which will be supplied to the next call to this function, and eventually returned from the avmpack_fold function. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.dreg_t">
+<span class="k"><span class="pre">typedef</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.types.term" title="term"><span class="n"><span class="pre">term</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">dreg_t</span></span></span><a class="headerlink" href="#c.libAtomVM.types.dreg_t" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.dreg_gc_safe_t">
+<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dreg_gc_safe_t</span></span></span><a class="headerlink" href="#c.libAtomVM.types.dreg_gc_safe_t" title="Link to this definition"></a><br /></dt>
+<dd><dl class="c struct">
+<dt class="sig sig-object c" id="c.libAtomVM.types.dreg_gc_safe_t._">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_</span></span></span><a class="headerlink" href="#c.libAtomVM.types.dreg_gc_safe_t._" title="Link to this definition"></a><br /></dt>
+<dd><dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.types.dreg_gc_safe_t._.base">
+<a class="reference internal" href="#c.libAtomVM.types.term" title="term"><span class="n"><span class="pre">term</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">base</span></span></span><a class="headerlink" href="#c.libAtomVM.types.dreg_gc_safe_t._.base" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.types.dreg_gc_safe_t._.index">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">index</span></span></span><a class="headerlink" href="#c.libAtomVM.types.dreg_gc_safe_t._.index" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.ERL_NIF_TERM">
+<span class="target" id="libatomvmerl__nif_8h_1ad97421d256b5163f2ad3facac2e29746"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.types.term" title="term"><span class="n"><span class="pre">term</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ERL_NIF_TERM</span></span></span><a class="headerlink" href="#c.libAtomVM.types.ERL_NIF_TERM" title="Link to this definition"></a><br /></dt>
+<dd><p>A term. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.ErlNifEvent">
+<span class="target" id="libatomvmerl__nif_8h_1afcb0b7056f9c9f16e885abb98c5ede9e"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ErlNifEvent</span></span></span><a class="headerlink" href="#c.libAtomVM.types.ErlNifEvent" title="Link to this definition"></a><br /></dt>
+<dd><p>Selectable event. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.ErlNifMonitor">
+<span class="target" id="libatomvmerl__nif_8h_1a300e123e11ebe6b6d5ef7e40ca9f0ed3"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ErlNifMonitor</span></span></span><a class="headerlink" href="#c.libAtomVM.types.ErlNifMonitor" title="Link to this definition"></a><br /></dt>
+<dd><p>Opaque monitor type. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.ErlNifPid">
+<span class="target" id="libatomvmerl__nif_8h_1a82320f71731e5bab1d5187e536ed8177"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ErlNifPid</span></span></span><a class="headerlink" href="#c.libAtomVM.types.ErlNifPid" title="Link to this definition"></a><br /></dt>
+<dd><p>a pid </p>
+<p>We currently only handle local pids. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.ErlNifResourceDown">
+<span class="target" id="libatomvmerl__nif_8h_1ac49962e3e22286ee4305229afe9be85b"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ErlNifResourceDown</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">caller_env</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">obj</span></span>, <a class="reference internal" href="#c.libAtomVM.types.ErlNifPid" title="ErlNifPid"><span class="n"><span class="pre">ErlNifPid</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">pid</span></span>, <a class="reference internal" href="#c.libAtomVM.types.ErlNifMonitor" title="ErlNifMonitor"><span class="n"><span class="pre">ErlNifMonitor</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.types.ErlNifResourceDown" title="Link to this definition"></a><br /></dt>
+<dd><p>Resource monitor callback. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.ErlNifResourceDtor">
+<span class="target" id="libatomvmerl__nif_8h_1adca45bb8b19726480af47eb7ec598348"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ErlNifResourceDtor</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">caller_env</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">obj</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.types.ErlNifResourceDtor" title="Link to this definition"></a><br /></dt>
+<dd><p>Destructor callback. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.ErlNifResourceStop">
+<span class="target" id="libatomvmerl__nif_8h_1ab8519109623a2843ee34ecd07b9dc3a8"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ErlNifResourceStop</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">caller_env</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">obj</span></span>, <a class="reference internal" href="#c.libAtomVM.types.ErlNifEvent" title="ErlNifEvent"><span class="n"><span class="pre">ErlNifEvent</span></span></a><span class="w"> </span><span class="n"><span class="pre">event</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">is_direct_call</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.types.ErlNifResourceStop" title="Link to this definition"></a><br /></dt>
+<dd><p>Select stop callback. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.ErlNifResourceType">
+<span class="target" id="libatomvmerl__nif_8h_1ad4034fff19f7e190b2ce89f7ed148e4e"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ResourceType</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ErlNifResourceType</span></span></span><a class="headerlink" href="#c.libAtomVM.types.ErlNifResourceType" title="Link to this definition"></a><br /></dt>
+<dd><p>Opaque resource type. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.event_handler_t">
+<span class="target" id="libatomvmsys_8h_1aa264b48d0e98aa3fbf7255b3958dd3fc"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.types.EventListener" title="EventListener"><span class="n"><span class="pre">EventListener</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">event_handler_t</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.types.EventListener" title="EventListener"><span class="n"><span class="pre">EventListener</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">listener</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.libAtomVM.types.event_handler_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Event handlers (for ports) </p>
+<p>The event handler is called from the scheduler thread but outside any process. It can send messages to processes using <code class="docutils literal notranslate"><span class="pre">globalcontext_send_message</span></code> function.</p>
+<p>Result of this callback alters the list of handlers which is locked for writing when it is called. It can:<ul class="simple">
+<li><p>return <code class="docutils literal notranslate"><span class="pre">listener</span></code>, in which case the list is not modified</p></li>
+<li><p>return <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, in which case the entry is removed. The callback is responsible for freeing the listener.</p></li>
+<li><p>return another listener, in which case the current listener is replaced by the other listener. The callback is responsible for freeing the previous listener if it is no longer needed.</p></li>
+</ul>
+</p>
+<p>Appending a listener is also possible by altering the list head.</p>
+<p>This callback is defined for platforms using <code class="docutils literal notranslate"><span class="pre">listeners.h</span></code> header and can be ignored by others.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param glb<span class="colon">:</span></dt>
+<dd class="field-odd"><p>global context </p>
+</dd>
+<dt class="field-even">Param listener<span class="colon">:</span></dt>
+<dd class="field-even"><p>the current listener </p>
+</dd>
+<dt class="field-odd">Return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NULL if the current listener should be removed, listener if it should be kept or another listener if it should be replaced. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.EventListener">
+<span class="target" id="libatomvmsys_8h_1ac544ff53d6f7affdcc93e58538a1702a"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.types.EventListener" title="EventListener"><span class="n"><span class="pre">EventListener</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EventListener</span></span></span><a class="headerlink" href="#c.libAtomVM.types.EventListener" title="Link to this definition"></a><br /></dt>
+<dd><p>Event listener. </p>
+<p>An event listener structure should be defined by the platform. Event listeners belong to the <code class="docutils literal notranslate"><a class="reference internal" href="../../atomvm-internals.html#libatomvmstruct_global_context_1a9219a7e5d9396ea0141e1612cf5cff48"><span class="std std-ref"><span class="pre">GlobalContext.listeners</span></span></a></code> synchronized list. </p>
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.MailboxMessage">
+<span class="k"><span class="pre">typedef</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.types.MailboxMessage.MailboxMessage" title="MailboxMessage"><span class="n"><span class="pre">MailboxMessage</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MailboxMessage</span></span></span><a class="headerlink" href="#c.libAtomVM.types.MailboxMessage" title="Link to this definition"></a><br /></dt>
+<dd><dl class="c struct">
+<dt class="sig sig-object c" id="c.libAtomVM.types.MailboxMessage.MailboxMessage">
+<span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MailboxMessage</span></span></span><a class="headerlink" href="#c.libAtomVM.types.MailboxMessage.MailboxMessage" title="Link to this definition"></a><br /></dt>
+<dd><dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.types.MailboxMessage.MailboxMessage.next">
+<a class="reference internal" href="#c.libAtomVM.types.MailboxMessage.MailboxMessage" title="MailboxMessage"><span class="n"><span class="pre">MailboxMessage</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">next</span></span></span><a class="headerlink" href="#c.libAtomVM.types.MailboxMessage.MailboxMessage.next" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c union">
+<dt class="sig sig-object c" id="c.libAtomVM.types.MailboxMessage.MailboxMessage._">
+<span class="k"><span class="pre">union</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_</span></span></span><a class="headerlink" href="#c.libAtomVM.types.MailboxMessage.MailboxMessage._" title="Link to this definition"></a><br /></dt>
+<dd><dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.types.MailboxMessage.MailboxMessage._.type">
+<span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="n"><span class="pre">MessageType</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><a class="headerlink" href="#c.libAtomVM.types.MailboxMessage.MailboxMessage._.type" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.types.MailboxMessage.MailboxMessage._.heap_fragment_end">
+<a class="reference internal" href="#c.libAtomVM.types.term" title="term"><span class="n"><span class="pre">term</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">heap_fragment_end</span></span></span><a class="headerlink" href="#c.libAtomVM.types.MailboxMessage.MailboxMessage._.heap_fragment_end" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.types.term">
+<span class="target" id="libatomvmterm__typedef_8h_1a603769ce1e8eeb1faa458d7e6cf904d8"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">uintptr_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term</span></span></span><a class="headerlink" href="#c.libAtomVM.types.term" title="Link to this definition"></a><br /></dt>
+<dd><p>A value of any data type, types bigger than a machine word will require some additional space on heap. </p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="data_structures.html" class="btn btn-neutral float-left" title="Data Structures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="macros.html" class="btn btn-neutral float-right" title="MACROS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      v0.6.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/v0.6.5/pdf/AtomVM-v0.6.5.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.5/epub/AtomVM-v0.6.5.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

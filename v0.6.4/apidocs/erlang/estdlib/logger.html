@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module logger &mdash; AtomVM 0.6.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/estdlib/logger.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=18b66ea0"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module maps" href="maps.html" />
+    <link rel="prev" title="Module lists" href="lists.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module logger</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-logger">
+<h1>Module logger<a class="headerlink" href="#module-logger" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>A naive implementation of the Erlang/OTP logger interface.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module implements a strict subset of the Erlang/OTP logger
+interface, supporting operations for logging messages to various
+log handlers.  A default handler (<code class="docutils literal notranslate"><span class="pre">logger_std_h</span></code>) supports logging to the console.</p>
+<p>This module is designed to be API-compatible with the Erlang/OTP logger API,
+with exceptions noted below.  Users can use macros defined in the Erlang/OTP
+<code class="docutils literal notranslate"><span class="pre">logger.hrl</span></code> header for logging messages.</p>
+<p>Limitations include but are not limited to:</p>
+<ul class="simple">
+<li><p>No support for logging filters</p></li>
+<li><p>No support for logging formatters</p></li>
+<li><p>No API support for logger configuration; all configuration
+must be done at initialization of the <code class="docutils literal notranslate"><span class="pre">logger_manager</span></code></p></li>
+<li><p>No support for throttling or compacting sequences of repeated
+log messages</p></li>
+</ul>
+<p><a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="level">
+<h3><a name="type-level">level()</a><a class="headerlink" href="#level" title="Link to this heading"></a></h3>
+<pre><code>
+level() = emergency | alert | critical | error | warning | notice | info | debug
+</code></pre>
+</section>
+<section id="string-or-report">
+<h3><a name="type-string_or_report">string_or_report()</a><a class="headerlink" href="#string-or-report" title="Link to this heading"></a></h3>
+<pre><code>
+string_or_report() = string() | map()
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#alert-1">alert/1</a></td><td>    Log a string at alert log level.</td></tr><tr><td valign="top"><a href="#alert-2">alert/2</a></td><td>    Log a format string with args at alert log level.</td></tr><tr><td valign="top"><a href="#alert-3">alert/3</a></td><td>    Log a format string with args at alert log level with
+the specified metadata.</td></tr><tr><td valign="top"><a href="#allow-2">allow/2</a></td><td>    Determine whether logging should be permitted at the specified level for the
+specified module.</td></tr><tr><td valign="top"><a href="#compare-2">compare/2</a></td><td>    Return comparison between levels.</td></tr><tr><td valign="top"><a href="#critical-1">critical/1</a></td><td>    Log a string at critical log level.</td></tr><tr><td valign="top"><a href="#critical-2">critical/2</a></td><td>    Log a format string with args at critical log level.</td></tr><tr><td valign="top"><a href="#critical-3">critical/3</a></td><td>    Log a format string with args at critical log level with
+the specified metadata.</td></tr><tr><td valign="top"><a href="#debug-1">debug/1</a></td><td>    Log a string at debug log level.</td></tr><tr><td valign="top"><a href="#debug-2">debug/2</a></td><td>    Log a format string with args at debug log level.</td></tr><tr><td valign="top"><a href="#debug-3">debug/3</a></td><td>    Log a format string with args at debug log level with
+the specified metadata.</td></tr><tr><td valign="top"><a href="#emergency-1">emergency/1</a></td><td>    Log a string at emergency log level.</td></tr><tr><td valign="top"><a href="#emergency-2">emergency/2</a></td><td>    Log a format string with args at emergency log level.</td></tr><tr><td valign="top"><a href="#emergency-3">emergency/3</a></td><td>    Log a format string with args at emergency log level with
+the specified metadata.</td></tr><tr><td valign="top"><a href="#error-1">error/1</a></td><td>    Log a string at error log level.</td></tr><tr><td valign="top"><a href="#error-2">error/2</a></td><td>    Log a format string with args at error log level.</td></tr><tr><td valign="top"><a href="#error-3">error/3</a></td><td>    Log a format string with args at error log level with
+the specified metadata.</td></tr><tr><td valign="top"><a href="#info-1">info/1</a></td><td>    Log a string at info log level.</td></tr><tr><td valign="top"><a href="#info-2">info/2</a></td><td>    Log a format string with args at info log level.</td></tr><tr><td valign="top"><a href="#info-3">info/3</a></td><td>    Log a format string with args at info log level with
+the specified metadata.</td></tr><tr><td valign="top"><a href="#log-2">log/2</a></td><td>    Log a string at the specified log level.</td></tr><tr><td valign="top"><a href="#log-3">log/3</a></td><td>    Log a format string with args at the specified log level.</td></tr><tr><td valign="top"><a href="#log-4">log/4</a></td><td>    Log a format string with args at the specified log level with
+the specified metadata.</td></tr><tr><td valign="top"><a href="#notice-1">notice/1</a></td><td>    Log a string at notice log level.</td></tr><tr><td valign="top"><a href="#notice-2">notice/2</a></td><td>    Log a format string with args at notice log level.</td></tr><tr><td valign="top"><a href="#notice-3">notice/3</a></td><td>    Log a format string with args at notice log level with
+the specified metadata.</td></tr><tr><td valign="top"><a href="#warning-1">warning/1</a></td><td>    Log a string at warning log level.</td></tr><tr><td valign="top"><a href="#warning-2">warning/2</a></td><td>    Log a format string with args at warning log level.</td></tr><tr><td valign="top"><a href="#warning-3">warning/3</a></td><td>    Log a format string with args at warning log level with
+the specified metadata.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="alert-1"></a></p>
+<section id="alert-1">
+<h3>alert/1<a class="headerlink" href="#alert-1" title="Link to this heading"></a></h3>
+<pre><code>
+alert(StringOrReport::<a href="#type-string_or_report">string_or_report()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">StringOrReport</span></code>: string or report<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a string at alert log level.</p>
+<p><a name="alert-2"></a></p>
+</section>
+<section id="alert-2">
+<h3>alert/2<a class="headerlink" href="#alert-2" title="Link to this heading"></a></h3>
+<pre><code>
+alert(FormatOrReport::<a href="#type-string_or_report">string_or_report()</a>, ArgsOrMeta::list() | map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">FormatOrReport</span></code>: format string or report<br /><code class="docutils literal notranslate"><span class="pre">ArgsOrMeta</span></code>: format string arguments or metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at alert log level.</p>
+<p><a name="alert-3"></a></p>
+</section>
+<section id="alert-3">
+<h3>alert/3<a class="headerlink" href="#alert-3" title="Link to this heading"></a></h3>
+<pre><code>
+alert(Format::string(), Args::list(), MetaData::map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format string arguments<br /><code class="docutils literal notranslate"><span class="pre">MetaData</span></code>: log metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at alert log level with
+the specified metadata.</p>
+<p><a name="allow-2"></a></p>
+</section>
+<section id="allow-2">
+<h3>allow/2<a class="headerlink" href="#allow-2" title="Link to this heading"></a></h3>
+<pre><code>
+allow(Level::<a href="#type-level">level()</a>, Module::atom()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Level</span></code>: the log level<br /><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code> if logging should be permitted at the specified level for the
+specified module; <code class="docutils literal notranslate"><span class="pre">false</span></code>, otherwise.</p>
+<p>Determine whether logging should be permitted at the specified level for the
+specified module</p>
+<p><a name="compare-2"></a></p>
+</section>
+<section id="compare-2">
+<h3>compare/2<a class="headerlink" href="#compare-2" title="Link to this heading"></a></h3>
+<pre><code>
+compare(Level1::<a href="#type-level">level()</a>, Level2::<a href="#type-level">level()</a>) -&gt; lt | eq | gt
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Level1</span></code>: a level<br /><code class="docutils literal notranslate"><span class="pre">Level2</span></code>: a level<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">lt</span> <span class="pre">|</span> <span class="pre">eq</span> <span class="pre">|</span> <span class="pre">gt</span></code></p>
+<p>Return comparison between levels</p>
+<p><code class="docutils literal notranslate"><span class="pre">lt</span></code> if <code class="docutils literal notranslate"><span class="pre">Level1</span> <span class="pre">&lt;</span> <span class="pre">Level2</span></code>
+<code class="docutils literal notranslate"><span class="pre">eq</span></code> if <code class="docutils literal notranslate"><span class="pre">Level1</span> <span class="pre">==</span> <span class="pre">Level2</span></code>
+<code class="docutils literal notranslate"><span class="pre">gt</span></code> if <code class="docutils literal notranslate"><span class="pre">Level1</span> <span class="pre">&gt;</span> <span class="pre">Level2</span></code></p>
+<p><a name="critical-1"></a></p>
+</section>
+<section id="critical-1">
+<h3>critical/1<a class="headerlink" href="#critical-1" title="Link to this heading"></a></h3>
+<pre><code>
+critical(StringOrReport::<a href="#type-string_or_report">string_or_report()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">StringOrReport</span></code>: string or report<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a string at critical log level.</p>
+<p><a name="critical-2"></a></p>
+</section>
+<section id="critical-2">
+<h3>critical/2<a class="headerlink" href="#critical-2" title="Link to this heading"></a></h3>
+<pre><code>
+critical(FormatOrReport::<a href="#type-string_or_report">string_or_report()</a>, ArgsOrMeta::list() | map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">FormatOrReport</span></code>: format string or report<br /><code class="docutils literal notranslate"><span class="pre">ArgsOrMeta</span></code>: format string arguments or metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at critical log level.</p>
+<p><a name="critical-3"></a></p>
+</section>
+<section id="critical-3">
+<h3>critical/3<a class="headerlink" href="#critical-3" title="Link to this heading"></a></h3>
+<pre><code>
+critical(Format::string(), Args::list(), MetaData::map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format string arguments<br /><code class="docutils literal notranslate"><span class="pre">MetaData</span></code>: log metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at critical log level with
+the specified metadata.</p>
+<p><a name="debug-1"></a></p>
+</section>
+<section id="debug-1">
+<h3>debug/1<a class="headerlink" href="#debug-1" title="Link to this heading"></a></h3>
+<pre><code>
+debug(StringOrReport::<a href="#type-string_or_report">string_or_report()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">StringOrReport</span></code>: string or report<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a string at debug log level.</p>
+<p><a name="debug-2"></a></p>
+</section>
+<section id="debug-2">
+<h3>debug/2<a class="headerlink" href="#debug-2" title="Link to this heading"></a></h3>
+<pre><code>
+debug(FormatOrReport::<a href="#type-string_or_report">string_or_report()</a>, ArgsOrMeta::list() | map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">FormatOrReport</span></code>: format string or report<br /><code class="docutils literal notranslate"><span class="pre">ArgsOrMeta</span></code>: format string arguments or metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at debug log level.</p>
+<p><a name="debug-3"></a></p>
+</section>
+<section id="debug-3">
+<h3>debug/3<a class="headerlink" href="#debug-3" title="Link to this heading"></a></h3>
+<pre><code>
+debug(Format::string(), Args::list(), MetaData::map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format string arguments<br /><code class="docutils literal notranslate"><span class="pre">MetaData</span></code>: log metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at debug log level with
+the specified metadata.</p>
+<p><a name="emergency-1"></a></p>
+</section>
+<section id="emergency-1">
+<h3>emergency/1<a class="headerlink" href="#emergency-1" title="Link to this heading"></a></h3>
+<pre><code>
+emergency(StringOrReport::<a href="#type-string_or_report">string_or_report()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">StringOrReport</span></code>: string or report<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a string at emergency log level.</p>
+<p><a name="emergency-2"></a></p>
+</section>
+<section id="emergency-2">
+<h3>emergency/2<a class="headerlink" href="#emergency-2" title="Link to this heading"></a></h3>
+<pre><code>
+emergency(FormatOrReport::<a href="#type-string_or_report">string_or_report()</a>, ArgsOrMeta::list() | map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">FormatOrReport</span></code>: format string or report<br /><code class="docutils literal notranslate"><span class="pre">ArgsOrMeta</span></code>: format string arguments or metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at emergency log level.</p>
+<p><a name="emergency-3"></a></p>
+</section>
+<section id="emergency-3">
+<h3>emergency/3<a class="headerlink" href="#emergency-3" title="Link to this heading"></a></h3>
+<pre><code>
+emergency(Format::string(), Args::list(), MetaData::map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format string arguments<br /><code class="docutils literal notranslate"><span class="pre">MetaData</span></code>: log metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at emergency log level with
+the specified metadata.</p>
+<p><a name="error-1"></a></p>
+</section>
+<section id="error-1">
+<h3>error/1<a class="headerlink" href="#error-1" title="Link to this heading"></a></h3>
+<pre><code>
+error(StringOrReport::<a href="#type-string_or_report">string_or_report()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">StringOrReport</span></code>: string or report<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a string at error log level.</p>
+<p><a name="error-2"></a></p>
+</section>
+<section id="error-2">
+<h3>error/2<a class="headerlink" href="#error-2" title="Link to this heading"></a></h3>
+<pre><code>
+error(FormatOrReport::<a href="#type-string_or_report">string_or_report()</a>, ArgsOrMeta::list() | map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">FormatOrReport</span></code>: format string or report<br /><code class="docutils literal notranslate"><span class="pre">ArgsOrMeta</span></code>: format string arguments or metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at error log level.</p>
+<p><a name="error-3"></a></p>
+</section>
+<section id="error-3">
+<h3>error/3<a class="headerlink" href="#error-3" title="Link to this heading"></a></h3>
+<pre><code>
+error(Format::string(), Args::list(), MetaData::map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format string arguments<br /><code class="docutils literal notranslate"><span class="pre">MetaData</span></code>: log metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at error log level with
+the specified metadata.</p>
+<p><a name="info-1"></a></p>
+</section>
+<section id="info-1">
+<h3>info/1<a class="headerlink" href="#info-1" title="Link to this heading"></a></h3>
+<pre><code>
+info(StringOrReport::<a href="#type-string_or_report">string_or_report()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">StringOrReport</span></code>: string or report<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a string at info log level.</p>
+<p><a name="info-2"></a></p>
+</section>
+<section id="info-2">
+<h3>info/2<a class="headerlink" href="#info-2" title="Link to this heading"></a></h3>
+<pre><code>
+info(FormatOrReport::<a href="#type-string_or_report">string_or_report()</a>, ArgsOrMeta::list() | map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">FormatOrReport</span></code>: format string or report<br /><code class="docutils literal notranslate"><span class="pre">ArgsOrMeta</span></code>: format string arguments or metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at info log level.</p>
+<p><a name="info-3"></a></p>
+</section>
+<section id="info-3">
+<h3>info/3<a class="headerlink" href="#info-3" title="Link to this heading"></a></h3>
+<pre><code>
+info(Format::string(), Args::list(), MetaData::map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format string arguments<br /><code class="docutils literal notranslate"><span class="pre">MetaData</span></code>: log metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at info log level with
+the specified metadata.</p>
+<p><a name="log-2"></a></p>
+</section>
+<section id="log-2">
+<h3>log/2<a class="headerlink" href="#log-2" title="Link to this heading"></a></h3>
+<pre><code>
+log(Level::<a href="#type-level">level()</a>, StringOrReport::<a href="#type-string_or_report">string_or_report()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Level</span></code>: log level<br /><code class="docutils literal notranslate"><span class="pre">StringOrReport</span></code>: string or report map<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a string at the specified log level.</p>
+<p><a name="log-3"></a></p>
+</section>
+<section id="log-3">
+<h3>log/3<a class="headerlink" href="#log-3" title="Link to this heading"></a></h3>
+<pre><code>
+log(Level::<a href="#type-level">level()</a>, FormatOrReport::<a href="#type-string_or_report">string_or_report()</a>, ArgsOrMeta::list() | map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Level</span></code>: log level<br /><code class="docutils literal notranslate"><span class="pre">FormatOrReport</span></code>: format string or report<br /><code class="docutils literal notranslate"><span class="pre">ArgsOrMeta</span></code>: format string arguments or metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at the specified log level.</p>
+<p><a name="log-4"></a></p>
+</section>
+<section id="log-4">
+<h3>log/4<a class="headerlink" href="#log-4" title="Link to this heading"></a></h3>
+<pre><code>
+log(Level::<a href="#type-level">level()</a>, Format::string(), Args::list(), Meta::map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Level</span></code>: log level<br /><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format string arguments<br /><code class="docutils literal notranslate"><span class="pre">Meta</span></code>: log metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at the specified log level with
+the specified metadata.</p>
+<p><a name="notice-1"></a></p>
+</section>
+<section id="notice-1">
+<h3>notice/1<a class="headerlink" href="#notice-1" title="Link to this heading"></a></h3>
+<pre><code>
+notice(StringOrReport::<a href="#type-string_or_report">string_or_report()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">StringOrReport</span></code>: string or report<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a string at notice log level.</p>
+<p><a name="notice-2"></a></p>
+</section>
+<section id="notice-2">
+<h3>notice/2<a class="headerlink" href="#notice-2" title="Link to this heading"></a></h3>
+<pre><code>
+notice(FormatOrReport::<a href="#type-string_or_report">string_or_report()</a>, ArgsOrMeta::list() | map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">FormatOrReport</span></code>: format string or report<br /><code class="docutils literal notranslate"><span class="pre">ArgsOrMeta</span></code>: format string arguments or metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at notice log level.</p>
+<p><a name="notice-3"></a></p>
+</section>
+<section id="notice-3">
+<h3>notice/3<a class="headerlink" href="#notice-3" title="Link to this heading"></a></h3>
+<pre><code>
+notice(Format::string(), Args::list(), MetaData::map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format string arguments<br /><code class="docutils literal notranslate"><span class="pre">MetaData</span></code>: log metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at notice log level with
+the specified metadata.</p>
+<p><a name="warning-1"></a></p>
+</section>
+<section id="warning-1">
+<h3>warning/1<a class="headerlink" href="#warning-1" title="Link to this heading"></a></h3>
+<pre><code>
+warning(StringOrReport::<a href="#type-string_or_report">string_or_report()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">StringOrReport</span></code>: string or report<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a string at warning log level.</p>
+<p><a name="warning-2"></a></p>
+</section>
+<section id="warning-2">
+<h3>warning/2<a class="headerlink" href="#warning-2" title="Link to this heading"></a></h3>
+<pre><code>
+warning(FormatOrReport::<a href="#type-string_or_report">string_or_report()</a>, ArgsOrMeta::list() | map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">FormatOrReport</span></code>: format string or report<br /><code class="docutils literal notranslate"><span class="pre">ArgsOrMeta</span></code>: format string arguments or metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at warning log level.</p>
+<p><a name="warning-3"></a></p>
+</section>
+<section id="warning-3">
+<h3>warning/3<a class="headerlink" href="#warning-3" title="Link to this heading"></a></h3>
+<pre><code>
+warning(Format::string(), Args::list(), MetaData::map()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format string arguments<br /><code class="docutils literal notranslate"><span class="pre">MetaData</span></code>: log metadata<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Log a format string with args at warning log level with
+the specified metadata.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lists.html" class="btn btn-neutral float-left" title="Module lists" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="maps.html" class="btn btn-neutral float-right" title="Module maps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      v0.6.4
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/v0.6.4/pdf/AtomVM-v0.6.4.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.4/epub/AtomVM-v0.6.4.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

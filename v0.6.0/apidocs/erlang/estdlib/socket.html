@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module socket &mdash; AtomVM 0.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/estdlib/socket.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=50f829f1"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module ssl" href="ssl.html" />
+    <link rel="prev" title="Module proplists" href="proplists.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module socket</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-socket">
+<h1>Module socket<a class="headerlink" href="#module-socket" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="domain">
+<h3><a name="type-domain">domain()</a><a class="headerlink" href="#domain" title="Link to this heading"></a></h3>
+<pre><code>
+domain() = inet
+</code></pre>
+</section>
+<section id="in-addr">
+<h3><a name="type-in_addr">in_addr()</a><a class="headerlink" href="#in-addr" title="Link to this heading"></a></h3>
+<pre><code>
+in_addr() = {0..255, 0..255, 0..255, 0..255}
+</code></pre>
+</section>
+<section id="port-number">
+<h3><a name="type-port_number">port_number()</a><a class="headerlink" href="#port-number" title="Link to this heading"></a></h3>
+<pre><code>
+port_number() = 0..65535
+</code></pre>
+</section>
+<section id="protocol">
+<h3><a name="type-protocol">protocol()</a><a class="headerlink" href="#protocol" title="Link to this heading"></a></h3>
+<pre><code>
+protocol() = tcp | udp
+</code></pre>
+</section>
+<section id="sockaddr">
+<h3><a name="type-sockaddr">sockaddr()</a><a class="headerlink" href="#sockaddr" title="Link to this heading"></a></h3>
+<pre><code>
+sockaddr() = <a href="#type-sockaddr_in">sockaddr_in()</a>
+</code></pre>
+</section>
+<section id="sockaddr-in">
+<h3><a name="type-sockaddr_in">sockaddr_in()</a><a class="headerlink" href="#sockaddr-in" title="Link to this heading"></a></h3>
+<pre><code>
+sockaddr_in() = #{family =&gt; inet, port =&gt; <a href="#type-port_number">port_number()</a>, addr =&gt; any | loopback | <a href="#type-in_addr">in_addr()</a>}
+</code></pre>
+</section>
+<section id="socket">
+<h3><a name="type-socket">socket()</a><a class="headerlink" href="#socket" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">socket()</span></code></p>
+</section>
+<section id="socket-option">
+<h3><a name="type-socket_option">socket_option()</a><a class="headerlink" href="#socket-option" title="Link to this heading"></a></h3>
+<pre><code>
+socket_option() = {socket, reuseaddr} | {socket, linger}
+</code></pre>
+</section>
+<section id="type">
+<h3><a name="type-type">type()</a><a class="headerlink" href="#type" title="Link to this heading"></a></h3>
+<pre><code>
+type() = stream | dgram
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#accept-1">accept/1</a></td><td>Equivalent to <a href="socket.md#accept-2"><tt>socket:accept(ListeningSocket, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#accept-2">accept/2</a></td><td>    Wait for the socket to accept a connection.</td></tr><tr><td valign="top"><a href="#bind-2">bind/2</a></td><td>    Bind a socket to an interface.</td></tr><tr><td valign="top"><a href="#close-1">close/1</a></td><td>    Close a socket.</td></tr><tr><td valign="top"><a href="#connect-2">connect/2</a></td><td>    Wait for the socket to connect to an address.</td></tr><tr><td valign="top"><a href="#listen-1">listen/1</a></td><td>    Set the socket to listen for connections.</td></tr><tr><td valign="top"><a href="#listen-2">listen/2</a></td><td>    Set the socket to listen for connections.</td></tr><tr><td valign="top"><a href="#open-3">open/3</a></td><td>    Create a socket.</td></tr><tr><td valign="top"><a href="#peername-1">peername/1</a></td><td>    Return the address of the peer connected to the specified socket.</td></tr><tr><td valign="top"><a href="#recv-1">recv/1</a></td><td>Equivalent to <a href="socket.md#recv-2"><tt>socket:recv(Socket, 0)</tt></a>.</td></tr><tr><td valign="top"><a href="#recv-2">recv/2</a></td><td>Equivalent to <a href="socket.md#recv-3"><tt>socket:recv(Socket, Length, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#recv-3">recv/3</a></td><td>    Receive data on the specified socket.</td></tr><tr><td valign="top"><a href="#recvfrom-1">recvfrom/1</a></td><td>Equivalent to <a href="socket.md#recvfrom-2"><tt>socket:recvfrom(Socket, 0)</tt></a>.</td></tr><tr><td valign="top"><a href="#recvfrom-2">recvfrom/2</a></td><td>Equivalent to <a href="socket.md#recvfrom-3"><tt>socket:recvfrom(Socket, Length, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#recvfrom-3">recvfrom/3</a></td><td>    Receive data on the specified socket, returning the from address.</td></tr><tr><td valign="top"><a href="#send-2">send/2</a></td><td>    Send data on the specified socket.</td></tr><tr><td valign="top"><a href="#sendto-3">sendto/3</a></td><td>    Send data on the specified socket to the specified destination.</td></tr><tr><td valign="top"><a href="#setopt-3">setopt/3</a></td><td>    Set a socket option.</td></tr><tr><td valign="top"><a href="#shutdown-2">shutdown/2</a></td><td>    Shut down one or both ends of a full-duplex socket connection.</td></tr><tr><td valign="top"><a href="#sockname-1">sockname/1</a></td><td>    Return the current address for the specified socket.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="accept-1"></a></p>
+<section id="accept-1">
+<h3>accept/1<a class="headerlink" href="#accept-1" title="Link to this heading"></a></h3>
+<pre><code>
+accept(Socket::<a href="#type-socket">socket()</a>) -&gt; {ok, Connection::<a href="#type-socket">socket()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#accept-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">socket:accept(ListeningSocket,</span> <span class="pre">infinity)</span></code></span></a>.</p>
+<p><a name="accept-2"></a></p>
+</section>
+<section id="accept-2">
+<h3>accept/2<a class="headerlink" href="#accept-2" title="Link to this heading"></a></h3>
+<pre><code>
+accept(Socket::<a href="#type-socket">socket()</a>, Timeout::timeout()) -&gt; {ok, Connection::<a href="#type-socket">socket()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout (in milliseconds)<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Connection}</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Wait for the socket to accept a connection.</p>
+<p>Wait for the socket to accept a connection.  The socket should
+be set to listen for connections.</p>
+<p>Note that this function will block until a connection is made
+from a client.  Typically, users will spawn a call to <code class="docutils literal notranslate"><span class="pre">accept</span></code>
+in a separate process.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">ConnectedSocket}</span> <span class="pre">=</span> <span class="pre">socket:accept(ListeningSocket)</span></code></p>
+<p><a name="bind-2"></a></p>
+</section>
+<section id="bind-2">
+<h3>bind/2<a class="headerlink" href="#bind-2" title="Link to this heading"></a></h3>
+<pre><code>
+bind(Socket::<a href="#type-socket">socket()</a>, Address::<a href="#type-sockaddr">sockaddr()</a> | any | loopback) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">Address</span></code>: the address to which to bind the socket<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Bind a socket to an interface.</p>
+<p>Bind a socket to an interface, via a socket address.  Use <code class="docutils literal notranslate"><span class="pre">any</span></code> to
+bind to all interfaces.  Use <code class="docutils literal notranslate"><span class="pre">loopback</span></code> to bind to the loopback
+address.  To specify a port, use a map containing the network family,
+address, and port.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:bind(ListeningSocket,</span> <span class="pre">#{family</span> <span class="pre">=&gt;</span> <span class="pre">inet,</span> <span class="pre">addr</span> <span class="pre">=&gt;</span> <span class="pre">any,</span> <span class="pre">port</span> <span class="pre">=&gt;</span> <span class="pre">44404})</span></code></p>
+<p><a name="close-1"></a></p>
+</section>
+<section id="close-1">
+<h3>close/1<a class="headerlink" href="#close-1" title="Link to this heading"></a></h3>
+<pre><code>
+close(Socket::<a href="#type-socket">socket()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Close a socket.</p>
+<p>Close a previously opened socket.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:close(Socket)</span></code></p>
+<p><a name="connect-2"></a></p>
+</section>
+<section id="connect-2">
+<h3>connect/2<a class="headerlink" href="#connect-2" title="Link to this heading"></a></h3>
+<pre><code>
+connect(Socket::<a href="#type-socket">socket()</a>, Address::<a href="#type-sockaddr">sockaddr()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">Address</span></code>: the address to which to connect the socket<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Wait for the socket to connect to an address.</p>
+<p>Wait for the socket to connect to an address.  The socket should
+be a connection-based socket.</p>
+<p>Note that this function will block until a connection is made
+to a server.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:connect(Socket,</span> <span class="pre">#{family</span> <span class="pre">=&gt;</span> <span class="pre">inet,</span> <span class="pre">addr</span> <span class="pre">=&gt;</span> <span class="pre">loopback,</span> <span class="pre">port</span> <span class="pre">=&gt;</span> <span class="pre">44404})</span></code></p>
+<p><a name="listen-1"></a></p>
+</section>
+<section id="listen-1">
+<h3>listen/1<a class="headerlink" href="#listen-1" title="Link to this heading"></a></h3>
+<pre><code>
+listen(Socket::<a href="#type-socket">socket()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Set the socket to listen for connections.</p>
+<p>Listen for connections.  The socket should be a connection-based
+socket and should be bound to an address and port.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:listen(ListeningSocket)</span></code></p>
+<p><a name="listen-2"></a></p>
+</section>
+<section id="listen-2">
+<h3>listen/2<a class="headerlink" href="#listen-2" title="Link to this heading"></a></h3>
+<pre><code>
+listen(Socket::<a href="#type-socket">socket()</a>, Backlog::integer()) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">Backlog</span></code>: the maximum length for the queue of pending connections<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Set the socket to listen for connections.</p>
+<p>Listen for connections.  The socket should be a connection-based
+socket and should be bound to an address and port.</p>
+<p>Use the Backlog to specify the maximum length for the queue of
+pending connections</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:listen(ListeningSocket,</span> <span class="pre">4)</span></code></p>
+<p><a name="open-3"></a></p>
+</section>
+<section id="open-3">
+<h3>open/3<a class="headerlink" href="#open-3" title="Link to this heading"></a></h3>
+<pre><code>
+open(Domain::<a href="#type-domain">domain()</a>, Type::<a href="#type-type">type()</a>, Protocol::<a href="#type-protocol">protocol()</a>) -&gt; {ok, <a href="#type-socket">socket()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Domain</span></code>: the network domain<br /><code class="docutils literal notranslate"><span class="pre">Type</span></code>: the network type<br /><code class="docutils literal notranslate"><span class="pre">Protocol</span></code>: the network protocol<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Socket}</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Create a socket.</p>
+<p>Create a socket with a specified domain, type, and protocol.
+Use the returned socket for communications.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">ListeningSocket}</span> <span class="pre">=</span> <span class="pre">socket:open(inet,</span> <span class="pre">stream,</span> <span class="pre">tcp)</span></code></p>
+<p><a name="peername-1"></a></p>
+</section>
+<section id="peername-1">
+<h3>peername/1<a class="headerlink" href="#peername-1" title="Link to this heading"></a></h3>
+<pre><code>
+peername(Socket::<a href="#type-socket">socket()</a>) -&gt; {ok, Address::<a href="#type-sockaddr">sockaddr()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Address}</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Return the address of the peer connected to the specified socket.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Address}</span> <span class="pre">=</span> <span class="pre">socket:peername(ConnectedSocket)</span></code></p>
+<p><a name="recv-1"></a></p>
+</section>
+<section id="recv-1">
+<h3>recv/1<a class="headerlink" href="#recv-1" title="Link to this heading"></a></h3>
+<pre><code>
+recv(Socket::<a href="#type-socket">socket()</a>) -&gt; {ok, Data::binary()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#recv-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">socket:recv(Socket,</span> <span class="pre">0)</span></code></span></a>.</p>
+<p><a name="recv-2"></a></p>
+</section>
+<section id="recv-2">
+<h3>recv/2<a class="headerlink" href="#recv-2" title="Link to this heading"></a></h3>
+<pre><code>
+recv(Socket::<a href="#type-socket">socket()</a>, Length::non_neg_integer()) -&gt; {ok, Data::binary()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#recv-3"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">socket:recv(Socket,</span> <span class="pre">Length,</span> <span class="pre">infinity)</span></code></span></a>.</p>
+<p><a name="recv-3"></a></p>
+</section>
+<section id="recv-3">
+<h3>recv/3<a class="headerlink" href="#recv-3" title="Link to this heading"></a></h3>
+<pre><code>
+recv(Socket::<a href="#type-socket">socket()</a>, Length::non_neg_integer(), Timeout::timeout()) -&gt; {ok, Data::binary()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">Length</span></code>: number of bytes to receive<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout (in milliseconds)<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Data}</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Receive data on the specified socket.</p>
+<p>This function is equivalent to <code class="docutils literal notranslate"><span class="pre">recvfrom/3</span></code> except for the return type.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Data}</span> <span class="pre">=</span> <span class="pre">socket:recv(ConnectedSocket)</span></code></p>
+<p><a name="recvfrom-1"></a></p>
+</section>
+<section id="recvfrom-1">
+<h3>recvfrom/1<a class="headerlink" href="#recvfrom-1" title="Link to this heading"></a></h3>
+<pre><code>
+recvfrom(Socket::<a href="#type-socket">socket()</a>) -&gt; {ok, {Address::<a href="#type-sockaddr">sockaddr()</a>, Data::binary()}} | {error, Reason::term()}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#recvfrom-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">socket:recvfrom(Socket,</span> <span class="pre">0)</span></code></span></a>.</p>
+<p><a name="recvfrom-2"></a></p>
+</section>
+<section id="recvfrom-2">
+<h3>recvfrom/2<a class="headerlink" href="#recvfrom-2" title="Link to this heading"></a></h3>
+<pre><code>
+recvfrom(Socket::<a href="#type-socket">socket()</a>, Length::non_neg_integer()) -&gt; {ok, {Address::<a href="#type-sockaddr">sockaddr()</a>, Data::binary()}} | {error, Reason::term()}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#recvfrom-3"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">socket:recvfrom(Socket,</span> <span class="pre">Length,</span> <span class="pre">infinity)</span></code></span></a>.</p>
+<p><a name="recvfrom-3"></a></p>
+</section>
+<section id="recvfrom-3">
+<h3>recvfrom/3<a class="headerlink" href="#recvfrom-3" title="Link to this heading"></a></h3>
+<pre><code>
+recvfrom(Socket::<a href="#type-socket">socket()</a>, Length::non_neg_integer(), Timeout::timeout()) -&gt; {ok, {Address::<a href="#type-sockaddr">sockaddr()</a>, Data::binary()}} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">Length</span></code>: number of bytes to receive<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout (in milliseconds)<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">{Address,</span> <span class="pre">Data}}</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Receive data on the specified socket, returning the from address.</p>
+<p>Note that this function will block until data is received
+on the socket.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">{Address,</span> <span class="pre">Data}}</span> <span class="pre">=</span> <span class="pre">socket:recvfrom(ConnectedSocket)</span></code></p>
+<p>If socket is UDP, the function retrieves the first available packet and
+truncate it to Length bytes, unless Length is 0 in which case it returns
+the whole packet (“all available”).</p>
+<p>If socket is TCP and Length is 0, this function retrieves all available
+data without waiting (using peek if the platform allows it).
+If socket is TCP and Length is not 0, this function waits until Length
+bytes are available and return these bytes.</p>
+<p><a name="send-2"></a></p>
+</section>
+<section id="send-2">
+<h3>send/2<a class="headerlink" href="#send-2" title="Link to this heading"></a></h3>
+<pre><code>
+send(Socket::<a href="#type-socket">socket()</a>, Data::iodata()) -&gt; ok | {ok, Rest::binary()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to send<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Rest}</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Send data on the specified socket.</p>
+<p>Note that this function will block until data is sent
+on the socket.  The data may not have been received by the
+intended recipient, and the data may not even have been sent
+over the network.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:send(ConnectedSocket,</span> <span class="pre">Data)</span></code></p>
+<p><a name="sendto-3"></a></p>
+</section>
+<section id="sendto-3">
+<h3>sendto/3<a class="headerlink" href="#sendto-3" title="Link to this heading"></a></h3>
+<pre><code>
+sendto(Socket::<a href="#type-socket">socket()</a>, Data::iodata(), Dest::<a href="#type-sockaddr">sockaddr()</a>) -&gt; ok | {ok, Rest::binary()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to send<br /><code class="docutils literal notranslate"><span class="pre">Dest</span></code>: the destination to which to send the data<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Rest}</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Send data on the specified socket to the specified destination.</p>
+<p>Note that this function will block until data is sent
+on the socket.  The data may not have been received by the
+intended recipient, and the data may not even have been sent
+over the network.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:sendto(ConnectedSocket,</span> <span class="pre">Data,</span> <span class="pre">Dest)</span></code></p>
+<p><a name="setopt-3"></a></p>
+</section>
+<section id="setopt-3">
+<h3>setopt/3<a class="headerlink" href="#setopt-3" title="Link to this heading"></a></h3>
+<pre><code>
+setopt(Socket::<a href="#type-socket">socket()</a>, SocketOption::<a href="#type-socket_option">socket_option()</a>, Value::term()) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">SocketOption</span></code>: the option<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: the option value<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Address}</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Set a socket option.</p>
+<p>Set an option on a socket.</p>
+<p>Currently, the following options are supported:</p>
+<table>
+<tr><td><code>{socket, reuseaddr}</code></td><td><code>boolean()</code></td></tr>
+<tr><td><code>{socket, linger}</code></td><td><code>#{onoff => boolean(), linger => non_neg_integer()}</code></td></tr>
+</table>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:setopt(ListeningSocket,</span> <span class="pre">{socket,</span> <span class="pre">reuseaddr},</span> <span class="pre">true)</span></code>
+<code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:setopt(ListeningSocket,</span> <span class="pre">{socket,</span> <span class="pre">linger},</span> <span class="pre">#{onoff</span> <span class="pre">=&gt;</span> <span class="pre">true,</span> <span class="pre">linger</span> <span class="pre">=&gt;</span> <span class="pre">0})</span></code></p>
+<p><a name="shutdown-2"></a></p>
+</section>
+<section id="shutdown-2">
+<h3>shutdown/2<a class="headerlink" href="#shutdown-2" title="Link to this heading"></a></h3>
+<pre><code>
+shutdown(Socket::<a href="#type-socket">socket()</a>, How::read | write | read_write) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /><code class="docutils literal notranslate"><span class="pre">How</span></code>: how to shut the socket down<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Shut down one or both ends of a full-duplex socket connection.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:shutdown(Socket,</span> <span class="pre">read_write)</span></code></p>
+<p><a name="sockname-1"></a></p>
+</section>
+<section id="sockname-1">
+<h3>sockname/1<a class="headerlink" href="#sockname-1" title="Link to this heading"></a></h3>
+<pre><code>
+sockname(Socket::<a href="#type-socket">socket()</a>) -&gt; {ok, Address::<a href="#type-sockaddr">sockaddr()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Socket</span></code>: the socket<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Address}</span></code> if successful; <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, otherwise.</p>
+<p>Return the current address for the specified socket.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Address}</span> <span class="pre">=</span> <span class="pre">socket:sockname(ConnectedSocket)</span></code></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="proplists.html" class="btn btn-neutral float-left" title="Module proplists" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ssl.html" class="btn btn-neutral float-right" title="Module ssl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">AtomVM Docs</span>
+      v: v0.6.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt>Versions</dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="/v0.6.0/pdf/AtomVM-v0.6.0.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.0/epub/AtomVM-v0.6.0.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,635 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module maps &mdash; AtomVM 0.6.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/estdlib/maps.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7c79bee4"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module math" href="math.html" />
+    <link rel="prev" title="Module logger" href="logger.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module maps</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-maps">
+<h1>Module maps<a class="headerlink" href="#module-maps" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>A <em>naive</em> implementation of the Erlang/OTP <code class="docutils literal notranslate"><span class="pre">maps</span></code> interface.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">maps</span></code> module provides several convenience operations for interfacing
+with the Erlang map type, which associates (unique) keys with values.</p>
+<p>Note that the ordering of entries in a map is implementation-defined.  While
+many operations in this module present entries in lexical order, users should
+in general make no assumptions about the ordering of entries in a map.</p>
+<p>This module implements a subset of the Erlang/OTP <code class="docutils literal notranslate"><span class="pre">maps</span></code> interface.
+Some OTP functions are not implemented, and the approach favors
+correctness and readability over speed and performance.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="iterator">
+<h3><a name="type-iterator">iterator()</a><a class="headerlink" href="#iterator" title="Link to this heading"></a></h3>
+<pre><code>
+iterator() = <a href="#type-iterator">iterator</a>(Key::any(), Value::any())
+</code></pre>
+</section>
+<section id="id1">
+<h3><a name="type-iterator">iterator()</a><a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">iterator(Key,</span> <span class="pre">Value)</span></code></p>
+</section>
+<section id="iterator-order">
+<h3><a name="type-iterator_order">iterator_order()</a><a class="headerlink" href="#iterator-order" title="Link to this heading"></a></h3>
+<pre><code>
+iterator_order() = <a href="#type-iterator_order">iterator_order</a>(Key::term())
+</code></pre>
+</section>
+<section id="id2">
+<h3><a name="type-iterator_order">iterator_order()</a><a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<pre><code>
+iterator_order(Key) = undefined | ordered | reversed | fun((Key, Key) -&gt; boolean())
+</code></pre>
+</section>
+<section id="map-or-iterator">
+<h3><a name="type-map_or_iterator">map_or_iterator()</a><a class="headerlink" href="#map-or-iterator" title="Link to this heading"></a></h3>
+<pre><code>
+map_or_iterator(Key, Value) = #{Key =&gt; Value} | <a href="#type-iterator">iterator</a>(Key, Value)
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#filter-2">filter/2</a></td><td>Return a map who's entries are filtered by the supplied predicate.</td></tr><tr><td valign="top"><a href="#find-2">find/2</a></td><td>Returns <code>{ok, Value}</code> if <code>Key</code> is in <code>Map</code>; <code>error</code>, otherwise.</td></tr><tr><td valign="top"><a href="#fold-3">fold/3</a></td><td>Fold over the entries in a map.</td></tr><tr><td valign="top"><a href="#foreach-2">foreach/2</a></td><td>Iterate over the entries in a map.</td></tr><tr><td valign="top"><a href="#from_keys-2">from_keys/2</a></td><td>Creates a map with specified keys intialized to given value.</td></tr><tr><td valign="top"><a href="#from_list-1">from_list/1</a></td><td>This function constructs a map from the supplied list of key-value pairs.</td></tr><tr><td valign="top"><a href="#get-2">get/2</a></td><td>    Get the value in <code>Map</code> associated with <code>Key</code>, if it exists.</td></tr><tr><td valign="top"><a href="#get-3">get/3</a></td><td>    Get the value in <code>Map</code> associated with <code>Key</code>, or <code>Default</code>, if
+the key is not associated with a value in <code>Map</code>.</td></tr><tr><td valign="top"><a href="#is_key-2">is_key/2</a></td><td>    Return <code>true</code> if <code>Key</code> is associated with a value in <code>Map</code>; <code>false</code>, otherwise.</td></tr><tr><td valign="top"><a href="#iterator-1">iterator/1</a></td><td>Equivalent to <a href="#iterator-2"><tt>iterator(Map, undefined)</tt></a>.</td></tr><tr><td valign="top"><a href="#iterator-2">iterator/2</a></td><td>Return an iterator structure that can be used to iterate over associations
+in a map.</td></tr><tr><td valign="top"><a href="#keys-1">keys/1</a></td><td>Returns the list of keys that occur in this map.</td></tr><tr><td valign="top"><a href="#map-2">map/2</a></td><td>Returns the result of applying a function to every element of a map.</td></tr><tr><td valign="top"><a href="#merge-2">merge/2</a></td><td>Merge two maps to yield a new map.</td></tr><tr><td valign="top"><a href="#merge_with-3">merge_with/3</a></td><td>Merge two maps to yield a new map.</td></tr><tr><td valign="top"><a href="#new-0">new/0</a></td><td>Return a new (empty) map.</td></tr><tr><td valign="top"><a href="#next-1">next/1</a></td><td>Returns the next key and value in the map, along with
+a new iterator that can be used to iterate over the remainder of the map.</td></tr><tr><td valign="top"><a href="#put-3">put/3</a></td><td>    Return the map containing the <code>{Key, Value}</code> association.</td></tr><tr><td valign="top"><a href="#remove-2">remove/2</a></td><td>Remove an entry from a map using a key.</td></tr><tr><td valign="top"><a href="#size-1">size/1</a></td><td>Returns the size of (i.e., the number of entries in) the map.</td></tr><tr><td valign="top"><a href="#to_list-1">to_list/1</a></td><td>Return the list of entries, expressed as <code>{Key, Value}</code> pairs, in the supplied map.</td></tr><tr><td valign="top"><a href="#update-3">update/3</a></td><td>Returns a new map with an updated key-value association.</td></tr><tr><td valign="top"><a href="#values-1">values/1</a></td><td>Returns the list of values that occur in this map.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="filter-2"></a></p>
+<section id="filter-2">
+<h3>filter/2<a class="headerlink" href="#filter-2" title="Link to this heading"></a></h3>
+<pre><code>
+filter(Pred::fun((Key, Value) -&gt; boolean()), MapOrIterator::<a href="#type-map_or_iterator">map_or_iterator</a>(Key, Value)) -&gt; #{Key =&gt; Value}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pred</span></code>: a function used to filter entries from the map<br /><code class="docutils literal notranslate"><span class="pre">MapOrIterator</span></code>: the map or map iterator to filter<br /></p>
+<p>returns: a map containing all elements in <code class="docutils literal notranslate"><span class="pre">MapOrIterator</span></code> that satisfy <code class="docutils literal notranslate"><span class="pre">Pred</span></code></p>
+<p>Return a map who’s entries are filtered by the supplied predicate.</p>
+<p>This function returns a new map containing all elements from the input
+<code class="docutils literal notranslate"><span class="pre">MapOrIterator</span></code> that satisfy the input <code class="docutils literal notranslate"><span class="pre">Pred</span></code>.</p>
+<p>The supplied predicate is a function from key-value inputs to a boolean value.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map or map
+iterator, and a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error if the input predicate is not a function.</p>
+<p><a name="find-2"></a></p>
+</section>
+<section id="find-2">
+<h3>find/2<a class="headerlink" href="#find-2" title="Link to this heading"></a></h3>
+<pre><code>
+find(Key, Map::#{Key =&gt; Value}) -&gt; {ok, Value} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key to find<br /><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map in which to search<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Value}</span></code> if <code class="docutils literal notranslate"><span class="pre">Key</span></code> is in <code class="docutils literal notranslate"><span class="pre">Map</span></code>; <code class="docutils literal notranslate"><span class="pre">error</span></code>, otherwise.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Value}</span></code> if <code class="docutils literal notranslate"><span class="pre">Key</span></code> is in <code class="docutils literal notranslate"><span class="pre">Map</span></code>; <code class="docutils literal notranslate"><span class="pre">error</span></code>, otherwise.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p><a name="fold-3"></a></p>
+</section>
+<section id="fold-3">
+<h3>fold/3<a class="headerlink" href="#fold-3" title="Link to this heading"></a></h3>
+<pre><code>
+fold(Fun::fun((Key, Value, Accum) -&gt; Accum), Accum, MapOrIterator::<a href="#type-map_or_iterator">map_or_iterator</a>(Key, Value)) -&gt; Accum
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: function over which to fold values<br /><code class="docutils literal notranslate"><span class="pre">MapOrIterator</span></code>: the map or map iterator over which to fold<br /></p>
+<p>returns: the result of folding over all elements of the supplied map.</p>
+<p>Fold over the entries in a map.</p>
+<p>This function takes a function used to fold over all entries in a map
+and an initial accumulator value to use as the value supplied to the
+first entry in the map.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">badmap</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map or map iterator,
+and a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error if the input function is not a function.</p>
+<p><a name="foreach-2"></a></p>
+</section>
+<section id="foreach-2">
+<h3>foreach/2<a class="headerlink" href="#foreach-2" title="Link to this heading"></a></h3>
+<pre><code>
+foreach(Fun::fun((Key, Value) -&gt; any()), MapOrIterator::<a href="#type-map_or_iterator">map_or_iterator</a>(Key, Value)) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: function to call with every key-value pair<br /><code class="docutils literal notranslate"><span class="pre">MapOrIterator</span></code>: the map or map iterator over which to iterate<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
+<p>Iterate over the entries in a map.</p>
+<p>This function takes a function used to iterate over all entries in a map.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">badmap</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map or map iterator,
+and a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error if the input function is not a function.</p>
+<p><a name="from_keys-2"></a></p>
+</section>
+<section id="from-keys-2">
+<h3>from_keys/2<a class="headerlink" href="#from-keys-2" title="Link to this heading"></a></h3>
+<pre><code>
+from_keys(List::list(), Value::term()) -&gt; map()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: the list of keys of the map that will be created<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: the value that will be used as value for all map items<br /></p>
+<p>returns: a map having all provided keys having provided value as value</p>
+<p>Creates a map with specified keys intialized to given value</p>
+<p><a name="from_list-1"></a></p>
+</section>
+<section id="from-list-1">
+<h3>from_list/1<a class="headerlink" href="#from-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+from_list(List::[{Key, Value}]) -&gt; #{Key =&gt; Value}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: a list of <code class="docutils literal notranslate"><span class="pre">[{Key,</span> <span class="pre">Value}]</span></code> pairs<br /></p>
+<p>returns: the map containing the entries from the list of supplied key-value pairs.</p>
+<p>This function constructs a map from the supplied list of key-value pairs.</p>
+<p>If the input list contains duplicate keys, the returned map will contain the
+right-most entry.</p>
+<p>This function will raise a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error if the input is not a proper
+list or contains an element that is not a key-value pair.</p>
+<p><a name="get-2"></a></p>
+</section>
+<section id="get-2">
+<h3>get/2<a class="headerlink" href="#get-2" title="Link to this heading"></a></h3>
+<pre><code>
+get(Key, Map::#{Key =&gt; Value}) -&gt; Value
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key to get<br /><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map from which to get the value<br /></p>
+<p>returns: the value in <code class="docutils literal notranslate"><span class="pre">Map</span></code> associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code>, if it exists.</p>
+<p>Get the value in <code class="docutils literal notranslate"><span class="pre">Map</span></code> associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code>, if it exists.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badkey,</span> <span class="pre">Key}</span></code> error if ‘Key’ does not occur in
+<code class="docutils literal notranslate"><span class="pre">Map</span></code> or a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p><a name="get-3"></a></p>
+</section>
+<section id="get-3">
+<h3>get/3<a class="headerlink" href="#get-3" title="Link to this heading"></a></h3>
+<pre><code>
+get(Key, Map::#{Key =&gt; Value}, Default::Value) -&gt; Value
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key<br /><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map<br /><code class="docutils literal notranslate"><span class="pre">Default</span></code>: default value<br /></p>
+<p>returns: the value in <code class="docutils literal notranslate"><span class="pre">Map</span></code> associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code>, or <code class="docutils literal notranslate"><span class="pre">Default</span></code>, if
+the key is not associated with a value in <code class="docutils literal notranslate"><span class="pre">Map</span></code>.</p>
+<p>Get the value in <code class="docutils literal notranslate"><span class="pre">Map</span></code> associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code>, or <code class="docutils literal notranslate"><span class="pre">Default</span></code>, if
+the key is not associated with a value in <code class="docutils literal notranslate"><span class="pre">Map</span></code>.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p><a name="is_key-2"></a></p>
+</section>
+<section id="is-key-2">
+<h3>is_key/2<a class="headerlink" href="#is-key-2" title="Link to this heading"></a></h3>
+<pre><code>
+is_key(Key, Map::#{Key =&gt; _Value}) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key<br /><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Key</span></code> is associated with a value in <code class="docutils literal notranslate"><span class="pre">Map</span></code>; <code class="docutils literal notranslate"><span class="pre">false</span></code>, otherwise.</p>
+<p>Return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Key</span></code> is associated with a value in <code class="docutils literal notranslate"><span class="pre">Map</span></code>; <code class="docutils literal notranslate"><span class="pre">false</span></code>, otherwise.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p><a name="iterator-1"></a></p>
+</section>
+<section id="iterator-1">
+<h3>iterator/1<a class="headerlink" href="#iterator-1" title="Link to this heading"></a></h3>
+<pre><code>
+iterator(Map::#{Key =&gt; Value}) -&gt; <a href="#type-iterator">iterator</a>(Key, Value)
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#iterator-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">iterator(Map,</span> <span class="pre">undefined)</span></code></span></a>.</p>
+<p><a name="iterator-2"></a></p>
+</section>
+<section id="iterator-2">
+<h3>iterator/2<a class="headerlink" href="#iterator-2" title="Link to this heading"></a></h3>
+<pre><code>
+iterator(Map::#{Key =&gt; Value}, Order::<a href="#type-iterator_order">iterator_order()</a>) -&gt; <a href="#type-iterator">iterator</a>(Key, Value)
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map<br /><code class="docutils literal notranslate"><span class="pre">Order</span></code>: the iterator order, or undefined for default (unspecified)
+order.<br /></p>
+<p>returns: an iterator structure that can be used to iterate over associations
+in a map.</p>
+<p>Return an iterator structure that can be used to iterate over associations
+in a map.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#next-1"><span class="xref myst">next/1</span></a>.</p>
+<p><a name="keys-1"></a></p>
+</section>
+<section id="keys-1">
+<h3>keys/1<a class="headerlink" href="#keys-1" title="Link to this heading"></a></h3>
+<pre><code>
+keys(Map::#{Key =&gt; _Value}) -&gt; [Key]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map<br /></p>
+<p>returns: the list of keys that occur in this map.</p>
+<p>Returns the list of keys that occur in this map.</p>
+<p>No guarantees are provided about the order of keys returned from this function.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p><a name="map-2"></a></p>
+</section>
+<section id="map-2">
+<h3>map/2<a class="headerlink" href="#map-2" title="Link to this heading"></a></h3>
+<pre><code>
+map(Fun::fun((Key, Value) -&gt; MappedValue), Map::<a href="#type-map_or_iterator">map_or_iterator</a>(Key, Value)) -&gt; #{Key =&gt; MappedValue}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the function to apply to every entry in the map<br /><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map to which to apply the map function<br /></p>
+<p>returns: the result of applying <code class="docutils literal notranslate"><span class="pre">Fun</span></code> to every entry in <code class="docutils literal notranslate"><span class="pre">Map</span></code></p>
+<p>Returns the result of applying a function to every element of a map.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">badmap</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map or map iterator,
+and a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error if the input function is not a function.</p>
+<p><a name="merge-2"></a></p>
+</section>
+<section id="merge-2">
+<h3>merge/2<a class="headerlink" href="#merge-2" title="Link to this heading"></a></h3>
+<pre><code>
+merge(Map1::#{Key =&gt; Value}, Map2::#{Key =&gt; Value}) -&gt; #{Key =&gt; Value}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Map1</span></code>: a map<br /><code class="docutils literal notranslate"><span class="pre">Map2</span></code>: a map<br /></p>
+<p>returns: the result of merging entries from <code class="docutils literal notranslate"><span class="pre">Map1</span></code> and <code class="docutils literal notranslate"><span class="pre">Map2</span></code>.</p>
+<p>Merge two maps to yield a new map.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">Map1</span></code> and <code class="docutils literal notranslate"><span class="pre">Map2</span></code> contain the same key, then the value from <code class="docutils literal notranslate"><span class="pre">Map2</span></code> will be used.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">badmap</span></code> error if neither <code class="docutils literal notranslate"><span class="pre">Map1</span></code> nor <code class="docutils literal notranslate"><span class="pre">Map2</span></code> is a map.</p>
+<p><a name="merge_with-3"></a></p>
+</section>
+<section id="merge-with-3">
+<h3>merge_with/3<a class="headerlink" href="#merge-with-3" title="Link to this heading"></a></h3>
+<pre><code>
+merge_with(Combiner::fun((Key, Value, Value) -&gt; Value), Map1::#{Key =&gt; Value}, Map2::#{Key =&gt; Value}) -&gt; #{Key =&gt; Value}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Combiner</span></code>: a function to merge values from Map1 and Map2 if a key exists in both maps<br /><code class="docutils literal notranslate"><span class="pre">Map1</span></code>: a map<br /><code class="docutils literal notranslate"><span class="pre">Map2</span></code>: a map<br /></p>
+<p>returns: the result of merging entries from <code class="docutils literal notranslate"><span class="pre">Map1</span></code> and <code class="docutils literal notranslate"><span class="pre">Map2</span></code>.</p>
+<p>Merge two maps to yield a new map.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">Map1</span></code> and <code class="docutils literal notranslate"><span class="pre">Map2</span></code> contain the same key, then the value from <code class="docutils literal notranslate"><span class="pre">Combiner(Key,</span> <span class="pre">Value1,</span> <span class="pre">Value2)</span></code> will be used.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">badmap</span></code> error if neither <code class="docutils literal notranslate"><span class="pre">Map1</span></code> nor <code class="docutils literal notranslate"><span class="pre">Map2</span></code> is a map.</p>
+<p><a name="new-0"></a></p>
+</section>
+<section id="new-0">
+<h3>new/0<a class="headerlink" href="#new-0" title="Link to this heading"></a></h3>
+<pre><code>
+new() -&gt; map()
+</code></pre>
+<br />
+<p>returns: a new map</p>
+<p>Return a new (empty) map.</p>
+<p><a name="next-1"></a></p>
+</section>
+<section id="next-1">
+<h3>next/1<a class="headerlink" href="#next-1" title="Link to this heading"></a></h3>
+<pre><code>
+next(Iterator::<a href="#type-iterator">iterator</a>(Key, Value)) -&gt; {Key, Value, <a href="#type-iterator">iterator</a>(Key, Value)} | none
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Iterator</span></code>: a map iterator<br /></p>
+<p>returns: the key and value, along with the next iterator in the map, or the
+atom <code class="docutils literal notranslate"><span class="pre">none</span></code> if there are no more items over which to iterate.</p>
+<p>Returns the next key and value in the map, along with
+a new iterator that can be used to iterate over the remainder of the map.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error if the supplied iterator is not
+of the expected type.  Only use iterators that are returned from functions
+in this module.</p>
+<p><a name="put-3"></a></p>
+</section>
+<section id="put-3">
+<h3>put/3<a class="headerlink" href="#put-3" title="Link to this heading"></a></h3>
+<pre><code>
+put(Key, Value, Map::#{Key =&gt; Value}) -&gt; #{Key =&gt; Value}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: the value<br /><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map<br /></p>
+<p>returns: A copy of <code class="docutils literal notranslate"><span class="pre">Map</span></code> containing the <code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">Value}</span></code> association.</p>
+<p>Return the map containing the <code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">Value}</span></code> association.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">Key</span></code> occurs in <code class="docutils literal notranslate"><span class="pre">Map</span></code> then it will be over-written.  Otherwise, the
+returned map will contain the new association.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p><a name="remove-2"></a></p>
+</section>
+<section id="remove-2">
+<h3>remove/2<a class="headerlink" href="#remove-2" title="Link to this heading"></a></h3>
+<pre><code>
+remove(Key, MapOrIterator::<a href="#type-map_or_iterator">map_or_iterator</a>(Key, Value)) -&gt; #{Key =&gt; Value}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key to remove<br /><code class="docutils literal notranslate"><span class="pre">MapOrIterator</span></code>: the map or map iterator from which to remove the key<br /></p>
+<p>returns: a new map without <code class="docutils literal notranslate"><span class="pre">Key</span></code> as an entry.</p>
+<p>Remove an entry from a map using a key.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">Key</span></code> does not occur in <code class="docutils literal notranslate"><span class="pre">Map</span></code>, then the returned Map has the same
+entries as the input map or map iterator.</p>
+<p>Note.  This function extends the functionality of the OTP <code class="docutils literal notranslate"><span class="pre">remove/2</span></code> function,
+since the OTP interface only takes a map as input.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">badmap</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map or map iterator.</p>
+<p><a name="size-1"></a></p>
+</section>
+<section id="size-1">
+<h3>size/1<a class="headerlink" href="#size-1" title="Link to this heading"></a></h3>
+<pre><code>
+size(Map::map()) -&gt; non_neg_integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map<br /></p>
+<p>returns: the size of the map</p>
+<p>Returns the size of (i.e., the number of entries in) the map</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p><a name="to_list-1"></a></p>
+</section>
+<section id="to-list-1">
+<h3>to_list/1<a class="headerlink" href="#to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+to_list(Map::#{Key =&gt; Value}) -&gt; [{Key, Value}]
+</code></pre>
+<br />
+<p>returns: a list of <code class="docutils literal notranslate"><span class="pre">[{Key,</span> <span class="pre">Value}]</span></code> tuples</p>
+<p>Return the list of entries, expressed as <code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">Value}</span></code> pairs, in the supplied map.</p>
+<p>If provided with a map, no guarantees are provided about the order of
+entries returned from this function. Order can be controlled with <code class="docutils literal notranslate"><span class="pre">iterator/2</span></code></p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map and not
+an iterator.</p>
+<p><a name="update-3"></a></p>
+</section>
+<section id="update-3">
+<h3>update/3<a class="headerlink" href="#update-3" title="Link to this heading"></a></h3>
+<pre><code>
+update(Key, Value, Map::#{Key =&gt; Value}) -&gt; #{Key =&gt; Value}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key to update<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: the value to update<br /><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map to update<br /></p>
+<p>returns: a new map, with <code class="docutils literal notranslate"><span class="pre">Key</span></code> updated with <code class="docutils literal notranslate"><span class="pre">Value</span></code></p>
+<p>Returns a new map with an updated key-value association.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">badmap</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map and
+<code class="docutils literal notranslate"><span class="pre">{badkey,</span> <span class="pre">Key}</span></code> if key doesn`t exist</p>
+<p><a name="values-1"></a></p>
+</section>
+<section id="values-1">
+<h3>values/1<a class="headerlink" href="#values-1" title="Link to this heading"></a></h3>
+<pre><code>
+values(Map::#{_Key =&gt; Value}) -&gt; [Value]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map<br /></p>
+<p>returns: the list of values that occur in this map.</p>
+<p>Returns the list of values that occur in this map.</p>
+<p>No guarantees are provided about the order of values returned from this function.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="logger.html" class="btn btn-neutral float-left" title="Module logger" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="math.html" class="btn btn-neutral float-right" title="Module math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      v0.6.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/v0.6.5/pdf/AtomVM-v0.6.5.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.5/epub/AtomVM-v0.6.5.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Instructions &mdash; AtomVM 0.5.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AtomVM Internals" href="atomvm-internals.html" />
+    <link rel="prev" title="Network Programming Guide" href="network-programming-guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> AtomVM
+          </a>
+              <div class="version">
+                0.5.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-programs.html">Example Programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build Instructions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#downloading-atomvm">Downloading AtomVM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-code-organization">Source code organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-for-generic-unix">Building for Generic UNIX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#build-requirements">Build Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Build Instructions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#special-note-for-macos-users">Special Note for MacOS users</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-tests">Running tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-for-esp32">Building for ESP32</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Build Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Build Instructions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flash-layout">Flash Layout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-lib-avm-and-main-avm-partitions">The <code class="docutils literal notranslate"><span class="pre">lib.avm</span></code> and <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-a-release-image">Building a Release Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-custom-nifs-ports-and-third-party-components">Adding custom Nifs, Ports, and third-party components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#adding-a-custom-atomvm-nif">Adding a custom AtomVM Nif</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adding-a-custom-atomvm-port">Adding a custom AtomVM Port</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-for-stm32">Building for STM32</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Build Instructions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/build-instructions.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+ Copyright 2021-2022 Fred Dushin <fred@dushin.net>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="build-instructions">
+<h1>Build Instructions<a class="headerlink" href="#build-instructions" title="Permalink to this headline"></a></h1>
+<p>This guide is intended for anyone interested in the implementation of AtomVM, including developers who would like to provide enhancements or bug fixes to the core AtomVM virtual machine, as well as providing third-party extensions via the implementation of AtomVM Nifs or Ports.  Understanding the virtual machine and how it is implemented is also interesting in its own right, and having an understanding of the underlying mechanics can be helpful for writing better Erlang and Elixir programs.</p>
+<p>The AtomVM virtual machine itself, including the runtime code execution engine, as well as built-in functions and Nifs is implemented in C.  The core standard and AtomVM libraries are implemented in Erlang and Elixir.</p>
+<p>The native C parts of AtomVM compile to machine code on MacOS, Linux, and FreeBSD platforms.  The C code also compiles to run on the ESP32 and STM32 platforms.  Typically, binaries for these platforms are created on a UNIX-like environment (MacOS or Linux, currently) using tool-chains provided by device vendors to cross-compile and target specific device architectures.</p>
+<p>The Erlang and Elixir parts are compiled to BEAM byte-code using the Erlang (<code class="docutils literal notranslate"><span class="pre">erlc</span></code>) and Elixir compilers.  Currently, Erlang/OTP versions 21 and 22 are supported.</p>
+<p>This guide provides information about how to build AtomVM for the various supported platforms (Generic UNIX, ESP32, and STM32).</p>
+<blockquote>
+<div><p>Note.  In order to build AtomVM AVM files for ESP32 and STM32 platforms, you will also need to build AtomVM for the Generic UNIX platform of your choice.</p>
+</div></blockquote>
+<section id="downloading-atomvm">
+<h2>Downloading AtomVM<a class="headerlink" href="#downloading-atomvm" title="Permalink to this headline"></a></h2>
+<p>The AtomVM source code is available by cloning the AtomVM github repository:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ git clone https://github.com/atomvm/AtomVM
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note.  Downloading the AtomVM github repository requires the installation of the <code class="docutils literal notranslate"><span class="pre">git</span></code> program.  Consult your local OS documentation for installation of the <code class="docutils literal notranslate"><span class="pre">git</span></code> package.</p>
+</div></blockquote>
+</section>
+<section id="source-code-organization">
+<h2>Source code organization<a class="headerlink" href="#source-code-organization" title="Permalink to this headline"></a></h2>
+<p>Source code is organized as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">src</span></code>  Contains the core AtomVM virtual machine source code;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lib</span></code>  Contains the Erlang and Elixir core library source code;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tools</span></code> Contains AtomVM tooling, including the <code class="docutils literal notranslate"><span class="pre">PackBEAM</span></code> executable, as well as build support tooling;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">examples</span></code> Contains sample programs for demonstration purposes;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests</span></code> Contains test code run as part of test qualification;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">doc</span></code> Contains documentation source code and content.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">src</span></code> directory is broken up into the core platform-independent AtomVM library (<code class="docutils literal notranslate"><span class="pre">libAtomVM</span></code>), and platform-dependent code for each of the supported platforms  (Generic UNIX, ESP32, and STM32).</p>
+<p>For information about porting to new platforms, see <a class="reference external" href="#porting-to-new-platforms">Porting to new platforms</a>, below.</p>
+</section>
+<section id="building-for-generic-unix">
+<h2>Building for Generic UNIX<a class="headerlink" href="#building-for-generic-unix" title="Permalink to this headline"></a></h2>
+<p>The following instructions apply to unix-like environments, including Linux, FreeBSD, and MacOS.</p>
+<blockquote>
+<div><p>Note.  The Generic UNIX is useful for running and testing simple AtomVM programs.  Not all of the AtomVM APIs, specifically, APIs that are dependent on various device integration, are supported on this platform.</p>
+</div></blockquote>
+<section id="build-requirements">
+<h3>Build Requirements<a class="headerlink" href="#build-requirements" title="Permalink to this headline"></a></h3>
+<p>The following software is required in order to build AtomVM in generic UNIX systems:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gcc</span></code> or <code class="docutils literal notranslate"><span class="pre">llvm</span></code> tool chains</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmake</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gperf</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zlib</span></code></p></li>
+<li><p>Erlang/OTP 21</p></li>
+</ul>
+<p>Consult your local OS documentation for instructions about how to install these components.</p>
+</section>
+<section id="id1">
+<h3>Build Instructions<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<p>The AtomVM build for generic UNIX systems makes use of the <code class="docutils literal notranslate"><span class="pre">cmake</span></code> tool for generating <code class="docutils literal notranslate"><span class="pre">make</span></code> files from the top level AtomVM directory.  With CMake, you generally create a separate directory for all output files (make files, generated object files, linked binaries, etc).  A common pattern is to create a clcal <code class="docutils literal notranslate"><span class="pre">build</span></code> directory, and then point <code class="docutils literal notranslate"><span class="pre">cmake</span></code> to the parent directory for the root of the source tree:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ mkdir build
+shell$ cd build
+shell$ cmake ..
+...
+</pre></div>
+</div>
+<p>This command will create all of the required make files for creating the AtomVM binary, tooling, and core libraries.  You can create all of these object using the <code class="docutils literal notranslate"><span class="pre">make</span></code> command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ make -j 8
+...
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note.  You may specify <code class="docutils literal notranslate"><span class="pre">-j</span> <span class="pre">&lt;n&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;n&gt;</span></code> is the number of CPUs you would like to assign to run the build in parallel.</p>
+</div></blockquote>
+<p>Upon completion, the <code class="docutils literal notranslate"><span class="pre">AtomVM</span></code> executable can be found in the <code class="docutils literal notranslate"><span class="pre">build/src</span></code> directory.</p>
+<p>The AtomVM core Erlang library can be found in the generated <code class="docutils literal notranslate"><span class="pre">libs/atomvmlib.avm</span></code> AVM file.</p>
+<section id="special-note-for-macos-users">
+<h4>Special Note for MacOS users<a class="headerlink" href="#special-note-for-macos-users" title="Permalink to this headline"></a></h4>
+<p>You may build an Apple Xcode project, for developing, testing, and debugging in the Xcode IDE, by specifying the Xcode generator.  For example, from the top level AtomVM directory:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ mkdir xcode
+shell$ cmake -G Xcode ..
+...
+shell$ open AtomVM.xcodeproj
+</pre></div>
+</div>
+<p>The above commands will build and open an AtomVM project in the Xcode IDE.</p>
+</section>
+</section>
+<section id="running-tests">
+<h3>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline"></a></h3>
+<p>There are currently two sets of suites of tests for AtomVM:</p>
+<ul class="simple">
+<li><p>Erlang tests (<code class="docutils literal notranslate"><span class="pre">erlang_tests</span></code>) A set of unit tests for basic Erlang functionality, exercising support BEAM opcodes, built-in functions (Bifs) and native functions (Nifs).</p></li>
+<li><p>Library tests, exercising functionality in the core Erlang and Elixir libraries.</p></li>
+</ul>
+<p>To run the Erlang tests, run the <code class="docutils literal notranslate"><span class="pre">test-erlang</span></code> executable in the <code class="docutils literal notranslate"><span class="pre">tests</span></code> directory:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ ./tests/test-erlang
+</pre></div>
+</div>
+<p>This will run a suite of several score unit tests.  Check the status of the executable after running the tests.  A non-zero return value indicates a test failure.</p>
+<p>To run the Library tests, run the corresponding AVM module in the <code class="docutils literal notranslate"><span class="pre">tests/libs</span></code> directory using the <code class="docutils literal notranslate"><span class="pre">AtomVM</span></code> executable.  For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ ./src/AtomVM ./tests/libs/estdlib/test_estdlib.avm
+</pre></div>
+</div>
+<p>This will run a suite of several unit tests for the specified library.  Check the status of the executable after running the tests.  A non-zero return value indicates a test failure.</p>
+<p>Tests for the following libraries are supported:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">estdlib</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eavmlib</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alisp</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="building-for-esp32">
+<h2>Building for ESP32<a class="headerlink" href="#building-for-esp32" title="Permalink to this headline"></a></h2>
+<p>Building AtomVM for ESP32 must be done on either a Linux or MacOS build machine.</p>
+<p>In order to build a complete AtomVM image for ESP32, you will also need to build AtomVM for the Generic UNIX platform (typically, the same build machine you are suing to build AtomVM for ESP32).</p>
+<section id="id2">
+<h3>Build Requirements<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<p>The following software is required in order to build AtomVM for the ESP32 platform:</p>
+<ul class="simple">
+<li><p>Espressif Xtensa tool chains</p></li>
+<li><p><a class="reference external" href="https://www.espressif.com/en/products/sdks/esp-idf">Espressif IDF SDK</a> version 3.x (4.x support is currently <em>experimental</em>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmake</span></code></p></li>
+<li><p>GNU <code class="docutils literal notranslate"><span class="pre">make</span></code></p></li>
+</ul>
+<p>Instructions for downloading and installing the Espressif IDF SDK and tool chains are outside of the scope of this document.  Please consult the <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/release-v3.3/get-started/index.html">IDF SDKGetting Started</a> guide for more information.</p>
+</section>
+<section id="id3">
+<h3>Build Instructions<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<p>Change directories to the <code class="docutils literal notranslate"><span class="pre">src/platforms/esp32</span></code> directory under the AtomVM source tree root:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ cd &lt;atomvm-source-tree-root&gt;
+shell$ cd src/platforms/esp32
+</pre></div>
+</div>
+<p>Start by updating the configuration of local <code class="docutils literal notranslate"><span class="pre">sdkconfig</span></code> file via the <code class="docutils literal notranslate"><span class="pre">menuconfig</span></code> Make target:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ make menuconfig
+</pre></div>
+</div>
+<p>This command will bring up a curses dialog box.  You can exit the program by typing <code class="docutils literal notranslate"><span class="pre">E</span></code>.  Save the changes, and the program will exit.</p>
+<p>You can now build AtomvVM using the <code class="docutils literal notranslate"><span class="pre">make</span></code> command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ make -j 8
+...
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note.  You may specify <code class="docutils literal notranslate"><span class="pre">-j</span> <span class="pre">&lt;n&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;n&gt;</span></code> is the number of CPUs you would like to assign to run the build in parallel.</p>
+</div></blockquote>
+<p>This command, once completed, will create the Espressif bootloader, partition table, and AtomVM binary.  The last line of the output should read something like the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>To flash all build output, run &#39;make flash&#39; or:
+python /path/to/esp-idf-sdk/components/esptool_py/esptool/esptool.py --chip esp32
+--port /dev/ttyUSB0 --baud 115200 --before default_reset --after hard_reset write_flash
+-z --flash_mode dio --flash_freq 40m --flash_size detect
+0x1000 /path-to-atomvm-source-tree/Atomvm/src/platforms/esp32/build/bootloader/bootloader.bin
+0x10000 /path-to-atomvm-source-tree/Atomvm/src/platforms/esp32/build/atomvvm-esp32.bin
+0x8000 /path-to-atomvm-source-tree/Atomvm/src/platforms/esp32/build/partitions.bin
+</pre></div>
+</div>
+<p>At this point, you can run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">flash</span></code> to upload the 3 binaries up to your ESP32 device, and in some development scenarios, this is a preferable shortcut.</p>
+<p>However, first, we will build a single binary image file containing all of the above 3 binaries, as well as the AtomVM core libraries.  See <a class="reference external" href="#building-a-release-image">Building a Release Image</a>, below.  But first, it is helpful to understand a bit about how the AtomVM partitioning scheme works, on the ESP32.</p>
+</section>
+<section id="flash-layout">
+<h3>Flash Layout<a class="headerlink" href="#flash-layout" title="Permalink to this headline"></a></h3>
+<p>The AtomVM Flash memory is partitioned to include areas for the above binary artifacts created from the build, as well areas for runtime information used by the ESP32 and compiled Erlang/Elixire code.</p>
+<p>The flash layout is roughly as follows (not to scale):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-----------------+  ------------- 0x0000
+|    secure       |
+|     boot        | 4KB
+|                 |
++-----------------+  ------------- 0x1000
+|                 |             ^
+|   boot loader   | 28KB        |
+|                 |             |
++-----------------+             |
+| partition table | 3KB         |
++-----------------+             |
+|                 |             |
+|       NVS       | 24KB        |
+|                 |             |
++-----------------+             |
+|     PHY_INIT    | 4KB         |
++-----------------+             | AtomVM
+|                 |             | binary
+|                 |             | image
+|                 |             |
+|     AtomVM      |             |
+|     Virtual     | 1.75MB      |
+|     Machine     |             |
+|                 |             |
+|                 |             |
++-----------------+             |
+|     lib.avm     | 256KB       v
++-----------------+  ------------- 0x210000
+|                 |             ^
+|                 |             |
+|     main.avm    | 1MB+        | Erlang/Elixir
+|                 |             | Application
+|                 |             |
+|                 |             v
++-----------------+  ------------- end
+</pre></div>
+</div>
+<p>The following table summarizes the partitions created on the ESP32 when deploying AtomVM:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>Partition</p></th>
+<th class="text-align:left head"><p>Offset</p></th>
+<th class="text-align:left head"><p>Length</p></th>
+<th class="text-align:left head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>Secure Boot</p></td>
+<td class="text-align:left"><p>0x00</p></td>
+<td class="text-align:left"><p>4kB</p></td>
+<td class="text-align:left"><p>Initialization vectors and other data needed for ESP32 secure boot.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>Bootloader</p></td>
+<td class="text-align:left"><p>0x1000</p></td>
+<td class="text-align:left"><p>28kB</p></td>
+<td class="text-align:left"><p>The ESP32 bootloader, as built from the IDF-SDK.  AtomVM does not define its own bootloader.</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>Partition Table</p></td>
+<td class="text-align:left"><p>0x8000</p></td>
+<td class="text-align:left"><p>3kB</p></td>
+<td class="text-align:left"><p>The AtomVM-defined partition table.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>NVS</p></td>
+<td class="text-align:left"><p>0x9000</p></td>
+<td class="text-align:left"><p>24kB</p></td>
+<td class="text-align:left"><p>Space for non-volatile storage.</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>PHY_INIT</p></td>
+<td class="text-align:left"><p>0xF000</p></td>
+<td class="text-align:left"><p>4kB</p></td>
+<td class="text-align:left"><p>Initialization data for physical layer radio signal data.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>AtomVM virtual machine</p></td>
+<td class="text-align:left"><p>0x10000</p></td>
+<td class="text-align:left"><p>1.75mB</p></td>
+<td class="text-align:left"><p>The AtomVM virtual machine (compiled from C code).</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>lib.avm</p></td>
+<td class="text-align:left"><p>0x1D0000</p></td>
+<td class="text-align:left"><p>256k</p></td>
+<td class="text-align:left"><p>The AtomVM BEAM library, compiled from Erlang and Elixir files in the AtomVM source tree.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>main.avm</p></td>
+<td class="text-align:left"><p>0x210000</p></td>
+<td class="text-align:left"><p>1mB</p></td>
+<td class="text-align:left"><p>The user application.  This is where users flash their compiled Erlang/Elixir code</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-lib-avm-and-main-avm-partitions">
+<h3>The <code class="docutils literal notranslate"><span class="pre">lib.avm</span></code> and <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partitions<a class="headerlink" href="#the-lib-avm-and-main-avm-partitions" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">lib.avm</span></code> and <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partitions are intended to store Erlang/Elixir libraries (compiled down to BEAM files, and assembled as AVM files).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">lib.avm</span></code> partition is intended for core Erlang/Elixir libraries that are built as part of the AtomVM build.  The release image of AtomVM (see below) includes both the AtomVM virtual machine and the <code class="docutils literal notranslate"><span class="pre">lib.avm</span></code> partition, which includes the BEAM files from the <code class="docutils literal notranslate"><span class="pre">estdlib</span></code> and <code class="docutils literal notranslate"><span class="pre">eavmlib</span></code> libraries.</p>
+<p>In contrast, the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition is intended for user applications.  Currently, the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition starts at address <code class="docutils literal notranslate"><span class="pre">0x210000</span></code>, and it is to that location to which application developers should flash their application AVM files.</p>
+<p>The AtomVM search path for BEAM modules starts in the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition and falls back to <code class="docutils literal notranslate"><span class="pre">lib.avm</span></code>.  Users should not have a need to override any functionality in the <code class="docutils literal notranslate"><span class="pre">lib.avm</span></code> partition, but if necessary, a BEAM module of the same name in the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition will be loaded instead of the version in the <code class="docutils literal notranslate"><span class="pre">lib.avm</span></code> partition.</p>
+<blockquote>
+<div><p>Note.  The location of the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition may change over time, depending on the relative sizes of the AtomVM binary and <code class="docutils literal notranslate"><span class="pre">lib.avm</span></code> partitions.</p>
+</div></blockquote>
+</section>
+<section id="building-a-release-image">
+<h3>Building a Release Image<a class="headerlink" href="#building-a-release-image" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;atomvm-source-tree-root&gt;/tools/release/esp32</span></code> directory contains the <code class="docutils literal notranslate"><span class="pre">mkimage.sh</span></code> script that can be used to create a single AtomVM image file, which can be distributed as a release, allowing application developers to develop AtomVM applications without having to build AtomVM from scratch.</p>
+<blockquote>
+<div><p>Note.  Before running the <code class="docutils literal notranslate"><span class="pre">mkimage.sh</span></code> script, you must have a complete build of both the esp32 project, as well as a full build of the core Erlang libraries in the <code class="docutils literal notranslate"><span class="pre">libs</span></code> directory.  The script configuration defaults to assuming that the core Erlang libraries will be written to the <code class="docutils literal notranslate"><span class="pre">build/libs</span></code> directory in the AtomVM source tree.  You should pass the <code class="docutils literal notranslate"><span class="pre">--build_dir</span> <span class="pre">&lt;path&gt;</span></code> option to the <code class="docutils literal notranslate"><span class="pre">mkimage.sh</span></code> script, with <code class="docutils literal notranslate"><span class="pre">&lt;path&gt;</span></code> pointing to your AtomVM build directory, if you  target a different build directory when running CMake.</p>
+</div></blockquote>
+<p>Running this script will generate a single <code class="docutils literal notranslate"><span class="pre">atomvm-&lt;sha&gt;.img</span></code> file in the <code class="docutils literal notranslate"><span class="pre">build</span></code> directory of the esp32 source tree, where <code class="docutils literal notranslate"><span class="pre">&lt;sha&gt;</span></code> is the git hash of the current checkout.  This image contains the ESP32 bootloader, AtomVM executable, and the <code class="docutils literal notranslate"><span class="pre">eavmlib</span></code> and <code class="docutils literal notranslate"><span class="pre">estdlib</span></code> Erlang libraries in one file, which can then be flashed to address <code class="docutils literal notranslate"><span class="pre">0x1000</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mkimage.sh</span></code> script is run as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ ./tools/release/esp32/mkimage.sh
+Writing output to /home/frege/AtomVM/src/platforms/esp32/build/atomvm-602e6bc.img
+=============================================
+Wrote bootloader at offset 0x1000 (4096)
+Wrote partition-table at offset 0x8000 (32768)
+Wrote AtomvVM Virtual Machine at offset 0x10000 (65536)
+Wrote AtomvVM Core BEAM Library at offset 0x110000 (1114112)
+</pre></div>
+</div>
+<p>Users can then use the <code class="docutils literal notranslate"><span class="pre">esptool.py</span></code> directly to flash the entire image to the ESP32 device, and then flash their applications to the <code class="docutils literal notranslate"><span class="pre">main.app</span></code> partition at address <code class="docutils literal notranslate"><span class="pre">0x210000</span></code>,</p>
+<p>But first, it is a good idea to erase the flash, e.g.,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ esptool.py --chip esp32 --port /dev/ttyUSB0 erase_flash
+esptool.py v2.1
+Connecting........_
+Chip is ESP32D0WDQ6 (revision 1)
+Uploading stub...
+Running stub...
+Stub running...
+Erasing flash (this may take a while)...
+Chip erase completed successfully in 5.4s
+Hard resetting...
+</pre></div>
+</div>
+<p>You can then use the <code class="docutils literal notranslate"><span class="pre">./tools/dev/flash.sh</span></code> tool (or <code class="docutils literal notranslate"><span class="pre">esptool.py</span></code> directly, if you prefer), to flash the entire image to your device:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ FLASH_OFFSET=0x1000 ./tools/dev/flash.sh ./src/platforms/esp32/build/atomvm-602e6bc.img
+esptool.py v2.8-dev
+Serial port /dev/tty.SLAB_USBtoUART
+Connecting........_
+Chip is ESP32D0WDQ6 (revision 1)
+Features: WiFi, BT, Dual Core, Coding Scheme None
+Crystal is 40MHz
+MAC: 30:ae:a4:1a:37:d8
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 921600
+Changed.
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Wrote 1163264 bytes at 0x00001000 in 15.4 seconds (603.1 kbit/s)...
+Hash of data verified.
+Leaving...
+Hard resetting via RTS pin...
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note. Flashing the full AtomVM image will delete all entries in non-volatile storage.  Only flash the full image if you have a way to recover and re-write any such data.</p>
+</div></blockquote>
+<p>Finally, you can then flash your own application, e.g.,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ ./tools/dev/flash.sh examples/erlang/esp32/blink.avm
+%%
+%% Flashing examples/erlang/esp32/blink.avm (size=4k)
+%%
+esptool.py v2.8-dev
+Serial port /dev/tty.SLAB_USBtoUART
+Connecting........_
+Chip is ESP32D0WDQ6 (revision 1)
+Features: WiFi, BT, Dual Core, Coding Scheme None
+Crystal is 40MHz
+MAC: 30:ae:a4:1a:37:d8
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 921600
+Changed.
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Wrote 16384 bytes at 0x00210000 in 0.2 seconds (611.7 kbit/s)...
+Hash of data verified.
+Leaving...
+Hard resetting via RTS pin...
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note.  Since the Erlang core libraries are flashed to the ESP32 device, it is not necessary to include core libraries in your application AVM files.  Users may be interested in using downstream development tools, such as the Elixir <a href="https://github.com/atomvm/ExAtomVM">ExAtomVM Mix task</a>, or the Erlang <a href="https://github.com/fadushin/atomvm_rebar3_plugin">AtomVM Rebar3 Plugin</a> for doing day-to-day development of applications for the AtomVM platform.</p>
+</div></blockquote>
+</section>
+<section id="adding-custom-nifs-ports-and-third-party-components">
+<h3>Adding custom Nifs, Ports, and third-party components<a class="headerlink" href="#adding-custom-nifs-ports-and-third-party-components" title="Permalink to this headline"></a></h3>
+<p>While AtomVM is a functional implementation of the Erlang virtual machine, it is nonetheless designed to allow developers to extend the VM to support additional integrations with peripherals and protocols that are not otherwise supported in the core virtual machine.</p>
+<p>AtomVM supports extensions to the VM via the implementation of custom native functions (Nifs) and processes (AtomVM Ports), allowing users to extend the VM for additional functionality, and you can add your own custom Nifs, ports, and additional third-party components to your ESP32 build by adding them to the <code class="docutils literal notranslate"><span class="pre">components</span></code> directory, and the ESP32 build will compile them automatically.</p>
+<blockquote>
+<div><p>For more information about building components for the IDF SDK, consult the <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/v3.3.2/api-guides/build-system.html">IDF SDK Build System</a> documentation.</p>
+</div></blockquote>
+<p>The instructions for adding custom Nifs and ports differ in slight detail, but are otherwise quite similar.  In general, they involve:</p>
+<ol class="simple">
+<li><p>Adding the custom Nif or Port to the <code class="docutils literal notranslate"><span class="pre">comonents</span></code> directory of the AtomVM source tree;</p></li>
+<li><p>Adding the component to the corresponding <code class="docutils literal notranslate"><span class="pre">main/component_nifs.txt</span></code> or <code class="docutils literal notranslate"><span class="pre">main/component_ports.txt</span></code> files;</p></li>
+<li><p>Building the AtomVM binary.</p></li>
+</ol>
+<blockquote>
+<div><p>Note.  The Espressif SDK and tool chains do not, unfortunately, support dynamic loading of shared libraries and dynamic symbol lookup.  In fact, dynamic libraries are not supported at all on the ESP32 using the IDF SDK; instead, any code that is needed at runtime must be statically linked into the application.</p>
+</div></blockquote>
+<p>Custom Nifs and Ports are available through third parties.  Follow the instructions provided with these custom components for detailed instruction for how to add the Nif or Port to your build.</p>
+<p>More detailed instructions follow, below, for implementing your own Nif or Port.</p>
+<section id="adding-a-custom-atomvm-nif">
+<h4>Adding a custom AtomVM Nif<a class="headerlink" href="#adding-a-custom-atomvm-nif" title="Permalink to this headline"></a></h4>
+<p>To add support for a new peripheral or protocol using custom AtomVM Nif, you need to do the following:</p>
+<ul class="simple">
+<li><p>Choose a name for your nif (e.g, “my_nif”).  Call this <code class="docutils literal notranslate"><span class="pre">&lt;moniker&gt;</span></code>.</p></li>
+<li><p>In your source code, implement the following two functions:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">&lt;moniker&gt;_nif_init(GlobalContext</span> <span class="pre">*global);</span></code></p>
+<ul>
+<li><p>This function will be called once, when the application is started.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">Nif</span> <span class="pre">*&lt;moniker&gt;_nif_get_nif(const</span> <span class="pre">char</span> <span class="pre">*nifname);</span></code></p>
+<ul>
+<li><p>This function will be called to locate the Nif during a function call.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void my_nif_init(GlobalContext *global);
+const struct Nif *my_nif_get_nif(const char *nifname);
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note. Instructions for implementing Nifs is outside of the scope of this document.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Add your <code class="docutils literal notranslate"><span class="pre">&lt;moniker&gt;</span></code> to the <code class="docutils literal notranslate"><span class="pre">main/component_nifs.txt</span></code> file in the <code class="docutils literal notranslate"><span class="pre">src/platforms/esp32</span></code> directory.</p></li>
+</ul>
+<blockquote>
+<div><p>Note.  The <code class="docutils literal notranslate"><span class="pre">main/component_nifs.txt</span></code> file will not exist until after the first clean build.</p>
+</div></blockquote>
+</section>
+<section id="adding-a-custom-atomvm-port">
+<h4>Adding a custom AtomVM Port<a class="headerlink" href="#adding-a-custom-atomvm-port" title="Permalink to this headline"></a></h4>
+<p>To add support for a new peripheral or protocol using an AtomVM port, you need to do the following:</p>
+<ul class="simple">
+<li><p>Choose a name for your port (e.g, “my_port”).  Call this <code class="docutils literal notranslate"><span class="pre">&lt;moniker&gt;</span></code>.</p></li>
+<li><p>In your source code, implement the following two functions:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">&lt;moniker&gt;_init(GlobalContext</span> <span class="pre">*global);</span></code></p>
+<ul>
+<li><p>This function will be called once, when the application is started.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Context</span> <span class="pre">*&lt;moniker&gt;_create_port(GlobalContext</span> <span class="pre">*global,</span> <span class="pre">term</span> <span class="pre">opts);</span></code></p>
+<ul>
+<li><p>This function will be called to locate the Nif during a function call.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>void my_port_init(GlobalContext *global);
+Context *my_port_create_port(GlobalContext *global, term opts);
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note. Instructions for implementing Ports is outside of the scope of this document.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Add your <code class="docutils literal notranslate"><span class="pre">&lt;moniker&gt;</span></code> to the <code class="docutils literal notranslate"><span class="pre">main/component_ports.txt</span></code> file in the <code class="docutils literal notranslate"><span class="pre">src/platforms/esp32</span></code> directory.</p></li>
+</ul>
+<blockquote>
+<div><p>Note.  The <code class="docutils literal notranslate"><span class="pre">main/component_ports.txt</span></code> file will not exist until after the first clean build.</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+<section id="building-for-stm32">
+<h2>Building for STM32<a class="headerlink" href="#building-for-stm32" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>TODO</p>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="network-programming-guide.html" class="btn btn-neutral float-left" title="Network Programming Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="atomvm-internals.html" class="btn btn-neutral float-right" title="AtomVM Internals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2022, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

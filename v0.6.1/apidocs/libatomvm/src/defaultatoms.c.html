@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>defaultatoms.c &mdash; AtomVM 0.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/libatomvm/src/defaultatoms.c.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=3437f9b5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="defaultatoms.h" href="defaultatoms.h.html" />
+    <link rel="prev" title="debug.h" href="debug.h.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html">libAtomVM</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#libatomvm-header-files">libAtomVM Header Files</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="atom.c.html">atom.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom.h.html">atom.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.c.html">atom_table.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.h.html">atom_table.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomshashtable.c.html">atomshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomshashtable.h.html">atomshashtable.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm_version.h.html">atomvm_version.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.c.html">avmpack.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.h.html">avmpack.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.c.html">bif.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.h.html">bif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.c.html">bitstring.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.h.html">bitstring.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.c.html">context.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.h.html">context.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.c.html">debug.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.h.html">debug.h</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">defaultatoms.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="defaultatoms.h.html">defaultatoms.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.c.html">dictionary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.h.html">dictionary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif.h.html">erl_nif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif_priv.h.html">erl_nif_priv.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exportedfunction.h.html">exportedfunction.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.c.html">externalterm.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.h.html">externalterm.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.c.html">globalcontext.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.h.html">globalcontext.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.c.html">iff.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.h.html">iff.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.c.html">inet.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.h.html">inet.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.c.html">interop.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.h.html">interop.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="listeners.h.html">listeners.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.c.html">mailbox.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.h.html">mailbox.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.c.html">memory.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.h.html">memory.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.c.html">module.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.h.html">module.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.c.html">nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.h.html">nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="opcodes.h.html">opcodes.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="opcodesswitch.h.html">opcodesswitch.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.c.html">otp_crypto.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.h.html">otp_crypto.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.c.html">otp_net.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.h.html">otp_net.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.c.html">otp_socket.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.h.html">otp_socket.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.c.html">otp_ssl.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.h.html">otp_ssl.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="overflow_helpers.h.html">overflow_helpers.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="platform_nifs.h.html">platform_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.c.html">port.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.h.html">port.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.c.html">posix_nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.h.html">posix_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.c.html">refc_binary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.h.html">refc_binary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.c.html">resources.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.h.html">resources.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scheduler.c.html">scheduler.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scheduler.h.html">scheduler.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smp.h.html">smp.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.c.html">stacktrace.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.h.html">stacktrace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="synclist.h.html">synclist.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys.h.html">sys.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys_mbedtls.h.html">sys_mbedtls.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tempstack.h.html">tempstack.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.c.html">term.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.h.html">term.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term_typedef.h.html">term_typedef.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.c.html">timer_list.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.h.html">timer_list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.h.html">utils.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.h.html">valueshashtable.h</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">libAtomVM</a></li>
+      <li class="breadcrumb-item active">defaultatoms.c</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="defaultatoms-c">
+<h1>defaultatoms.c<a class="headerlink" href="#defaultatoms-c" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>Include dependency graph for defaultatoms.c:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><img src="../../../_images/graphviz-a644597cb7585a739e7e6b40ef933f45166dcbff.png" alt="digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;8&quot; [label=&quot;stdbool.h&quot; tooltip=&quot;stdbool.h&quot;]
+    &quot;5&quot; [label=&quot;atom.h&quot; tooltip=&quot;atom.h&quot;]
+    &quot;11&quot; [label=&quot;assert.h&quot; tooltip=&quot;assert.h&quot;]
+    &quot;1&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/defaultatoms.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/defaultatoms.c&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;19&quot; [label=&quot;synclist.h&quot; tooltip=&quot;synclist.h&quot;]
+    &quot;2&quot; [label=&quot;defaultatoms.h&quot; tooltip=&quot;defaultatoms.h&quot;]
+    &quot;4&quot; [label=&quot;stdint.h&quot; tooltip=&quot;stdint.h&quot;]
+    &quot;6&quot; [label=&quot;stdlib.h&quot; tooltip=&quot;stdlib.h&quot;]
+    &quot;16&quot; [label=&quot;utils.h&quot; tooltip=&quot;utils.h&quot;]
+    &quot;7&quot; [label=&quot;atom_table.h&quot; tooltip=&quot;atom_table.h&quot;]
+    &quot;10&quot; [label=&quot;term_typedef.h&quot; tooltip=&quot;term_typedef.h&quot;]
+    &quot;17&quot; [label=&quot;stddef.h&quot; tooltip=&quot;stddef.h&quot;]
+    &quot;12&quot; [label=&quot;limits.h&quot; tooltip=&quot;limits.h&quot;]
+    &quot;24&quot; [label=&quot;refc_binary.h&quot; tooltip=&quot;refc_binary.h&quot;]
+    &quot;22&quot; [label=&quot;string.h&quot; tooltip=&quot;string.h&quot;]
+    &quot;15&quot; [label=&quot;mailbox.h&quot; tooltip=&quot;mailbox.h&quot;]
+    &quot;21&quot; [label=&quot;term.h&quot; tooltip=&quot;term.h&quot;]
+    &quot;9&quot; [label=&quot;erl_nif.h&quot; tooltip=&quot;erl_nif.h&quot;]
+    &quot;25&quot; [label=&quot;resources.h&quot; tooltip=&quot;resources.h&quot;]
+    &quot;18&quot; [label=&quot;smp.h&quot; tooltip=&quot;smp.h&quot;]
+    &quot;3&quot; [label=&quot;globalcontext.h&quot; tooltip=&quot;globalcontext.h&quot;]
+    &quot;23&quot; [label=&quot;memory.h&quot; tooltip=&quot;memory.h&quot;]
+    &quot;20&quot; [label=&quot;stdio.h&quot; tooltip=&quot;stdio.h&quot;]
+    &quot;26&quot; [label=&quot;timer_list.h&quot; tooltip=&quot;timer_list.h&quot;]
+    &quot;14&quot; [label=&quot;list.h&quot; tooltip=&quot;list.h&quot;]
+    &quot;13&quot; [label=&quot;inttypes.h&quot; tooltip=&quot;inttypes.h&quot;]
+    &quot;5&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;5&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;20&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;20&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;18&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;16&quot; -&gt; &quot;17&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;7&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;7&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;10&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;10&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;10&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;10&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;24&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;24&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;24&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;24&quot; -&gt; &quot;25&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;15&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;15&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;15&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;15&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;21&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;21&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;21&quot; -&gt; &quot;20&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;21&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;21&quot; -&gt; &quot;22&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;21&quot; -&gt; &quot;23&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;21&quot; -&gt; &quot;24&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;21&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;21&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;25&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;25&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;25&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;25&quot; -&gt; &quot;23&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;18&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;19&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;21&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;26&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;23&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;23&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;23&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;23&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;23&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;include&quot;]
+}" class="graphviz" /></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.defaultatoms_init">
+<span class="target" id="libatomvmdefaultatoms_8c_1a701cecf305c6ac32fd140cbce0cdd830"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">defaultatoms_init</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="globalcontext.h.html#c.libAtomVM.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.defaultatoms_init" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-variables">Variables</p>
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a440ec5eac8c7a084b685f5117478570d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">false_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x05&quot;</span> <span class="pre">&quot;false&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a3087a1339f4efff3fd3791558cbd27f5"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">true_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x04&quot;</span> <span class="pre">&quot;true&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ac5497966133c2055ef87c961f5534018"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">ok_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x2&quot;</span> <span class="pre">&quot;ok&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a1245d64d3730eee518aadb0397af8c2f"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">error_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;error&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a8c886a595e6aa884ebccdaf2b7934d3b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">undefined_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x9&quot;</span> <span class="pre">&quot;undefined&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a0125ffed8c0bccea56157b02ad9885ca"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">badarg_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;badarg&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ae8eda8313876b9612d787bfdfdb75a48"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">badarith_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x08&quot;</span> <span class="pre">&quot;badarith&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a205873700a54f4f1c29fce676c6ec14c"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">badarity_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x08&quot;</span> <span class="pre">&quot;badarity&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a64eb6e73bdf0784e69207803db257e2e"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">badfun_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x06&quot;</span> <span class="pre">&quot;badfun&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ab445908f67ddbe860dbc0185e0229a64"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">system_limit_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xC&quot;</span> <span class="pre">&quot;system_limit&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a37dd8730617205217323fdfdd2fd58a6"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">function_clause_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x0F&quot;</span> <span class="pre">&quot;function_clause&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1abdfe72fe2b8d3fa321f59acde940412a"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">try_clause_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xA&quot;</span> <span class="pre">&quot;try_clause&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a6f109e398584f96d7b29f1a82684634e"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">out_of_memory_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xD&quot;</span> <span class="pre">&quot;out_of_memory&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a8bb02802cb7bc5f138c0df1035bb42b0"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">overflow_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x8&quot;</span> <span class="pre">&quot;overflow&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a0640ef34a028cbb447eca5168e1f8697"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">flush_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;flush&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ade29caa28316ff9774bcf282125edc1d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">heap_size_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x9&quot;</span> <span class="pre">&quot;heap_size&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a0159792b997e72283e3175df70062d66"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">latin1_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;latin1&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a46a67658051b91949293ba1720e70a62"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">max_heap_size_atom</span>&#160;&#160; <span class="pre">=&quot;\xD&quot;</span> <span class="pre">&quot;max_heap_size&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a7a7f041aa5b78af44d715128b69df225"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">memory_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;memory&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a5b84945b69212d67876042e784e0890b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">message_queue_len_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x11&quot;</span> <span class="pre">&quot;message_queue_len&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a8294a8a34f5673262003874f22a5e4f5"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">puts_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;puts&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a9b17a9ff6ebb850bbee97c812d82bbd1"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">stack_size_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xA&quot;</span> <span class="pre">&quot;stack_size&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a0e6715156f8cc52d98f202026786a634"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">min_heap_size_atom</span>&#160;&#160; <span class="pre">=&quot;\xD&quot;</span> <span class="pre">&quot;min_heap_size&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aac8f207f240c474a6d6bf9bdbf27434b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">process_count_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xD&quot;</span> <span class="pre">&quot;process_count&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a1f85e84ae343ea551219261c1b1ad5cf"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">port_count_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xA&quot;</span> <span class="pre">&quot;port_count&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ad4bc97ad5e2e9ad6742adcb4303a7c93"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">atom_count_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xA&quot;</span> <span class="pre">&quot;atom_count&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a5383089c927c41ea488586b667ceede2"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">system_architecture_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x13&quot;</span> <span class="pre">&quot;system_architecture&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ad9c2705061e27416c236dbed0d8ed70d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">wordsize_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x8&quot;</span> <span class="pre">&quot;wordsize&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a679c1358d469206ae47ba09c5bf09e4d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">decimals_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x8&quot;</span> <span class="pre">&quot;decimals&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aba4e354b0718078b175c788cd82184f7"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">scientific_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xA&quot;</span> <span class="pre">&quot;scientific&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a0991db73fc5ce622fe20fc2144f2176b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">compact_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;compact&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ade5f40aa21a5626c514d09eec41c2a84"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">badmatch_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x8&quot;</span> <span class="pre">&quot;badmatch&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a79283dfd97007678640625c4480c08eb"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">case_clause_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xB&quot;</span> <span class="pre">&quot;case_clause&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ad2eb20a14f174b64ce53b9b1b2ab1d4c"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">if_clause_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x9&quot;</span> <span class="pre">&quot;if_clause&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a8537e2fbf68ab10a243090b764c15bab"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">throw_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;throw&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a2dfbb7e5267289bb1e4641f7a8b0b8cb"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">low_entropy_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xB&quot;</span> <span class="pre">&quot;low_entropy&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ad1dbc7103bb69c80fe07c8b08fc62037"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">unsupported_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xB&quot;</span> <span class="pre">&quot;unsupported&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a872c46ec51c71760e7f106f932aea687"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">used_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;used&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a767044fe0e5e17a373338f29ac6c0f72"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">all_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x3&quot;</span> <span class="pre">&quot;all&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ae7686d9f21f4bb848401176ade16c70b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">start_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;start&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a5e28fab1280129021cebc8208e2de85e"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">undef_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;undef&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a76a10fa2505b335898d6ce531241f929"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">vm_abort_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x8&quot;</span> <span class="pre">&quot;vm_abort&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a074271d79041373323429b80137cdb46"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">link_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;link&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a6a180108d52039fc96ecbf422699ee92"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">monitor_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;monitor&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aac35338215958cbb0cd78e50fdbe641e"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">normal_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;normal&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aa6855ff35635100eac2bd04580b02e7b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">down_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;DOWN&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a90b5322d9c7a34f79949f48f79215ddb"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">process_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;process&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a9483344792c28feb882896562d0785ee"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">nocatch_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;nocatch&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ad819dcda33b1b470b4315a26050f4de6"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">refc_binary_info_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x10&quot;</span> <span class="pre">&quot;refc_binary_info&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a6471e555221789a1a2e586983dd3cef7"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">noproc_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;noproc&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a0502d626faa126a1a84bdf98548bc865"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">trap_exit_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x9&quot;</span> <span class="pre">&quot;trap_exit&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a8057226025fa8f164c1cac01139c71ea"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">exit_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;EXIT&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a2ab5839a76783954b01e745e4612c1e5"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">badmap_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;badmap&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a3d212763c0a682dcc98565e98c6f9921"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">badkey_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;badkey&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a8385ec5acf5e64c1b7f66cf29051366d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">none_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;none&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a626888c5294b286217c9f51a9649c6f4"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">io_request_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xA&quot;</span> <span class="pre">&quot;io_request&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a05e48f6615a28841e041b813a6388712"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">io_reply_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x8&quot;</span> <span class="pre">&quot;io_reply&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aac643adb8ea28c15f71222ca8c6e5931"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">put_chars_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x9&quot;</span> <span class="pre">&quot;put_chars&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a5304ceeab20e43f338ac002eb80e806f"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">lowercase_exit_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;exit&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a428522eec73bbc4a0297f30eb3a7870d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">atomvm_version_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xE&quot;</span> <span class="pre">&quot;atomvm_version&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ac557351b2e84c8e0c9c879f5552560ae"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">second_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;second&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a90d0bc9a93a659013dc524377f220192"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">millisecond_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xB&quot;</span> <span class="pre">&quot;millisecond&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a989b5f6a2f8894f6838da0b874eadb99"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">microsecond_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xB&quot;</span> <span class="pre">&quot;microsecond&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a90fecda025c66e0373eeec3b2a6f142b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">infinity_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x8&quot;</span> <span class="pre">&quot;infinity&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aee5f3f5ad5a4c6de853b1699ffdc7e00"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">timeout_value_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xD&quot;</span> <span class="pre">&quot;timeout_value&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a06947514ebc9ec60570d3377e737a2dd"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">schedulers_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xA&quot;</span> <span class="pre">&quot;schedulers&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aeecc7e649217f00d44fa09ed0424007d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">schedulers_online_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x11&quot;</span> <span class="pre">&quot;schedulers_online&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a0fe6cf25eb12b23ea9277881e5fe96bf"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">append_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;append&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1adea6d82924d2d0d1ce417029275f3c0b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">private_append_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xE&quot;</span> <span class="pre">&quot;private_append&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a58ad525e7f040d8378188f86eeadd000"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">binary_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;binary&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aade4c1a918c135a722cdecd14cb0cd54"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">integer_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;integer&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ad34a47877b1b4851b0ec29daa418338b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">little_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;little&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a0876ba7b680dca22e7b72080e743cdcc"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">native_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;native&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a98fc907606918c8e3069ff2c1fdf533d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">string_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;string&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a629a2ce2d39c4fa48b225969621830ba"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">utf8_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;utf8&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aabb0d28a54bad763c131244dc1482752"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">utf16_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;utf16&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a3714079bbd96bf7a6f6c2f1fa1a7ba09"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">utf32_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;utf32&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a6383262892da878f67de0820727b0fb3"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">badrecord_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x9&quot;</span> <span class="pre">&quot;badrecord&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a50d960cdb6e9836fbd95caaeef28c9fc"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">copy_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;copy&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a3fdd98dadc90da2fdf56bddda56da3fa"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">reuse_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;reuse&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a4b24bd52ed2e0bd8da574ee4d614aae0"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">ensure_at_least_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xF&quot;</span> <span class="pre">&quot;ensure_at_least&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1adfee108ad34d31ea13d905c955247a28"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">ensure_exactly_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xE&quot;</span> <span class="pre">&quot;ensure_exactly&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1adf387ab14c9fffa99fb9eaadf11810f1"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">skip_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;skip&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ace7294c9ab6be0eb8a6efc8bdc9d797f"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">get_tail_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x8&quot;</span> <span class="pre">&quot;get_tail&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a122f3bdc63e6b5d7a9415784fe3326f6"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">equal_colon_equal_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x3&quot;</span> <span class="pre">&quot;=:=&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a84f9b128dbb9232e2563ab04b6a7a55a"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">signed_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;signed&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a472b2d225b7af8d088c3787a8ad0a7a1"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">machine_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;machine&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1af9b4cad2c4d2a93d84c67f97ad3d980a"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">avm_floatsize_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xD&quot;</span> <span class="pre">&quot;avm_floatsize&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a00ba079098c28eb4c8874492b3d9f55e"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">close_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;close&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ae44f53cf5a83ca76cfd81ce6da00527b"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">closed_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;closed&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a59ca8343a7ca8dd4cb4a900463605edd"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">port_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;port&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a55a65e3229106c1232bc96069291666c"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">info_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;info&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a58a646e1b03491f523704efe56b17a0d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">module_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x06&quot;</span> <span class="pre">&quot;module&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a6f5049dfbbfc8224d0c3955527c3d9f5"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">select_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;select&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ac4b27f644638862d4d78c99ba507a7c8"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">ready_input_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xB&quot;</span> <span class="pre">&quot;ready_input&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aaed4ce0291f68f751ddfb65eb9485a60"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">ready_output_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xC&quot;</span> <span class="pre">&quot;ready_output&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a37977538960345d2243124808e3a870d"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">attributes_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xA&quot;</span> <span class="pre">&quot;attributes&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1ad360646918452a85e339d55d9f97ad2e"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">compile_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;compile&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a2dfe57fbfdc39c66669e50fa5280443c"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">exports_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;exports&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a5deb3528372c63faf9f87de68620ee89"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">incomplete_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xA&quot;</span> <span class="pre">&quot;incomplete&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a74cb2fca6c28eb0aea43fb5ed6046bce"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">kill_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x4&quot;</span> <span class="pre">&quot;kill&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aa4f7d2eb71d74e6613ce11f13c7b34cc"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">killed_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x6&quot;</span> <span class="pre">&quot;killed&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a5b25aa58c9430d00b10a5dba93adb49f"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">links_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;links&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a29a6b6ba095520a718f92fdcc8250266"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">total_heap_size_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xF&quot;</span> <span class="pre">&quot;total_heap_size&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1aac3063182c3533f471224e60f00d1163"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">atomvm_heap_growth_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x12&quot;</span> <span class="pre">&quot;atomvm_heap_growth&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a2478ce2d638436b3927b48b4a2bc87d8"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">bounded_free_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\xC&quot;</span> <span class="pre">&quot;bounded_free&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a4e4028df572ea71929a0c30015796fbd"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">minimum_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;minimum&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1adb92d0d68d7c2de072f842160b78d44e"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">fibonacci_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x9&quot;</span> <span class="pre">&quot;fibonacci&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a0e77f8cd9eb77737b528020f714f2ca7"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">call_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;$call&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a73390d7b2538854d824738383e3621c8"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">cast_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x5&quot;</span> <span class="pre">&quot;$cast&quot;</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmdefaultatoms_8c_1a7b52fbdc7238c7778a528f0d00ec1ed2"></span><span class="sig-name descname"><span class="pre">static</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*const</span> <span class="pre">unicode_atom</span>&#160;&#160; <span class="pre">=</span> <span class="pre">&quot;\x7&quot;</span> <span class="pre">&quot;unicode&quot;</span></span></dt>
+<dd></dd></dl>
+
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="debug.h.html" class="btn btn-neutral float-left" title="debug.h" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="defaultatoms.h.html" class="btn btn-neutral float-right" title="defaultatoms.h" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">AtomVM Docs</span>
+      v: v0.6.1
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt>Versions</dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="/v0.6.1/pdf/AtomVM-v0.6.1.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.1/epub/AtomVM-v0.6.1.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>defaultatoms.h &mdash; AtomVM 0.6.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/libatomvm/src/defaultatoms.h.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=99678979"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="dictionary.c" href="dictionary.c.html" />
+    <link rel="prev" title="defaultatoms.c" href="defaultatoms.c.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html">libAtomVM</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#libatomvm-header-files">libAtomVM Header Files</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="atom.c.html">atom.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom.h.html">atom.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.c.html">atom_table.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.h.html">atom_table.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomshashtable.c.html">atomshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomshashtable.h.html">atomshashtable.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm_version.h.html">atomvm_version.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.c.html">avmpack.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.h.html">avmpack.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.c.html">bif.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.h.html">bif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.c.html">bitstring.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.h.html">bitstring.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.c.html">context.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.h.html">context.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.c.html">debug.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.h.html">debug.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="defaultatoms.c.html">defaultatoms.c</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">defaultatoms.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.c.html">dictionary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.h.html">dictionary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif.h.html">erl_nif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif_priv.h.html">erl_nif_priv.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exportedfunction.h.html">exportedfunction.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.c.html">externalterm.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.h.html">externalterm.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.c.html">globalcontext.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.h.html">globalcontext.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.c.html">iff.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.h.html">iff.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.c.html">inet.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.h.html">inet.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.c.html">interop.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.h.html">interop.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="listeners.h.html">listeners.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.c.html">mailbox.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.h.html">mailbox.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.c.html">memory.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.h.html">memory.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.c.html">module.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.h.html">module.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.c.html">nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.h.html">nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="opcodes.h.html">opcodes.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="opcodesswitch.h.html">opcodesswitch.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.c.html">otp_crypto.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.h.html">otp_crypto.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.c.html">otp_net.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.h.html">otp_net.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.c.html">otp_socket.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.h.html">otp_socket.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.c.html">otp_ssl.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.h.html">otp_ssl.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="overflow_helpers.h.html">overflow_helpers.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="platform_nifs.h.html">platform_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.c.html">port.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.h.html">port.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.c.html">posix_nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.h.html">posix_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.c.html">refc_binary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.h.html">refc_binary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.c.html">resources.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.h.html">resources.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scheduler.c.html">scheduler.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scheduler.h.html">scheduler.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smp.h.html">smp.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.c.html">stacktrace.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.h.html">stacktrace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="synclist.h.html">synclist.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys.h.html">sys.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys_mbedtls.h.html">sys_mbedtls.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tempstack.h.html">tempstack.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.c.html">term.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.h.html">term.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term_typedef.h.html">term_typedef.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.c.html">timer_list.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.h.html">timer_list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.h.html">utils.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.h.html">valueshashtable.h</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">libAtomVM</a></li>
+      <li class="breadcrumb-item active">defaultatoms.h</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="defaultatoms-h">
+<h1>defaultatoms.h<a class="headerlink" href="#defaultatoms-h" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>Include dependency graph for defaultatoms.h:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><img src="../../../_images/graphviz-5dcf4ce027cf1d99b802e9ed33ce1a2b7d7d4205.png" alt="digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;7&quot; [label=&quot;stdbool.h&quot; tooltip=&quot;stdbool.h&quot;]
+    &quot;4&quot; [label=&quot;atom.h&quot; tooltip=&quot;atom.h&quot;]
+    &quot;10&quot; [label=&quot;assert.h&quot; tooltip=&quot;assert.h&quot;]
+    &quot;19&quot; [label=&quot;synclist.h&quot; tooltip=&quot;synclist.h&quot;]
+    &quot;1&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;3&quot; [label=&quot;stdint.h&quot; tooltip=&quot;stdint.h&quot;]
+    &quot;5&quot; [label=&quot;stdlib.h&quot; tooltip=&quot;stdlib.h&quot;]
+    &quot;15&quot; [label=&quot;utils.h&quot; tooltip=&quot;utils.h&quot;]
+    &quot;6&quot; [label=&quot;atom_table.h&quot; tooltip=&quot;atom_table.h&quot;]
+    &quot;9&quot; [label=&quot;term_typedef.h&quot; tooltip=&quot;term_typedef.h&quot;]
+    &quot;16&quot; [label=&quot;stddef.h&quot; tooltip=&quot;stddef.h&quot;]
+    &quot;11&quot; [label=&quot;limits.h&quot; tooltip=&quot;limits.h&quot;]
+    &quot;23&quot; [label=&quot;refc_binary.h&quot; tooltip=&quot;refc_binary.h&quot;]
+    &quot;21&quot; [label=&quot;string.h&quot; tooltip=&quot;string.h&quot;]
+    &quot;14&quot; [label=&quot;mailbox.h&quot; tooltip=&quot;mailbox.h&quot;]
+    &quot;20&quot; [label=&quot;term.h&quot; tooltip=&quot;term.h&quot;]
+    &quot;8&quot; [label=&quot;erl_nif.h&quot; tooltip=&quot;erl_nif.h&quot;]
+    &quot;24&quot; [label=&quot;resources.h&quot; tooltip=&quot;resources.h&quot;]
+    &quot;18&quot; [label=&quot;smp.h&quot; tooltip=&quot;smp.h&quot;]
+    &quot;2&quot; [label=&quot;globalcontext.h&quot; tooltip=&quot;globalcontext.h&quot;]
+    &quot;22&quot; [label=&quot;memory.h&quot; tooltip=&quot;memory.h&quot;]
+    &quot;17&quot; [label=&quot;stdio.h&quot; tooltip=&quot;stdio.h&quot;]
+    &quot;25&quot; [label=&quot;timer_list.h&quot; tooltip=&quot;timer_list.h&quot;]
+    &quot;13&quot; [label=&quot;list.h&quot; tooltip=&quot;list.h&quot;]
+    &quot;12&quot; [label=&quot;inttypes.h&quot; tooltip=&quot;inttypes.h&quot;]
+    &quot;4&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;4&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;17&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;19&quot; -&gt; &quot;18&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;15&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;15&quot; -&gt; &quot;17&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;15&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;6&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;6&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;23&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;23&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;23&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;23&quot; -&gt; &quot;24&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;17&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;21&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;22&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;23&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;20&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;8&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;24&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;24&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;24&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;24&quot; -&gt; &quot;22&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;18&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;19&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;20&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;25&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;25&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;25&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;25&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;include&quot;]
+}" class="graphviz" /></div>
+</div>
+</figure>
+<p>This graph shows which files directly or indirectly include defaultatoms.h:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><img src="../../../_images/graphviz-3cbdf270d3fa48bcb7a3668ca7ff57b90dfc89d2.png" alt="digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;2&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/bif.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/bif.c&quot;]
+    &quot;4&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/dictionary.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/dictionary.c&quot;]
+    &quot;15&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/posix_nifs.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/posix_nifs.c&quot;]
+    &quot;3&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/defaultatoms.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/defaultatoms.c&quot;]
+    &quot;1&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;14&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/inet.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/inet.c&quot;]
+    &quot;12&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/port.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/port.c&quot;]
+    &quot;13&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/port.h&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/port.h&quot;]
+    &quot;17&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot;]
+    &quot;6&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/interop.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/interop.c&quot;]
+    &quot;11&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/otp_ssl.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/otp_ssl.c&quot;]
+    &quot;16&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/resources.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/resources.c&quot;]
+    &quot;8&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/otp_crypto.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/otp_crypto.c&quot;]
+    &quot;9&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/otp_net.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/otp_net.c&quot;]
+    &quot;7&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
+    &quot;5&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot;]
+    &quot;10&quot; [label=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot; tooltip=&quot;/home/runner/work/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;13&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;13&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;13&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;13&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;13&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;13&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+}" class="graphviz" /></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.FALSE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a24d4812246437e4e8e7e288bc5406d62"></span><span class="sig-name descname"><span class="n"><span class="pre">FALSE_ATOM_INDEX</span></span></span> <span class="pre">0</span><a class="headerlink" href="#c.libAtomVM.FALSE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TRUE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a22dd45cd1924c653170ad03bafb2809b"></span><span class="sig-name descname"><span class="n"><span class="pre">TRUE_ATOM_INDEX</span></span></span> <span class="pre">1</span><a class="headerlink" href="#c.libAtomVM.TRUE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OK_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ade535ec5c1822d2eb345e34f60eacebe"></span><span class="sig-name descname"><span class="n"><span class="pre">OK_ATOM_INDEX</span></span></span> <span class="pre">2</span><a class="headerlink" href="#c.libAtomVM.OK_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ERROR_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a725acc25af2b3d8291b3be7c19c284c0"></span><span class="sig-name descname"><span class="n"><span class="pre">ERROR_ATOM_INDEX</span></span></span> <span class="pre">3</span><a class="headerlink" href="#c.libAtomVM.ERROR_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UNDEFINED_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a20eedcc893dbb82b8f1130e550de5db2"></span><span class="sig-name descname"><span class="n"><span class="pre">UNDEFINED_ATOM_INDEX</span></span></span> <span class="pre">4</span><a class="headerlink" href="#c.libAtomVM.UNDEFINED_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADARG_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a72ceec71e6aea672bf2c7b7d6a102841"></span><span class="sig-name descname"><span class="n"><span class="pre">BADARG_ATOM_INDEX</span></span></span> <span class="pre">5</span><a class="headerlink" href="#c.libAtomVM.BADARG_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADARITH_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a751734244df944a31dea0972af8d5813"></span><span class="sig-name descname"><span class="n"><span class="pre">BADARITH_ATOM_INDEX</span></span></span> <span class="pre">6</span><a class="headerlink" href="#c.libAtomVM.BADARITH_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADARITY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a2ed874661787c45b36606a1ac7bdf4f9"></span><span class="sig-name descname"><span class="n"><span class="pre">BADARITY_ATOM_INDEX</span></span></span> <span class="pre">7</span><a class="headerlink" href="#c.libAtomVM.BADARITY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADFUN_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a74876df3eb429fbf7da7bd133116c8ce"></span><span class="sig-name descname"><span class="n"><span class="pre">BADFUN_ATOM_INDEX</span></span></span> <span class="pre">8</span><a class="headerlink" href="#c.libAtomVM.BADFUN_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.FUNCTION_CLAUSE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1afecfade4992370e8b13fa4160bfbd084"></span><span class="sig-name descname"><span class="n"><span class="pre">FUNCTION_CLAUSE_ATOM_INDEX</span></span></span> <span class="pre">9</span><a class="headerlink" href="#c.libAtomVM.FUNCTION_CLAUSE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TRY_CLAUSE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad32d5d56c819f323432614fb19ff9907"></span><span class="sig-name descname"><span class="n"><span class="pre">TRY_CLAUSE_ATOM_INDEX</span></span></span> <span class="pre">10</span><a class="headerlink" href="#c.libAtomVM.TRY_CLAUSE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OUT_OF_MEMORY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab31bc0cb07d6eeaa5bcc8bd6dd44e1aa"></span><span class="sig-name descname"><span class="n"><span class="pre">OUT_OF_MEMORY_ATOM_INDEX</span></span></span> <span class="pre">11</span><a class="headerlink" href="#c.libAtomVM.OUT_OF_MEMORY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OVERFLOW_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae1e9b845a2a8786618c1abbc93f59606"></span><span class="sig-name descname"><span class="n"><span class="pre">OVERFLOW_ATOM_INDEX</span></span></span> <span class="pre">12</span><a class="headerlink" href="#c.libAtomVM.OVERFLOW_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SYSTEM_LIMIT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a9834e111879ba53cedb17ea779a098cf"></span><span class="sig-name descname"><span class="n"><span class="pre">SYSTEM_LIMIT_ATOM_INDEX</span></span></span> <span class="pre">13</span><a class="headerlink" href="#c.libAtomVM.SYSTEM_LIMIT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.FLUSH_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a02ce4225b7635f6c74c4776ec71f611b"></span><span class="sig-name descname"><span class="n"><span class="pre">FLUSH_ATOM_INDEX</span></span></span> <span class="pre">14</span><a class="headerlink" href="#c.libAtomVM.FLUSH_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.HEAP_SIZE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a3af3eeef5233d96df29859d8e041fffd"></span><span class="sig-name descname"><span class="n"><span class="pre">HEAP_SIZE_ATOM_INDEX</span></span></span> <span class="pre">15</span><a class="headerlink" href="#c.libAtomVM.HEAP_SIZE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LATIN1_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aaf761bb7e4b3f7481db1d9726633a339"></span><span class="sig-name descname"><span class="n"><span class="pre">LATIN1_ATOM_INDEX</span></span></span> <span class="pre">16</span><a class="headerlink" href="#c.libAtomVM.LATIN1_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MAX_HEAP_SIZE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a10320021c62d02238de6b080495aa06c"></span><span class="sig-name descname"><span class="n"><span class="pre">MAX_HEAP_SIZE_ATOM_INDEX</span></span></span> <span class="pre">17</span><a class="headerlink" href="#c.libAtomVM.MAX_HEAP_SIZE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MEMORY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a56387f271cdf443e7b82be30879debc3"></span><span class="sig-name descname"><span class="n"><span class="pre">MEMORY_ATOM_INDEX</span></span></span> <span class="pre">18</span><a class="headerlink" href="#c.libAtomVM.MEMORY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MESSAGE_QUEUE_LEN_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8fd307e8636a7fb27fee84545e7be4a0"></span><span class="sig-name descname"><span class="n"><span class="pre">MESSAGE_QUEUE_LEN_ATOM_INDEX</span></span></span> <span class="pre">19</span><a class="headerlink" href="#c.libAtomVM.MESSAGE_QUEUE_LEN_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PUTS_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a35dd696143acda73f5e264395f728ca5"></span><span class="sig-name descname"><span class="n"><span class="pre">PUTS_ATOM_INDEX</span></span></span> <span class="pre">20</span><a class="headerlink" href="#c.libAtomVM.PUTS_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.STACK_SIZE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a056b51ce334983ae982745abe454ec66"></span><span class="sig-name descname"><span class="n"><span class="pre">STACK_SIZE_ATOM_INDEX</span></span></span> <span class="pre">21</span><a class="headerlink" href="#c.libAtomVM.STACK_SIZE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MIN_HEAP_SIZE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ac44dc573d419d72e84a2455a2e7c2dcb"></span><span class="sig-name descname"><span class="n"><span class="pre">MIN_HEAP_SIZE_ATOM_INDEX</span></span></span> <span class="pre">22</span><a class="headerlink" href="#c.libAtomVM.MIN_HEAP_SIZE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PROCESS_COUNT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a9df1e8ad96bf01f9148af3965e78be3d"></span><span class="sig-name descname"><span class="n"><span class="pre">PROCESS_COUNT_ATOM_INDEX</span></span></span> <span class="pre">23</span><a class="headerlink" href="#c.libAtomVM.PROCESS_COUNT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PORT_COUNT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aaaf3618175e6b0563318536e71873848"></span><span class="sig-name descname"><span class="n"><span class="pre">PORT_COUNT_ATOM_INDEX</span></span></span> <span class="pre">24</span><a class="headerlink" href="#c.libAtomVM.PORT_COUNT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ATOM_COUNT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1acd21a07090f08006328285bd3cdf7370"></span><span class="sig-name descname"><span class="n"><span class="pre">ATOM_COUNT_ATOM_INDEX</span></span></span> <span class="pre">25</span><a class="headerlink" href="#c.libAtomVM.ATOM_COUNT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SYSTEM_ARCHITECTURE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab522ca4fadb995947362ecc6d204000e"></span><span class="sig-name descname"><span class="n"><span class="pre">SYSTEM_ARCHITECTURE_ATOM_INDEX</span></span></span> <span class="pre">26</span><a class="headerlink" href="#c.libAtomVM.SYSTEM_ARCHITECTURE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.WORDSIZE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae1721c24d26a531a9d9ea4c52d85b9ad"></span><span class="sig-name descname"><span class="n"><span class="pre">WORDSIZE_ATOM_INDEX</span></span></span> <span class="pre">27</span><a class="headerlink" href="#c.libAtomVM.WORDSIZE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.DECIMALS_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8b084d28090dd9954ec353b15bf43c76"></span><span class="sig-name descname"><span class="n"><span class="pre">DECIMALS_ATOM_INDEX</span></span></span> <span class="pre">28</span><a class="headerlink" href="#c.libAtomVM.DECIMALS_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SCIENTIFIC_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae905eb874f1f0052cae2425a2e69cda5"></span><span class="sig-name descname"><span class="n"><span class="pre">SCIENTIFIC_ATOM_INDEX</span></span></span> <span class="pre">29</span><a class="headerlink" href="#c.libAtomVM.SCIENTIFIC_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.COMPACT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab5ccbe292885055940137eca0238c7a6"></span><span class="sig-name descname"><span class="n"><span class="pre">COMPACT_ATOM_INDEX</span></span></span> <span class="pre">30</span><a class="headerlink" href="#c.libAtomVM.COMPACT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADMATCH_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a14a32d2afd73352926575fc0c73b48d5"></span><span class="sig-name descname"><span class="n"><span class="pre">BADMATCH_ATOM_INDEX</span></span></span> <span class="pre">31</span><a class="headerlink" href="#c.libAtomVM.BADMATCH_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CASE_CLAUSE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a6010f59ed41d163eab076142c2d5516b"></span><span class="sig-name descname"><span class="n"><span class="pre">CASE_CLAUSE_ATOM_INDEX</span></span></span> <span class="pre">32</span><a class="headerlink" href="#c.libAtomVM.CASE_CLAUSE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.IF_CLAUSE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a20d0f9bcb83eedb4826f32207137aee2"></span><span class="sig-name descname"><span class="n"><span class="pre">IF_CLAUSE_ATOM_INDEX</span></span></span> <span class="pre">33</span><a class="headerlink" href="#c.libAtomVM.IF_CLAUSE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.THROW_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a4fd13ab0a60f0909711e532ba42a38b8"></span><span class="sig-name descname"><span class="n"><span class="pre">THROW_ATOM_INDEX</span></span></span> <span class="pre">34</span><a class="headerlink" href="#c.libAtomVM.THROW_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LOW_ENTROPY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a93d556cdfbd954edc0e85a4a3013923a"></span><span class="sig-name descname"><span class="n"><span class="pre">LOW_ENTROPY_ATOM_INDEX</span></span></span> <span class="pre">35</span><a class="headerlink" href="#c.libAtomVM.LOW_ENTROPY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UNSUPPORTED_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8aca5e6625c276d51237d60b440845ed"></span><span class="sig-name descname"><span class="n"><span class="pre">UNSUPPORTED_ATOM_INDEX</span></span></span> <span class="pre">36</span><a class="headerlink" href="#c.libAtomVM.UNSUPPORTED_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.USED_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a95c4f326cdeff2aefcf6f946fb29e616"></span><span class="sig-name descname"><span class="n"><span class="pre">USED_ATOM_INDEX</span></span></span> <span class="pre">37</span><a class="headerlink" href="#c.libAtomVM.USED_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ALL_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8ea2c573317613623abb750db7b2c4ca"></span><span class="sig-name descname"><span class="n"><span class="pre">ALL_ATOM_INDEX</span></span></span> <span class="pre">38</span><a class="headerlink" href="#c.libAtomVM.ALL_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.START_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a1f22c7693a6c1889a5d2a3f47c9f7ff3"></span><span class="sig-name descname"><span class="n"><span class="pre">START_ATOM_INDEX</span></span></span> <span class="pre">39</span><a class="headerlink" href="#c.libAtomVM.START_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UNDEF_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a32be95587faaadf45c0a30bc185e5256"></span><span class="sig-name descname"><span class="n"><span class="pre">UNDEF_ATOM_INDEX</span></span></span> <span class="pre">40</span><a class="headerlink" href="#c.libAtomVM.UNDEF_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.VM_ABORT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad3f965afb3ba7e0a8d6aed7a96c6e165"></span><span class="sig-name descname"><span class="n"><span class="pre">VM_ABORT_ATOM_INDEX</span></span></span> <span class="pre">41</span><a class="headerlink" href="#c.libAtomVM.VM_ABORT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LINK_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a7b1f6dda1cfb8109b449c1808b6908f1"></span><span class="sig-name descname"><span class="n"><span class="pre">LINK_ATOM_INDEX</span></span></span> <span class="pre">42</span><a class="headerlink" href="#c.libAtomVM.LINK_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MONITOR_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a2ff70dcdea2658b985aca34f03db397d"></span><span class="sig-name descname"><span class="n"><span class="pre">MONITOR_ATOM_INDEX</span></span></span> <span class="pre">43</span><a class="headerlink" href="#c.libAtomVM.MONITOR_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NORMAL_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a503e0285b8387b794a1e414612b2bf6b"></span><span class="sig-name descname"><span class="n"><span class="pre">NORMAL_ATOM_INDEX</span></span></span> <span class="pre">44</span><a class="headerlink" href="#c.libAtomVM.NORMAL_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.DOWN_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aff2710f78ef60e8eb2e040289b8d7e7a"></span><span class="sig-name descname"><span class="n"><span class="pre">DOWN_ATOM_INDEX</span></span></span> <span class="pre">45</span><a class="headerlink" href="#c.libAtomVM.DOWN_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PROCESS_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a644949e312c03b2a88ec1c7b48f499cc"></span><span class="sig-name descname"><span class="n"><span class="pre">PROCESS_ATOM_INDEX</span></span></span> <span class="pre">46</span><a class="headerlink" href="#c.libAtomVM.PROCESS_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NOCATCH_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1acc45e270a589c6473d4da2994e4f8077"></span><span class="sig-name descname"><span class="n"><span class="pre">NOCATCH_ATOM_INDEX</span></span></span> <span class="pre">47</span><a class="headerlink" href="#c.libAtomVM.NOCATCH_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.REFC_BINARY_INFO_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ac145ce4ab3c6edc3d8d4620a7e166e65"></span><span class="sig-name descname"><span class="n"><span class="pre">REFC_BINARY_INFO_ATOM_INDEX</span></span></span> <span class="pre">48</span><a class="headerlink" href="#c.libAtomVM.REFC_BINARY_INFO_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NOPROC_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1af6cf3964f16253070db70b5509a2cf48"></span><span class="sig-name descname"><span class="n"><span class="pre">NOPROC_ATOM_INDEX</span></span></span> <span class="pre">49</span><a class="headerlink" href="#c.libAtomVM.NOPROC_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TRAP_EXIT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1abf2cd5fb078e3511a943a6be2068214b"></span><span class="sig-name descname"><span class="n"><span class="pre">TRAP_EXIT_ATOM_INDEX</span></span></span> <span class="pre">50</span><a class="headerlink" href="#c.libAtomVM.TRAP_EXIT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.EXIT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae72699db52971c151738027c4b2ecf62"></span><span class="sig-name descname"><span class="n"><span class="pre">EXIT_ATOM_INDEX</span></span></span> <span class="pre">51</span><a class="headerlink" href="#c.libAtomVM.EXIT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADMAP_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a6a64392a0877deb6f3b27b31c099c4ca"></span><span class="sig-name descname"><span class="n"><span class="pre">BADMAP_ATOM_INDEX</span></span></span> <span class="pre">52</span><a class="headerlink" href="#c.libAtomVM.BADMAP_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADKEY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a88296911d78fe8a0e8f0d29001b0a3c9"></span><span class="sig-name descname"><span class="n"><span class="pre">BADKEY_ATOM_INDEX</span></span></span> <span class="pre">53</span><a class="headerlink" href="#c.libAtomVM.BADKEY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NONE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a6bf30e43e09962f60d3069793f989f27"></span><span class="sig-name descname"><span class="n"><span class="pre">NONE_ATOM_INDEX</span></span></span> <span class="pre">54</span><a class="headerlink" href="#c.libAtomVM.NONE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.IO_REQUEST_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a2501ee14d2a48bcd334a59ced6515c79"></span><span class="sig-name descname"><span class="n"><span class="pre">IO_REQUEST_ATOM_INDEX</span></span></span> <span class="pre">55</span><a class="headerlink" href="#c.libAtomVM.IO_REQUEST_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.IO_REPLY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ac3987d4f0c88bcaa75c1012e0d4467b8"></span><span class="sig-name descname"><span class="n"><span class="pre">IO_REPLY_ATOM_INDEX</span></span></span> <span class="pre">56</span><a class="headerlink" href="#c.libAtomVM.IO_REPLY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PUT_CHARS_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab8b47cd14b12863a94d0ec25c5ddea9c"></span><span class="sig-name descname"><span class="n"><span class="pre">PUT_CHARS_ATOM_INDEX</span></span></span> <span class="pre">57</span><a class="headerlink" href="#c.libAtomVM.PUT_CHARS_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LOWERCASE_EXIT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a35a5a1bb7b30b0c5ffe85bad9ed891a0"></span><span class="sig-name descname"><span class="n"><span class="pre">LOWERCASE_EXIT_ATOM_INDEX</span></span></span> <span class="pre">58</span><a class="headerlink" href="#c.libAtomVM.LOWERCASE_EXIT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ATOMVM_VERSION_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aeddb04841083298c9295e86bbda96ef7"></span><span class="sig-name descname"><span class="n"><span class="pre">ATOMVM_VERSION_ATOM_INDEX</span></span></span> <span class="pre">59</span><a class="headerlink" href="#c.libAtomVM.ATOMVM_VERSION_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SECOND_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aefb80ab0d62fd4f6570777eb1f119177"></span><span class="sig-name descname"><span class="n"><span class="pre">SECOND_ATOM_INDEX</span></span></span> <span class="pre">60</span><a class="headerlink" href="#c.libAtomVM.SECOND_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MILLISECOND_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ac8e363b6c6e17172babda3a115fb0176"></span><span class="sig-name descname"><span class="n"><span class="pre">MILLISECOND_ATOM_INDEX</span></span></span> <span class="pre">61</span><a class="headerlink" href="#c.libAtomVM.MILLISECOND_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MICROSECOND_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa9eac8c21b6189b3eeb850b08d12b773"></span><span class="sig-name descname"><span class="n"><span class="pre">MICROSECOND_ATOM_INDEX</span></span></span> <span class="pre">62</span><a class="headerlink" href="#c.libAtomVM.MICROSECOND_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.INFINITY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1acd88bc0853002f5223bfc870ffc9c2ae"></span><span class="sig-name descname"><span class="n"><span class="pre">INFINITY_ATOM_INDEX</span></span></span> <span class="pre">63</span><a class="headerlink" href="#c.libAtomVM.INFINITY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TIMEOUT_VALUE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a91a6858a13a4801035f1ff1e4fb238f4"></span><span class="sig-name descname"><span class="n"><span class="pre">TIMEOUT_VALUE_ATOM_INDEX</span></span></span> <span class="pre">64</span><a class="headerlink" href="#c.libAtomVM.TIMEOUT_VALUE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SCHEDULERS_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab1dd5341a4032aceb35b1e7eba131b1b"></span><span class="sig-name descname"><span class="n"><span class="pre">SCHEDULERS_ATOM_INDEX</span></span></span> <span class="pre">65</span><a class="headerlink" href="#c.libAtomVM.SCHEDULERS_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SCHEDULERS_ONLINE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa314797a41659c7aa776fd1cda2d0cae"></span><span class="sig-name descname"><span class="n"><span class="pre">SCHEDULERS_ONLINE_ATOM_INDEX</span></span></span> <span class="pre">66</span><a class="headerlink" href="#c.libAtomVM.SCHEDULERS_ONLINE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.APPEND_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a5350a9e2e8420938c182d8e955a1779f"></span><span class="sig-name descname"><span class="n"><span class="pre">APPEND_ATOM_INDEX</span></span></span> <span class="pre">67</span><a class="headerlink" href="#c.libAtomVM.APPEND_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PRIVATE_APPEND_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a86b8bcc0bcdc564a9c9fbc5077445388"></span><span class="sig-name descname"><span class="n"><span class="pre">PRIVATE_APPEND_ATOM_INDEX</span></span></span> <span class="pre">68</span><a class="headerlink" href="#c.libAtomVM.PRIVATE_APPEND_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BINARY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a6cb81b85060963769f58fdf3cc56d81a"></span><span class="sig-name descname"><span class="n"><span class="pre">BINARY_ATOM_INDEX</span></span></span> <span class="pre">69</span><a class="headerlink" href="#c.libAtomVM.BINARY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.INTEGER_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa15c47f88f498d0563f3e9ccf5bec0fd"></span><span class="sig-name descname"><span class="n"><span class="pre">INTEGER_ATOM_INDEX</span></span></span> <span class="pre">70</span><a class="headerlink" href="#c.libAtomVM.INTEGER_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LITTLE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a941eadf250f7da99fae143ca224840da"></span><span class="sig-name descname"><span class="n"><span class="pre">LITTLE_ATOM_INDEX</span></span></span> <span class="pre">71</span><a class="headerlink" href="#c.libAtomVM.LITTLE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NATIVE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a550d407b65bdb564b0e880a4721fc9cb"></span><span class="sig-name descname"><span class="n"><span class="pre">NATIVE_ATOM_INDEX</span></span></span> <span class="pre">72</span><a class="headerlink" href="#c.libAtomVM.NATIVE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.STRING_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad89ea65928b62054acf81206d0890963"></span><span class="sig-name descname"><span class="n"><span class="pre">STRING_ATOM_INDEX</span></span></span> <span class="pre">73</span><a class="headerlink" href="#c.libAtomVM.STRING_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UTF8_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aaa9774981cc9d3b4c42dded19608d64e"></span><span class="sig-name descname"><span class="n"><span class="pre">UTF8_ATOM_INDEX</span></span></span> <span class="pre">74</span><a class="headerlink" href="#c.libAtomVM.UTF8_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UTF16_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab33e1805a31fdde5651199c8c885642d"></span><span class="sig-name descname"><span class="n"><span class="pre">UTF16_ATOM_INDEX</span></span></span> <span class="pre">75</span><a class="headerlink" href="#c.libAtomVM.UTF16_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UTF32_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a0e5bf8c910305a088ce2818ceceeeb1b"></span><span class="sig-name descname"><span class="n"><span class="pre">UTF32_ATOM_INDEX</span></span></span> <span class="pre">76</span><a class="headerlink" href="#c.libAtomVM.UTF32_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADRECORD_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1af6d27cc364f6aa704e2f539794c0ea2e"></span><span class="sig-name descname"><span class="n"><span class="pre">BADRECORD_ATOM_INDEX</span></span></span> <span class="pre">77</span><a class="headerlink" href="#c.libAtomVM.BADRECORD_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.COPY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a948899822a86d8f81129264f78af7224"></span><span class="sig-name descname"><span class="n"><span class="pre">COPY_ATOM_INDEX</span></span></span> <span class="pre">78</span><a class="headerlink" href="#c.libAtomVM.COPY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.REUSE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aebb15e70d2f81e821d6fa876e81027df"></span><span class="sig-name descname"><span class="n"><span class="pre">REUSE_ATOM_INDEX</span></span></span> <span class="pre">79</span><a class="headerlink" href="#c.libAtomVM.REUSE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ENSURE_AT_LEAST_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aedb7dc810796971282ff10758486e5fb"></span><span class="sig-name descname"><span class="n"><span class="pre">ENSURE_AT_LEAST_ATOM_INDEX</span></span></span> <span class="pre">80</span><a class="headerlink" href="#c.libAtomVM.ENSURE_AT_LEAST_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ENSURE_EXACTLY_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1af3ece6906162c301a3d8a9bc286ae3a2"></span><span class="sig-name descname"><span class="n"><span class="pre">ENSURE_EXACTLY_ATOM_INDEX</span></span></span> <span class="pre">81</span><a class="headerlink" href="#c.libAtomVM.ENSURE_EXACTLY_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SKIP_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a52a0b99928a1935b0165982cb78b6eea"></span><span class="sig-name descname"><span class="n"><span class="pre">SKIP_ATOM_INDEX</span></span></span> <span class="pre">82</span><a class="headerlink" href="#c.libAtomVM.SKIP_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.GET_TAIL_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a7ccf40f4b82dd9e130f163f6d371ac29"></span><span class="sig-name descname"><span class="n"><span class="pre">GET_TAIL_ATOM_INDEX</span></span></span> <span class="pre">83</span><a class="headerlink" href="#c.libAtomVM.GET_TAIL_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.EQUAL_COLON_EQUAL_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a5a83b82cddf5d89492e52cdc283389df"></span><span class="sig-name descname"><span class="n"><span class="pre">EQUAL_COLON_EQUAL_ATOM_INDEX</span></span></span> <span class="pre">84</span><a class="headerlink" href="#c.libAtomVM.EQUAL_COLON_EQUAL_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SIGNED_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1af250a81f5266ff322857ab8dc987691a"></span><span class="sig-name descname"><span class="n"><span class="pre">SIGNED_ATOM_INDEX</span></span></span> <span class="pre">85</span><a class="headerlink" href="#c.libAtomVM.SIGNED_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MACHINE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1afb081409ab35ee29fad42763d1b396f1"></span><span class="sig-name descname"><span class="n"><span class="pre">MACHINE_ATOM_INDEX</span></span></span> <span class="pre">86</span><a class="headerlink" href="#c.libAtomVM.MACHINE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.AVM_FLOATSIZE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ac13a3f4fb649293cd55ba9fdf14ce555"></span><span class="sig-name descname"><span class="n"><span class="pre">AVM_FLOATSIZE_ATOM_INDEX</span></span></span> <span class="pre">87</span><a class="headerlink" href="#c.libAtomVM.AVM_FLOATSIZE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CLOSE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a48b45f7de7db5dd5a0b520700b1bb825"></span><span class="sig-name descname"><span class="n"><span class="pre">CLOSE_ATOM_INDEX</span></span></span> <span class="pre">88</span><a class="headerlink" href="#c.libAtomVM.CLOSE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CLOSED_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa662d61ff3ac8b65243a8e1136e277f5"></span><span class="sig-name descname"><span class="n"><span class="pre">CLOSED_ATOM_INDEX</span></span></span> <span class="pre">89</span><a class="headerlink" href="#c.libAtomVM.CLOSED_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PORT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a26997a4583693e1029f44490062ae7c8"></span><span class="sig-name descname"><span class="n"><span class="pre">PORT_ATOM_INDEX</span></span></span> <span class="pre">90</span><a class="headerlink" href="#c.libAtomVM.PORT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.INFO_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a9162f04cca66f75000cbaf5755f4f333"></span><span class="sig-name descname"><span class="n"><span class="pre">INFO_ATOM_INDEX</span></span></span> <span class="pre">91</span><a class="headerlink" href="#c.libAtomVM.INFO_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MODULE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a5bb56e7a99d08e56cf397704037411dd"></span><span class="sig-name descname"><span class="n"><span class="pre">MODULE_ATOM_INDEX</span></span></span> <span class="pre">92</span><a class="headerlink" href="#c.libAtomVM.MODULE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SELECT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aeb753677578fcd232caa0d8b1aa91b53"></span><span class="sig-name descname"><span class="n"><span class="pre">SELECT_ATOM_INDEX</span></span></span> <span class="pre">93</span><a class="headerlink" href="#c.libAtomVM.SELECT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.READY_INPUT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab3b6c065f352166458b8f9d3f45c7e55"></span><span class="sig-name descname"><span class="n"><span class="pre">READY_INPUT_ATOM_INDEX</span></span></span> <span class="pre">94</span><a class="headerlink" href="#c.libAtomVM.READY_INPUT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.READY_OUTPUT_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ac245be60d34501c5306fc421ff7c09bd"></span><span class="sig-name descname"><span class="n"><span class="pre">READY_OUTPUT_ATOM_INDEX</span></span></span> <span class="pre">95</span><a class="headerlink" href="#c.libAtomVM.READY_OUTPUT_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ATTRIBUTES_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a095a03bf5b8d76c3810854904776ec87"></span><span class="sig-name descname"><span class="n"><span class="pre">ATTRIBUTES_ATOM_INDEX</span></span></span> <span class="pre">96</span><a class="headerlink" href="#c.libAtomVM.ATTRIBUTES_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.COMPILE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a154a54e01a5a82e56e7ca79eda9b56c1"></span><span class="sig-name descname"><span class="n"><span class="pre">COMPILE_ATOM_INDEX</span></span></span> <span class="pre">97</span><a class="headerlink" href="#c.libAtomVM.COMPILE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.EXPORTS_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa460d3e9113e46c925de2f291410824f"></span><span class="sig-name descname"><span class="n"><span class="pre">EXPORTS_ATOM_INDEX</span></span></span> <span class="pre">98</span><a class="headerlink" href="#c.libAtomVM.EXPORTS_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.INCOMPLETE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8368ad364c9a0d3d187725771686d109"></span><span class="sig-name descname"><span class="n"><span class="pre">INCOMPLETE_ATOM_INDEX</span></span></span> <span class="pre">99</span><a class="headerlink" href="#c.libAtomVM.INCOMPLETE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.KILL_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a53a09273ffbe51590ab7bb3ffd482c10"></span><span class="sig-name descname"><span class="n"><span class="pre">KILL_ATOM_INDEX</span></span></span> <span class="pre">100</span><a class="headerlink" href="#c.libAtomVM.KILL_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.KILLED_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8c998d3effe960f220375ea06016d6e8"></span><span class="sig-name descname"><span class="n"><span class="pre">KILLED_ATOM_INDEX</span></span></span> <span class="pre">101</span><a class="headerlink" href="#c.libAtomVM.KILLED_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LINKS_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aebdd78c60ff197ba59584282d651e971"></span><span class="sig-name descname"><span class="n"><span class="pre">LINKS_ATOM_INDEX</span></span></span> <span class="pre">102</span><a class="headerlink" href="#c.libAtomVM.LINKS_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TOTAL_HEAP_SIZE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa1ac0e6e8f648e9dbf0997f3a3e63dee"></span><span class="sig-name descname"><span class="n"><span class="pre">TOTAL_HEAP_SIZE_ATOM_INDEX</span></span></span> <span class="pre">103</span><a class="headerlink" href="#c.libAtomVM.TOTAL_HEAP_SIZE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ATOMVM_HEAP_GROWTH_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a407e955620d553652e2c3be8ec6a84e6"></span><span class="sig-name descname"><span class="n"><span class="pre">ATOMVM_HEAP_GROWTH_ATOM_INDEX</span></span></span> <span class="pre">104</span><a class="headerlink" href="#c.libAtomVM.ATOMVM_HEAP_GROWTH_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BOUNDED_FREE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a4d5f120c54dcd963a8bc92d7da9e353e"></span><span class="sig-name descname"><span class="n"><span class="pre">BOUNDED_FREE_ATOM_INDEX</span></span></span> <span class="pre">105</span><a class="headerlink" href="#c.libAtomVM.BOUNDED_FREE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MINIMUM_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a825bd42709af65ab7fde2fb45ae1bbbb"></span><span class="sig-name descname"><span class="n"><span class="pre">MINIMUM_ATOM_INDEX</span></span></span> <span class="pre">106</span><a class="headerlink" href="#c.libAtomVM.MINIMUM_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.FIBONACCI_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae069a5fa3c84acac810f245980844551"></span><span class="sig-name descname"><span class="n"><span class="pre">FIBONACCI_ATOM_INDEX</span></span></span> <span class="pre">107</span><a class="headerlink" href="#c.libAtomVM.FIBONACCI_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CALL_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a286bbd4ff1976155d5fb6cef45e3b7e6"></span><span class="sig-name descname"><span class="n"><span class="pre">CALL_ATOM_INDEX</span></span></span> <span class="pre">108</span><a class="headerlink" href="#c.libAtomVM.CALL_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CAST_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a332ccdcf85c6f9b5c0b789f39b19edf9"></span><span class="sig-name descname"><span class="n"><span class="pre">CAST_ATOM_INDEX</span></span></span> <span class="pre">109</span><a class="headerlink" href="#c.libAtomVM.CAST_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UNICODE_ATOM_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1a16566b9d795d1f306ae0c91d42dbf824"></span><span class="sig-name descname"><span class="n"><span class="pre">UNICODE_ATOM_INDEX</span></span></span> <span class="pre">110</span><a class="headerlink" href="#c.libAtomVM.UNICODE_ATOM_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PLATFORM_ATOMS_BASE_INDEX">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa1555d02731f2cd06ea640f8dcd1ba26"></span><span class="sig-name descname"><span class="n"><span class="pre">PLATFORM_ATOMS_BASE_INDEX</span></span></span> <span class="pre">111</span><a class="headerlink" href="#c.libAtomVM.PLATFORM_ATOMS_BASE_INDEX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.FALSE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae4dd436f6a4239e1ce24965e59688d1f"></span><span class="sig-name descname"><span class="n"><span class="pre">FALSE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a24d4812246437e4e8e7e288bc5406d62"><span class="std std-ref"><span class="pre">FALSE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.FALSE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TRUE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a697a13c6e41b7cefd3e3e4ef25e46479"></span><span class="sig-name descname"><span class="n"><span class="pre">TRUE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a22dd45cd1924c653170ad03bafb2809b"><span class="std std-ref"><span class="pre">TRUE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.TRUE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OK_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a44cb8f06cfb523910ab29f5e6a2cf6e3"></span><span class="sig-name descname"><span class="n"><span class="pre">OK_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ade535ec5c1822d2eb345e34f60eacebe"><span class="std std-ref"><span class="pre">OK_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.OK_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ERROR_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a44cbb241677d97b870f957e462caf3b3"></span><span class="sig-name descname"><span class="n"><span class="pre">ERROR_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a725acc25af2b3d8291b3be7c19c284c0"><span class="std std-ref"><span class="pre">ERROR_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.ERROR_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UNDEFINED_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a431a12158d6469dbb05df9fccb3a614c"></span><span class="sig-name descname"><span class="n"><span class="pre">UNDEFINED_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a20eedcc893dbb82b8f1130e550de5db2"><span class="std std-ref"><span class="pre">UNDEFINED_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.UNDEFINED_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADARG_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1af18728853e2246cba0937458e40c1a35"></span><span class="sig-name descname"><span class="n"><span class="pre">BADARG_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a72ceec71e6aea672bf2c7b7d6a102841"><span class="std std-ref"><span class="pre">BADARG_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BADARG_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADARITH_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab90cc376c880d338001078e0c230a997"></span><span class="sig-name descname"><span class="n"><span class="pre">BADARITH_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a751734244df944a31dea0972af8d5813"><span class="std std-ref"><span class="pre">BADARITH_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BADARITH_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADARITY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1adb821ef1dbf6e89ff0569bb13d04b165"></span><span class="sig-name descname"><span class="n"><span class="pre">BADARITY_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a2ed874661787c45b36606a1ac7bdf4f9"><span class="std std-ref"><span class="pre">BADARITY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BADARITY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADFUN_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a0e1aa8d17aa7329d32204e29d873c9cd"></span><span class="sig-name descname"><span class="n"><span class="pre">BADFUN_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a74876df3eb429fbf7da7bd133116c8ce"><span class="std std-ref"><span class="pre">BADFUN_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BADFUN_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.FUNCTION_CLAUSE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a32d7dea459afc600c4ce85e8ff5f573e"></span><span class="sig-name descname"><span class="n"><span class="pre">FUNCTION_CLAUSE_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1afecfade4992370e8b13fa4160bfbd084"><span class="std std-ref"><span class="pre">FUNCTION_CLAUSE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.FUNCTION_CLAUSE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TRY_CLAUSE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8120b8696f98d70ff4cb9aebed411b30"></span><span class="sig-name descname"><span class="n"><span class="pre">TRY_CLAUSE_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ad32d5d56c819f323432614fb19ff9907"><span class="std std-ref"><span class="pre">TRY_CLAUSE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.TRY_CLAUSE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OUT_OF_MEMORY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a05fa391f29b40e152094bd604dfb1293"></span><span class="sig-name descname"><span class="n"><span class="pre">OUT_OF_MEMORY_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ab31bc0cb07d6eeaa5bcc8bd6dd44e1aa"><span class="std std-ref"><span class="pre">OUT_OF_MEMORY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.OUT_OF_MEMORY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OVERFLOW_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a754fec403f25270585d92517992bad0d"></span><span class="sig-name descname"><span class="n"><span class="pre">OVERFLOW_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ae1e9b845a2a8786618c1abbc93f59606"><span class="std std-ref"><span class="pre">OVERFLOW_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.OVERFLOW_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SYSTEM_LIMIT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a9fdd88ab44e586679804400121346d48"></span><span class="sig-name descname"><span class="n"><span class="pre">SYSTEM_LIMIT_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a9834e111879ba53cedb17ea779a098cf"><span class="std std-ref"><span class="pre">SYSTEM_LIMIT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.SYSTEM_LIMIT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LATIN1_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad10070155b01bd7efe073895bc9b8eac"></span><span class="sig-name descname"><span class="n"><span class="pre">LATIN1_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aaf761bb7e4b3f7481db1d9726633a339"><span class="std std-ref"><span class="pre">LATIN1_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.LATIN1_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.FLUSH_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad6064b3311cca4cff9835cb20e82c051"></span><span class="sig-name descname"><span class="n"><span class="pre">FLUSH_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a02ce4225b7635f6c74c4776ec71f611b"><span class="std std-ref"><span class="pre">FLUSH_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.FLUSH_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.HEAP_SIZE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1acd159300b11c4446847477a3f326347b"></span><span class="sig-name descname"><span class="n"><span class="pre">HEAP_SIZE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a3af3eeef5233d96df29859d8e041fffd"><span class="std std-ref"><span class="pre">HEAP_SIZE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.HEAP_SIZE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MAX_HEAP_SIZE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa5dbce8136287f2a1459770448e0bee1"></span><span class="sig-name descname"><span class="n"><span class="pre">MAX_HEAP_SIZE_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a10320021c62d02238de6b080495aa06c"><span class="std std-ref"><span class="pre">MAX_HEAP_SIZE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MAX_HEAP_SIZE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MEMORY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a1e84ccd6e48f9f92cadc3951f04af942"></span><span class="sig-name descname"><span class="n"><span class="pre">MEMORY_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a56387f271cdf443e7b82be30879debc3"><span class="std std-ref"><span class="pre">MEMORY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MEMORY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MESSAGE_QUEUE_LEN_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a7d90c6914d3b7cde9e3ce049e3bedfa4"></span><span class="sig-name descname"><span class="n"><span class="pre">MESSAGE_QUEUE_LEN_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a8fd307e8636a7fb27fee84545e7be4a0"><span class="std std-ref"><span class="pre">MESSAGE_QUEUE_LEN_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MESSAGE_QUEUE_LEN_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PUTS_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1aaad0af0bda1fa2df1d292b903234ce1a"></span><span class="sig-name descname"><span class="n"><span class="pre">PUTS_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a35dd696143acda73f5e264395f728ca5"><span class="std std-ref"><span class="pre">PUTS_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.PUTS_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.STACK_SIZE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a37f01258ee09436a2416920437addfe7"></span><span class="sig-name descname"><span class="n"><span class="pre">STACK_SIZE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a056b51ce334983ae982745abe454ec66"><span class="std std-ref"><span class="pre">STACK_SIZE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.STACK_SIZE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MIN_HEAP_SIZE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae0d7819ee4ef174d5f9e33d17e3ed2b0"></span><span class="sig-name descname"><span class="n"><span class="pre">MIN_HEAP_SIZE_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ac44dc573d419d72e84a2455a2e7c2dcb"><span class="std std-ref"><span class="pre">MIN_HEAP_SIZE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MIN_HEAP_SIZE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PROCESS_COUNT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab23fde7326a27725272cd5e027368bca"></span><span class="sig-name descname"><span class="n"><span class="pre">PROCESS_COUNT_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a9df1e8ad96bf01f9148af3965e78be3d"><span class="std std-ref"><span class="pre">PROCESS_COUNT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.PROCESS_COUNT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PORT_COUNT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1aea64bb51a47962646527e47d751ddd49"></span><span class="sig-name descname"><span class="n"><span class="pre">PORT_COUNT_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aaaf3618175e6b0563318536e71873848"><span class="std std-ref"><span class="pre">PORT_COUNT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.PORT_COUNT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ATOM_COUNT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a0485baf8e9646b68f3d257a9d2fbe6f6"></span><span class="sig-name descname"><span class="n"><span class="pre">ATOM_COUNT_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1acd21a07090f08006328285bd3cdf7370"><span class="std std-ref"><span class="pre">ATOM_COUNT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.ATOM_COUNT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SYSTEM_ARCHITECTURE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a4ec813315a43f0a0d7d0860e37f5f0db"></span><span class="sig-name descname"><span class="n"><span class="pre">SYSTEM_ARCHITECTURE_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ab522ca4fadb995947362ecc6d204000e"><span class="std std-ref"><span class="pre">SYSTEM_ARCHITECTURE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.SYSTEM_ARCHITECTURE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.WORDSIZE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1aedce40f6ec8715ec493574efe59940c7"></span><span class="sig-name descname"><span class="n"><span class="pre">WORDSIZE_ATOM</span></span></span> <span class="pre">term_from_atom_index(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ae1721c24d26a531a9d9ea4c52d85b9ad"><span class="std std-ref"><span class="pre">WORDSIZE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.WORDSIZE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.DECIMALS_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ac89aefc090c5fc26ea0df04a9e177a75"></span><span class="sig-name descname"><span class="n"><span class="pre">DECIMALS_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a8b084d28090dd9954ec353b15bf43c76"><span class="std std-ref"><span class="pre">DECIMALS_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.DECIMALS_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SCIENTIFIC_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a17a0077c1d639689f6020e874f4ad430"></span><span class="sig-name descname"><span class="n"><span class="pre">SCIENTIFIC_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ae905eb874f1f0052cae2425a2e69cda5"><span class="std std-ref"><span class="pre">SCIENTIFIC_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.SCIENTIFIC_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.DEFAULTATOMS_COMPACT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a674ef6be15698b51f26e9fc8dd7563f0"></span><span class="sig-name descname"><span class="n"><span class="pre">DEFAULTATOMS_COMPACT_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ab5ccbe292885055940137eca0238c7a6"><span class="std std-ref"><span class="pre">COMPACT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.DEFAULTATOMS_COMPACT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADMATCH_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a4751a286ffd1525fe7e5c21412c8d7f5"></span><span class="sig-name descname"><span class="n"><span class="pre">BADMATCH_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a14a32d2afd73352926575fc0c73b48d5"><span class="std std-ref"><span class="pre">BADMATCH_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BADMATCH_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CASE_CLAUSE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1afed0718ec4dffc3af56e7e1cc9616aaf"></span><span class="sig-name descname"><span class="n"><span class="pre">CASE_CLAUSE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a6010f59ed41d163eab076142c2d5516b"><span class="std std-ref"><span class="pre">CASE_CLAUSE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.CASE_CLAUSE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.IF_CLAUSE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1adc4ee84b23f5944e84281e6c28ea18f4"></span><span class="sig-name descname"><span class="n"><span class="pre">IF_CLAUSE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a20d0f9bcb83eedb4826f32207137aee2"><span class="std std-ref"><span class="pre">IF_CLAUSE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.IF_CLAUSE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.THROW_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ac9dbb53e7df16429b873c7a695e9824b"></span><span class="sig-name descname"><span class="n"><span class="pre">THROW_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a4fd13ab0a60f0909711e532ba42a38b8"><span class="std std-ref"><span class="pre">THROW_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.THROW_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LOW_ENTROPY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a5a60bffe026cfb16ff07eafde21bc500"></span><span class="sig-name descname"><span class="n"><span class="pre">LOW_ENTROPY_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a93d556cdfbd954edc0e85a4a3013923a"><span class="std std-ref"><span class="pre">LOW_ENTROPY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.LOW_ENTROPY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UNSUPPORTED_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae5c2c6adb402c7388745ec697dda0f5c"></span><span class="sig-name descname"><span class="n"><span class="pre">UNSUPPORTED_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a8aca5e6625c276d51237d60b440845ed"><span class="std std-ref"><span class="pre">UNSUPPORTED_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.UNSUPPORTED_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.USED_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8bd56544fe90a05efd76693ee70c601b"></span><span class="sig-name descname"><span class="n"><span class="pre">USED_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a95c4f326cdeff2aefcf6f946fb29e616"><span class="std std-ref"><span class="pre">USED_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.USED_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ALL_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a69cf71e7b2e2ed45c2d8e5e271280e04"></span><span class="sig-name descname"><span class="n"><span class="pre">ALL_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a8ea2c573317613623abb750db7b2c4ca"><span class="std std-ref"><span class="pre">ALL_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.ALL_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.START_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a6a3f31641e882d71184d2a3ab2e23b34"></span><span class="sig-name descname"><span class="n"><span class="pre">START_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a1f22c7693a6c1889a5d2a3f47c9f7ff3"><span class="std std-ref"><span class="pre">START_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.START_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UNDEF_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae744daba67fbdc0c5dbdcaf94cdedbdb"></span><span class="sig-name descname"><span class="n"><span class="pre">UNDEF_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a32be95587faaadf45c0a30bc185e5256"><span class="std std-ref"><span class="pre">UNDEF_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.UNDEF_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.VM_ABORT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a95ecde9478a3f4bad2093c6386743658"></span><span class="sig-name descname"><span class="n"><span class="pre">VM_ABORT_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ad3f965afb3ba7e0a8d6aed7a96c6e165"><span class="std std-ref"><span class="pre">VM_ABORT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.VM_ABORT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LINK_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8941f6994db4195bf5ded2c6ce5a576c"></span><span class="sig-name descname"><span class="n"><span class="pre">LINK_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a7b1f6dda1cfb8109b449c1808b6908f1"><span class="std std-ref"><span class="pre">LINK_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.LINK_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MONITOR_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a762dabe47e76a63dd1fe41f8c92e9e5c"></span><span class="sig-name descname"><span class="n"><span class="pre">MONITOR_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a2ff70dcdea2658b985aca34f03db397d"><span class="std std-ref"><span class="pre">MONITOR_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MONITOR_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NORMAL_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad70279c275dd27c0699b31a9f685d46a"></span><span class="sig-name descname"><span class="n"><span class="pre">NORMAL_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a503e0285b8387b794a1e414612b2bf6b"><span class="std std-ref"><span class="pre">NORMAL_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.NORMAL_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.DOWN_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a9421c43be7cfd22e794f9511e4ea7297"></span><span class="sig-name descname"><span class="n"><span class="pre">DOWN_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aff2710f78ef60e8eb2e040289b8d7e7a"><span class="std std-ref"><span class="pre">DOWN_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.DOWN_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PROCESS_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1aef5be74948b51cc478b37b06779a79c1"></span><span class="sig-name descname"><span class="n"><span class="pre">PROCESS_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a644949e312c03b2a88ec1c7b48f499cc"><span class="std std-ref"><span class="pre">PROCESS_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.PROCESS_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NOCATCH_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae23cc588ce010830cfed6ab0be2cb0c3"></span><span class="sig-name descname"><span class="n"><span class="pre">NOCATCH_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1acc45e270a589c6473d4da2994e4f8077"><span class="std std-ref"><span class="pre">NOCATCH_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.NOCATCH_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.REFC_BINARY_INFO_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa54038cf05383289175eb76b4dbb3c35"></span><span class="sig-name descname"><span class="n"><span class="pre">REFC_BINARY_INFO_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ac145ce4ab3c6edc3d8d4620a7e166e65"><span class="std std-ref"><span class="pre">REFC_BINARY_INFO_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.REFC_BINARY_INFO_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NOPROC_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a65c82fcb600c4070f684f3930ffd395d"></span><span class="sig-name descname"><span class="n"><span class="pre">NOPROC_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1af6cf3964f16253070db70b5509a2cf48"><span class="std std-ref"><span class="pre">NOPROC_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.NOPROC_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TRAP_EXIT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a43618f19fc825486b6fc88ba64e7e644"></span><span class="sig-name descname"><span class="n"><span class="pre">TRAP_EXIT_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1abf2cd5fb078e3511a943a6be2068214b"><span class="std std-ref"><span class="pre">TRAP_EXIT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.TRAP_EXIT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.EXIT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a5b2c2c4cc688436dbceea017dd24ad99"></span><span class="sig-name descname"><span class="n"><span class="pre">EXIT_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ae72699db52971c151738027c4b2ecf62"><span class="std std-ref"><span class="pre">EXIT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.EXIT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADMAP_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a5b3533d51459dcbd1adcd7f1eb54117b"></span><span class="sig-name descname"><span class="n"><span class="pre">BADMAP_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a6a64392a0877deb6f3b27b31c099c4ca"><span class="std std-ref"><span class="pre">BADMAP_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BADMAP_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADKEY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a2f8c1afec38af9f8ae2bad7d17b32e52"></span><span class="sig-name descname"><span class="n"><span class="pre">BADKEY_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a88296911d78fe8a0e8f0d29001b0a3c9"><span class="std std-ref"><span class="pre">BADKEY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BADKEY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NONE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a0370b05cd08078ff599dc56cdd38bff8"></span><span class="sig-name descname"><span class="n"><span class="pre">NONE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a6bf30e43e09962f60d3069793f989f27"><span class="std std-ref"><span class="pre">NONE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.NONE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.IO_REQUEST_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a03f3d723cc51890183c74d08db4ca6fa"></span><span class="sig-name descname"><span class="n"><span class="pre">IO_REQUEST_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a2501ee14d2a48bcd334a59ced6515c79"><span class="std std-ref"><span class="pre">IO_REQUEST_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.IO_REQUEST_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.IO_REPLY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a4f6bd3332616f66054110d342fb294e7"></span><span class="sig-name descname"><span class="n"><span class="pre">IO_REPLY_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ac3987d4f0c88bcaa75c1012e0d4467b8"><span class="std std-ref"><span class="pre">IO_REPLY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.IO_REPLY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PUT_CHARS_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1aae9f6ac43e90105a4ccb72b10a0574c7"></span><span class="sig-name descname"><span class="n"><span class="pre">PUT_CHARS_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ab8b47cd14b12863a94d0ec25c5ddea9c"><span class="std std-ref"><span class="pre">PUT_CHARS_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.PUT_CHARS_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LOWERCASE_EXIT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1adb6fb4527976d5f626a9e87e33c2b9ba"></span><span class="sig-name descname"><span class="n"><span class="pre">LOWERCASE_EXIT_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a35a5a1bb7b30b0c5ffe85bad9ed891a0"><span class="std std-ref"><span class="pre">LOWERCASE_EXIT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.LOWERCASE_EXIT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ATOMVM_VERSION_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a3784f88d69af8ea7e555a03895b5847e"></span><span class="sig-name descname"><span class="n"><span class="pre">ATOMVM_VERSION_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aeddb04841083298c9295e86bbda96ef7"><span class="std std-ref"><span class="pre">ATOMVM_VERSION_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.ATOMVM_VERSION_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SECOND_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad3dc3091407f37640b477afdf2d6803e"></span><span class="sig-name descname"><span class="n"><span class="pre">SECOND_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aefb80ab0d62fd4f6570777eb1f119177"><span class="std std-ref"><span class="pre">SECOND_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.SECOND_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MILLISECOND_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a655d8a26cb6dd5d70e50b09e717524ea"></span><span class="sig-name descname"><span class="n"><span class="pre">MILLISECOND_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ac8e363b6c6e17172babda3a115fb0176"><span class="std std-ref"><span class="pre">MILLISECOND_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MILLISECOND_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MICROSECOND_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a823a92e499012829feaffc0f094a17bf"></span><span class="sig-name descname"><span class="n"><span class="pre">MICROSECOND_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aa9eac8c21b6189b3eeb850b08d12b773"><span class="std std-ref"><span class="pre">MICROSECOND_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MICROSECOND_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.INFINITY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a943365f6caede003a90b7645ffb9a4f6"></span><span class="sig-name descname"><span class="n"><span class="pre">INFINITY_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1acd88bc0853002f5223bfc870ffc9c2ae"><span class="std std-ref"><span class="pre">INFINITY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.INFINITY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TIMEOUT_VALUE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1af53ac231726ffe698a1dcb6c09cb9220"></span><span class="sig-name descname"><span class="n"><span class="pre">TIMEOUT_VALUE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a91a6858a13a4801035f1ff1e4fb238f4"><span class="std std-ref"><span class="pre">TIMEOUT_VALUE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.TIMEOUT_VALUE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SCHEDULERS_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad7e38b9e2138cdb6bf975610dc4c9276"></span><span class="sig-name descname"><span class="n"><span class="pre">SCHEDULERS_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ab1dd5341a4032aceb35b1e7eba131b1b"><span class="std std-ref"><span class="pre">SCHEDULERS_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.SCHEDULERS_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SCHEDULERS_ONLINE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a865a6ff588580d8580237e9f6687b33e"></span><span class="sig-name descname"><span class="n"><span class="pre">SCHEDULERS_ONLINE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aa314797a41659c7aa776fd1cda2d0cae"><span class="std std-ref"><span class="pre">SCHEDULERS_ONLINE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.SCHEDULERS_ONLINE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.APPEND_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1adc925bef71ae242c27bb5f303cebeca8"></span><span class="sig-name descname"><span class="n"><span class="pre">APPEND_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a5350a9e2e8420938c182d8e955a1779f"><span class="std std-ref"><span class="pre">APPEND_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.APPEND_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PRIVATE_APPEND_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae17c122345d9b59e05619ef625237513"></span><span class="sig-name descname"><span class="n"><span class="pre">PRIVATE_APPEND_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a86b8bcc0bcdc564a9c9fbc5077445388"><span class="std std-ref"><span class="pre">PRIVATE_APPEND_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.PRIVATE_APPEND_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BINARY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad6d462137473b0abb5e62ff93efe70de"></span><span class="sig-name descname"><span class="n"><span class="pre">BINARY_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a6cb81b85060963769f58fdf3cc56d81a"><span class="std std-ref"><span class="pre">BINARY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BINARY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.INTEGER_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a41fe883ab26fc5435bfb85cfdbdd4591"></span><span class="sig-name descname"><span class="n"><span class="pre">INTEGER_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aa15c47f88f498d0563f3e9ccf5bec0fd"><span class="std std-ref"><span class="pre">INTEGER_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.INTEGER_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LITTLE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a917de4f8a0eedef70dd63a625e5c9419"></span><span class="sig-name descname"><span class="n"><span class="pre">LITTLE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a941eadf250f7da99fae143ca224840da"><span class="std std-ref"><span class="pre">LITTLE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.LITTLE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.NATIVE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a2f7cd21e19c3ff00f7e24d8b03ba09ab"></span><span class="sig-name descname"><span class="n"><span class="pre">NATIVE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a550d407b65bdb564b0e880a4721fc9cb"><span class="std std-ref"><span class="pre">NATIVE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.NATIVE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.STRING_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1acb257810364fb9c90f4213505bbbe463"></span><span class="sig-name descname"><span class="n"><span class="pre">STRING_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ad89ea65928b62054acf81206d0890963"><span class="std std-ref"><span class="pre">STRING_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.STRING_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UTF8_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1adc0608e41191cd05dc842302f46ebefb"></span><span class="sig-name descname"><span class="n"><span class="pre">UTF8_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aaa9774981cc9d3b4c42dded19608d64e"><span class="std std-ref"><span class="pre">UTF8_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.UTF8_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UTF16_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a48b7d9f924754e6e380943efae5bfcd7"></span><span class="sig-name descname"><span class="n"><span class="pre">UTF16_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ab33e1805a31fdde5651199c8c885642d"><span class="std std-ref"><span class="pre">UTF16_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.UTF16_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UTF32_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a9d73f25fccec1401b6d096a9a52f7951"></span><span class="sig-name descname"><span class="n"><span class="pre">UTF32_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a0e5bf8c910305a088ce2818ceceeeb1b"><span class="std std-ref"><span class="pre">UTF32_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.UTF32_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BADRECORD_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a9f758581328edc9bb07c8793a56b989f"></span><span class="sig-name descname"><span class="n"><span class="pre">BADRECORD_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1af6d27cc364f6aa704e2f539794c0ea2e"><span class="std std-ref"><span class="pre">BADRECORD_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BADRECORD_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.COPY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1adf68e3a9ce732445c8ac7977b1257567"></span><span class="sig-name descname"><span class="n"><span class="pre">COPY_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a948899822a86d8f81129264f78af7224"><span class="std std-ref"><span class="pre">COPY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.COPY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.REUSE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a8d142d823f28e6757842a0a4ef9c5b39"></span><span class="sig-name descname"><span class="n"><span class="pre">REUSE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aebb15e70d2f81e821d6fa876e81027df"><span class="std std-ref"><span class="pre">REUSE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.REUSE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ENSURE_AT_LEAST_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a59402e90431fefe5a43e22589fcf1ecc"></span><span class="sig-name descname"><span class="n"><span class="pre">ENSURE_AT_LEAST_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aedb7dc810796971282ff10758486e5fb"><span class="std std-ref"><span class="pre">ENSURE_AT_LEAST_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.ENSURE_AT_LEAST_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ENSURE_EXACTLY_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a34c74adc645944befeb3fe739c70f3a3"></span><span class="sig-name descname"><span class="n"><span class="pre">ENSURE_EXACTLY_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1af3ece6906162c301a3d8a9bc286ae3a2"><span class="std std-ref"><span class="pre">ENSURE_EXACTLY_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.ENSURE_EXACTLY_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SKIP_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a1ff10592618d2e42dd3f59e411b2e828"></span><span class="sig-name descname"><span class="n"><span class="pre">SKIP_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a52a0b99928a1935b0165982cb78b6eea"><span class="std std-ref"><span class="pre">SKIP_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.SKIP_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.GET_TAIL_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a080daa0c7b8526fb9eac184b64cfdd56"></span><span class="sig-name descname"><span class="n"><span class="pre">GET_TAIL_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a7ccf40f4b82dd9e130f163f6d371ac29"><span class="std std-ref"><span class="pre">GET_TAIL_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.GET_TAIL_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.EQUAL_COLON_EQUAL_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a6666d37ec22a47e3066e0f34744ea87e"></span><span class="sig-name descname"><span class="n"><span class="pre">EQUAL_COLON_EQUAL_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a5a83b82cddf5d89492e52cdc283389df"><span class="std std-ref"><span class="pre">EQUAL_COLON_EQUAL_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.EQUAL_COLON_EQUAL_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SIGNED_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a204fafc9909f4fd0675f88d4a2a27dd4"></span><span class="sig-name descname"><span class="n"><span class="pre">SIGNED_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1af250a81f5266ff322857ab8dc987691a"><span class="std std-ref"><span class="pre">SIGNED_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.SIGNED_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MACHINE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa03c452f652f30ff2e8a0a572d7564e9"></span><span class="sig-name descname"><span class="n"><span class="pre">MACHINE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1afb081409ab35ee29fad42763d1b396f1"><span class="std std-ref"><span class="pre">MACHINE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MACHINE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.AVM_FLOATSIZE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab6ebaae571d92413c36ce4db92d0419c"></span><span class="sig-name descname"><span class="n"><span class="pre">AVM_FLOATSIZE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ac13a3f4fb649293cd55ba9fdf14ce555"><span class="std std-ref"><span class="pre">AVM_FLOATSIZE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.AVM_FLOATSIZE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CLOSE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a39ed990779caf8b8f5a64502567fcbea"></span><span class="sig-name descname"><span class="n"><span class="pre">CLOSE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a48b45f7de7db5dd5a0b520700b1bb825"><span class="std std-ref"><span class="pre">CLOSE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.CLOSE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CLOSED_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a3446a78220214777beefbec03d7d2cc2"></span><span class="sig-name descname"><span class="n"><span class="pre">CLOSED_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aa662d61ff3ac8b65243a8e1136e277f5"><span class="std std-ref"><span class="pre">CLOSED_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.CLOSED_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.PORT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a2b47ef03800aa973d6808bf8222b5b18"></span><span class="sig-name descname"><span class="n"><span class="pre">PORT_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a26997a4583693e1029f44490062ae7c8"><span class="std std-ref"><span class="pre">PORT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.PORT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.INFO_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a4d7d4521490fe0bb5163fa1604880aeb"></span><span class="sig-name descname"><span class="n"><span class="pre">INFO_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a9162f04cca66f75000cbaf5755f4f333"><span class="std std-ref"><span class="pre">INFO_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.INFO_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MODULE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a2a8f1f97fd427f9f71464d6937ceb0b0"></span><span class="sig-name descname"><span class="n"><span class="pre">MODULE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a5bb56e7a99d08e56cf397704037411dd"><span class="std std-ref"><span class="pre">MODULE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MODULE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.SELECT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a38d5a01670a30df9edc4ae7c9a1f543c"></span><span class="sig-name descname"><span class="n"><span class="pre">SELECT_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aeb753677578fcd232caa0d8b1aa91b53"><span class="std std-ref"><span class="pre">SELECT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.SELECT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.READY_INPUT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a0cb410b2e2251f0b0fbc11c5edd1a62f"></span><span class="sig-name descname"><span class="n"><span class="pre">READY_INPUT_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ab3b6c065f352166458b8f9d3f45c7e55"><span class="std std-ref"><span class="pre">READY_INPUT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.READY_INPUT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.READY_OUTPUT_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1aa69123b2c892324602444f5ed2f83666"></span><span class="sig-name descname"><span class="n"><span class="pre">READY_OUTPUT_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ac245be60d34501c5306fc421ff7c09bd"><span class="std std-ref"><span class="pre">READY_OUTPUT_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.READY_OUTPUT_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ATTRIBUTES_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a5a53c0893a56d95d210350aff7a47f97"></span><span class="sig-name descname"><span class="n"><span class="pre">ATTRIBUTES_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a095a03bf5b8d76c3810854904776ec87"><span class="std std-ref"><span class="pre">ATTRIBUTES_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.ATTRIBUTES_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.COMPILE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a55c6ae24c522a5ed902f533e1d63feeb"></span><span class="sig-name descname"><span class="n"><span class="pre">COMPILE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a154a54e01a5a82e56e7ca79eda9b56c1"><span class="std std-ref"><span class="pre">COMPILE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.COMPILE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.EXPORTS_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ab2e1de4afadf8b9dccc4610547018f18"></span><span class="sig-name descname"><span class="n"><span class="pre">EXPORTS_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aa460d3e9113e46c925de2f291410824f"><span class="std std-ref"><span class="pre">EXPORTS_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.EXPORTS_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.INCOMPLETE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a935d2fb3335b1bdba93449cd13a62076"></span><span class="sig-name descname"><span class="n"><span class="pre">INCOMPLETE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a8368ad364c9a0d3d187725771686d109"><span class="std std-ref"><span class="pre">INCOMPLETE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.INCOMPLETE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.KILL_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a0a6ccfe84a281e39ad258119b8eaf2e5"></span><span class="sig-name descname"><span class="n"><span class="pre">KILL_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a53a09273ffbe51590ab7bb3ffd482c10"><span class="std std-ref"><span class="pre">KILL_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.KILL_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.KILLED_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a60259b59d59ceea17303facf861f829d"></span><span class="sig-name descname"><span class="n"><span class="pre">KILLED_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a8c998d3effe960f220375ea06016d6e8"><span class="std std-ref"><span class="pre">KILLED_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.KILLED_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.LINKS_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a704377a7f45ea43ebf4e2de3a57a28b7"></span><span class="sig-name descname"><span class="n"><span class="pre">LINKS_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aebdd78c60ff197ba59584282d651e971"><span class="std std-ref"><span class="pre">LINKS_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.LINKS_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.TOTAL_HEAP_SIZE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a16c7f2a4b73d23cd89de2a2fad2953d7"></span><span class="sig-name descname"><span class="n"><span class="pre">TOTAL_HEAP_SIZE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1aa1ac0e6e8f648e9dbf0997f3a3e63dee"><span class="std std-ref"><span class="pre">TOTAL_HEAP_SIZE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.TOTAL_HEAP_SIZE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.ATOMVM_HEAP_GROWTH_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a52bd507fa48966f0a259e134ebb0ebb4"></span><span class="sig-name descname"><span class="n"><span class="pre">ATOMVM_HEAP_GROWTH_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a407e955620d553652e2c3be8ec6a84e6"><span class="std std-ref"><span class="pre">ATOMVM_HEAP_GROWTH_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.ATOMVM_HEAP_GROWTH_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.BOUNDED_FREE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a4b5b2afcd2302dea26de9934b9cdb719"></span><span class="sig-name descname"><span class="n"><span class="pre">BOUNDED_FREE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a4d5f120c54dcd963a8bc92d7da9e353e"><span class="std std-ref"><span class="pre">BOUNDED_FREE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.BOUNDED_FREE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.MINIMUM_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad045f4f372da95d0bf1f4d279f4e33d4"></span><span class="sig-name descname"><span class="n"><span class="pre">MINIMUM_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a825bd42709af65ab7fde2fb45ae1bbbb"><span class="std std-ref"><span class="pre">MINIMUM_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.MINIMUM_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.FIBONACCI_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ac2611c14dd12678c5de6217d8933fa11"></span><span class="sig-name descname"><span class="n"><span class="pre">FIBONACCI_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1ae069a5fa3c84acac810f245980844551"><span class="std std-ref"><span class="pre">FIBONACCI_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.FIBONACCI_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CALL_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1a89f71026ad82cc96b9acbb8f033313c7"></span><span class="sig-name descname"><span class="n"><span class="pre">CALL_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a286bbd4ff1976155d5fb6cef45e3b7e6"><span class="std std-ref"><span class="pre">CALL_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.CALL_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.CAST_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad657ccfc8342688bfc58ad33d12c9bbf"></span><span class="sig-name descname"><span class="n"><span class="pre">CAST_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a332ccdcf85c6f9b5c0b789f39b19edf9"><span class="std std-ref"><span class="pre">CAST_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.CAST_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.UNICODE_ATOM">
+<span class="target" id="libatomvmdefaultatoms_8h_1ad66c9e99b8a905f9d8093f5a76ae5ccb"></span><span class="sig-name descname"><span class="n"><span class="pre">UNICODE_ATOM</span></span></span> <a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3de30c0bd38e2e31ec36b72fd749a906"><span class="std std-ref"><span class="pre">TERM_FROM_ATOM_INDEX</span></span></a><span class="pre">(</span><a class="reference internal" href="#libatomvmdefaultatoms_8h_1a16566b9d795d1f306ae0c91d42dbf824"><span class="std std-ref"><span class="pre">UNICODE_ATOM_INDEX</span></span></a><span class="pre">)</span><a class="headerlink" href="#c.libAtomVM.UNICODE_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.defaultatoms_init">
+<span class="target" id="libatomvmdefaultatoms_8h_1a701cecf305c6ac32fd140cbce0cdd830"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">defaultatoms_init</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="globalcontext.h.html#c.libAtomVM.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.platform_defaultatoms_init">
+<span class="target" id="libatomvmdefaultatoms_8h_1ae0ac7f250f6e8b51c984fd0168e0f914"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">platform_defaultatoms_init</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="globalcontext.h.html#c.libAtomVM.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.platform_defaultatoms_init" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="defaultatoms.c.html" class="btn btn-neutral float-left" title="defaultatoms.c" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dictionary.c.html" class="btn btn-neutral float-right" title="dictionary.c" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">AtomVM Docs</span>
+      v: v0.6.2
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt>Versions</dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="/v0.6.2/pdf/AtomVM-v0.6.2.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.2/epub/AtomVM-v0.6.2.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module erlang</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module erlang</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>An implementation of the Erlang/OTP erlang module, for functions
+  that are not already defined as NIFs.
+
+
+<h2><a name="description">Description</a></h2>An implementation of the Erlang/OTP erlang module, for functions
+  that are not already defined as NIFs.
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#apply-3">apply/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#is_map-1">is_map/1</a></td><td>    Return <code>true</code> if <code>Map</code> is a map; <code>false</code>, otherwise.</td></tr>
+<tr><td valign="top"><a href="#map_get-2">map_get/2</a></td><td>    Get the value in <code>Map</code> associated with <code>Key</code>, if it exists.</td></tr>
+<tr><td valign="top"><a href="#map_is_key-2">map_is_key/2</a></td><td>    Return <code>true</code> if <code>Key</code> is associated with a value in <code>Map</code>; <code>false</code>, otherwise.</td></tr>
+<tr><td valign="top"><a href="#map_size-1">map_size/1</a></td><td>Returns the size of (i.e., the number of entries in) the map.</td></tr>
+<tr><td valign="top"><a href="#max-2">max/2</a></td><td>    Return the minimum value of two terms.</td></tr>
+<tr><td valign="top"><a href="#md5-1">md5/1</a></td><td>    Computes the MD5 hash of an input binary, as defined by
+           https://www.ietf.org/rfc/rfc1321.txt.</td></tr>
+<tr><td valign="top"><a href="#min-2">min/2</a></td><td>    Return the minimum value of two terms.</td></tr>
+<tr><td valign="top"><a href="#process_info-2">process_info/2</a></td><td>    Return process information.</td></tr>
+<tr><td valign="top"><a href="#send_after-3">send_after/3</a></td><td>    Send Msg to Dest after Time ms.</td></tr>
+<tr><td valign="top"><a href="#start_timer-3">start_timer/3</a></td><td>    Start a timer, and send {timeout, TimerRef, Msg} to Dest after
+           Time ms, where TimerRef is the reference returned from this function.</td></tr>
+<tr><td valign="top"><a href="#system_info-1">system_info/1</a></td><td>    Return system information.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="apply-3">apply/3</a></h3>
+<div class="spec">
+<p><tt>apply(Module, Function, Args) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="is_map-1">is_map/1</a></h3>
+<div class="spec">
+<p><tt>is_map(Map::map()) -&gt; boolean()</tt><br></p>
+<p><tt>Map</tt>: the map to test<br>
+</p>
+<p>returns: <code>true</code> if <code>Map</code> is a map; <code>false</code>, otherwise.</p>
+</div><p><p>    Return <code>true</code> if <code>Map</code> is a map; <code>false</code>, otherwise.</p>
+ 
+  This function may be used in a guard expression.</p>
+
+<h3 class="function"><a name="map_get-2">map_get/2</a></h3>
+<div class="spec">
+<p><tt>map_get(Key::term(), Map::map()) -&gt; Value::term()</tt><br></p>
+<p><tt>Key</tt>: the key to get<br>
+<tt>Map</tt>: the map from which to get the value<br>
+</p>
+<p>returns: the value in <code>Map</code> associated with <code>Key</code>, if it exists.</p>
+</div><p>throws <tt>{badkey, Key} | {badmap, Map}</tt></p>
+<p><p>    Get the value in <code>Map</code> associated with <code>Key</code>, if it exists.</p>
+ 
+  <p>This function throws a <code>{badkey, Key}</code> exception if 'Key' does not occur in <code>Map</code> or
+  a <code>{badmap, Map}</code> if <code>Map</code> is not a map.</p>
+ 
+  This function may be used in a guard expression.</p>
+
+<h3 class="function"><a name="map_is_key-2">map_is_key/2</a></h3>
+<div class="spec">
+<p><tt>map_is_key(Key::term(), Map::map()) -&gt; boolean()</tt><br></p>
+<p><tt>Key</tt>: the key<br>
+<tt>Map</tt>: the map<br>
+</p>
+<p>returns: <code>true</code> if <code>Key</code> is associated with a value in <code>Map</code>; <code>false</code>, otherwise.</p>
+</div><p>throws <tt>{badmap, Map}</tt></p>
+<p><p>    Return <code>true</code> if <code>Key</code> is associated with a value in <code>Map</code>; <code>false</code>, otherwise.</p>
+ 
+  <p>This function throws a <code>{badmap, Map}</code> exception if <code>Map</code> is not a map.</p>
+ 
+  This function may be used in a guard expression.</p>
+
+<h3 class="function"><a name="map_size-1">map_size/1</a></h3>
+<div class="spec">
+<p><tt>map_size(Map::map()) -&gt; non_neg_integer()</tt><br></p>
+<p><tt>Map</tt>: the map<br>
+</p>
+<p>returns: the size of the map</p>
+</div><p>throws <tt>{badmap, Map}</tt></p>
+<p><p>Returns the size of (i.e., the number of entries in) the map</p>
+ 
+  <p>This function throws a <code>{badmap, Map}</code> exception if <code>Map</code> is not a map.</p>
+ 
+  This function may be used in a guard expression.</p>
+
+<h3 class="function"><a name="max-2">max/2</a></h3>
+<div class="spec">
+<p><tt>max(A, B) -&gt; any()</tt></p>
+</div><p><p>    Return the minimum value of two terms</p>
+ 
+  Terms are compared using <code>&gt;</code> and follow the ordering principles defined in
+  https://www.erlang.org/doc/reference_manual/expressions.html#term-comparisons</p>
+
+<h3 class="function"><a name="md5-1">md5/1</a></h3>
+<div class="spec">
+<p><tt>md5(Data::binary()) -&gt; binary()</tt><br></p>
+<p><tt>Data</tt>: data to compute hash of, as a binary.<br>
+</p>
+<p>returns: the md5 hash of the input Data, as a 16-byte binary.</p>
+</div><p>    Computes the MD5 hash of an input binary, as defined by
+           https://www.ietf.org/rfc/rfc1321.txt</p>
+
+<h3 class="function"><a name="min-2">min/2</a></h3>
+<div class="spec">
+<p><tt>min(A, B) -&gt; any()</tt></p>
+</div><p><p>    Return the minimum value of two terms</p>
+ 
+  Terms are compared using <code>&lt;</code> and follow the ordering principles defined in
+  https://www.erlang.org/doc/reference_manual/expressions.html#term-comparisons</p>
+
+<h3 class="function"><a name="process_info-2">process_info/2</a></h3>
+<div class="spec">
+<p><tt>process_info(Pid::pid(), Key::atom()) -&gt; term()</tt><br></p>
+<p><tt>Pid</tt>: the process pid.<br>
+<tt>Key</tt>: key used to find process information.<br>
+</p>
+<p>returns: process information for the specified pid defined by the specified key.</p>
+</div><p><p>    Return process information.</p>
+ 
+  <p>This function returns information about the specified process.  
+The type of information returned is dependent on the specified key.</p>
+ 
+  The following keys are supported:
+  <ul>
+       <li><b>heap_size</b> the number of words used in the heap (integer)</li>
+       <li><b>stack_size</b> the number of words used in the stack (integer)</li>
+       <li><b>message_queue_len</b> the number of messages enqueued for the process (integer)</li>
+       <li><b>memory</b> the estimated total number of bytes in use by the process (integer)</li>
+  </ul>
+  Specifying an unsupported term or atom raises a bad_arg error.
+ </p>
+
+<h3 class="function"><a name="send_after-3">send_after/3</a></h3>
+<div class="spec">
+<p><tt>send_after(Time::non_neg_integer(), Dest::pid() | atom(), Msg::term()) -&gt; reference()</tt><br></p>
+<p><tt>Time</tt>: time in milliseconds after which to send the message.<br>
+<tt>Dest</tt>: Pid or server name to which to send the message.<br>
+<tt>Msg</tt>: Message to send to Dest after Time ms.<br>
+</p>
+<p>returns: a reference that can be used to cancel the timer, if desired.</p>
+</div><p>    Send Msg to Dest after Time ms.</p>
+
+<h3 class="function"><a name="start_timer-3">start_timer/3</a></h3>
+<div class="spec">
+<p><tt>start_timer(Time::non_neg_integer(), Dest::pid() | atom(), Msg::term()) -&gt; reference()</tt><br></p>
+<p><tt>Time</tt>: time in milliseconds after which to send the timeout message.<br>
+<tt>Dest</tt>: Pid or server name to which to send the timeout message.<br>
+<tt>Msg</tt>: Message to send to Dest after Time ms.<br>
+</p>
+<p>returns: a reference that can be used to cancel the timer, if desired.</p>
+</div><p>    Start a timer, and send {timeout, TimerRef, Msg} to Dest after
+           Time ms, where TimerRef is the reference returned from this function.</p>
+
+<h3 class="function"><a name="system_info-1">system_info/1</a></h3>
+<div class="spec">
+<p><tt>system_info(Key::atom()) -&gt; term()</tt><br></p>
+<p><tt>Key</tt>: key used to find system information.<br>
+</p>
+<p>returns: system information defined by the specified key.</p>
+</div><p><p>    Return system information.</p>
+ 
+  <p>This function returns information about the system on which AtomVM is  
+running. The type of information returned is dependent on the specified key.</p>
+ 
+  The following keys are supported on all platforms:
+  <ul>
+       <li><b>process_count</b> the number of processes running in the node (integer)</li>
+       <li><b>port_count</b> the number of ports running in the node (integer)</li>
+       <li><b>atom_count</b> the number of atoms currently allocated (integer)</li>
+       <li><b>system_architecture</b> the processor and OS architecture (binary)</li>
+       <li><b>version</b> the version of the AtomVM executable image (binary)</li>
+       <li><b>wordsize</b> the number of bytes in a machine word on the current platform (integer)</li>
+  </ul>
+  The following keys are supported on the ESP32 platform:
+  <ul>
+       <li><b>esp32_free_heap_size</b> the number of (noncontiguous) free bytes in the ESP32 heap (integer)</li>
+  </ul>
+ 
+  <p>Additional keys may be supported on some platforms that are not documented here.</p>
+ 
+  <p>Specifying an unsupported atom key will results in returning the atom 'undefined'.</p>
+ 
+  Specifying a term that is not an atom will result in a bad_arg error.
+ </p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

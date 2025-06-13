@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>opcodes.h &mdash; AtomVM 0.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/libatomvm/src/opcodes.h.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=50f829f1"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="opcodesswitch.h" href="opcodesswitch.h.html" />
+    <link rel="prev" title="nifs.h" href="nifs.h.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html">libAtomVM</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#libatomvm-header-files">libAtomVM Header Files</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="atom.c.html">atom.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom.h.html">atom.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.c.html">atom_table.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.h.html">atom_table.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomshashtable.c.html">atomshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomshashtable.h.html">atomshashtable.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm_version.h.html">atomvm_version.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.c.html">avmpack.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.h.html">avmpack.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.c.html">bif.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.h.html">bif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.c.html">bitstring.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.h.html">bitstring.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.c.html">context.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.h.html">context.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.c.html">debug.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.h.html">debug.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="defaultatoms.c.html">defaultatoms.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="defaultatoms.h.html">defaultatoms.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.c.html">dictionary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.h.html">dictionary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif.h.html">erl_nif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif_priv.h.html">erl_nif_priv.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exportedfunction.h.html">exportedfunction.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.c.html">externalterm.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.h.html">externalterm.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.c.html">globalcontext.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.h.html">globalcontext.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.c.html">iff.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.h.html">iff.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.c.html">inet.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.h.html">inet.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.c.html">interop.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.h.html">interop.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="listeners.h.html">listeners.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.c.html">mailbox.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.h.html">mailbox.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.c.html">memory.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.h.html">memory.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.c.html">module.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.h.html">module.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.c.html">nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.h.html">nifs.h</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">opcodes.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="opcodesswitch.h.html">opcodesswitch.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.c.html">otp_crypto.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.h.html">otp_crypto.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.c.html">otp_net.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.h.html">otp_net.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.c.html">otp_socket.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.h.html">otp_socket.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.c.html">otp_ssl.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.h.html">otp_ssl.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="overflow_helpers.h.html">overflow_helpers.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="platform_nifs.h.html">platform_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.c.html">port.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.h.html">port.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.c.html">posix_nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.h.html">posix_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.c.html">refc_binary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.h.html">refc_binary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.c.html">resources.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.h.html">resources.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scheduler.c.html">scheduler.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scheduler.h.html">scheduler.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smp.h.html">smp.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.c.html">stacktrace.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.h.html">stacktrace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="synclist.h.html">synclist.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys.h.html">sys.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys_mbedtls.h.html">sys_mbedtls.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tempstack.h.html">tempstack.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.c.html">term.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.h.html">term.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term_typedef.h.html">term_typedef.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.c.html">timer_list.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.h.html">timer_list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.h.html">utils.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.h.html">valueshashtable.h</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">libAtomVM</a></li>
+      <li class="breadcrumb-item active">opcodes.h</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="opcodes-h">
+<h1>opcodes.h<a class="headerlink" href="#opcodes-h" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_LABEL">
+<span class="target" id="libatomvmopcodes_8h_1a802631aef53e649fe75dbabec3721c27"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_LABEL</span></span></span> <span class="pre">1</span><a class="headerlink" href="#c.libAtomVM.OP_LABEL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FUNC_INFO">
+<span class="target" id="libatomvmopcodes_8h_1affcd52b5227b271223f9342c7b8380fb"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FUNC_INFO</span></span></span> <span class="pre">2</span><a class="headerlink" href="#c.libAtomVM.OP_FUNC_INFO" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_INT_CALL_END">
+<span class="target" id="libatomvmopcodes_8h_1af4aef09cbe78ecef0cd80b6df7570ab0"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_INT_CALL_END</span></span></span> <span class="pre">3</span><a class="headerlink" href="#c.libAtomVM.OP_INT_CALL_END" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CALL">
+<span class="target" id="libatomvmopcodes_8h_1a4583668f6d2a4965e5cb28a2c7b3e2e6"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CALL</span></span></span> <span class="pre">4</span><a class="headerlink" href="#c.libAtomVM.OP_CALL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CALL_LAST">
+<span class="target" id="libatomvmopcodes_8h_1a8e4400292cf4a86ae7b30a72b932f598"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CALL_LAST</span></span></span> <span class="pre">5</span><a class="headerlink" href="#c.libAtomVM.OP_CALL_LAST" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CALL_ONLY">
+<span class="target" id="libatomvmopcodes_8h_1a173dbcbdf18208dc7c57e5b51cd21692"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CALL_ONLY</span></span></span> <span class="pre">6</span><a class="headerlink" href="#c.libAtomVM.OP_CALL_ONLY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CALL_EXT">
+<span class="target" id="libatomvmopcodes_8h_1a2a0dd0e47fbc6025f0115a698673e837"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CALL_EXT</span></span></span> <span class="pre">7</span><a class="headerlink" href="#c.libAtomVM.OP_CALL_EXT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CALL_EXT_LAST">
+<span class="target" id="libatomvmopcodes_8h_1a454d73552a4f776a20402ee74f12c92e"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CALL_EXT_LAST</span></span></span> <span class="pre">8</span><a class="headerlink" href="#c.libAtomVM.OP_CALL_EXT_LAST" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BIF0">
+<span class="target" id="libatomvmopcodes_8h_1a5959f09375dd0629366cd75b92702115"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BIF0</span></span></span> <span class="pre">9</span><a class="headerlink" href="#c.libAtomVM.OP_BIF0" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BIF1">
+<span class="target" id="libatomvmopcodes_8h_1adbfae0fafab41b1a5ecd7d9ef709861c"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BIF1</span></span></span> <span class="pre">10</span><a class="headerlink" href="#c.libAtomVM.OP_BIF1" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BIF2">
+<span class="target" id="libatomvmopcodes_8h_1abb0c030194d25c2406bc5a3a58b0e6ed"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BIF2</span></span></span> <span class="pre">11</span><a class="headerlink" href="#c.libAtomVM.OP_BIF2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_ALLOCATE">
+<span class="target" id="libatomvmopcodes_8h_1a44c3b983c25e8e8574a186e12ee3f177"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_ALLOCATE</span></span></span> <span class="pre">12</span><a class="headerlink" href="#c.libAtomVM.OP_ALLOCATE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_ALLOCATE_HEAP">
+<span class="target" id="libatomvmopcodes_8h_1a33d82eec44573b6f5377a5f5d6d28bff"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_ALLOCATE_HEAP</span></span></span> <span class="pre">13</span><a class="headerlink" href="#c.libAtomVM.OP_ALLOCATE_HEAP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_ALLOCATE_ZERO">
+<span class="target" id="libatomvmopcodes_8h_1a42eacbe30492a98aaac49bfefd26d056"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_ALLOCATE_ZERO</span></span></span> <span class="pre">14</span><a class="headerlink" href="#c.libAtomVM.OP_ALLOCATE_ZERO" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_ALLOCATE_HEAP_ZERO">
+<span class="target" id="libatomvmopcodes_8h_1a3b1407ef9f1e036dbc8962e49e4e856b"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_ALLOCATE_HEAP_ZERO</span></span></span> <span class="pre">15</span><a class="headerlink" href="#c.libAtomVM.OP_ALLOCATE_HEAP_ZERO" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_TEST_HEAP">
+<span class="target" id="libatomvmopcodes_8h_1a8b787215a75d4f09ff0844ae4e3bec61"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_TEST_HEAP</span></span></span> <span class="pre">16</span><a class="headerlink" href="#c.libAtomVM.OP_TEST_HEAP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_KILL">
+<span class="target" id="libatomvmopcodes_8h_1a7e84bae96a60988173efdc1185aceeb4"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_KILL</span></span></span> <span class="pre">17</span><a class="headerlink" href="#c.libAtomVM.OP_KILL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_DEALLOCATE">
+<span class="target" id="libatomvmopcodes_8h_1af9ca1fe1c8c863b9718f53cc9aa7d4c8"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_DEALLOCATE</span></span></span> <span class="pre">18</span><a class="headerlink" href="#c.libAtomVM.OP_DEALLOCATE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_RETURN">
+<span class="target" id="libatomvmopcodes_8h_1a7f3b93299da1c382f8b941e730b968ea"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_RETURN</span></span></span> <span class="pre">19</span><a class="headerlink" href="#c.libAtomVM.OP_RETURN" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_SEND">
+<span class="target" id="libatomvmopcodes_8h_1add130e4772be3676dc2428d43d8cfd84"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_SEND</span></span></span> <span class="pre">20</span><a class="headerlink" href="#c.libAtomVM.OP_SEND" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_REMOVE_MESSAGE">
+<span class="target" id="libatomvmopcodes_8h_1a706a79eb45be32d86224e51889b4dc05"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_REMOVE_MESSAGE</span></span></span> <span class="pre">21</span><a class="headerlink" href="#c.libAtomVM.OP_REMOVE_MESSAGE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_TIMEOUT">
+<span class="target" id="libatomvmopcodes_8h_1a1edfa98369961982b96768d8816754dc"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_TIMEOUT</span></span></span> <span class="pre">22</span><a class="headerlink" href="#c.libAtomVM.OP_TIMEOUT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_LOOP_REC">
+<span class="target" id="libatomvmopcodes_8h_1ab4b2a572ad67e364080426ab0c8b4ef8"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_LOOP_REC</span></span></span> <span class="pre">23</span><a class="headerlink" href="#c.libAtomVM.OP_LOOP_REC" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_LOOP_REC_END">
+<span class="target" id="libatomvmopcodes_8h_1a5d5fe49d586bd3361110349c1561d58b"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_LOOP_REC_END</span></span></span> <span class="pre">24</span><a class="headerlink" href="#c.libAtomVM.OP_LOOP_REC_END" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_WAIT">
+<span class="target" id="libatomvmopcodes_8h_1a93b7bb1edaf26562ce648a67fa3e2c97"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_WAIT</span></span></span> <span class="pre">25</span><a class="headerlink" href="#c.libAtomVM.OP_WAIT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_WAIT_TIMEOUT">
+<span class="target" id="libatomvmopcodes_8h_1ac36fe2bb0ff973cd353b98d7b4dc548b"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_WAIT_TIMEOUT</span></span></span> <span class="pre">26</span><a class="headerlink" href="#c.libAtomVM.OP_WAIT_TIMEOUT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_LT">
+<span class="target" id="libatomvmopcodes_8h_1a0b0fb62f7f07aebccdb31df13ea099cd"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_LT</span></span></span> <span class="pre">39</span><a class="headerlink" href="#c.libAtomVM.OP_IS_LT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_GE">
+<span class="target" id="libatomvmopcodes_8h_1aab17b346d52ab9c74b168726a3605acd"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_GE</span></span></span> <span class="pre">40</span><a class="headerlink" href="#c.libAtomVM.OP_IS_GE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_EQUAL">
+<span class="target" id="libatomvmopcodes_8h_1a5267bdf11fa5e1ad18aaa8171c93eac7"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_EQUAL</span></span></span> <span class="pre">41</span><a class="headerlink" href="#c.libAtomVM.OP_IS_EQUAL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_NOT_EQUAL">
+<span class="target" id="libatomvmopcodes_8h_1a48f6100de4f4e711563918ffe15fdd22"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_NOT_EQUAL</span></span></span> <span class="pre">42</span><a class="headerlink" href="#c.libAtomVM.OP_IS_NOT_EQUAL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_EQ_EXACT">
+<span class="target" id="libatomvmopcodes_8h_1a470cdd9ee4a2fe1dd267ff03d410afb7"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_EQ_EXACT</span></span></span> <span class="pre">43</span><a class="headerlink" href="#c.libAtomVM.OP_IS_EQ_EXACT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_NOT_EQ_EXACT">
+<span class="target" id="libatomvmopcodes_8h_1abd95b93e72ed061d5fbccc772909b3a8"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_NOT_EQ_EXACT</span></span></span> <span class="pre">44</span><a class="headerlink" href="#c.libAtomVM.OP_IS_NOT_EQ_EXACT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_INTEGER">
+<span class="target" id="libatomvmopcodes_8h_1aa6253fbe8e4b9fa7e4bab06afdeb7012"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_INTEGER</span></span></span> <span class="pre">45</span><a class="headerlink" href="#c.libAtomVM.OP_IS_INTEGER" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_FLOAT">
+<span class="target" id="libatomvmopcodes_8h_1a7beca72fb044686ae3de5b2378d3d4f4"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_FLOAT</span></span></span> <span class="pre">46</span><a class="headerlink" href="#c.libAtomVM.OP_IS_FLOAT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_NUMBER">
+<span class="target" id="libatomvmopcodes_8h_1a9f41b2135c8932462f903a31e3276a0a"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_NUMBER</span></span></span> <span class="pre">47</span><a class="headerlink" href="#c.libAtomVM.OP_IS_NUMBER" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_ATOM">
+<span class="target" id="libatomvmopcodes_8h_1a02b36a9daa62cd0dab0206b504f851db"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_ATOM</span></span></span> <span class="pre">48</span><a class="headerlink" href="#c.libAtomVM.OP_IS_ATOM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_PID">
+<span class="target" id="libatomvmopcodes_8h_1aeb53a8a9a4d172475ecd400b3df24314"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_PID</span></span></span> <span class="pre">49</span><a class="headerlink" href="#c.libAtomVM.OP_IS_PID" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_REFERENCE">
+<span class="target" id="libatomvmopcodes_8h_1ad3ed4486766f097db59bd5db89763000"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_REFERENCE</span></span></span> <span class="pre">50</span><a class="headerlink" href="#c.libAtomVM.OP_IS_REFERENCE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_PORT">
+<span class="target" id="libatomvmopcodes_8h_1a99b1626c49ab808a7629eabf39a5a883"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_PORT</span></span></span> <span class="pre">51</span><a class="headerlink" href="#c.libAtomVM.OP_IS_PORT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_NIL">
+<span class="target" id="libatomvmopcodes_8h_1a3ba43f71c236249b4d6ef492973a263b"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_NIL</span></span></span> <span class="pre">52</span><a class="headerlink" href="#c.libAtomVM.OP_IS_NIL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_BINARY">
+<span class="target" id="libatomvmopcodes_8h_1a34d09270240f125679af6dfc061eae8a"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_BINARY</span></span></span> <span class="pre">53</span><a class="headerlink" href="#c.libAtomVM.OP_IS_BINARY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_LIST">
+<span class="target" id="libatomvmopcodes_8h_1a879f4bd58f5d8b516de545e3efb24202"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_LIST</span></span></span> <span class="pre">55</span><a class="headerlink" href="#c.libAtomVM.OP_IS_LIST" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_NONEMPTY_LIST">
+<span class="target" id="libatomvmopcodes_8h_1abd2e26322a199b1882714b2b7edc997a"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_NONEMPTY_LIST</span></span></span> <span class="pre">56</span><a class="headerlink" href="#c.libAtomVM.OP_IS_NONEMPTY_LIST" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_TUPLE">
+<span class="target" id="libatomvmopcodes_8h_1a6efecd333002b97809b8c38ecc182b34"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_TUPLE</span></span></span> <span class="pre">57</span><a class="headerlink" href="#c.libAtomVM.OP_IS_TUPLE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_TEST_ARITY">
+<span class="target" id="libatomvmopcodes_8h_1a93cd6a24fb3f4856fddb6fee73c58b01"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_TEST_ARITY</span></span></span> <span class="pre">58</span><a class="headerlink" href="#c.libAtomVM.OP_TEST_ARITY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_SELECT_VAL">
+<span class="target" id="libatomvmopcodes_8h_1af958142a7f753deda5dd45edd5f2ee78"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_SELECT_VAL</span></span></span> <span class="pre">59</span><a class="headerlink" href="#c.libAtomVM.OP_SELECT_VAL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_SELECT_TUPLE_ARITY">
+<span class="target" id="libatomvmopcodes_8h_1a205b8deb508793da76bdd39ef4bcb6dc"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_SELECT_TUPLE_ARITY</span></span></span> <span class="pre">60</span><a class="headerlink" href="#c.libAtomVM.OP_SELECT_TUPLE_ARITY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_JUMP">
+<span class="target" id="libatomvmopcodes_8h_1a2c0c5b3bb88f6119fd2455997fe9ea81"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_JUMP</span></span></span> <span class="pre">61</span><a class="headerlink" href="#c.libAtomVM.OP_JUMP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CATCH">
+<span class="target" id="libatomvmopcodes_8h_1a8bfd7249cf6adbb2cf41db112c099bd2"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CATCH</span></span></span> <span class="pre">62</span><a class="headerlink" href="#c.libAtomVM.OP_CATCH" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CATCH_END">
+<span class="target" id="libatomvmopcodes_8h_1a33c72ba00509e73aa22fbe4dff1f4112"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CATCH_END</span></span></span> <span class="pre">63</span><a class="headerlink" href="#c.libAtomVM.OP_CATCH_END" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_MOVE">
+<span class="target" id="libatomvmopcodes_8h_1a989aa8dffbb56b3becf3abbc43e98dec"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_MOVE</span></span></span> <span class="pre">64</span><a class="headerlink" href="#c.libAtomVM.OP_MOVE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_GET_LIST">
+<span class="target" id="libatomvmopcodes_8h_1a95689ed9fb0a86e406d306ca0d82c786"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_GET_LIST</span></span></span> <span class="pre">65</span><a class="headerlink" href="#c.libAtomVM.OP_GET_LIST" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_GET_TUPLE_ELEMENT">
+<span class="target" id="libatomvmopcodes_8h_1a70f442d5964b8407d2b462c4ab1eefcc"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_GET_TUPLE_ELEMENT</span></span></span> <span class="pre">66</span><a class="headerlink" href="#c.libAtomVM.OP_GET_TUPLE_ELEMENT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_SET_TUPLE_ELEMENT">
+<span class="target" id="libatomvmopcodes_8h_1a74ca27eb87316b0d28a69767f312e79e"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_SET_TUPLE_ELEMENT</span></span></span> <span class="pre">67</span><a class="headerlink" href="#c.libAtomVM.OP_SET_TUPLE_ELEMENT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_PUT_LIST">
+<span class="target" id="libatomvmopcodes_8h_1a2faa3dbd1923bbeae4761d96985b8473"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_PUT_LIST</span></span></span> <span class="pre">69</span><a class="headerlink" href="#c.libAtomVM.OP_PUT_LIST" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_PUT_TUPLE">
+<span class="target" id="libatomvmopcodes_8h_1a49ae9b1f063d59b3c73640bb56fb9de8"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_PUT_TUPLE</span></span></span> <span class="pre">70</span><a class="headerlink" href="#c.libAtomVM.OP_PUT_TUPLE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_PUT">
+<span class="target" id="libatomvmopcodes_8h_1a9eafebd251641382580cbc6204a32a7c"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_PUT</span></span></span> <span class="pre">71</span><a class="headerlink" href="#c.libAtomVM.OP_PUT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BADMATCH">
+<span class="target" id="libatomvmopcodes_8h_1af7fcc8d601b1f0fb8d7fc33bcb40dcc6"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BADMATCH</span></span></span> <span class="pre">72</span><a class="headerlink" href="#c.libAtomVM.OP_BADMATCH" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IF_END">
+<span class="target" id="libatomvmopcodes_8h_1af4b69d30b529d453d4dd74c13d461158"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IF_END</span></span></span> <span class="pre">73</span><a class="headerlink" href="#c.libAtomVM.OP_IF_END" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CASE_END">
+<span class="target" id="libatomvmopcodes_8h_1a8975c0029613ae1b245b6e649c58d7f8"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CASE_END</span></span></span> <span class="pre">74</span><a class="headerlink" href="#c.libAtomVM.OP_CASE_END" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CALL_FUN">
+<span class="target" id="libatomvmopcodes_8h_1ad74b37dbc2087828d579f8c6455ce5f3"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CALL_FUN</span></span></span> <span class="pre">75</span><a class="headerlink" href="#c.libAtomVM.OP_CALL_FUN" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_FUNCTION">
+<span class="target" id="libatomvmopcodes_8h_1a7d3a55160959f2534e5a7acaed13a2d5"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_FUNCTION</span></span></span> <span class="pre">77</span><a class="headerlink" href="#c.libAtomVM.OP_IS_FUNCTION" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CALL_EXT_ONLY">
+<span class="target" id="libatomvmopcodes_8h_1a73847cdb98dbdde10be5cda65528a29d"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CALL_EXT_ONLY</span></span></span> <span class="pre">78</span><a class="headerlink" href="#c.libAtomVM.OP_CALL_EXT_ONLY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_PUT_INTEGER">
+<span class="target" id="libatomvmopcodes_8h_1a7ec80dd3f1b29b193ef2daa6d41965e9"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_PUT_INTEGER</span></span></span> <span class="pre">89</span><a class="headerlink" href="#c.libAtomVM.OP_BS_PUT_INTEGER" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_PUT_BINARY">
+<span class="target" id="libatomvmopcodes_8h_1aa5813ae9228ef37bdc12ad3f78724698"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_PUT_BINARY</span></span></span> <span class="pre">90</span><a class="headerlink" href="#c.libAtomVM.OP_BS_PUT_BINARY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_PUT_STRING">
+<span class="target" id="libatomvmopcodes_8h_1a0eee4a9cd92af2a4c916757e7204a408"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_PUT_STRING</span></span></span> <span class="pre">92</span><a class="headerlink" href="#c.libAtomVM.OP_BS_PUT_STRING" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FCLEARERROR">
+<span class="target" id="libatomvmopcodes_8h_1a2c4d67fb74318042ceb5ba5edca28a01"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FCLEARERROR</span></span></span> <span class="pre">94</span><a class="headerlink" href="#c.libAtomVM.OP_FCLEARERROR" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FCHECKERROR">
+<span class="target" id="libatomvmopcodes_8h_1a877424d99a7263eb93f229d94b4ce9e4"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FCHECKERROR</span></span></span> <span class="pre">95</span><a class="headerlink" href="#c.libAtomVM.OP_FCHECKERROR" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FMOVE">
+<span class="target" id="libatomvmopcodes_8h_1af1d3fc49f898217897ab7e535ef10bb2"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FMOVE</span></span></span> <span class="pre">96</span><a class="headerlink" href="#c.libAtomVM.OP_FMOVE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FCONV">
+<span class="target" id="libatomvmopcodes_8h_1aebc5abb7221f52de1859f27298c5d197"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FCONV</span></span></span> <span class="pre">97</span><a class="headerlink" href="#c.libAtomVM.OP_FCONV" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FADD">
+<span class="target" id="libatomvmopcodes_8h_1a46fd838b4cc0dc9cc6cf480d2eccc07b"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FADD</span></span></span> <span class="pre">98</span><a class="headerlink" href="#c.libAtomVM.OP_FADD" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FSUB">
+<span class="target" id="libatomvmopcodes_8h_1a9d73dd43848931faa976365877fc22da"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FSUB</span></span></span> <span class="pre">99</span><a class="headerlink" href="#c.libAtomVM.OP_FSUB" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FMUL">
+<span class="target" id="libatomvmopcodes_8h_1a8287f0e45d48f0334ffbff4556638b34"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FMUL</span></span></span> <span class="pre">100</span><a class="headerlink" href="#c.libAtomVM.OP_FMUL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FDIV">
+<span class="target" id="libatomvmopcodes_8h_1a29f1eb585189f9ded11479fbbce2f401"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FDIV</span></span></span> <span class="pre">101</span><a class="headerlink" href="#c.libAtomVM.OP_FDIV" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_FNEGATE">
+<span class="target" id="libatomvmopcodes_8h_1ac377ed2b03468021274a003170da9756"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_FNEGATE</span></span></span> <span class="pre">102</span><a class="headerlink" href="#c.libAtomVM.OP_FNEGATE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_MAKE_FUN2">
+<span class="target" id="libatomvmopcodes_8h_1a67db72d82120f03fb76af19f1ad0f819"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_MAKE_FUN2</span></span></span> <span class="pre">103</span><a class="headerlink" href="#c.libAtomVM.OP_MAKE_FUN2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_TRY">
+<span class="target" id="libatomvmopcodes_8h_1a2c1773a822733882441df49e7f2ff08b"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_TRY</span></span></span> <span class="pre">104</span><a class="headerlink" href="#c.libAtomVM.OP_TRY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_TRY_END">
+<span class="target" id="libatomvmopcodes_8h_1aaeb6ddaf94a9398a4c6176bc2ba0a312"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_TRY_END</span></span></span> <span class="pre">105</span><a class="headerlink" href="#c.libAtomVM.OP_TRY_END" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_TRY_CASE">
+<span class="target" id="libatomvmopcodes_8h_1a05d8a5308ffbf9c3dc4f51f16d949f72"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_TRY_CASE</span></span></span> <span class="pre">106</span><a class="headerlink" href="#c.libAtomVM.OP_TRY_CASE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_TRY_CASE_END">
+<span class="target" id="libatomvmopcodes_8h_1a2c3bdc015d8846164ec0de5d199ea49c"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_TRY_CASE_END</span></span></span> <span class="pre">107</span><a class="headerlink" href="#c.libAtomVM.OP_TRY_CASE_END" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_RAISE">
+<span class="target" id="libatomvmopcodes_8h_1ad7c64f4f37668da6626616745074356f"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_RAISE</span></span></span> <span class="pre">108</span><a class="headerlink" href="#c.libAtomVM.OP_RAISE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_INIT2">
+<span class="target" id="libatomvmopcodes_8h_1aad2a3964ce1097df8e6152a5ec3af79f"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_INIT2</span></span></span> <span class="pre">109</span><a class="headerlink" href="#c.libAtomVM.OP_BS_INIT2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_ADD">
+<span class="target" id="libatomvmopcodes_8h_1a8adb2e24d85ce4a74644193ab58aa3c6"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_ADD</span></span></span> <span class="pre">111</span><a class="headerlink" href="#c.libAtomVM.OP_BS_ADD" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_APPLY">
+<span class="target" id="libatomvmopcodes_8h_1a85edf74cc4e5b0279cd74356d4fcfecf"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_APPLY</span></span></span> <span class="pre">112</span><a class="headerlink" href="#c.libAtomVM.OP_APPLY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_APPLY_LAST">
+<span class="target" id="libatomvmopcodes_8h_1adb9dc0a0e0422616b6207a62217842a2"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_APPLY_LAST</span></span></span> <span class="pre">113</span><a class="headerlink" href="#c.libAtomVM.OP_APPLY_LAST" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_BOOLEAN">
+<span class="target" id="libatomvmopcodes_8h_1af062a84551a2456c1ea42b07847985f4"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_BOOLEAN</span></span></span> <span class="pre">114</span><a class="headerlink" href="#c.libAtomVM.OP_IS_BOOLEAN" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_FUNCTION2">
+<span class="target" id="libatomvmopcodes_8h_1a2dfafd5d410e545c601aa113854d5901"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_FUNCTION2</span></span></span> <span class="pre">115</span><a class="headerlink" href="#c.libAtomVM.OP_IS_FUNCTION2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_START_MATCH2">
+<span class="target" id="libatomvmopcodes_8h_1aae724976f08e3c0dfc1dd853b926f403"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_START_MATCH2</span></span></span> <span class="pre">116</span><a class="headerlink" href="#c.libAtomVM.OP_BS_START_MATCH2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_GET_INTEGER2">
+<span class="target" id="libatomvmopcodes_8h_1af80074f3bcf35e4b29403e8280d01cf7"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_GET_INTEGER2</span></span></span> <span class="pre">117</span><a class="headerlink" href="#c.libAtomVM.OP_BS_GET_INTEGER2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_GET_FLOAT2">
+<span class="target" id="libatomvmopcodes_8h_1a5945d06a1809ba5c6b0ed658598ce489"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_GET_FLOAT2</span></span></span> <span class="pre">118</span><a class="headerlink" href="#c.libAtomVM.OP_BS_GET_FLOAT2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_GET_BINARY2">
+<span class="target" id="libatomvmopcodes_8h_1aa7480a4359674270803fb9ae5bc70a4c"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_GET_BINARY2</span></span></span> <span class="pre">119</span><a class="headerlink" href="#c.libAtomVM.OP_BS_GET_BINARY2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_SKIP_BITS2">
+<span class="target" id="libatomvmopcodes_8h_1a4740b7029f0d2bdaf9462d2ca76aeff5"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_SKIP_BITS2</span></span></span> <span class="pre">120</span><a class="headerlink" href="#c.libAtomVM.OP_BS_SKIP_BITS2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_TEST_TAIL2">
+<span class="target" id="libatomvmopcodes_8h_1a4dde0117df588fb6713d292b96ea832e"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_TEST_TAIL2</span></span></span> <span class="pre">121</span><a class="headerlink" href="#c.libAtomVM.OP_BS_TEST_TAIL2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_SAVE2">
+<span class="target" id="libatomvmopcodes_8h_1a553d5828c25c694de90f9ff48be2099c"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_SAVE2</span></span></span> <span class="pre">122</span><a class="headerlink" href="#c.libAtomVM.OP_BS_SAVE2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_RESTORE2">
+<span class="target" id="libatomvmopcodes_8h_1a4bf3f9f391b99874d3e47435d71bad2e"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_RESTORE2</span></span></span> <span class="pre">123</span><a class="headerlink" href="#c.libAtomVM.OP_BS_RESTORE2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_GC_BIF1">
+<span class="target" id="libatomvmopcodes_8h_1a30bf059be60f23752c24af7a72545204"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_GC_BIF1</span></span></span> <span class="pre">124</span><a class="headerlink" href="#c.libAtomVM.OP_GC_BIF1" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_GC_BIF2">
+<span class="target" id="libatomvmopcodes_8h_1a28b94f37e4b63334a1c444d1f4983714"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_GC_BIF2</span></span></span> <span class="pre">125</span><a class="headerlink" href="#c.libAtomVM.OP_GC_BIF2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_BITSTR">
+<span class="target" id="libatomvmopcodes_8h_1ade08de67fa3a3c32b47b2f54e5355d9f"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_BITSTR</span></span></span> <span class="pre">129</span><a class="headerlink" href="#c.libAtomVM.OP_IS_BITSTR" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_CONTEXT_TO_BINARY">
+<span class="target" id="libatomvmopcodes_8h_1a8faecf00a8537a759fd4e785f17860d2"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_CONTEXT_TO_BINARY</span></span></span> <span class="pre">130</span><a class="headerlink" href="#c.libAtomVM.OP_BS_CONTEXT_TO_BINARY" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_TEST_UNIT">
+<span class="target" id="libatomvmopcodes_8h_1a0883dbdd832ae34c5abcfc892d863845"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_TEST_UNIT</span></span></span> <span class="pre">131</span><a class="headerlink" href="#c.libAtomVM.OP_BS_TEST_UNIT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_MATCH_STRING">
+<span class="target" id="libatomvmopcodes_8h_1a4274f12a78f7a764512e4ccb9a1027f5"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_MATCH_STRING</span></span></span> <span class="pre">132</span><a class="headerlink" href="#c.libAtomVM.OP_BS_MATCH_STRING" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_INIT_WRITABLE">
+<span class="target" id="libatomvmopcodes_8h_1ae51a44f76e9fcf9acc7fb0d26f21e4cb"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_INIT_WRITABLE</span></span></span> <span class="pre">133</span><a class="headerlink" href="#c.libAtomVM.OP_BS_INIT_WRITABLE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_APPEND">
+<span class="target" id="libatomvmopcodes_8h_1a462efff2da50522be6bd4fc68574b3ca"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_APPEND</span></span></span> <span class="pre">134</span><a class="headerlink" href="#c.libAtomVM.OP_BS_APPEND" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_PRIVATE_APPEND">
+<span class="target" id="libatomvmopcodes_8h_1a1ec37919fbf77dd31e15eabf017d7554"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_PRIVATE_APPEND</span></span></span> <span class="pre">135</span><a class="headerlink" href="#c.libAtomVM.OP_BS_PRIVATE_APPEND" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_TRIM">
+<span class="target" id="libatomvmopcodes_8h_1a836963d0ce030ca8e251567d6d56a0b6"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_TRIM</span></span></span> <span class="pre">136</span><a class="headerlink" href="#c.libAtomVM.OP_TRIM" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_INIT_BITS">
+<span class="target" id="libatomvmopcodes_8h_1a0034b12344dfa06b7116d6140cfa1a04"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_INIT_BITS</span></span></span> <span class="pre">137</span><a class="headerlink" href="#c.libAtomVM.OP_BS_INIT_BITS" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_GET_UTF8">
+<span class="target" id="libatomvmopcodes_8h_1a491b4b3e5135a491119476c5f72a8809"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_GET_UTF8</span></span></span> <span class="pre">138</span><a class="headerlink" href="#c.libAtomVM.OP_BS_GET_UTF8" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_SKIP_UTF8">
+<span class="target" id="libatomvmopcodes_8h_1aedb425a703a28f01931cf449f98a0e60"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_SKIP_UTF8</span></span></span> <span class="pre">139</span><a class="headerlink" href="#c.libAtomVM.OP_BS_SKIP_UTF8" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_GET_UTF16">
+<span class="target" id="libatomvmopcodes_8h_1a8981c0f3b3bbfa835ee7ec2814f19e82"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_GET_UTF16</span></span></span> <span class="pre">140</span><a class="headerlink" href="#c.libAtomVM.OP_BS_GET_UTF16" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_SKIP_UTF16">
+<span class="target" id="libatomvmopcodes_8h_1a2a8396997c8f75cb0ce2887814ac3dc3"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_SKIP_UTF16</span></span></span> <span class="pre">141</span><a class="headerlink" href="#c.libAtomVM.OP_BS_SKIP_UTF16" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_GET_UTF32">
+<span class="target" id="libatomvmopcodes_8h_1a0671bc584846067a69de98786e0c726b"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_GET_UTF32</span></span></span> <span class="pre">142</span><a class="headerlink" href="#c.libAtomVM.OP_BS_GET_UTF32" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_SKIP_UTF32">
+<span class="target" id="libatomvmopcodes_8h_1a68b144409ecb0eb77383fcb56ae5cc97"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_SKIP_UTF32</span></span></span> <span class="pre">143</span><a class="headerlink" href="#c.libAtomVM.OP_BS_SKIP_UTF32" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_UTF8_SIZE">
+<span class="target" id="libatomvmopcodes_8h_1a6a2205d7c5b9aff5630cd7dedd4c913a"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_UTF8_SIZE</span></span></span> <span class="pre">144</span><a class="headerlink" href="#c.libAtomVM.OP_BS_UTF8_SIZE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_PUT_UTF8">
+<span class="target" id="libatomvmopcodes_8h_1af72108966ec22264fdbc2d49833bb8bc"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_PUT_UTF8</span></span></span> <span class="pre">145</span><a class="headerlink" href="#c.libAtomVM.OP_BS_PUT_UTF8" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_UTF16_SIZE">
+<span class="target" id="libatomvmopcodes_8h_1a5e36c9bea54041de41040b095ed95fc8"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_UTF16_SIZE</span></span></span> <span class="pre">146</span><a class="headerlink" href="#c.libAtomVM.OP_BS_UTF16_SIZE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_PUT_UTF16">
+<span class="target" id="libatomvmopcodes_8h_1aee972a1048cf20d0bc46cf622f097dfc"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_PUT_UTF16</span></span></span> <span class="pre">147</span><a class="headerlink" href="#c.libAtomVM.OP_BS_PUT_UTF16" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_PUT_UTF32">
+<span class="target" id="libatomvmopcodes_8h_1a50242414026bd8e1ed687c09725aa56f"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_PUT_UTF32</span></span></span> <span class="pre">148</span><a class="headerlink" href="#c.libAtomVM.OP_BS_PUT_UTF32" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_RECV_MARK">
+<span class="target" id="libatomvmopcodes_8h_1a4ebdf50d18fbff5529b38d9a4aff3503"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_RECV_MARK</span></span></span> <span class="pre">150</span><a class="headerlink" href="#c.libAtomVM.OP_RECV_MARK" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_RECV_SET">
+<span class="target" id="libatomvmopcodes_8h_1abed954cc527db1cd9a59631318bb0de5"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_RECV_SET</span></span></span> <span class="pre">151</span><a class="headerlink" href="#c.libAtomVM.OP_RECV_SET" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_GC_BIF3">
+<span class="target" id="libatomvmopcodes_8h_1ab1c5fbfb796861152c908d37d5dc4abb"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_GC_BIF3</span></span></span> <span class="pre">152</span><a class="headerlink" href="#c.libAtomVM.OP_GC_BIF3" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_LINE">
+<span class="target" id="libatomvmopcodes_8h_1a9ad21637823870565cfd821730938e03"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_LINE</span></span></span> <span class="pre">153</span><a class="headerlink" href="#c.libAtomVM.OP_LINE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_PUT_MAP_ASSOC">
+<span class="target" id="libatomvmopcodes_8h_1ab93328860e3eac125c797f3f6cd218ac"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_PUT_MAP_ASSOC</span></span></span> <span class="pre">154</span><a class="headerlink" href="#c.libAtomVM.OP_PUT_MAP_ASSOC" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_PUT_MAP_EXACT">
+<span class="target" id="libatomvmopcodes_8h_1a0df7be41acb234030cce19e84e4cc7d0"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_PUT_MAP_EXACT</span></span></span> <span class="pre">155</span><a class="headerlink" href="#c.libAtomVM.OP_PUT_MAP_EXACT" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_MAP">
+<span class="target" id="libatomvmopcodes_8h_1a173249d12031ccbd108ff16397b9ef1b"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_MAP</span></span></span> <span class="pre">156</span><a class="headerlink" href="#c.libAtomVM.OP_IS_MAP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_HAS_MAP_FIELDS">
+<span class="target" id="libatomvmopcodes_8h_1a80686b857458eb47e12315d0d99e31c6"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_HAS_MAP_FIELDS</span></span></span> <span class="pre">157</span><a class="headerlink" href="#c.libAtomVM.OP_HAS_MAP_FIELDS" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_GET_MAP_ELEMENTS">
+<span class="target" id="libatomvmopcodes_8h_1a039c9c23fa01e46c41db21a824642e88"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_GET_MAP_ELEMENTS</span></span></span> <span class="pre">158</span><a class="headerlink" href="#c.libAtomVM.OP_GET_MAP_ELEMENTS" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_IS_TAGGED_TUPLE">
+<span class="target" id="libatomvmopcodes_8h_1aa6162a253876da32951e1717c67f05af"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_IS_TAGGED_TUPLE</span></span></span> <span class="pre">159</span><a class="headerlink" href="#c.libAtomVM.OP_IS_TAGGED_TUPLE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BUILD_STACKTRACE">
+<span class="target" id="libatomvmopcodes_8h_1a71c9756acac53063752d8a488f965cb5"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BUILD_STACKTRACE</span></span></span> <span class="pre">160</span><a class="headerlink" href="#c.libAtomVM.OP_BUILD_STACKTRACE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_GET_HD">
+<span class="target" id="libatomvmopcodes_8h_1aaf38ba88e34c716f3ef3230b461b849d"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_GET_HD</span></span></span> <span class="pre">162</span><a class="headerlink" href="#c.libAtomVM.OP_GET_HD" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_GET_TL">
+<span class="target" id="libatomvmopcodes_8h_1ac5a4e403022ca41d353be1ecb775b820"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_GET_TL</span></span></span> <span class="pre">163</span><a class="headerlink" href="#c.libAtomVM.OP_GET_TL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_PUT_TUPLE2">
+<span class="target" id="libatomvmopcodes_8h_1aae26a6e56a287afd8db49e3e252d56d6"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_PUT_TUPLE2</span></span></span> <span class="pre">164</span><a class="headerlink" href="#c.libAtomVM.OP_PUT_TUPLE2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_GET_TAIL">
+<span class="target" id="libatomvmopcodes_8h_1a043371d86308934c54110b1b31f56180"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_GET_TAIL</span></span></span> <span class="pre">165</span><a class="headerlink" href="#c.libAtomVM.OP_BS_GET_TAIL" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_START_MATCH3">
+<span class="target" id="libatomvmopcodes_8h_1a4081991aae1ad76160ab65993919d34a"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_START_MATCH3</span></span></span> <span class="pre">166</span><a class="headerlink" href="#c.libAtomVM.OP_BS_START_MATCH3" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_GET_POSITION">
+<span class="target" id="libatomvmopcodes_8h_1a53fe5b17c20f7abd429ba6c12c64c7c0"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_GET_POSITION</span></span></span> <span class="pre">167</span><a class="headerlink" href="#c.libAtomVM.OP_BS_GET_POSITION" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_SET_POSITION">
+<span class="target" id="libatomvmopcodes_8h_1a156470e8fc04410c64d33cf89a8a1ddb"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_SET_POSITION</span></span></span> <span class="pre">168</span><a class="headerlink" href="#c.libAtomVM.OP_BS_SET_POSITION" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_SWAP">
+<span class="target" id="libatomvmopcodes_8h_1a2193c19ef839c22a7d0c8fa8bf684aea"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_SWAP</span></span></span> <span class="pre">169</span><a class="headerlink" href="#c.libAtomVM.OP_SWAP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_START_MATCH4">
+<span class="target" id="libatomvmopcodes_8h_1acd84bad4ae20c9d47a3321b47eeb2405"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_START_MATCH4</span></span></span> <span class="pre">170</span><a class="headerlink" href="#c.libAtomVM.OP_BS_START_MATCH4" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_MAKE_FUN3">
+<span class="target" id="libatomvmopcodes_8h_1a97cf90e0d5d7377558e7cd730ad9094a"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_MAKE_FUN3</span></span></span> <span class="pre">171</span><a class="headerlink" href="#c.libAtomVM.OP_MAKE_FUN3" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_INIT_YREGS">
+<span class="target" id="libatomvmopcodes_8h_1aa90296f66a4d64e137168f8c698326ce"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_INIT_YREGS</span></span></span> <span class="pre">172</span><a class="headerlink" href="#c.libAtomVM.OP_INIT_YREGS" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_RECV_MARKER_BIND">
+<span class="target" id="libatomvmopcodes_8h_1a03141fb0d6e288f21217a7a6128966d5"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_RECV_MARKER_BIND</span></span></span> <span class="pre">173</span><a class="headerlink" href="#c.libAtomVM.OP_RECV_MARKER_BIND" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_RECV_MARKER_CLEAR">
+<span class="target" id="libatomvmopcodes_8h_1a93d07bdcadfb2173a7a0b3296431989e"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_RECV_MARKER_CLEAR</span></span></span> <span class="pre">174</span><a class="headerlink" href="#c.libAtomVM.OP_RECV_MARKER_CLEAR" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_RECV_MARKER_RESERVE">
+<span class="target" id="libatomvmopcodes_8h_1a7c1146920150080eaa52a3b72b663e47"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_RECV_MARKER_RESERVE</span></span></span> <span class="pre">175</span><a class="headerlink" href="#c.libAtomVM.OP_RECV_MARKER_RESERVE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_RECV_MARKER_USE">
+<span class="target" id="libatomvmopcodes_8h_1a8d0fbfc2d07b044ffa6703a4d30aae21"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_RECV_MARKER_USE</span></span></span> <span class="pre">176</span><a class="headerlink" href="#c.libAtomVM.OP_RECV_MARKER_USE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_CREATE_BIN">
+<span class="target" id="libatomvmopcodes_8h_1a55799315a1edb437ea50474cf32f0103"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_CREATE_BIN</span></span></span> <span class="pre">177</span><a class="headerlink" href="#c.libAtomVM.OP_BS_CREATE_BIN" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_CALL_FUN2">
+<span class="target" id="libatomvmopcodes_8h_1ac91dab9c09b5c488a59d508641ab8a8b"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_CALL_FUN2</span></span></span> <span class="pre">178</span><a class="headerlink" href="#c.libAtomVM.OP_CALL_FUN2" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BADRECORD">
+<span class="target" id="libatomvmopcodes_8h_1a8a5bd60b1abcf8e86981fd77723d1532"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BADRECORD</span></span></span> <span class="pre">180</span><a class="headerlink" href="#c.libAtomVM.OP_BADRECORD" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_UPDATE_RECORD">
+<span class="target" id="libatomvmopcodes_8h_1a3c6b509f6857acb3db84bf73f620e02e"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_UPDATE_RECORD</span></span></span> <span class="pre">181</span><a class="headerlink" href="#c.libAtomVM.OP_UPDATE_RECORD" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.OP_BS_MATCH">
+<span class="target" id="libatomvmopcodes_8h_1af1d7adefc18a441b04d44d9a5c85f3dd"></span><span class="sig-name descname"><span class="n"><span class="pre">OP_BS_MATCH</span></span></span> <span class="pre">182</span><a class="headerlink" href="#c.libAtomVM.OP_BS_MATCH" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="nifs.h.html" class="btn btn-neutral float-left" title="nifs.h" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="opcodesswitch.h.html" class="btn btn-neutral float-right" title="opcodesswitch.h" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">AtomVM Docs</span>
+      v: v0.6.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt>Versions</dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="/v0.6.0/pdf/AtomVM-v0.6.0.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.0/epub/AtomVM-v0.6.0.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

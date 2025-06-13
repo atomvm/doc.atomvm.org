@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Network Programming Guide</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/epub.css" /> 
+  </head><body>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <!--
+ Copyright 2020-2022 Fred Dushin <fred@dushin.net>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="network-programming-guide">
+<h1>Network Programming Guide</h1>
+<p>One of the exciting features of the ESP32 is its support for WiFi networking, allowing ESP32 micro-controllers to communicate with the outside world over common IP networking protocols, such as TCP or IDP.  The ESP32 and ISF SDK supports configuring an ESP32 in station mode (STA), whereby the device connects to an existing access point, as well as “softAP” mode (AP), whereby it functions as an access point, to which other stations can connect.   The ESP32 also supports a combined STA+softAP mode, which allows the device to function in both STA and softAP mode simultaneously.</p>
+<p>AtomVM provides an Erlang API interface for interacting with the WiFi networking layer on ESP32 devices, providing support for configuring your ESP32 device in STA mode, AP mode, or a combined STA+AP mode, allowing Erlang/Elixir applications to send and receive data from other devices on a network.  This interface is encapsulated in the <code class="docutils literal notranslate"><span class="pre">network</span></code> module, which implements a simple interface for connecting to existing WiFi networks or for functioning as a WiFi access point.</p>
+<p>Once the network has been set up (in STA or AP mode), AtomVM can use various socket interfaces to interact with the socket layer to create a client or server application.  For example, AtomVM supports the <code class="docutils literal notranslate"><span class="pre">gen_udp</span></code> and <code class="docutils literal notranslate"><span class="pre">gen_tcp</span></code> APIs, while AtomVM extensions may support HTTP, MQTT, and other protocols built over low-level networking interfaces.</p>
+<p>The AtomVM networking API leverages callback functions, allowing applications to be responsive to changes in the underlying network, which can frequently occur in embedded applications, where devices can easily lose and then regain network connectivity.  In such cases, it is important for applications to be resilient to changes in network availability, by closing or re-opening socket connections in response to disconnections and re-connections in the underlying network.</p>
+<p>This document describes the basic design of the AtomVM network interfaces, and how to interact programmatically with it.</p>
+<section id="station-sta-mode">
+<h2>Station (STA) mode</h2>
+<p>In STA mode, the ESP32 connects to an existing WiFi network.</p>
+<p>In this case, the input configuration should be a properties list containing a tuple of the form <code class="docutils literal notranslate"><span class="pre">{sta,</span> <span class="pre">&lt;sta-properties&gt;}</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;sta-properties&gt;</span></code> is a property list containing configuration properties for the device in station mode.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;sta-properties&gt;</span></code> property list should contain the following entries:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{ssid,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code>  The SSID to which the device should connect.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{psk,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code> The password required to authenticate to the network, if required.</p></li>
+</ul>
+<blockquote>
+<div><p>Note that the station mode SSID and password <em>may</em> be stored in non-volatile storage, in which case these parameters may be skipped.  See the “NVS Credentials” section below, for more information about using non-volatile storage to store credentials that persist across device reboots.</p>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> will immediately return <code class="docutils literal notranslate"><span class="pre">ok</span></code>, if the network was properly initialized, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if there was an error in configuration.  However, the application may want to wait for the device to connect to the target network and obtain an IP address, for example, before starting clients or services that require network access.</p>
+<p>Applications can specify callback functions, which get triggered as events emerge from the network layer, including connection to and disconnection from the target network, as well as IP address acquisition.</p>
+<p>Callback functions can be specified by the following configuration parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{connected,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device connects to the target network.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{disconnected,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device disconnects from the target network.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{got_ip,</span> <span class="pre">fun((ip_info())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device obtains an IP address.  In this case, the IPv4 IP address, net mask, and gateway are provided as a parameter to the callback function.</p></li>
+</ul>
+<blockquote>
+<div><p>Note.  IPv6 addresses are not yet supported in AtomVM.</p>
+</div></blockquote>
+<p>Callback functions are optional, but are highly recommended for building robust WiFi applications.  The return value from callback functions is ignored, and AtomVM provides no guarantees about the execution context (i.e., BEAM process) in which these functions are invoked.</p>
+<p>In addition, the following optional parameters can be specified to configure the AP network:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{dhcp_hostname,</span> <span class="pre">string()|binary()}</span></code> The DHCP hostname as which the device should register (<code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;atomvm-&lt;hexmac&gt;&quot;&gt;&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;hexmac&gt;</span></code> is the hexadecimal representation of the factory-assigned MAC address of the device).</p></li>
+</ul>
+<p>The following example illustrates initialization of the WiFi network in STA mode.  The example program will configure the network to connect to a specified network.  Events that occur during the lifecycle of the network will trigger invocations of the specified callback functions.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%% erlang
+Config = [
+    {sta, [
+        {ssid, &lt;&lt;&quot;myssid&quot;&gt;&gt;},
+        {psk,  &lt;&lt;&quot;mypsk&quot;&gt;&gt;},
+        {connected, fun connected/0,
+        {got_ip, fun got_ip/1},
+        {disconnected, fun disconnected/0}
+        {dhcp_hostname, &lt;&lt;&quot;myesp32&quot;&gt;&gt;}
+    ]}
+],
+ok = network:start(Config),
+...
+</pre></div>
+</div>
+<p>The following callback functions will be called when the corresponding events occur during the lifetime of the network connection.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%% erlang
+connected()) -&gt;
+    io:format(&quot;Connected to AP.~n&quot;).
+
+gotIp(IpInfo) -&gt;
+    io:format(&quot;Got IP: ~p~n&quot;, [IpInfo]).
+
+disconnected() -&gt;
+    io:format(&quot;Disconnected from AP.~n&quot;).
+</pre></div>
+</div>
+<p>In a typical application, the network should be configured and an IP address should be acquired first, before starting clients or services that have a dependency on the network.</p>
+<section id="convenience-functions">
+<h3>Convenience Functions</h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module supports the <code class="docutils literal notranslate"><span class="pre">network:wait_for_sta/1,2</span></code> convenience functions for applications that do not need robust connection management.  These functions are synchronous and will wait until the device is connected to the specified AP.  Supply the properties list specified in the <code class="docutils literal notranslate"><span class="pre">{sta,</span> <span class="pre">[...]}</span></code> component of the above configuration, in addition to an optional timeout (in milliseconds).</p>
+<p>For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%% erlang
+Config = [
+    {ssid, &lt;&lt;&quot;myssid&quot;&gt;&gt;},
+    {psk,  &lt;&lt;&quot;mypsk&quot;&gt;&gt;},
+    {dhcp_hostname, &lt;&lt;&quot;mydevice&quot;&gt;&gt;}
+],
+case network:wait_for_sta(Config, 15000) of
+    {ok, {Address, _Netmask, _Gateway}} -&gt;
+        io:format(&quot;Acquired IP address: ~p~n&quot;, [Address]);
+    {error, Reason} -&gt;
+        io:format(&quot;Network initialization failed: ~p~n&quot;, [Reason])
+end
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ap-mode">
+<h2>AP mode</h2>
+<p>In AP mode, the ESP32 starts a WiFi network to which other devices (laptops, mobile devices, other ESP32 devices, etc) can connect.  The ESP32 will create an IPv4 network, and will assign itself the address <code class="docutils literal notranslate"><span class="pre">192.168.4.1</span></code>.  Devices that attach to the ESP32 in AP mode will be assigned sequential addresses in the <code class="docutils literal notranslate"><span class="pre">192.168.4.0/24</span></code> range, e.g., <code class="docutils literal notranslate"><span class="pre">192.168.4.2</span></code>, <code class="docutils literal notranslate"><span class="pre">192.168.4.3</span></code>, etc.</p>
+<p>To initialize the ESP32 device in AP mode, the input configuration should be a properties list containing a tuple of the form <code class="docutils literal notranslate"><span class="pre">{ap,</span> <span class="pre">&lt;ap-properties&gt;}</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;ap-properties&gt;</span></code> is a property list containing configuration properties for the device in AP mode.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;ap-properties&gt;</span></code> property list may contain the following entries:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{ssid,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code>  The SSID to which the device should connect.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{psk,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code> The password required to authenticate to the network, if required.  Note that this password must be a minimum of 8 characters.</p></li>
+</ul>
+<p>If the SSID is omitted in configuration, the SSID name <code class="docutils literal notranslate"><span class="pre">atomvm-&lt;hexmac&gt;</span></code> will be created, where <code class="docutils literal notranslate"><span class="pre">&lt;hexmac&gt;</span></code> is the hexadecimal representation of the factory-assigned MAC address of the device.  This name should be sufficiently unique to disambiguate it from other reachable ESP32 devices, but it may also be difficult to read or remember.</p>
+<p>If the password is omitted, then an <em>open network</em> will be created, and a warning will be printed to the console.  Otherwise, the AP network will be started using WPA+WPA2 authentication.</p>
+<blockquote>
+<div><p>Note that the station mode SSID and password <em>may</em> be stored in non-volatile storage, in which case these parameters may be skipped.  See the “NVS Credentials” section below, for more information about using non-volatile storage to store credentials that persist across device reboots.</p>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> will immediately return <code class="docutils literal notranslate"><span class="pre">ok</span></code>, if the network was properly initialized, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if there was an error in configuration.  However, the application may want to wait for the device to to be ready to accept connections from other devices, or to be notified when other devices connect to this AP.</p>
+<p>Applications can specify callback functions, which get triggered as events emerge from the network layer, including when a station connects or disconnects from the AP, as well as when a station is assigned an IP address.</p>
+<p>Callback functions can be specified by the following configuration parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{ap_started,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the AP endpoint has started and is ready to be connected to.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{sta_connected,</span> <span class="pre">fun((Mac::binary())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when a device connects to the AP.  The MAC address of the connected station, as a 6-byte binary, is passed to the callback function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{sta_disconnected,</span> <span class="pre">fun((Mac::binary())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when a device disconnects from the AP.  The MAC address of the disconnected station, as a 6-byte binary, is passed to the callback function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{sta_ip_assigned,</span> <span class="pre">fun((ipv4_address())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the AP assigns an IP address to a station.  The assigned IP address is passed to the callback function.</p></li>
+</ul>
+<blockquote>
+<div><p>Note.  IPv6 addresses are not yet supported in AtomVM.</p>
+</div></blockquote>
+<p>Callback functions are completely optional, but are highly recommended for building robust WiFi applications.  The return value from callback functions is ignored, and AtomVM provides no guarantees about the execution context (i.e., BEAM process) in which these functions are invoked.</p>
+<p>In addition, the following optional parameters can be specified to configure the AP network:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{ssid_hidden,</span> <span class="pre">boolean()}</span></code> Whether the AP network should be not be broadcast (false, by default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{max_connections,</span> <span class="pre">non_neg_integer()}</span></code> The maximum number of devices that can connect to this network (by default, 4)</p></li>
+</ul>
+<p>The following example illustrates initialization of the WiFi network in AP mode.  The example program will configure the network to connect to start a WiFi network with the name <code class="docutils literal notranslate"><span class="pre">myssid</span></code> and password <code class="docutils literal notranslate"><span class="pre">mypsk</span></code>.  Events that occur during the lifecycle of the network will trigger invocations of the specified callback functions.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%% erlang
+Config = [
+    {ap, [
+        {ssid, &lt;&lt;&quot;myssid&quot;&gt;&gt;},
+        {psk,  &lt;&lt;&quot;mypsk&quot;&gt;&gt;},
+        {ap_started, fun ap_started/0},
+        {sta_connected, fun sta_connected/1},
+        {sta_ip_assigned, fun sta_ip_assigned/1},
+        {sta_disconnected, fun sta_disconnected/1},
+    ]}
+],
+ok = network:start(Config),
+...
+</pre></div>
+</div>
+<p>The following callback functions will be called when the corresponding events occur during the lifetime of the network connection.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%% erlang
+ap_started() -&gt;
+    io:format(&quot;AP started.~n&quot;).
+
+sta_connected(Mac) -&gt;
+    io:format(&quot;STA connected with mac ~p~n&quot;, [Mac]).
+
+sta_disconnected(Mac) -&gt;
+    io:format(&quot;STA disconnected with mac ~p~n&quot;, [Mac]).
+
+sta_ip_assigned(Address) -&gt;
+    io:format(&quot;STA assigned address ~p~n&quot;, [Address]).
+</pre></div>
+</div>
+<p>In a typical application, the network should be configured and the application should wait for the AP to report that it has started, before starting clients or services that have a dependency on the network.</p>
+<section id="id1">
+<h3>Convenience Functions</h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module supports the <code class="docutils literal notranslate"><span class="pre">network:wait_for_ap/1,2</span></code> convenience functions for applications that do not need robust connection management.  These functions are synchronous and will wait until the device is successfully starts an AP.  Supply the properties list specified in the <code class="docutils literal notranslate"><span class="pre">{ap,</span> <span class="pre">[...]}</span></code> component of the above configuration, in addition to an optional timeout (in milliseconds).</p>
+<p>For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%% erlang
+Config = [
+    {psk,  &lt;&lt;&quot;mypsk&quot;&gt;&gt;}
+],
+case network:wait_for_ap(Config, 15000) of
+    ok -&gt;
+        io:format(&quot;AP network started at 192.168.4.1~n&quot;);
+    {error, Reason} -&gt;
+        io:format(&quot;Network initialization failed: ~p~n&quot;, [Reason])
+end
+</pre></div>
+</div>
+</section>
+</section>
+<section id="sta-ap-mode">
+<h2>STA+AP mode</h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module can be started in both STA and AP mode.  In this case, the ESP32 device will both connect to an access point in its STA mode, and will simultaneously serve as an access point in its role in AP mode.</p>
+<p>In order to enable both STA and AP mode, simply provide valid configuration for both modes in the configuration structure supplied to the <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> function.</p>
+</section>
+<section id="sntp-support">
+<h2>SNTP Support</h2>
+<p>You may configure the networking layer to automatically synchronize time on the ESP32 with an NTP server accessible on the network.</p>
+<p>To synchronize time with an NTP server, add a property list with the tag <code class="docutils literal notranslate"><span class="pre">sntp</span></code> at the top level configuration passed into the <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> function.  Specify the NTP hostname or IP address with which your device should sync using the <code class="docutils literal notranslate"><span class="pre">endpoint</span></code> property tag, e.g.,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{sntp, [{endpoint, &lt;&lt;&quot;pool.ntp.org&quot;&gt;&gt;}]}
+</pre></div>
+</div>
+<p>The endpoint value can be a string or binary.</p>
+</section>
+<section id="nvs-credentials">
+<h2>NVS Credentials</h2>
+<p>It can become tiresome to enter an SSID and password for every application, and in general it is bad security practice to hard-wire WiFi credentials in your application source code.</p>
+<p>You may instead store an STA or AP SSID and PSK in non-volatile storage (NVS) on and ESP32 device under the <code class="docutils literal notranslate"><span class="pre">atomvm</span></code> namespace.  The following entries may be specified in non-volatile storage:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>namespace</p></th>
+<th class="head"><p>mode</p></th>
+<th class="head"><p>key</p></th>
+<th class="head"><p>type</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atomvm</span></code></p></td>
+<td><p>STA</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sta_ssid</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">binary()</span></code></p></td>
+<td><p>Station ID</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atomvm</span></code></p></td>
+<td><p>STA</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sta_psk</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">binary()</span></code></p></td>
+<td><p>Station password (if applicable)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atomvm</span></code></p></td>
+<td><p>AP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ap_ssid</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">binary()</span></code></p></td>
+<td><p>Access Point ID</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atomvm</span></code></p></td>
+<td><p>AP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ap_psk</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">binary()</span></code></p></td>
+<td><p>Access Point password (if applicable)</p></td>
+</tr>
+</tbody>
+</table>
+<p>If set in NVS storage, you may remove the corresponding <code class="docutils literal notranslate"><span class="pre">ssid</span></code> and <code class="docutils literal notranslate"><span class="pre">psk</span></code> parameters from the configuration used to initialize the network, and the SSID and PSK configured in NVS will be used, instead.  An SSID or PSK defined explicitly in configuration will override any values in NVS.</p>
+<p>You can set these credentials once, as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>esp:nvs_set_binary(atomvm, sta_ssid, &lt;&lt;&quot;myssid&quot;&gt;&gt;).
+esp:nvs_set_binary(atomvm, sta_psk, &lt;&lt;&quot;mypsk&quot;&gt;&gt;).
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>esp:nvs_set_binary(atomvm, ap_ssid, &lt;&lt;&quot;myssid&quot;&gt;&gt;).
+esp:nvs_set_binary(atomvm, ap_psk, &lt;&lt;&quot;mypsk&quot;&gt;&gt;).
+</pre></div>
+</div>
+<p>With these settings, you can run ESP programs that initialize the network without configuring your SSID and PSK explicitly in source code.</p>
+<blockquote>
+<div><p>Note.  Credentials are stored un-encrypted and in plaintext and should not be considered secure.  Future versions may use encrypted NVS storage.</p>
+</div></blockquote>
+</section>
+<section id="stopping-the-network">
+<h2>Stopping the Network</h2>
+<p>To stop the network and free any resources in use, issue the <code class="docutils literal notranslate"><span class="pre">stop/0</span></code> function:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>network:stop().
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note.  This function is currently not well tested.</p>
+</div></blockquote>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

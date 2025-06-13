@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Release Notes &mdash; AtomVM 0.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/release-notes.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=3437f9b5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started Guide" href="getting-started-guide.html" />
+    <link rel="prev" title="Welcome to AtomVM!" href="welcome-to-atomvm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#required-software">Required Software</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#esp32-support">ESP32 Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stm32-support">STM32 Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#raspberry-pi-pico-support">Raspberry Pi Pico Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Release Notes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+ Copyright 2023 AtomVM <atomvm.org>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section id="release-notes">
+<h1>Release Notes<a class="headerlink" href="#release-notes" title="Link to this heading"></a></h1>
+<p>Welcome to AtomVM <code class="docutils literal notranslate"><span class="pre">0.6.1</span></code></p>
+<p>These release notes provide version information about the current release of AtomVM.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>For a detailed list of changes since the last release consult the <a class="reference internal" href="CHANGELOG.html"><span class="std std-doc">Changelog</span></a>.</p>
+</div>
+<section id="required-software">
+<h2>Required Software<a class="headerlink" href="#required-software" title="Link to this heading"></a></h2>
+<p>The following software is required to develop Erlang or Elixir applications on AtomVM:</p>
+<ul class="simple">
+<li><p>An <a class="reference external" href="https://erlang.org">Erlang/OTP</a> compiler (<code class="docutils literal notranslate"><span class="pre">erlc</span></code>)</p></li>
+<li><p>The <a class="reference external" href="https://elixir-lang.org">Elixir</a> runtime, if developing Elixir applications.</p></li>
+<li><p>(recommended) For Erlang programs, <a class="reference external" href="https://rebar3.org"><code class="docutils literal notranslate"><span class="pre">rebar3</span></code></a></p></li>
+<li><p>(recommended) For Elixir programs, <a class="reference external" href="https://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html"><code class="docutils literal notranslate"><span class="pre">mix</span></code></a>, which ships with the Elixir runtime.</p></li>
+</ul>
+<p>AtomVM will run BEAM files that have been compiled using the following Erlang and Elixir versions:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Erlang Version</p></th>
+<th class="head"><p>Elixir Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>✅ OTP 21</p></td>
+<td><p>✅ 1.7</p></td>
+</tr>
+<tr class="row-odd"><td><p>✅ OTP 22</p></td>
+<td><p>✅ 1.8</p></td>
+</tr>
+<tr class="row-even"><td><p>✅ OTP 23</p></td>
+<td><p>✅ 1.11</p></td>
+</tr>
+<tr class="row-odd"><td><p>✅ OTP 24</p></td>
+<td><p>✅ 1.14</p></td>
+</tr>
+<tr class="row-even"><td><p>✅ OTP 25</p></td>
+<td><p>✅ 1.14</p></td>
+</tr>
+<tr class="row-odd"><td><p>✅ OTP 26</p></td>
+<td><p>✅ 1.15</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Versions of Elixir that are compatible with a particular OTP version may work.  This table reflects the versions that are tested.</p>
+</div>
+<p>Not all BEAM instructions are supported for every Erlang and Elixir compiler.  For details about which instructions are supported, see the <code class="docutils literal notranslate"><span class="pre">src/libAtomVM/opcodes.h</span></code> header file in the  <a class="reference external" href="https://github.com/atomvm/AtomVM/">AtomVM</a> github repository corresponding to the current release.</p>
+<p>For detailed information about features and bug fixes in the current release, see the AtomVM <a class="reference internal" href="CHANGELOG.html"><span class="std std-doc">Change Log</span></a>.  For information about how to update from previous versions of AtomVM, see the AtomVM <a class="reference internal" href="UPDATING.html"><span class="std std-doc">Updating</span></a> page.</p>
+<section id="esp32-support">
+<h3>ESP32 Support<a class="headerlink" href="#esp32-support" title="Link to this heading"></a></h3>
+<p>AtomVM supports deployment on the <a class="reference external" href="https://www.espressif.com/en/products/socs">Espressif ESP32</a> family of architectures.</p>
+<p>To run applications built for AtomVM on the ESP32 platform you will need:</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://github.com/espressif/esptool"><code class="docutils literal notranslate"><span class="pre">esptool</span></code></a> program, for flashing the AtomVM image and AtomVM programs to ESP32 MCUs.</p></li>
+<li><p>A serial console program, such as <code class="docutils literal notranslate"><span class="pre">minicom</span></code> or <code class="docutils literal notranslate"><span class="pre">screen</span></code>, so that you can view console output from your AtomVM application.</p></li>
+</ul>
+<p>AtomVM currently supports the following <a class="reference external" href="https://www.espressif.com/en/products/socs">Espressif ESP SoCs</a>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Espressif SoCs</p></th>
+<th class="head"><p>AtomVM support</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf">ESP32</a></p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf">ESP32c3</a></p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf">ESP32s2</a></p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf">ESP32s3</a></p></td>
+<td><p>✅</p></td>
+</tr>
+</tbody>
+</table>
+<p>AtomVM currently supports the following versions of ESP-IDF:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>IDF SDK supported versions</p></th>
+<th class="head"><p>AtomVM support</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ESP-IDF <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32/get-started/index.html">v4.4</a></p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESP-IDF <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/v5.0.4/esp32/get-started/index.html">v5.0</a></p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-even"><td><p>ESP-IDF <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/v5.1.1/esp32/get-started/index.html">v5.1</a></p></td>
+<td><p>✅</p></td>
+</tr>
+</tbody>
+</table>
+<p>Building the AtomVM virtual machine for ESP32 is optional.  In most cases, you can simply download a release image from the AtomVM <a class="reference external" href="https://github.com/atomvm/AtomVM/releases">release</a> repository.  If you wish to work on development of the VM or use one on the additional drivers that are available in the <a class="reference external" href="https://github.com/atomvm">AtomVM repositories</a> you will to build AtomVM from source.  See the <a class="reference internal" href="build-instructions.html"><span class="std std-doc">Build Instructions</span></a> for information about how to build AtomVM from source code.</p>
+</section>
+<section id="stm32-support">
+<h3>STM32 Support<a class="headerlink" href="#stm32-support" title="Link to this heading"></a></h3>
+<p>AtomVM supports deployment on the <a class="reference external" href="https://www.st.com">STMicroelectronics</a> <a class="reference external" href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html">STM32</a> architecture.</p>
+<p>AtomVM has been tested on the following development boards:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>STM32 Development Boards</p></th>
+<th class="head"><p>AtomVM support</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.st.com/en/evaluation-tools/nucleo-f429zi.html">Nucleo-F429ZI</a></p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.st.com/en/evaluation-tools/stm32f4discovery.html">STM32F4Discovery</a></p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://stm32-base.org/boards/STM32F411CEU6-WeAct-Black-Pill-V2.0">BlackPill V2.0</a></p></td>
+<td><p>✅</p></td>
+</tr>
+</tbody>
+</table>
+<p>Due to the proliferation of boards for the <a class="reference external" href="https://www.st.com">STMicroelectronics</a> <a class="reference external" href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html">STM32</a> platform, AtomVM does not currently support pre-build binaries for STM32.  In order to deploy AtomVM to the STM32 platform, you will need to build AtomVM for STM32 from source.  See the <a class="reference internal" href="build-instructions.html"><span class="std std-doc">Build Instructions</span></a> for information about how to build AtomVM from source code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>AtomVM tests this build on the latest Ubuntu github runner.</p>
+</div>
+</section>
+<section id="raspberry-pi-pico-support">
+<h3>Raspberry Pi Pico Support<a class="headerlink" href="#raspberry-pi-pico-support" title="Link to this heading"></a></h3>
+<p>AtomVM supports deployment on the <a class="reference external" href="https://www.raspberrypi.com/documentation/microcontrollers/rp2040.html">Raspberry Pico RP2040</a> architecture.</p>
+<p>AtomVM currently supports the following Raspberry Pico development boards:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Development Board</p></th>
+<th class="head"><p>AtomVM support</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html#raspberry-pi-pico-and-pico-h">Raspberry Pico and Pico H</a></p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html#raspberry-pi-pico-w-and-pico-wh">Raspberry Pico W and Pico WH</a></p></td>
+<td><p>✅</p></td>
+</tr>
+</tbody>
+</table>
+<p>Building the AtomVM virtual machine for Raspberry Pico is optional.  In most cases, you can simply download a release image from the AtomVM <a class="reference external" href="https://github.com/atomvm/AtomVM/releases">release</a> repository.  If you wish to work on development of the VM or use one on the additional drivers that are available in the <a class="reference external" href="https://github.com/atomvm">AtomVM repositories</a> you will to build AtomVM from source.  See the <a class="reference internal" href="build-instructions.html"><span class="std std-doc">Build Instructions</span></a> for information about how to build AtomVM from source code.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="welcome-to-atomvm.html" class="btn btn-neutral float-left" title="Welcome to AtomVM!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getting-started-guide.html" class="btn btn-neutral float-right" title="Getting Started Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">AtomVM Docs</span>
+      v: v0.6.1
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt>Versions</dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="/v0.6.1/pdf/AtomVM-v0.6.1.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.1/epub/AtomVM-v0.6.1.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

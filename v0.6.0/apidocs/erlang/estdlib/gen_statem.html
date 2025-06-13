@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module gen_statem &mdash; AtomVM 0.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/estdlib/gen_statem.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=50f829f1"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module gen_tcp" href="gen_tcp.html" />
+    <link rel="prev" title="Module gen_server" href="gen_server.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module gen_statem</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-gen-statem">
+<h1>Module gen_statem<a class="headerlink" href="#module-gen-statem" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>An implementation of the Erlang/OTP gen_statem interface.</p>
+<p><strong>This module defines the <code class="docutils literal notranslate"><span class="pre">gen_statem</span></code> behaviour.</strong><br /> Required callback functions: <code class="docutils literal notranslate"><span class="pre">init/1</span></code>, <code class="docutils literal notranslate"><span class="pre">callback_mode/0</span></code>.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module implements a strict subset of the Erlang/OTP gen_statem
+interface, supporting operations for local creation and management of
+gen_statem instances.</p>
+<p>This module is designed to be API-compatible with gen_statem, with exceptions noted
+below.</p>
+<p>Caveats:</p>
+<ul class="simple">
+<li><p>No support for start_link</p></li>
+<li><p>Support only for locally named gen_statem instances</p></li>
+<li><p>Support only for state function event handlers</p></li>
+<li><p>No support for keep_state or repeat_state return values from Module:StateName/3 callbacks</p></li>
+<li><p>No support for postpone or hibernate state transition actions</p></li>
+<li><p>No support for state enter calls</p></li>
+<li><p>No support for multi_call</p></li>
+</ul>
+<p><a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="options">
+<h3><a name="type-options">options()</a><a class="headerlink" href="#options" title="Link to this heading"></a></h3>
+<pre><code>
+options() = [{atom(), term()}]
+</code></pre>
+</section>
+<section id="server-ref">
+<h3><a name="type-server_ref">server_ref()</a><a class="headerlink" href="#server-ref" title="Link to this heading"></a></h3>
+<pre><code>
+server_ref() = atom() | pid()
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#call-2">call/2</a></td><td>    Send a request to a gen_statem instance, and wait for a reply.</td></tr><tr><td valign="top"><a href="#call-3">call/3</a></td><td>    Send a request to a gen_statem instance, and wait for a reply..</td></tr><tr><td valign="top"><a href="#cast-2">cast/2</a></td><td>    Send a request to a gen_statem instance.</td></tr><tr><td valign="top"><a href="#reply-2">reply/2</a></td><td>    Send a reply to a calling client.</td></tr><tr><td valign="top"><a href="#start-3">start/3</a></td><td>    Start an un-named gen_statem.</td></tr><tr><td valign="top"><a href="#start-4">start/4</a></td><td>    Start a named gen_statem.</td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td>    Start an un-named gen_statem.</td></tr><tr><td valign="top"><a href="#start_link-4">start_link/4</a></td><td>    Start a named gen_statem.</td></tr><tr><td valign="top"><a href="#stop-1">stop/1</a></td><td>    Stop a previously started gen_statem.</td></tr><tr><td valign="top"><a href="#stop-3">stop/3</a></td><td>    Stop a previously started gen_statem instance.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="call-2"></a></p>
+<section id="call-2">
+<h3>call/2<a class="headerlink" href="#call-2" title="Link to this heading"></a></h3>
+<pre><code>
+call(ServerRef::<a href="#type-server_ref">server_ref()</a>, Request::term()) -&gt; Reply::term() | {error, Reason::term()}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#call-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">call(ServerRef,</span> <span class="pre">Request,</span> <span class="pre">infinity)</span></code></span></a>.</p>
+<p>Send a request to a gen_statem instance, and wait for a reply.</p>
+<p><a name="call-3"></a></p>
+</section>
+<section id="call-3">
+<h3>call/3<a class="headerlink" href="#call-3" title="Link to this heading"></a></h3>
+<pre><code>
+call(ServerRef::<a href="#type-server_ref">server_ref()</a>, Request::term(), Timeout::timeout()) -&gt; Reply::term() | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ServerRef</span></code>: a reference to the gen_statem acquired via start<br /><code class="docutils literal notranslate"><span class="pre">Request</span></code>: the request to send to the gen_statem<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: the amount of time in milliseconds to wait for a reply<br /></p>
+<p>returns: the reply sent back from the gen_statem; {error, Reason}, otherwise.</p>
+<p>Send a request to a gen_statem instance, and wait for a reply..</p>
+<p>This function will send the specified request to the specified
+gen_statem instance, and wait at least Timeout milliseconds for a
+reply from the gen_statem.</p>
+<p><a name="cast-2"></a></p>
+</section>
+<section id="cast-2">
+<h3>cast/2<a class="headerlink" href="#cast-2" title="Link to this heading"></a></h3>
+<pre><code>
+cast(ServerRef::<a href="#type-server_ref">server_ref()</a>, Request::term()) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ServerRef</span></code>: a reference to the gen_statem acquired via start<br /><code class="docutils literal notranslate"><span class="pre">Request</span></code>: the request to send to the gen_statem<br /></p>
+<p>returns: ok | {error, Reason}</p>
+<p>Send a request to a gen_statem instance.</p>
+<p>This function will send the specified request to the specified
+gen_statem instance, but will not wait for a reply.</p>
+<p><a name="reply-2"></a></p>
+</section>
+<section id="reply-2">
+<h3>reply/2<a class="headerlink" href="#reply-2" title="Link to this heading"></a></h3>
+<pre><code>
+reply(Client::pid(), Reply::term()) -&gt; term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Client</span></code>: the client to whom to send the reply<br /><code class="docutils literal notranslate"><span class="pre">Reply</span></code>: the reply to send to the client<br /></p>
+<p>returns: an arbitrary term, that should be ignored</p>
+<p>Send a reply to a calling client.</p>
+<p>This function will send the specified reply back to the specified
+gen_statem client (e.g, via call/3).  The return value of this
+function can be safely ignored.</p>
+<p><a name="start-3"></a></p>
+</section>
+<section id="start-3">
+<h3>start/3<a class="headerlink" href="#start-3" title="Link to this heading"></a></h3>
+<pre><code>
+start(Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_statem callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_statem<br /></p>
+<p>returns: the gen_statem pid, if successful; {error, Reason}, otherwise.</p>
+<p>Start an un-named gen_statem.</p>
+<p>This function will start a gen_statem instance.</p>
+<p><em><strong>Note.</strong>  The Options argument is currently ignored.</em></p>
+<p><a name="start-4"></a></p>
+</section>
+<section id="start-4">
+<h3>start/4<a class="headerlink" href="#start-4" title="Link to this heading"></a></h3>
+<pre><code>
+start(ServerName::{local, Name::atom()}, Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ServerName</span></code>: the name with which to register the gen_statem<br /><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_statem callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_statem<br /></p>
+<p>returns: the gen_statem pid, if successful; {error, Reason}, otherwise.</p>
+<p>Start a named gen_statem.</p>
+<p>This function will start a gen_statem instance and register the
+newly created process with the process registry.  Subsequent calls
+may use the gen_statem name, in lieu of the process id.</p>
+<p><em><strong>Note.</strong>  The Options argument is currently ignored.</em></p>
+<p><a name="start_link-3"></a></p>
+</section>
+<section id="start-link-3">
+<h3>start_link/3<a class="headerlink" href="#start-link-3" title="Link to this heading"></a></h3>
+<pre><code>
+start_link(Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_statem callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_statem<br /></p>
+<p>returns: the gen_statem pid, if successful; {error, Reason}, otherwise.</p>
+<p>Start an un-named gen_statem.</p>
+<p>This function will start a gen_statem instance.</p>
+<p>This version of the start function will link the started gen_statem
+process to the calling process.</p>
+<p><em><strong>Note.</strong>  The Options argument is currently ignored.</em></p>
+<p><a name="start_link-4"></a></p>
+</section>
+<section id="start-link-4">
+<h3>start_link/4<a class="headerlink" href="#start-link-4" title="Link to this heading"></a></h3>
+<pre><code>
+start_link(ServerName::{local, Name::atom()}, Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ServerName</span></code>: the name with which to register the gen_statem<br /><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_statem callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_statem<br /></p>
+<p>returns: the gen_statem pid, if successful; {error, Reason}, otherwise.</p>
+<p>Start a named gen_statem.</p>
+<p>This function will start a gen_statem instance and register the
+newly created process with the process registry.  Subsequent calls
+may use the gen_statem name, in lieu of the process id.</p>
+<p>This version of the start function will link the started gen_statem
+process to the calling process.</p>
+<p><em><strong>Note.</strong>  The Options argument is currently ignored.</em></p>
+<p><a name="stop-1"></a></p>
+</section>
+<section id="stop-1">
+<h3>stop/1<a class="headerlink" href="#stop-1" title="Link to this heading"></a></h3>
+<pre><code>
+stop(ServerRef::<a href="#type-server_ref">server_ref()</a>) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#stop-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stop(ServerRef,</span> <span class="pre">normal,</span> <span class="pre">infinity)</span></code></span></a>.</p>
+<p>Stop a previously started gen_statem.</p>
+<p><a name="stop-3"></a></p>
+</section>
+<section id="stop-3">
+<h3>stop/3<a class="headerlink" href="#stop-3" title="Link to this heading"></a></h3>
+<pre><code>
+stop(ServerRef::<a href="#type-server_ref">server_ref()</a>, Reason::term(), Timeout::non_neg_integer() | infinity) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ServerRef</span></code>: a reference to the gen_statem acquired via start<br /><code class="docutils literal notranslate"><span class="pre">Reason</span></code>: the reason to supply for stopping<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: maximum time to wait for shutdown<br /></p>
+<p>returns: ok, if the gen_statem stopped; {error, Reason}, otherwise.</p>
+<p>Stop a previously started gen_statem instance.</p>
+<p>This function will stop a gen_statem instance, providing the supplied
+Reason to the .  If the gen_statem is
+a named gen_statem, then the gen_statem name may be used to stop the gen_statem.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gen_server.html" class="btn btn-neutral float-left" title="Module gen_server" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gen_tcp.html" class="btn btn-neutral float-right" title="Module gen_tcp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">AtomVM Docs</span>
+      v: v0.6.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt>Versions</dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="/v0.6.0/pdf/AtomVM-v0.6.0.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.0/epub/AtomVM-v0.6.0.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

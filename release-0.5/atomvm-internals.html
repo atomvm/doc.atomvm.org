@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AtomVM Internals &mdash; AtomVM 0.5.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Memory Management" href="memory-management.html" />
+    <link rel="prev" title="Build Instructions" href="build-instructions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> AtomVM
+          </a>
+              <div class="version">
+                0.5.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-programs.html">Example Programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AtomVM Internals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-an-abstract-machine">What is an Abstract Machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#atomvm-data-structures">AtomVM Data Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-globalcontext">The GlobalContext</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#process-management">Process Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-management">Module Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#an-aside-what-s-in-a-hashtable">An Aside: What’s in a HashTable?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules">Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contexts">Contexts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#runtime-execution-loop">Runtime Execution Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-loading">Module Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#function-calls-and-return-values">Function Calls and Return Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exception-handling">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-scheduler">The Scheduler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>AtomVM Internals</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/atomvm-internals.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+ Copyright 2021-2022 Fred Dushin <fred@dushin.net>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="atomvm-internals">
+<h1>AtomVM Internals<a class="headerlink" href="#atomvm-internals" title="Permalink to this headline"></a></h1>
+<section id="what-is-an-abstract-machine">
+<h2>What is an Abstract Machine?<a class="headerlink" href="#what-is-an-abstract-machine" title="Permalink to this headline"></a></h2>
+<p>AtomVM is an “abstract” or “virtual” machine, in the sense that it simulates, in software, what a physical machine would do when executing machine instructions.  In a normal computing machine (e.g., a desktop computer), machine code instructions are generated by a tool called a compiler, allowing an application developer to write software in a high-level language (such as C).  (In rare cases, application developers will write instructions in assembly code, which is closer to the actual machine instructions, but which still requires a translation step, called “assembly”, to translate the assembly code into actual machine code.)  Machine code instructions are executed in hardware using the machine’s Central Processing Unit (CPU), which is specifically designed to efficiently execute machine instructions targeted for the specific machine architecture (e.g., Intel x86, ARM, Apple M-series, etc.)  As a result, machine code instructions are typically tightly packed, encoded instructions that require minimum effort (on the part of the machine) to unpack an interpret.  These a low level instructions unsuited for human interpretation, or at least for most humans.</p>
+<p>AtomVM and virtual machines generally (including, for example, the Java Virtual Machine) perform a similar task, except that i) the instructions are not machine code instructions, but rather what are typically called “bytecode” or sometimes “opcode” instructions; and ii) the generated instructions are themselves executed by a runtime execution engine written in software, a so-called “virtual” or sometimes “abstract” machine.  These bytecode instructions are generated by a compiler tailored specifically for the virtual machine.  For example, the <code class="docutils literal notranslate"><span class="pre">javac</span></code> compiler is used to translate Java source code into Java VM bytecode, and the <code class="docutils literal notranslate"><span class="pre">erlc</span></code> compiler is used to translate Erlang source code into BEAM opcodes.</p>
+<p>AtomVM is an abstract machine designed to implement the BEAM instruction set, the 170+ (and growing) set of virtual machine instructions implemented in the Erlang/OTP BEAM.</p>
+<blockquote>
+<div><p>Note that there is no abstract specification of the BEAM abstract machine and instruction set.  Instead, the BEAM implementation by the Erlang/OTP team is the definitive specification of its behavior.</p>
+</div></blockquote>
+<p>At a high level, the AtomVM abstract machine is responsible for:</p>
+<ul class="simple">
+<li><p>Loading and execution of the BEAM opcodes encoded in one or more BEAM files;</p></li>
+<li><p>Managing calls to internal and external functions, handling return values, exceptions, and crashes;</p></li>
+<li><p>Creation and destruction of Erlang “processes” within the AtomVM memory space, and communication between processes via message passing;</p></li>
+<li><p>Memory management (allocation and reclamation) of memory associated with Erlang “processes”</p></li>
+<li><p>Pre-emptive scheduling and interruption of Erlang “processes”</p></li>
+<li><p>Execution of user-defined native code (Nifs and Ports)</p></li>
+<li><p>Interfacing with the host operating system (or facsimile)</p></li>
+</ul>
+<p>This document provides a description of the AtomVM abstract machine, including its architecture and the major components and data structures that form the system.  It is intended for developers who want to get involved in bug fixing or implementing features for the VM, as well as for anyone interested in virtual machine internals targeted for BEAM-based languages, such as Erlang or Elixir.</p>
+</section>
+<section id="atomvm-data-structures">
+<h2>AtomVM Data Structures<a class="headerlink" href="#atomvm-data-structures" title="Permalink to this headline"></a></h2>
+<p>This section describes AtomVM internal data structures that are used to manage the load and runtime state of the virtual machine.  Since AtomVM is written in C, this discussion will largely be in the context of native C data structures (i.e., <code class="docutils literal notranslate"><span class="pre">structs</span></code>).  The descriptions will start at a fairly high level but drill down to some detail about the data structures, themselves.  This narrative is important, because memory is limited on the target architectures for AtomVM (i.e., micro-controllers), and it is important to always be aware of how memory is organized and used in a way that is as space-efficient as possible.</p>
+<section id="the-globalcontext">
+<h3>The GlobalContext<a class="headerlink" href="#the-globalcontext" title="Permalink to this headline"></a></h3>
+<p>We start with the top level data structure, the <code class="docutils literal notranslate"><span class="pre">GlobalContext</span></code> struct.  This object is a singleton object (currently, and for the foreseeable future), and represents the root of all data structures in the virtual machine.  It is in essence in 1..1 correspondence with instances of the virtual machine.</p>
+<blockquote>
+<div><p>Note. Given the design of the system, it is theoretically possible to run multiple instances of the AtomVM in one process space.  However, no current deployments make use of this capability.</p>
+</div></blockquote>
+<p>In order to simplify the exposition of this structure, we break the fields of the structure into manageable subsets:</p>
+<ul class="simple">
+<li><p>Process management – fields associated with the management of Erlang (lightweight) “processes”</p></li>
+<li><p>Atoms management – fields associated with the storage of atoms</p></li>
+<li><p>Module Management – fields associated with the loading of BEAM modules</p></li>
+<li><p>Reference Counted Binaries – fields associated with the storage of binary data shared between processes</p></li>
+<li><p>Other data structures</p></li>
+</ul>
+<p>These subsets are described in more detail below.</p>
+<blockquote>
+<div><p>Note.  Not all fields of the <code class="docutils literal notranslate"><span class="pre">GlobalContext</span></code> structure are described in this document.</p>
+</div></blockquote>
+<section id="process-management">
+<h4>Process Management<a class="headerlink" href="#process-management" title="Permalink to this headline"></a></h4>
+<p>As a BEAM implementation, AtomVM must be capable of spawning and managing the lifecycle of Erlang lightweight processes.  Each of these processes is encapsulated in the <code class="docutils literal notranslate"><span class="pre">Context</span></code> structure, described in more detail in subsequent sections.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">GlobalContext</span></code> structure maintains a list of running processes and contains the following fields for managing the running Erlang processes in the VM:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">processes_table</span></code> the list of all processes running in the system</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">waiting_processes</span></code> the subset of processes that are waiting to run (e.g., waiting for a message or timeout condition).  This set is the complement of the set of ready processes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ready_processes</span></code> the subset of processes that are ready to run.  This set is the complement of the set of waiting processes.</p></li>
+</ul>
+<p>Each of these fields are doubly-linked list (ring) structures, i.e, structs containing a <code class="docutils literal notranslate"><span class="pre">prev</span></code> and <code class="docutils literal notranslate"><span class="pre">next</span></code> pointer field.  The <code class="docutils literal notranslate"><span class="pre">Context</span></code> data structure begins with two such structures, the first of which links the <code class="docutils literal notranslate"><span class="pre">Context</span></code> struct in the <code class="docutils literal notranslate"><span class="pre">processes_table</span></code> field, and the second of which is used for either the <code class="docutils literal notranslate"><span class="pre">waiting_processes</span></code> or the <code class="docutils literal notranslate"><span class="pre">ready_processes</span></code> field.</p>
+<blockquote>
+<div><p>Note.  The C programming language treats structures in memory as contiguous sequences of fields of given types.  Structures have no hidden pramble data, such as you might find in C++ or who knows what in even higher level languages.  The size of a struct, therefore, is determined simply by the size of the component fields.</p>
+</div></blockquote>
+<p>The relationship between the <code class="docutils literal notranslate"><span class="pre">GlobalContext</span></code> fields that manage BEAM processes and the <code class="docutils literal notranslate"><span class="pre">Context</span></code> data structures that represent the processes, themselves, is illustrated in the following diagram:</p>
+<p><img alt="GlobalContext Processes" src="_static/globalcontext-processes.svg" /></p>
+<blockquote>
+<div><p>Note.  The <code class="docutils literal notranslate"><span class="pre">Context</span></code> data structure is described in more detail below.</p>
+</div></blockquote>
+</section>
+<section id="module-management">
+<h4>Module Management<a class="headerlink" href="#module-management" title="Permalink to this headline"></a></h4>
+</section>
+<section id="an-aside-what-s-in-a-hashtable">
+<h4>An Aside: What’s in a HashTable?<a class="headerlink" href="#an-aside-what-s-in-a-hashtable" title="Permalink to this headline"></a></h4>
+</section>
+</section>
+<section id="modules">
+<h3>Modules<a class="headerlink" href="#modules" title="Permalink to this headline"></a></h3>
+</section>
+<section id="contexts">
+<h3>Contexts<a class="headerlink" href="#contexts" title="Permalink to this headline"></a></h3>
+</section>
+</section>
+<section id="runtime-execution-loop">
+<h2>Runtime Execution Loop<a class="headerlink" href="#runtime-execution-loop" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-loading">
+<h2>Module Loading<a class="headerlink" href="#module-loading" title="Permalink to this headline"></a></h2>
+</section>
+<section id="function-calls-and-return-values">
+<h2>Function Calls and Return Values<a class="headerlink" href="#function-calls-and-return-values" title="Permalink to this headline"></a></h2>
+</section>
+<section id="exception-handling">
+<h2>Exception Handling<a class="headerlink" href="#exception-handling" title="Permalink to this headline"></a></h2>
+</section>
+<section id="the-scheduler">
+<h2>The Scheduler<a class="headerlink" href="#the-scheduler" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="build-instructions.html" class="btn btn-neutral float-left" title="Build Instructions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="memory-management.html" class="btn btn-neutral float-right" title="Memory Management" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2022, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

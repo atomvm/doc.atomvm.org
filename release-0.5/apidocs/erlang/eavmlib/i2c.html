@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module i2c</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module i2c</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>AtomvVM I2c interface.
+
+
+<h2><a name="description">Description</a></h2><p>AtomvVM I2c interface</p>
+ 
+  <p>This module provides and interface into the AtomVM I2C driver.</p>
+ 
+  <p>Use this module to communicate with devices connected to your ESP32  
+device via the 2-wire I2C interface.</p>
+ 
+  Using this interface, you can read or write data to an I2C device
+  at a given I2C address.  In addition, you may read from or write to
+  specific registers on the I2C device.
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-address">address()</a></h3>
+<p><tt>address() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-freq_hz">freq_hz()</a></h3>
+<p><tt>freq_hz() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-i2c">i2c()</a></h3>
+<p><tt>i2c() = pid()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-param">param()</a></h3>
+<p><tt>param() = {scl_io_num, <a href="#type-pin">pin()</a>} | {sda_io_num, <a href="#type-pin">pin()</a>} | {i2c_clock_hz, <a href="#type-freq_hz">freq_hz()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-params">params()</a></h3>
+<p><tt>params() = [<a href="#type-param">param()</a>]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-pin">pin()</a></h3>
+<p><tt>pin() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-register">register()</a></h3>
+<p><tt>register() = non_neg_integer()</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#begin_transmission-2">begin_transmission/2</a></td><td>    Begin a transimission of I2C commands.</td></tr>
+<tr><td valign="top"><a href="#end_transmission-1">end_transmission/1</a></td><td>    End a transimission of I2C commands.</td></tr>
+<tr><td valign="top"><a href="#open-1">open/1</a></td><td>    Open a connection to the I2C driver.</td></tr>
+<tr><td valign="top"><a href="#read_bytes-3">read_bytes/3</a></td><td>    Read a block of bytes from the I2C device.</td></tr>
+<tr><td valign="top"><a href="#read_bytes-4">read_bytes/4</a></td><td>    Read a block of bytes from the I2C device starting at a specified           
+register address.</td></tr>
+<tr><td valign="top"><a href="#write_byte-2">write_byte/2</a></td><td>    Write a byte to the device.</td></tr>
+<tr><td valign="top"><a href="#write_bytes-2">write_bytes/2</a></td><td>    Write a sequence of bytes to the device.</td></tr>
+<tr><td valign="top"><a href="#write_bytes-3">write_bytes/3</a></td><td>    Write a block of bytes to the I2C device.</td></tr>
+<tr><td valign="top"><a href="#write_bytes-4">write_bytes/4</a></td><td>    Write a block of bytes to the I2C device starting at a specified           
+register address.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="begin_transmission-2">begin_transmission/2</a></h3>
+<div class="spec">
+<p><tt>begin_transmission(I2c::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>) -&gt; ok | error</tt><br></p>
+<p><tt>Address</tt>: I2C Address of the device (typically fixed for the device type)<br>
+</p>
+<p>returns: <code>ok</code> or <code>error</code></p>
+</div><p><p>    Begin a transimission of I2C commands</p>
+ 
+           This command is typically followed by one or more calls to
+           <code>write_byte/2</code> and then a call to <code>end_transmission/1</code></p>
+
+<h3 class="function"><a name="end_transmission-1">end_transmission/1</a></h3>
+<div class="spec">
+<p><tt>end_transmission(I2c::<a href="#type-i2c">i2c()</a>) -&gt; ok | error</tt><br></p>
+<p>returns: <code>ok</code> or <code>error</code></p>
+</div><p><p>    End a transimission of I2C commands</p>
+ 
+           This command is typically preceded by a call to <code>begin_transmission/2</code>
+           and one or more calls to <code>write_byte/2</code>.</p>
+
+<h3 class="function"><a name="open-1">open/1</a></h3>
+<div class="spec">
+<p><tt>open(Param::<a href="#type-params">params()</a>) -&gt; <a href="#type-i2c">i2c()</a></tt><br></p>
+<p><tt>Param</tt>: Initialization parameters<br>
+</p>
+<p>returns: process id of the driver.</p>
+</div><p><p>    Open a connection to the I2C driver</p>
+ 
+           This function will open a connection to the I2C driver.</p>
+
+<h3 class="function"><a name="read_bytes-3">read_bytes/3</a></h3>
+<div class="spec">
+<p><tt>read_bytes(I2c::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>, Count::non_neg_integer()) -&gt; error | binary()</tt><br></p>
+<p><tt>Address</tt>: I2C Address of the device (typically fixed for the device type)<br>
+<tt>Count</tt>: The number of bytes to read<br>
+</p>
+<p>returns: the read binary data or <code>error</code></p>
+</div><p><p>    Read a block of bytes from the I2C device.</p>
+ 
+           This command is not wrapped in a <code>begin_transmission/2</code>
+           and <code>end_transmission/1</code> call.</p>
+
+<h3 class="function"><a name="read_bytes-4">read_bytes/4</a></h3>
+<div class="spec">
+<p><tt>read_bytes(I2c::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>, Register::<a href="#type-register">register()</a>, Count::non_neg_integer()) -&gt; error | binary()</tt><br></p>
+<p><tt>Address</tt>: I2C Address of the device (typically fixed for the device type)<br>
+<tt>Register</tt>: The register address in the device from which to read data<br>
+<tt>Count</tt>: The number of bytes to read<br>
+</p>
+<p>returns: the read binary data or <code>error</code></p>
+</div><p><p>    Read a block of bytes from the I2C device starting at a specified           
+register address</p>
+ 
+           This command is not wrapped in a <code>begin_transmission/2</code>
+           and <code>end_transmission/1</code> call.</p>
+
+<h3 class="function"><a name="write_byte-2">write_byte/2</a></h3>
+<div class="spec">
+<p><tt>write_byte(I2c::<a href="#type-i2c">i2c()</a>, Byte::byte()) -&gt; ok | error</tt><br></p>
+<p><tt>Byte</tt>: value to write<br>
+</p>
+<p>returns: <code>ok</code> or <code>error</code></p>
+</div><p><p>    Write a byte to the device.</p>
+ 
+           This command must be wrapped in a <code>begin_transmission/2</code>
+           and <code>end_transmission/1</code> call.</p>
+
+<h3 class="function"><a name="write_bytes-2">write_bytes/2</a></h3>
+<div class="spec">
+<p><tt>write_bytes(I2c::<a href="#type-i2c">i2c()</a>, Bytes::binary()) -&gt; ok | error</tt><br></p>
+<p>returns: <code>ok</code> or <code>error</code></p>
+</div><p><p>    Write a sequence of bytes to the device.</p>
+ 
+           This command must be wrapped in a <code>begin_transmission/2</code>
+           and <code>end_transmission/1</code> call.</p>
+
+<h3 class="function"><a name="write_bytes-3">write_bytes/3</a></h3>
+<div class="spec">
+<p><tt>write_bytes(I2c::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>, BinOrInt::binary() | byte()) -&gt; ok | error</tt><br></p>
+<p><tt>Address</tt>: I2C Address of the device (typically fixed for the device type)<br>
+<tt>BinOrInt</tt>: The binary or byte value to write<br>
+</p>
+<p>returns: <code>ok</code> or <code>error</code></p>
+</div><p><p>    Write a block of bytes to the I2C device.</p>
+ 
+           This command is not wrapped in a <code>begin_transmission/2</code>
+           and <code>end_transmission/1</code> call.</p>
+
+<h3 class="function"><a name="write_bytes-4">write_bytes/4</a></h3>
+<div class="spec">
+<p><tt>write_bytes(I2c::<a href="#type-i2c">i2c()</a>, Address::<a href="#type-address">address()</a>, Register::<a href="#type-register">register()</a>, BinOrInt::binary() | integer()) -&gt; ok | error</tt><br></p>
+<p><tt>Address</tt>: I2C Address of the device (typically fixed for the device type)<br>
+<tt>Register</tt>: The register address in the device to which to write data<br>
+<tt>BinOrInt</tt>: The binary or byte value to write<br>
+</p>
+<p>returns: <code>ok</code> or <code>error</code></p>
+</div><p><p>    Write a block of bytes to the I2C device starting at a specified           
+register address.</p>
+ 
+           This command is not wrapped in a <code>begin_transmission/2</code>
+           and <code>end_transmission/1</code> call.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

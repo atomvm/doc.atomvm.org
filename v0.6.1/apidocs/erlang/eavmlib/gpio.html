@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module gpio &mdash; AtomVM 0.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/eavmlib/gpio.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=3437f9b5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module http_server" href="http_server.html" />
+    <link rel="prev" title="Module esp" href="esp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm.html">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="emscripten.html">Module emscripten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp.html">Module esp</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="i2c.html">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ledc.html">Module ledc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network.html">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uart.html">Module uart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module gpio</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-gpio">
+<h1>Module gpio<a class="headerlink" href="#module-gpio" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>GPIO driver module.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module provides functions for interacting with micro-controller GPIO
+(General Purpose Input and Output) pins.</p>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">-type</span> <span class="pre">pin()</span></code> used in this driver refers to a pin number on Espressif
+chips and normal Raspberry Pi Pico pins, or a tuple {GPIO_BANK, PIN} for STM32
+chips and the “extra” GPIOs available on the Pico-W.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="direction">
+<h3><a name="type-direction">direction()</a><a class="headerlink" href="#direction" title="Link to this heading"></a></h3>
+<pre><code>
+direction() = input | output | output_od | <a href="#type-mode_config">mode_config()</a>
+</code></pre>
+<p>The direction is used to set the mode of operation for a GPIO pin, either as an input, an output, or output with open drain.
+On the STM32 platform pull mode and output_speed must be set at the same time as direction. See &#64;type mode_config()</p>
+</section>
+<section id="gpio">
+<h3><a name="type-gpio">gpio()</a><a class="headerlink" href="#gpio" title="Link to this heading"></a></h3>
+<pre><code>
+gpio() = pid()
+</code></pre>
+<p>This is the pid returned by <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code>.</p>
+</section>
+<section id="gpio-bank">
+<h3><a name="type-gpio_bank">gpio_bank()</a><a class="headerlink" href="#gpio-bank" title="Link to this heading"></a></h3>
+<pre><code>
+gpio_bank() = a | b | c | d | e | f | g | h | i | j | k | wl
+</code></pre>
+<p>STM32 gpio banks vary by board, some only break out <code class="docutils literal notranslate"><span class="pre">a</span></code> thru <code class="docutils literal notranslate"><span class="pre">h</span></code>. The extra “WL” pins on Pico-W use bank <code class="docutils literal notranslate"><span class="pre">wl</span></code>.</p>
+</section>
+<section id="high-level">
+<h3><a name="type-high_level">high_level()</a><a class="headerlink" href="#high-level" title="Link to this heading"></a></h3>
+<pre><code>
+high_level() = high | 1
+</code></pre>
+</section>
+<section id="level">
+<h3><a name="type-level">level()</a><a class="headerlink" href="#level" title="Link to this heading"></a></h3>
+<pre><code>
+level() = <a href="#type-low_level">low_level()</a> | <a href="#type-high_level">high_level()</a>
+</code></pre>
+<p>Valid pin levels can be atom or binary representation.</p>
+</section>
+<section id="low-level">
+<h3><a name="type-low_level">low_level()</a><a class="headerlink" href="#low-level" title="Link to this heading"></a></h3>
+<pre><code>
+low_level() = low | 0
+</code></pre>
+</section>
+<section id="mode-config">
+<h3><a name="type-mode_config">mode_config()</a><a class="headerlink" href="#mode-config" title="Link to this heading"></a></h3>
+<pre><code>
+mode_config() = {<a href="#type-direction">direction()</a>, <a href="#type-pull">pull()</a>} | {output, <a href="#type-pull">pull()</a>, <a href="#type-output_speed">output_speed()</a>}
+</code></pre>
+<p>Extended mode configuration options on STM32. Default pull() is <code class="docutils literal notranslate"><span class="pre">floating</span></code>, default output_speed() is <code class="docutils literal notranslate"><span class="pre">mhz_2</span></code> if options are omitted.</p>
+</section>
+<section id="output-speed">
+<h3><a name="type-output_speed">output_speed()</a><a class="headerlink" href="#output-speed" title="Link to this heading"></a></h3>
+<pre><code>
+output_speed() = mhz_2 | mhz_25 | mhz_50 | mhz_100
+</code></pre>
+<p>Output clock speed. Only available on STM32, default is <code class="docutils literal notranslate"><span class="pre">mhz_2</span></code>.</p>
+</section>
+<section id="pin">
+<h3><a name="type-pin">pin()</a><a class="headerlink" href="#pin" title="Link to this heading"></a></h3>
+<pre><code>
+pin() = non_neg_integer() | <a href="#type-pin_tuple">pin_tuple()</a>
+</code></pre>
+<p>The pin definition for ESP32 and PR2040 is a non-negative integer. A tuple is used on the STM32 platform and for the extra “WL” pins on the Pico-W.</p>
+</section>
+<section id="pin-tuple">
+<h3><a name="type-pin_tuple">pin_tuple()</a><a class="headerlink" href="#pin-tuple" title="Link to this heading"></a></h3>
+<pre><code>
+pin_tuple() = {<a href="#type-gpio_bank">gpio_bank()</a>, 0..15}
+</code></pre>
+<p>A pin parameter on STM32 is a tuple consisting of a GPIO bank and pin number, also used on the Pico-W for the extra “WL” pins <code class="docutils literal notranslate"><span class="pre">0..2</span></code>.</p>
+</section>
+<section id="pull">
+<h3><a name="type-pull">pull()</a><a class="headerlink" href="#pull" title="Link to this heading"></a></h3>
+<pre><code>
+pull() = up | down | up_down | floating
+</code></pre>
+<p>Internal resistor pull mode. STM32 does not support <code class="docutils literal notranslate"><span class="pre">up_down</span></code>.</p>
+</section>
+<section id="trigger">
+<h3><a name="type-trigger">trigger()</a><a class="headerlink" href="#trigger" title="Link to this heading"></a></h3>
+<pre><code>
+trigger() = none | rising | falling | both | low | high
+</code></pre>
+<p>Event type that will trigger a <code class="docutils literal notranslate"><span class="pre">gpio_interrupt</span></code>. STM32 only supports <code class="docutils literal notranslate"><span class="pre">rising</span></code>, <code class="docutils literal notranslate"><span class="pre">falling</span></code>, or <code class="docutils literal notranslate"><span class="pre">both</span></code>.</p>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#attach_interrupt-2">attach_interrupt/2</a></td><td>    Convenience function for <code>gpio:set_int/3</code></td></tr><tr><td valign="top"><a href="#close-1">close/1</a></td><td>    Stop the GPIO interrupt port.</td></tr><tr><td valign="top"><a href="#deep_sleep_hold_dis-0">deep_sleep_hold_dis/0</a></td><td>    Disable all gpio pad functions during Deep-sleep.</td></tr><tr><td valign="top"><a href="#deep_sleep_hold_en-0">deep_sleep_hold_en/0</a></td><td>    Enable all hold functions to continue in deep sleep.</td></tr><tr><td valign="top"><a href="#deinit-1">deinit/1</a></td><td>    Reset a pin back to the NULL function.</td></tr><tr><td valign="top"><a href="#detach_interrupt-1">detach_interrupt/1</a></td><td>    Convenience function for <code>gpio:remove_int/2</code></td></tr><tr><td valign="top"><a href="#digital_read-1">digital_read/1</a></td><td>    Read the digital state of a GPIO pin.</td></tr><tr><td valign="top"><a href="#digital_write-2">digital_write/2</a></td><td>    Set GPIO digital output level.</td></tr><tr><td valign="top"><a href="#hold_dis-1">hold_dis/1</a></td><td>    Release a pin from a hold state.</td></tr><tr><td valign="top"><a href="#hold_en-1">hold_en/1</a></td><td>    Hold the state of a pin.</td></tr><tr><td valign="top"><a href="#init-1">init/1</a></td><td>    Initialize a pin to be used as GPIO.</td></tr><tr><td valign="top"><a href="#open-0">open/0</a></td><td>    Start the GPIO driver port.</td></tr><tr><td valign="top"><a href="#read-2">read/2</a></td><td>    Read the digital state of a GPIO pin.</td></tr><tr><td valign="top"><a href="#remove_int-2">remove_int/2</a></td><td>    Remove a GPIO interrupt.</td></tr><tr><td valign="top"><a href="#set_direction-3">set_direction/3</a></td><td>    Set the operational mode of a pin.</td></tr><tr><td valign="top"><a href="#set_int-3">set_int/3</a></td><td>    Set a GPIO interrupt.</td></tr><tr><td valign="top"><a href="#set_int-4">set_int/4</a></td><td>    Set a GPIO interrupt.</td></tr><tr><td valign="top"><a href="#set_level-3">set_level/3</a></td><td>    Set GPIO digital output level.</td></tr><tr><td valign="top"><a href="#set_pin_mode-2">set_pin_mode/2</a></td><td>    Set the operational mode of a pin.</td></tr><tr><td valign="top"><a href="#set_pin_pull-2">set_pin_pull/2</a></td><td>    Set the internal resistor of a pin.</td></tr><tr><td valign="top"><a href="#start-0">start/0</a></td><td>    Start the GPIO driver port.</td></tr><tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>    Stop the GPIO interrupt port.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="attach_interrupt-2"></a></p>
+<section id="attach-interrupt-2">
+<h3>attach_interrupt/2<a class="headerlink" href="#attach-interrupt-2" title="Link to this heading"></a></h3>
+<pre><code>
+attach_interrupt(Pin::<a href="#type-pin">pin()</a>, Trigger::<a href="#type-trigger">trigger()</a>) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to set the interrupt on<br /><code class="docutils literal notranslate"><span class="pre">Trigger</span></code>: is the state that will trigger an interrupt<br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Convenience function for <code class="docutils literal notranslate"><span class="pre">gpio:set_int/3</span></code></p>
+<p>This is a convenience function for <code class="docutils literal notranslate"><span class="pre">gpio:set_int/3</span></code> that allows an
+interrupt to be set using only the pin number and trigger as
+arguments.</p>
+<p>This function should only be used when only one gpio trigger is
+used in an application. If multiple pins are being configured with
+interrupt triggers gpio:set_int/3 should be used otherwise there is
+a race condition when start() is called internally by this function.</p>
+<p>The rp2040 (Pico) port does not support gpio interrupts at this time.</p>
+<p><a name="close-1"></a></p>
+</section>
+<section id="close-1">
+<h3>close/1<a class="headerlink" href="#close-1" title="Link to this heading"></a></h3>
+<pre><code>
+close(GPIO::<a href="#type-gpio">gpio()</a>) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from gpio:start/0<br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Stop the GPIO interrupt port</p>
+<p>This function disables any interrupts that are set, stops
+the listening port, and frees all of its resources.</p>
+<p>Not currently available on rp2040 (Pico) port, use nif functions.</p>
+<p><a name="deep_sleep_hold_dis-0"></a></p>
+</section>
+<section id="deep-sleep-hold-dis-0">
+<h3>deep_sleep_hold_dis/0<a class="headerlink" href="#deep-sleep-hold-dis-0" title="Link to this heading"></a></h3>
+<pre><code>
+deep_sleep_hold_dis() -&gt; ok
+</code></pre>
+<br />
+<p>returns: ok</p>
+<p>Disable all gpio pad functions during Deep-sleep.</p>
+<p>This function is only supported on ESP32.</p>
+<p><a name="deep_sleep_hold_en-0"></a></p>
+</section>
+<section id="deep-sleep-hold-en-0">
+<h3>deep_sleep_hold_en/0<a class="headerlink" href="#deep-sleep-hold-en-0" title="Link to this heading"></a></h3>
+<pre><code>
+deep_sleep_hold_en() -&gt; ok
+</code></pre>
+<br />
+<p>returns: ok</p>
+<p>Enable all hold functions to continue in deep sleep.</p>
+<p>The gpio pad hold function works in both input and output modes,
+but must be output-capable gpios.</p>
+<p>When the chip is in Deep-sleep mode, all digital gpio will hold the
+state before sleep, and when the chip is woken up, the status of
+digital gpio will not be held. Note that the pad hold feature only
+works when the chip is in Deep-sleep mode, when not in sleep mode,
+the digital gpio state can be changed even you have called this
+function.</p>
+<p>Power down or call <code class="docutils literal notranslate"><span class="pre">gpio_hold_dis</span></code> will disable this function,
+otherwise, the digital gpio hold feature works as long as the chip
+enters Deep-sleep.</p>
+<p>This function is only supported on ESP32.</p>
+<p><a name="deinit-1"></a></p>
+</section>
+<section id="deinit-1">
+<h3>deinit/1<a class="headerlink" href="#deinit-1" title="Link to this heading"></a></h3>
+<pre><code>
+deinit(Pin::<a href="#type-pin">pin()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number to deinitialize<br /></p>
+<p>returns: ok</p>
+<p>Reset a pin back to the NULL function.
+Currently only implemented for RP2040 (Pico).</p>
+<p><a name="detach_interrupt-1"></a></p>
+</section>
+<section id="detach-interrupt-1">
+<h3>detach_interrupt/1<a class="headerlink" href="#detach-interrupt-1" title="Link to this heading"></a></h3>
+<pre><code>
+detach_interrupt(Pin::<a href="#type-pin">pin()</a>) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to remove the interrupt<br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Convenience function for <code class="docutils literal notranslate"><span class="pre">gpio:remove_int/2</span></code></p>
+<p>This is a convenience function for <code class="docutils literal notranslate"><span class="pre">gpio:remove_int/2</span></code> that allows an
+interrupt to be removed using only the pin number as an argument.</p>
+<p>Unlike <code class="docutils literal notranslate"><span class="pre">gpio:attach_interrupt/2</span></code> this function can be safely used
+regardless of the number of interrupt pins used in the application.</p>
+<p>The rp2040 (Pico) port does not support gpio interrupts at this time.</p>
+<p><a name="digital_read-1"></a></p>
+</section>
+<section id="digital-read-1">
+<h3>digital_read/1<a class="headerlink" href="#digital-read-1" title="Link to this heading"></a></h3>
+<pre><code>
+digital_read(Pin::<a href="#type-pin">pin()</a>) -&gt; high | low | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to read<br /></p>
+<p>returns: high | low | error | {error, Reason}</p>
+<p>Read the digital state of a GPIO pin</p>
+<p>Read if an input pin state is high or low.
+Warning: if the pin was not previously configured as an input using
+<code class="docutils literal notranslate"><span class="pre">gpio:set_pin_mode/2</span></code> it will always read as low.</p>
+<p>The VBUS detect pin on the Pico-W can be read on the extended pin <code class="docutils literal notranslate"><span class="pre">{wl,</span> <span class="pre">2}</span></code>,
+and does not require or accept <code class="docutils literal notranslate"><span class="pre">set_pin_mode</span></code> or <code class="docutils literal notranslate"><span class="pre">set_pin_pull</span></code> before use.</p>
+<p><a name="digital_write-2"></a></p>
+</section>
+<section id="digital-write-2">
+<h3>digital_write/2<a class="headerlink" href="#digital-write-2" title="Link to this heading"></a></h3>
+<pre><code>
+digital_write(Pin::<a href="#type-pin">pin()</a>, Level::<a href="#type-level">level()</a>) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to write<br /><code class="docutils literal notranslate"><span class="pre">Level</span></code>: the desired output level to set<br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Set GPIO digital output level</p>
+<p>Set a pin to <code class="docutils literal notranslate"><span class="pre">high</span></code> (1) or <code class="docutils literal notranslate"><span class="pre">low</span></code> (0).</p>
+<p>The STM32 is capable of setting the state for any, or all of the output pins
+on a single bank at the same time, this is done by passing a list of pins numbers
+in the pin tuple. For example, setting all of the even numbered pins to a <code class="docutils literal notranslate"><span class="pre">high</span></code> state,
+and all of the odd numbered pins to a <code class="docutils literal notranslate"><span class="pre">low</span></code> state can be accomplished in two lines:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>     gpio:digital_write({c, [0,2,4,6,8,10,12,14]}, high}),
+     gpio:digital_write({c, [1,3,5,7,9,11,13,15]}, low}).
+</pre></div>
+</div>
+<p>To set the same state for all of the pins that have been previously configured as outputs
+on a specific bank the atom <code class="docutils literal notranslate"><span class="pre">all</span></code> may be used, this will have no effect on any pins on the
+same bank that have been configured as inputs, so it is safe to use with mixed direction
+modes on a bank.</p>
+<p>The LED pin on the Pico-W can be controlled on the extended pin <code class="docutils literal notranslate"><span class="pre">{wl,</span> <span class="pre">0}</span></code>, and does not
+require or accept <code class="docutils literal notranslate"><span class="pre">set_pin_mode</span></code> or <code class="docutils literal notranslate"><span class="pre">set_pin_pull</span></code> before use.</p>
+<p><a name="hold_dis-1"></a></p>
+</section>
+<section id="hold-dis-1">
+<h3>hold_dis/1<a class="headerlink" href="#hold-dis-1" title="Link to this heading"></a></h3>
+<pre><code>
+hold_dis(Pin::<a href="#type-pin">pin()</a>) -&gt; ok | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to be released<br /></p>
+<p>returns: ok | error</p>
+<p>Release a pin from a hold state.</p>
+<p>When the chip is woken up from Deep-sleep, the gpio will be set to
+the default mode, so, the gpio will output the default level if
+this function is called. If you don’t want the level changes, the
+gpio should be configured to a known state before this function is
+called. e.g. If you hold gpio18 high during Deep-sleep, after the
+chip is woken up and <code class="docutils literal notranslate"><span class="pre">gpio:hold_dis</span></code> is called, gpio18 will output
+low level(because gpio18 is input mode by default). If you don’t
+want this behavior, you should configure gpio18 as output mode and
+set it to hight level before calling <code class="docutils literal notranslate"><span class="pre">gpio:hold_dis</span></code>.</p>
+<p>This function is only supported on ESP32.</p>
+<p><a name="hold_en-1"></a></p>
+</section>
+<section id="hold-en-1">
+<h3>hold_en/1<a class="headerlink" href="#hold-en-1" title="Link to this heading"></a></h3>
+<pre><code>
+hold_en(Pin::<a href="#type-pin">pin()</a>) -&gt; ok | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to be held<br /></p>
+<p>returns: ok | error</p>
+<p>Hold the state of a pin</p>
+<p>The gpio pad hold function works in both input and output modes,
+but must be output-capable gpios.</p>
+<p>If pad hold enabled:
+In output mode: the output level of the pad will be force locked
+and can not be changed.
+In input mode: the input value read will not change, regardless
+the changes of input signal.</p>
+<p>The state of digital gpio cannot be held during Deep-sleep, and it
+will resume the hold function when the chip wakes up from
+Deep-sleep. If the digital gpio also needs to be held during
+Deep-sleep <code class="docutils literal notranslate"><span class="pre">gpio:deep_sleep_hold_en</span></code> should also be called.</p>
+<p>This function is only supported on ESP32.</p>
+<p><a name="init-1"></a></p>
+</section>
+<section id="init-1">
+<h3>init/1<a class="headerlink" href="#init-1" title="Link to this heading"></a></h3>
+<pre><code>
+init(Pin::<a href="#type-pin">pin()</a>) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number to initialize<br /></p>
+<p>returns: ok</p>
+<p>Initialize a pin to be used as GPIO.
+Currently only implemented (and required) for RP2040 (Pico).</p>
+<p><a name="open-0"></a></p>
+</section>
+<section id="open-0">
+<h3>open/0<a class="headerlink" href="#open-0" title="Link to this heading"></a></h3>
+<pre><code>
+open() -&gt; <a href="#type-gpio">gpio()</a> | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p>returns: Pid | error | {error, Reason}</p>
+<p>Start the GPIO driver port</p>
+<p>The GPIO port driver will be stared and registered as <code class="docutils literal notranslate"><span class="pre">gpio</span></code>. If the
+port has already been started through the <code class="docutils literal notranslate"><span class="pre">gpio:open/0</span></code> or
+<code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code> the command will fail. The use of <code class="docutils literal notranslate"><span class="pre">gpio:open/0</span></code> or
+<code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code> is required before using any functions that require a
+GPIO pid as a parameter.</p>
+<p>Not currently available on rp2040 (Pico) port, use nif functions.</p>
+<p><a name="read-2"></a></p>
+</section>
+<section id="read-2">
+<h3>read/2<a class="headerlink" href="#read-2" title="Link to this heading"></a></h3>
+<pre><code>
+read(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>) -&gt; high | low | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from gpio:start/0<br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to read<br /></p>
+<p>returns: high | low | error | {error, Reason}</p>
+<p>Read the digital state of a GPIO pin</p>
+<p>Read if an input pin state is <code class="docutils literal notranslate"><span class="pre">high</span></code> or <code class="docutils literal notranslate"><span class="pre">low</span></code>.
+Warning: if the pin was not previously configured as an input using
+<code class="docutils literal notranslate"><span class="pre">gpio:set_direction/3</span></code> it will always read as low.</p>
+<p>Not supported on rp2040 (Pico), use <code class="docutils literal notranslate"><span class="pre">gpio:digital_read/1</span></code> instead.</p>
+<p><a name="remove_int-2"></a></p>
+</section>
+<section id="remove-int-2">
+<h3>remove_int/2<a class="headerlink" href="#remove-int-2" title="Link to this heading"></a></h3>
+<pre><code>
+remove_int(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to remove the interrupt<br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Remove a GPIO interrupt</p>
+<p>Removes an interrupt from the specified pin.</p>
+<p>The rp2040 (Pico) port does not support gpio interrupts at this time.</p>
+<p><a name="set_direction-3"></a></p>
+</section>
+<section id="set-direction-3">
+<h3>set_direction/3<a class="headerlink" href="#set-direction-3" title="Link to this heading"></a></h3>
+<pre><code>
+set_direction(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>, Direction::<a href="#type-direction">direction()</a>) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to configure<br /><code class="docutils literal notranslate"><span class="pre">Direction</span></code>: is <code class="docutils literal notranslate"><span class="pre">input</span></code>, <code class="docutils literal notranslate"><span class="pre">output</span></code>, or <code class="docutils literal notranslate"><span class="pre">output_od</span></code><br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Set the operational mode of a pin</p>
+<p>Pins can be used for input, output, or output with open drain.</p>
+<p>The STM32 platform has extended direction mode configuration options.
+See &#64;type mode_config() for details. All configuration must be set using
+<code class="docutils literal notranslate"><span class="pre">set_direction/3</span></code>, including pull() mode, unlike the ESP32 which has a
+separate function (<code class="docutils literal notranslate"><span class="pre">set_pin_pull/2</span></code>). If you are configuring multiple pins
+on the same GPIO <code class="docutils literal notranslate"><span class="pre">bank</span></code> with the same options the pins may be configured all
+at the same time by giving a list of pin numbers in the pin tuple.</p>
+<p>Example to configure all of the leds on a Nucleo board:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>     gpio:set_direction({b, [0,7,14], output)
+</pre></div>
+</div>
+<p>Not supported on rp2040 (Pico), use <code class="docutils literal notranslate"><span class="pre">gpio:set_pin_mode/2</span></code> instead.</p>
+<p><a name="set_int-3"></a></p>
+</section>
+<section id="set-int-3">
+<h3>set_int/3<a class="headerlink" href="#set-int-3" title="Link to this heading"></a></h3>
+<pre><code>
+set_int(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>, Trigger::<a href="#type-trigger">trigger()</a>) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to set the interrupt on<br /><code class="docutils literal notranslate"><span class="pre">Trigger</span></code>: is the state that will trigger an interrupt<br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Set a GPIO interrupt</p>
+<p>Available triggers are <code class="docutils literal notranslate"><span class="pre">none</span></code> (which is the same as disabling an
+interrupt), <code class="docutils literal notranslate"><span class="pre">rising</span></code>, <code class="docutils literal notranslate"><span class="pre">falling</span></code>, <code class="docutils literal notranslate"><span class="pre">both</span></code> (rising or falling), <code class="docutils literal notranslate"><span class="pre">low</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">high</span></code>. When the interrupt is triggered it will send a tuple:
+<code class="docutils literal notranslate"><span class="pre">{gpio_interrupt,</span> <span class="pre">Pin}</span></code> to the process that set the interrupt. <code class="docutils literal notranslate"><span class="pre">Pin</span></code>
+will be the number of the pin that triggered the interrupt.</p>
+<p>The STM32 port only supports <code class="docutils literal notranslate"><span class="pre">rising</span></code>, <code class="docutils literal notranslate"><span class="pre">falling</span></code>, or <code class="docutils literal notranslate"><span class="pre">both</span></code>.</p>
+<p>The rp2040 (Pico) port does not support gpio interrupts at this time.</p>
+<p><a name="set_int-4"></a></p>
+</section>
+<section id="set-int-4">
+<h3>set_int/4<a class="headerlink" href="#set-int-4" title="Link to this heading"></a></h3>
+<pre><code>
+set_int(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>, Trigger::<a href="#type-trigger">trigger()</a>, Pid::pid()) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to set the interrupt on<br /><code class="docutils literal notranslate"><span class="pre">Trigger</span></code>: is the state that will trigger an interrupt<br /><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: is the process that will receive the interrupt message<br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Set a GPIO interrupt</p>
+<p>Available triggers are <code class="docutils literal notranslate"><span class="pre">none</span></code> (which is the same as disabling an
+interrupt), <code class="docutils literal notranslate"><span class="pre">rising</span></code>, <code class="docutils literal notranslate"><span class="pre">falling</span></code>, <code class="docutils literal notranslate"><span class="pre">both</span></code> (rising or falling), <code class="docutils literal notranslate"><span class="pre">low</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">high</span></code>. When the interrupt is triggered it will send a tuple:
+<code class="docutils literal notranslate"><span class="pre">{gpio_interrupt,</span> <span class="pre">Pin}</span></code>
+to the process that set the interrupt. Pin will be the number
+of the pin that triggered the interrupt.</p>
+<p>The STM32 port only supports <code class="docutils literal notranslate"><span class="pre">rising</span></code>, <code class="docutils literal notranslate"><span class="pre">falling</span></code>, or <code class="docutils literal notranslate"><span class="pre">both</span></code>.</p>
+<p>The rp2040 (Pico) port does not support gpio interrupts at this time.</p>
+<p><a name="set_level-3"></a></p>
+</section>
+<section id="set-level-3">
+<h3>set_level/3<a class="headerlink" href="#set-level-3" title="Link to this heading"></a></h3>
+<pre><code>
+set_level(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>, Level::<a href="#type-level">level()</a>) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to write<br /><code class="docutils literal notranslate"><span class="pre">Level</span></code>: the desired output level to set<br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Set GPIO digital output level</p>
+<p>Set a pin to <code class="docutils literal notranslate"><span class="pre">high</span></code> (1) or <code class="docutils literal notranslate"><span class="pre">low</span></code> (0).</p>
+<p>The STM32 is capable of setting the state for any, or all of the output pins
+on a single bank at the same time, this is done by passing a list of pins numbers
+in the pin tuple.</p>
+<p>For example, setting all of the even numbered pins to a <code class="docutils literal notranslate"><span class="pre">high</span></code> state,
+and all of the odd numbered pins to a <code class="docutils literal notranslate"><span class="pre">low</span></code> state can be accomplished in two lines:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>     gpio:digital_write({c, [0,2,4,6,8,10,12,14]}, high}),
+     gpio:digital_write({c, [1,3,5,7,9,11,13,15]}, low}).
+</pre></div>
+</div>
+<p>To set the same state for all of the pins that have been previously configured as outputs
+on a specific bank the atom <code class="docutils literal notranslate"><span class="pre">all</span></code> may be used, this will have no effect on any pins on the
+same bank that have been configured as inputs, so it is safe to use with mixed direction
+modes on a bank.</p>
+<p>Not supported on rp2040 (Pico), use <code class="docutils literal notranslate"><span class="pre">gpio:digital_write/2</span></code> instead.</p>
+<p><a name="set_pin_mode-2"></a></p>
+</section>
+<section id="set-pin-mode-2">
+<h3>set_pin_mode/2<a class="headerlink" href="#set-pin-mode-2" title="Link to this heading"></a></h3>
+<pre><code>
+set_pin_mode(Pin::<a href="#type-pin">pin()</a>, Direction::<a href="#type-direction">direction()</a>) -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number to set operational mode<br /><code class="docutils literal notranslate"><span class="pre">Direction</span></code>: is <code class="docutils literal notranslate"><span class="pre">input</span></code>, <code class="docutils literal notranslate"><span class="pre">output</span></code>, or <code class="docutils literal notranslate"><span class="pre">output_od</span></code><br /></p>
+<p>returns: ok | error | {error, Reason}</p>
+<p>Set the operational mode of a pin</p>
+<p>Pins can be used for input, output, or output with open drain.</p>
+<p>The STM32 platform has extended direction mode configuration options.
+See &#64;type mode_config() for details. All configuration must be set using
+<code class="docutils literal notranslate"><span class="pre">set_direction/3</span></code>, including pull() mode, unlike the ESP32 which has a
+separate function (<code class="docutils literal notranslate"><span class="pre">set_pin_pull/2</span></code>). If you are configuring multiple pins
+on the same GPIO <code class="docutils literal notranslate"><span class="pre">bank</span></code> with the same options the pins may be configured all
+at the same time by giving a list of pin numbers in the pin tuple.
+Example to configure all of the leds on a Nucleo board:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>     gpio:set_direction({b, [0,7,14], output)
+</pre></div>
+</div>
+<p><a name="set_pin_pull-2"></a></p>
+</section>
+<section id="set-pin-pull-2">
+<h3>set_pin_pull/2<a class="headerlink" href="#set-pin-pull-2" title="Link to this heading"></a></h3>
+<pre><code>
+set_pin_pull(Pin::<a href="#type-pin">pin()</a>, Pull::<a href="#type-pull">pull()</a>) -&gt; ok | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number to set internal resistor direction<br /><code class="docutils literal notranslate"><span class="pre">Pull</span></code>: is the internal resistor state<br /></p>
+<p>returns: ok | error</p>
+<p>Set the internal resistor of a pin</p>
+<p>Pins can be internally pulled <code class="docutils literal notranslate"><span class="pre">up</span></code>, <code class="docutils literal notranslate"><span class="pre">down</span></code>, <code class="docutils literal notranslate"><span class="pre">up_down</span></code> (pulled in
+both directions), or left <code class="docutils literal notranslate"><span class="pre">floating</span></code>.</p>
+<p>This function is not supported on STM32, the internal resistor must
+be configured when setting the direction mode, see <code class="docutils literal notranslate"><span class="pre">set_direction/3</span></code>
+or <code class="docutils literal notranslate"><span class="pre">set_pin_mode/2</span></code>.</p>
+<p><a name="start-0"></a></p>
+</section>
+<section id="start-0">
+<h3>start/0<a class="headerlink" href="#start-0" title="Link to this heading"></a></h3>
+<pre><code>
+start() -&gt; <a href="#type-gpio">gpio()</a> | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p>returns: Pid | error | {error, Reason}</p>
+<p>Start the GPIO driver port</p>
+<p>Returns the pid of the active GPIO port driver, otherwise the GPIO
+port driver will be stared and registered as <code class="docutils literal notranslate"><span class="pre">gpio</span></code>. The use of
+<code class="docutils literal notranslate"><span class="pre">gpio:open/0</span></code> or <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code> is required before using any functions
+that require a GPIO pid as a parameter.</p>
+<p>Not currently available on rp2040 (Pico) port, use nif functions.</p>
+<p><a name="stop-0"></a></p>
+</section>
+<section id="stop-0">
+<h3>stop/0<a class="headerlink" href="#stop-0" title="Link to this heading"></a></h3>
+<pre><code>
+stop() -&gt; ok | {error, Reason::atom()} | error
+</code></pre>
+<br />
+<p>returns: ok | error | {error, Reason}</p>
+<p>Stop the GPIO interrupt port</p>
+<p>This function disables any interrupts that are set, stops
+the listening port, and frees all of its resources.</p>
+<p>Not currently available on rp2040 (Pico) port, use nif functions.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="esp.html" class="btn btn-neutral float-left" title="Module esp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="http_server.html" class="btn btn-neutral float-right" title="Module http_server" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">AtomVM Docs</span>
+      v: v0.6.1
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt>Versions</dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="/v0.6.1/pdf/AtomVM-v0.6.1.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.1/epub/AtomVM-v0.6.1.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

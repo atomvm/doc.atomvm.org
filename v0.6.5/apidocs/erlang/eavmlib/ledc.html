@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module ledc &mdash; AtomVM 0.6.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/eavmlib/ledc.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7c79bee4"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module network" href="network.html" />
+    <link rel="prev" title="Module json_encoder" href="json_encoder.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ahttp_client.html">Module ahttp_client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm.html">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="emscripten.html">Module emscripten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp.html">Module esp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp_adc.html">Module esp_adc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gpio.html">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="i2c.html">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module ledc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network.html">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uart.html">Module uart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module ledc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-ledc">
+<h1>Module ledc<a class="headerlink" href="#module-ledc" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>LED Controller low-level APIs.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>The functions in this module broadly reflect the ESP IDF-SDK LED Controller API.</p>
+<p>See the IDF-SDK <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/ledc.md">LEDC</a>
+documentation for more information about these APIs.
+<a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="channel">
+<h3><a name="type-channel">channel()</a><a class="headerlink" href="#channel" title="Link to this heading"></a></h3>
+<pre><code>
+channel() = 0..7
+</code></pre>
+</section>
+<section id="channel-cfg">
+<h3><a name="type-channel_cfg">channel_cfg()</a><a class="headerlink" href="#channel-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+channel_cfg() = {channel, <a href="#type-channel">channel()</a>}
+</code></pre>
+</section>
+<section id="channel-config">
+<h3><a name="type-channel_config">channel_config()</a><a class="headerlink" href="#channel-config" title="Link to this heading"></a></h3>
+<pre><code>
+channel_config() = [<a href="#type-channel_cfg">channel_cfg()</a> | <a href="#type-duty_cfg">duty_cfg()</a> | <a href="#type-gpio_num_cfg">gpio_num_cfg()</a> | <a href="#type-speed_mode_cfg">speed_mode_cfg()</a> | <a href="#type-hpoint_cfg">hpoint_cfg()</a> | <a href="#type-timer_sel_cfg">timer_sel_cfg()</a>]
+</code></pre>
+</section>
+<section id="duty">
+<h3><a name="type-duty">duty()</a><a class="headerlink" href="#duty" title="Link to this heading"></a></h3>
+<pre><code>
+duty() = non_neg_integer()
+</code></pre>
+</section>
+<section id="duty-cfg">
+<h3><a name="type-duty_cfg">duty_cfg()</a><a class="headerlink" href="#duty-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+duty_cfg() = {duty, <a href="#type-duty">duty()</a>}
+</code></pre>
+</section>
+<section id="duty-resolution">
+<h3><a name="type-duty_resolution">duty_resolution()</a><a class="headerlink" href="#duty-resolution" title="Link to this heading"></a></h3>
+<pre><code>
+duty_resolution() = non_neg_integer()
+</code></pre>
+</section>
+<section id="duty-resolution-cfg">
+<h3><a name="type-duty_resolution_cfg">duty_resolution_cfg()</a><a class="headerlink" href="#duty-resolution-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+duty_resolution_cfg() = {duty_resolution, <a href="#type-duty_resolution">duty_resolution()</a>}
+</code></pre>
+</section>
+<section id="fade-mode">
+<h3><a name="type-fade_mode">fade_mode()</a><a class="headerlink" href="#fade-mode" title="Link to this heading"></a></h3>
+<pre><code>
+fade_mode() = non_neg_integer()
+</code></pre>
+</section>
+<section id="freq-hz">
+<h3><a name="type-freq_hz">freq_hz()</a><a class="headerlink" href="#freq-hz" title="Link to this heading"></a></h3>
+<pre><code>
+freq_hz() = non_neg_integer()
+</code></pre>
+</section>
+<section id="freq-hz-cfg">
+<h3><a name="type-freq_hz_cfg">freq_hz_cfg()</a><a class="headerlink" href="#freq-hz-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+freq_hz_cfg() = {freq_hz, <a href="#type-freq_hz">freq_hz()</a>}
+</code></pre>
+</section>
+<section id="gpio-num">
+<h3><a name="type-gpio_num">gpio_num()</a><a class="headerlink" href="#gpio-num" title="Link to this heading"></a></h3>
+<pre><code>
+gpio_num() = non_neg_integer()
+</code></pre>
+</section>
+<section id="gpio-num-cfg">
+<h3><a name="type-gpio_num_cfg">gpio_num_cfg()</a><a class="headerlink" href="#gpio-num-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+gpio_num_cfg() = {gpio_num, <a href="#type-gpio_num">gpio_num()</a>}
+</code></pre>
+</section>
+<section id="hpoint">
+<h3><a name="type-hpoint">hpoint()</a><a class="headerlink" href="#hpoint" title="Link to this heading"></a></h3>
+<pre><code>
+hpoint() = non_neg_integer()
+</code></pre>
+</section>
+<section id="hpoint-cfg">
+<h3><a name="type-hpoint_cfg">hpoint_cfg()</a><a class="headerlink" href="#hpoint-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+hpoint_cfg() = {hpoint, <a href="#type-hpoint">hpoint()</a>}
+</code></pre>
+</section>
+<section id="ledc-error-code">
+<h3><a name="type-ledc_error_code">ledc_error_code()</a><a class="headerlink" href="#ledc-error-code" title="Link to this heading"></a></h3>
+<pre><code>
+ledc_error_code() = non_neg_integer()
+</code></pre>
+</section>
+<section id="speed-mode">
+<h3><a name="type-speed_mode">speed_mode()</a><a class="headerlink" href="#speed-mode" title="Link to this heading"></a></h3>
+<pre><code>
+speed_mode() = ?LEDC_LOW_SPEED_MODE | ?LEDC_HIGH_SPEED_MODE
+</code></pre>
+</section>
+<section id="speed-mode-cfg">
+<h3><a name="type-speed_mode_cfg">speed_mode_cfg()</a><a class="headerlink" href="#speed-mode-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+speed_mode_cfg() = {speed_mode, <a href="#type-speed_mode">speed_mode()</a>}
+</code></pre>
+</section>
+<section id="timer-config">
+<h3><a name="type-timer_config">timer_config()</a><a class="headerlink" href="#timer-config" title="Link to this heading"></a></h3>
+<pre><code>
+timer_config() = [<a href="#type-duty_resolution_cfg">duty_resolution_cfg()</a> | <a href="#type-freq_hz_cfg">freq_hz_cfg()</a> | <a href="#type-speed_mode_cfg">speed_mode_cfg()</a> | <a href="#type-timer_num_cfg">timer_num_cfg()</a>]
+</code></pre>
+</section>
+<section id="timer-num">
+<h3><a name="type-timer_num">timer_num()</a><a class="headerlink" href="#timer-num" title="Link to this heading"></a></h3>
+<pre><code>
+timer_num() = 0..3
+</code></pre>
+</section>
+<section id="timer-num-cfg">
+<h3><a name="type-timer_num_cfg">timer_num_cfg()</a><a class="headerlink" href="#timer-num-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+timer_num_cfg() = {timer_num, <a href="#type-timer_num">timer_num()</a>}
+</code></pre>
+</section>
+<section id="timer-sel">
+<h3><a name="type-timer_sel">timer_sel()</a><a class="headerlink" href="#timer-sel" title="Link to this heading"></a></h3>
+<pre><code>
+timer_sel() = non_neg_integer()
+</code></pre>
+</section>
+<section id="timer-sel-cfg">
+<h3><a name="type-timer_sel_cfg">timer_sel_cfg()</a><a class="headerlink" href="#timer-sel-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+timer_sel_cfg() = {timer_sel, <a href="#type-timer_sel">timer_sel()</a>}
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#channel_config-1">channel_config/1</a></td><td>    LEDC channel configuration.</td></tr><tr><td valign="top"><a href="#fade_func_install-1">fade_func_install/1</a></td><td>    Install LEDC fade function.</td></tr><tr><td valign="top"><a href="#fade_func_uninstall-0">fade_func_uninstall/0</a></td><td>    Uninstall LEDC fade function.</td></tr><tr><td valign="top"><a href="#fade_start-3">fade_start/3</a></td><td>    Start LEDC fading.</td></tr><tr><td valign="top"><a href="#get_duty-2">get_duty/2</a></td><td>    LEDC get duty.</td></tr><tr><td valign="top"><a href="#get_freq-2">get_freq/2</a></td><td>    LEDC get channel frequency (Hz).</td></tr><tr><td valign="top"><a href="#set_duty-3">set_duty/3</a></td><td>    LEDC set duty.</td></tr><tr><td valign="top"><a href="#set_fade_with_step-5">set_fade_with_step/5</a></td><td>    Set LEDC fade function.</td></tr><tr><td valign="top"><a href="#set_fade_with_time-4">set_fade_with_time/4</a></td><td>    Set LEDC fade function, with a limited time.</td></tr><tr><td valign="top"><a href="#set_freq-3">set_freq/3</a></td><td>    LEDC set channel frequency (Hz).</td></tr><tr><td valign="top"><a href="#stop-3">stop/3</a></td><td>    LEDC stop.</td></tr><tr><td valign="top"><a href="#timer_config-1">timer_config/1</a></td><td>    LEDC timer configuration.</td></tr><tr><td valign="top"><a href="#update_duty-2">update_duty/2</a></td><td>    LEDC update channel parameters.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="channel_config-1"></a></p>
+<section id="channel-config-1">
+<h3>channel_config/1<a class="headerlink" href="#channel-config-1" title="Link to this heading"></a></h3>
+<pre><code>
+channel_config(Config::<a href="#type-channel_config">channel_config()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Config</span></code>: channel configuration<br /></p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+<p>LEDC channel configuration.</p>
+<p>Configure LEDC timer with the given source timer/frequency(Hz)/duty_resolution.</p>
+<p><a name="fade_func_install-1"></a></p>
+</section>
+<section id="fade-func-install-1">
+<h3>fade_func_install/1<a class="headerlink" href="#fade-func-install-1" title="Link to this heading"></a></h3>
+<pre><code>
+fade_func_install(Flags::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Flags</span></code>: Flags used to allocate the interrupt. One (or multiple, using
+an ORred mask) ESP_INTR_FLAG_* values. See esp_intr_alloc.h
+for more info.<br /></p>
+<p>returns:         ok | {error, ledc_error_code()}</p>
+<p>Install LEDC fade function.</p>
+<p>This function will occupy interrupt of LEDC module.</p>
+<p><a name="fade_func_uninstall-0"></a></p>
+</section>
+<section id="fade-func-uninstall-0">
+<h3>fade_func_uninstall/0<a class="headerlink" href="#fade-func-uninstall-0" title="Link to this heading"></a></h3>
+<pre><code>
+fade_func_uninstall() -&gt; ok
+</code></pre>
+<br />
+<p>returns: ok</p>
+<p>Uninstall LEDC fade function.</p>
+<p><a name="fade_start-3"></a></p>
+</section>
+<section id="fade-start-3">
+<h3>fade_start/3<a class="headerlink" href="#fade-start-3" title="Link to this heading"></a></h3>
+<pre><code>
+fade_start(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, FadeMode::<a href="#type-fade_mode">fade_mode()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SpeedMode</span></code>: Select the LEDC channel group with specified speed mode.
+Note that not all targets support high speed mode.<br /><code class="docutils literal notranslate"><span class="pre">Channel</span></code>: LEDC channel index (0-7).<br /><code class="docutils literal notranslate"><span class="pre">FadeMode</span></code>: Whether to block until fading done.<br /></p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+<p>Start LEDC fading.</p>
+<p>Note. Call ledc:fade_func_install() once before calling this function.
+Call ledc:fade_start() after this to start fading.</p>
+<p><a name="get_duty-2"></a></p>
+</section>
+<section id="get-duty-2">
+<h3>get_duty/2<a class="headerlink" href="#get-duty-2" title="Link to this heading"></a></h3>
+<pre><code>
+get_duty(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SpeedMode</span></code>: Select the LEDC channel group with specified speed mode.
+Note that not all targets support high speed mode.<br /><code class="docutils literal notranslate"><span class="pre">Channel</span></code>: LEDC channel index (0-7).<br /></p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+<p>LEDC get duty.</p>
+<p><a name="get_freq-2"></a></p>
+</section>
+<section id="get-freq-2">
+<h3>get_freq/2<a class="headerlink" href="#get-freq-2" title="Link to this heading"></a></h3>
+<pre><code>
+get_freq(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, TimerNum::<a href="#type-timer_num">timer_num()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SpeedMode</span></code>: Select the LEDC channel group with specified speed mode.<br /><code class="docutils literal notranslate"><span class="pre">TimerNum</span></code>: LEDC timer index (0-3).<br /></p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+<p>LEDC get channel frequency (Hz)</p>
+<p><a name="set_duty-3"></a></p>
+</section>
+<section id="set-duty-3">
+<h3>set_duty/3<a class="headerlink" href="#set-duty-3" title="Link to this heading"></a></h3>
+<pre><code>
+set_duty(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, Duty::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SpeedMode</span></code>: Select the LEDC channel group with specified speed mode.
+Note that not all targets support high speed mode.<br /><code class="docutils literal notranslate"><span class="pre">Channel</span></code>: LEDC channel index (0-7).<br /><code class="docutils literal notranslate"><span class="pre">Duty</span></code>: Set the LEDC duty, the range of setting is [0, (2^duty_resolution)-1].<br /></p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+<p>LEDC set duty.</p>
+<p><a name="set_fade_with_step-5"></a></p>
+</section>
+<section id="set-fade-with-step-5">
+<h3>set_fade_with_step/5<a class="headerlink" href="#set-fade-with-step-5" title="Link to this heading"></a></h3>
+<pre><code>
+set_fade_with_step(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, TargetDuty::non_neg_integer(), Scale::non_neg_integer(), CycleNum::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SpeedMode</span></code>: Select the LEDC channel group with specified speed mode.
+Note that not all targets support high speed mode.<br /><code class="docutils literal notranslate"><span class="pre">Channel</span></code>: LEDC channel index (0-7).<br /><code class="docutils literal notranslate"><span class="pre">TargetDuty</span></code>: Target duty of fading. (0..(2^duty_resolution)-1)<br /><code class="docutils literal notranslate"><span class="pre">Scale</span></code>: Controls the increase or decrease step scale.<br /><code class="docutils literal notranslate"><span class="pre">CycleNum</span></code>: increase or decrease the duty every cycle_num cycles<br /></p>
+<p>returns:         ok | {error, ledc_error_code()}</p>
+<p>Set LEDC fade function</p>
+<p>Note. Call ledc:fade_func_install() once before calling this function.
+Call ledc:fade_start() after this to start fading.</p>
+<p><a name="set_fade_with_time-4"></a></p>
+</section>
+<section id="set-fade-with-time-4">
+<h3>set_fade_with_time/4<a class="headerlink" href="#set-fade-with-time-4" title="Link to this heading"></a></h3>
+<pre><code>
+set_fade_with_time(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, TargetDuty::non_neg_integer(), MaxFadeTimeMs::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SpeedMode</span></code>: Select the LEDC channel group with specified speed mode.
+Note that not all targets support high speed mode.<br /><code class="docutils literal notranslate"><span class="pre">Channel</span></code>: LEDC channel index (0-7).<br /><code class="docutils literal notranslate"><span class="pre">TargetDuty</span></code>: Target duty of fading. (0..(2^duty_resolution)-1)<br /><code class="docutils literal notranslate"><span class="pre">MaxFadeTimeMs</span></code>: The maximum time of the fading (ms).<br /></p>
+<p>returns:         ok | {error, ledc_error_code()}</p>
+<p>Set LEDC fade function, with a limited time.</p>
+<p>Note. Call ledc:fade_func_install() once before calling this function.
+Call ledc:fade_start() after this to start fading.</p>
+<p><a name="set_freq-3"></a></p>
+</section>
+<section id="set-freq-3">
+<h3>set_freq/3<a class="headerlink" href="#set-freq-3" title="Link to this heading"></a></h3>
+<pre><code>
+set_freq(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, TimerNum::<a href="#type-timer_num">timer_num()</a>, FreqHz::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SpeedMode</span></code>: Select the LEDC channel group with specified speed mode.<br /><code class="docutils literal notranslate"><span class="pre">TimerNum</span></code>: LEDC timer index (0-3).<br /><code class="docutils literal notranslate"><span class="pre">FreqHz</span></code>: Set the LEDC frequency.<br /></p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+<p>LEDC set channel frequency (Hz)</p>
+<p><a name="stop-3"></a></p>
+</section>
+<section id="stop-3">
+<h3>stop/3<a class="headerlink" href="#stop-3" title="Link to this heading"></a></h3>
+<pre><code>
+stop(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, IdleLevel::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SpeedMode</span></code>: Select the LEDC channel group with specified speed mode.
+Note that not all targets support high speed mode.<br /><code class="docutils literal notranslate"><span class="pre">Channel</span></code>: LEDC channel index (0-7).<br /><code class="docutils literal notranslate"><span class="pre">IdleLevel</span></code>: Set output idle level after LEDC stops.<br /></p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+<p>LEDC stop. Disable LEDC output, and set idle level.</p>
+<p><a name="timer_config-1"></a></p>
+</section>
+<section id="timer-config-1">
+<h3>timer_config/1<a class="headerlink" href="#timer-config-1" title="Link to this heading"></a></h3>
+<pre><code>
+timer_config(Config::<a href="#type-timer_config">timer_config()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Config</span></code>: timer configuration<br /></p>
+<p>returns: ok | {error, Reason}</p>
+<p>LEDC timer configuration.</p>
+<p>Configure LEDC timer with the given source timer/frequency(Hz)/duty_resolution.</p>
+<p><a name="update_duty-2"></a></p>
+</section>
+<section id="update-duty-2">
+<h3>update_duty/2<a class="headerlink" href="#update-duty-2" title="Link to this heading"></a></h3>
+<pre><code>
+update_duty(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">SpeedMode</span></code>: Select the LEDC channel group with specified speed mode.
+Note that not all targets support high speed mode.<br /><code class="docutils literal notranslate"><span class="pre">Channel</span></code>: LEDC channel index (0-7).<br /></p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+<p>LEDC update channel parameters.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="json_encoder.html" class="btn btn-neutral float-left" title="Module json_encoder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="network.html" class="btn btn-neutral float-right" title="Module network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      v0.6.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/v0.6.5/pdf/AtomVM-v0.6.5.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.5/epub/AtomVM-v0.6.5.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

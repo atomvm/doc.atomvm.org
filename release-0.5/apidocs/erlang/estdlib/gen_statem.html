@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module gen_statem</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module gen_statem</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>An implementation of the Erlang/OTP gen_statem interface.
+
+
+<h2><a name="description">Description</a></h2><p>An implementation of the Erlang/OTP gen_statem interface.</p>
+ 
+  <p>This module implements a strict susbset of the Erlang/OTP gen_statem  
+interface, supporting operations for local creation and management of  
+gen_statem instances.</p>
+ 
+  <p>This module is designed to be API-compatible with gen_statem, with exceptions noted  
+below.</p>
+ 
+  Caveats:
+  <ul>
+      <li>No support for start_link</li>
+      <li>Support only for locally named gen_statem instances</li>
+      <li>Support only for state function event handlers</li>
+      <li>No support for keeep_state or repeat_state return values from Module:StateName/3 callbacks</li>
+      <li>No support for postpone or hibernate state transition actions</li>
+      <li>No support for state enter calls</li>
+      <li>No support for multi_call</li>
+  </ul>
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-options">options()</a></h3>
+<p><tt>options() = [{atom(), term()}]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-server_ref">server_ref()</a></h3>
+<p><tt>server_ref() = atom() | pid()</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#call-2">call/2</a></td><td>    Send a request to a gen_statem instance, and wait for a reply.</td></tr>
+<tr><td valign="top"><a href="#call-3">call/3</a></td><td>    Send a request to a gen_statem instance, and wait for a reply..</td></tr>
+<tr><td valign="top"><a href="#cast-2">cast/2</a></td><td>    Send a request to a gen_statem instance.</td></tr>
+<tr><td valign="top"><a href="#reply-2">reply/2</a></td><td>    Send a reply to a calling client.</td></tr>
+<tr><td valign="top"><a href="#start-3">start/3</a></td><td>    Start an un-named gen_statem.</td></tr>
+<tr><td valign="top"><a href="#start-4">start/4</a></td><td>    Start a named gen_statem.</td></tr>
+<tr><td valign="top"><a href="#stop-1">stop/1</a></td><td>    Stop a previously started gen_statem.</td></tr>
+<tr><td valign="top"><a href="#stop-3">stop/3</a></td><td>    Stop a previously started gen_statem instance.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="call-2">call/2</a></h3>
+<div class="spec">
+<p><tt>call(ServerRef::<a href="#type-server_ref">server_ref()</a>, Request::term) -&gt; Reply::term() | {error, Reason::term()}</tt><br></p>
+</div><p>Equivalent to <a href="#call-3"><tt>call(ServerRef, Request, infinity)</tt></a>.</p>
+<p>    Send a request to a gen_statem instance, and wait for a reply.</p>
+
+<h3 class="function"><a name="call-3">call/3</a></h3>
+<div class="spec">
+<p><tt>call(ServerRef::<a href="#type-server_ref">server_ref()</a>, Request::term(), Timeout::timeout()) -&gt; Reply::term() | {error, Reason::term()}</tt><br></p>
+<p><tt>ServerRef</tt>: a reference to the gen_statem acquired via start<br>
+<tt>Request</tt>: the request to send to the gen_statem<br>
+<tt>Timeout</tt>: the amount of time in milliseconds to wait for a reply<br>
+</p>
+<p>returns: the reply sent back from the gen_statem; {error, Reason}, otherwise.</p>
+</div><p><p>    Send a request to a gen_statem instance, and wait for a reply..</p>
+ 
+           This function will send the specified request to the specified
+           gen_statem instance, and wait at least Timeout milliseconds for a
+           reply from the gen_statem.</p>
+
+<h3 class="function"><a name="cast-2">cast/2</a></h3>
+<div class="spec">
+<p><tt>cast(ServerRef, Request) -&gt; any()</tt></p>
+</div><p><p>    Send a request to a gen_statem instance.</p>
+ 
+           This function will send the specified request to the specified
+           gen_statem instance, but will not wait for a reply.</p>
+
+<h3 class="function"><a name="reply-2">reply/2</a></h3>
+<div class="spec">
+<p><tt>reply(Client, Reply) -&gt; any()</tt></p>
+</div><p><p>    Send a reply to a calling client.</p>
+ 
+           This function will send the specified reply back to the specified
+           gen_statem client (e.g, via call/3).  The return value of this
+           function can be safely ignored.</p>
+
+<h3 class="function"><a name="start-3">start/3</a></h3>
+<div class="spec">
+<p><tt>start(Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}</tt><br></p>
+<p><tt>Module</tt>: the module in which the gen_statem callbacks are defined<br>
+<tt>Args</tt>: the arguments to pass to the module's init callback<br>
+<tt>Options</tt>: the options used to create the gen_statem<br>
+</p>
+<p>returns: the gen_statem pid, if successful; {error, Reason}, otherwise.</p>
+</div><p><p>    Start an un-named gen_statem.</p>
+ 
+           <p>This function will start a gen_statem instance.</p>
+ 
+           <em><b>Note.</b>  The Options argument is currently ignored.</em></p>
+
+<h3 class="function"><a name="start-4">start/4</a></h3>
+<div class="spec">
+<p><tt>start(ServerName::{local, Name::atom()}, Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}</tt><br></p>
+<p><tt>ServerName</tt>: the name with which to register the gen_statem<br>
+<tt>Module</tt>: the module in which the gen_statem callbacks are defined<br>
+<tt>Args</tt>: the arguments to pass to the module's init callback<br>
+<tt>Options</tt>: the options used to create the gen_statem<br>
+</p>
+<p>returns: the gen_statem pid, if successful; {error, Reason}, otherwise.</p>
+</div><p><p>    Start a named gen_statem.</p>
+ 
+           <p>This function will start a gen_statem instance and register the           
+newly created process with the process registry.  Subsequent calls           
+may use the gen_statem name, in lieu of the process id.</p>
+ 
+           <em><b>Note.</b>  The Options argument is currently ignored.</em></p>
+
+<h3 class="function"><a name="stop-1">stop/1</a></h3>
+<div class="spec">
+<p><tt>stop(ServerRef::<a href="#type-server_ref">server_ref()</a>) -&gt; ok | {error, Reason::term()}</tt><br></p>
+</div><p>Equivalent to <a href="#stop-3"><tt>stop(ServerRef, normal, infinity)</tt></a>.</p>
+<p>    Stop a previously started gen_statem.</p>
+
+<h3 class="function"><a name="stop-3">stop/3</a></h3>
+<div class="spec">
+<p><tt>stop(ServerRef::<a href="#type-server_ref">server_ref()</a>, Reason::term(), Timeout::non_neg_integer() | infinity) -&gt; ok | {error, Reason::term()}</tt><br></p>
+<p><tt>ServerRef</tt>: a reference to the gen_statem acquired via start<br>
+</p>
+<p>returns: ok, if the gen_statem stopped; {error, Reason}, otherwise.</p>
+</div><p><p>    Stop a previously started gen_statem instance.</p>
+ 
+           This function will stop a gen_statem instance, providing the supplied
+           Reason to the .  If the gen_statem is
+           a named gen_statem, then the gen_statem name may be used to stop the gen_statem.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Getting Started Guide</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/epub.css" /> 
+  </head><body>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <!--
+ Copyright 2021-2022 Fred Dushin <fred@dushin.net>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="getting-started-guide">
+<h1>Getting Started Guide</h1>
+<p>The getting started is broken up into the following sections:</p>
+<ul class="simple">
+<li><p>Getting Started on the ESP32 platform</p></li>
+<li><p>Getting Started on the STM32 platform</p></li>
+<li><p>Getting Started on the Generic UNIX platform</p></li>
+</ul>
+<section id="getting-started-on-the-esp32-platform">
+<h2>Getting Started on the ESP32 platform</h2>
+<p>The AtomVM virtual machine is supported on the <a class="reference external" href="https://www.espressif.com">Espressif</a> <a class="reference external" href="https://www.espressif.com/en/products/socs/esp32">ESP32</a> platform, allowing users to write Erlang and Elixir programs and deploy them to the ESP32 micro-controller.</p>
+<p>These instructions cover how to get the AtomVM virtual machine flashed to your ESP32 device, as well as how to flash your Erlang and Elixir programs that will be executed by the virtual machine running on the device.</p>
+<p>For most applications, you should only need to install the VM once (or at least once per desired AtomVM release).  Once the VM is uploaded, you can then begin development of Erlang or Elixir applications, which can then be flashed as part of your routine development cycle.</p>
+<section id="requirements">
+<h3>Requirements</h3>
+<p>Deployment of AtomVM applications requires the following components:</p>
+<ul class="simple">
+<li><p>A computer running MacOS or Linux (Windows support is not currently supported);</p></li>
+<li><p>An ESP32 module with a USB/UART connector (typically part of an ESP32 development board);</p></li>
+<li><p>A USB cable capable of connecting the ESP32 module or board to your development machine (laptop or PC);</p></li>
+<li><p>The <a class="reference external" href="https://github.com/espressif/esptool"><code class="docutils literal notranslate"><span class="pre">esptool</span></code></a> program, for flashing the AtomVM image and AtomVM programs;</p></li>
+<li><p>An <a class="reference external" href="https://erlang.org">Erlang/OTP</a> release (21, 22, or 23);</p></li>
+<li><p>A serial console program, such as <code class="docutils literal notranslate"><span class="pre">minicom</span></code> or <code class="docutils literal notranslate"><span class="pre">screen</span></code>, so that you can view console output from your AtomVM application.</p></li>
+<li><p>(optional) For Erlang programs, <a class="reference external" href="https://rebar3.org"><code class="docutils literal notranslate"><span class="pre">rebar3</span></code></a>;</p></li>
+<li><p>(optional) For Elixir programs, <a class="reference external" href="https://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html"><code class="docutils literal notranslate"><span class="pre">mix</span></code></a>, which ships with the Elixir runtime;</p></li>
+</ul>
+</section>
+<section id="deployment-overview">
+<h3>Deployment Overview</h3>
+<p>The ES32 AtomVM virtual machine is an IDF application that runs on the ESP32 platform.  As an IDF application, it provides the object code to boot the ESP device and execute the AtomVM virtual machine code, which in turn is responsible for execution of an Erlang/Elixir application.</p>
+<p>The AtomVM virtual machine is implemented in C, and the AtomVM binary image contains the binary object code compiled from C source files, as well as the ESP boot loader and partition map, which tells the ESP32 how the flash module is laid out.</p>
+<p>AtomVM developers will typically write their applications in Erlang or Elixir.  These source files are compiled into BEAM bytecode, which is then assembled into AtomVM “packbeam” (<code class="docutils literal notranslate"><span class="pre">.avm</span></code>) files.  This packbeam file is flashed onto the ESP32 device, starting at the data partition address <code class="docutils literal notranslate"><span class="pre">0x210000</span></code>.  When AtomVM starts, it will look in this partition for the first occurrence of a BEAM module that exports a <code class="docutils literal notranslate"><span class="pre">start/0</span></code> function.  Once that module is located, execution of the BEAM bytecode will commence at that point.</p>
+<p>The following diagram provides a simplified overview of the layout of the AtomVM virtual machine and Erlang/Elixir applications on the ESP32 flash module.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|               |
++---------------+  ----------- 0x1000
+| boot loader   |           ^
++---------------+           |
+| partition map |           | AtomVM
++---------------+           | binary
+|               |           | image
+|   AtomVM      |           |
+|   Virtual     |           |
+|   Machine     |           |
+|               |           v
++---------------+  ----------- 0x210000
+|               |           ^
+|               |           |
+|     data      |           | Erlang/Elixir
+|   partition   |           | Application
+|               |           |
+|               |           v
++---------------+  ----------- end
+</pre></div>
+</div>
+<p>Deploying an AtomVM application to an ESP32 device typically involved two steps:</p>
+<ol class="simple">
+<li><p>Connecting the ESP32 device;</p></li>
+<li><p>Deploying the AtomVM virtual machine;</p></li>
+<li><p>Deploying an AtomVM application (typically an iterative process)</p></li>
+</ol>
+<p>These steps are described in more detail below.</p>
+</section>
+<section id="connecting-the-esp32-device">
+<h3>Connecting the ESP32 device</h3>
+<p>Connect the ESP32 to your development machine (e.g., laptop or PC) via a USB cable.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+---------------+
+| laptop or PC  |
+|               |           +-------+
+|               | USB       |       |
+|               x-----------x       |
+|               |           |       |
+|               |           +-------+
++---------------+           ESP32
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note. There are a wide variety of ESP32 modules, ranging from home-made breadboard solutions to all-in-one development boards.  For simplicity, we assume a development board that can both be powered by a USB cable and which can be simultaneously flashed using the same cable, e.g., the <a class="reference external" href="https://www.espressif.com/en/products/devkits/esp32-devkitc">Espressif ESP32 DevKit</a>.</p>
+</div></blockquote>
+<p>Consult your local development board documentation for instructions about how to connect your device to your development machine.</p>
+</section>
+<section id="deploying-the-atomvm-virtual-machine">
+<h3>Deploying the AtomVM virtual machine</h3>
+<p>The following methods can be used to deploy the AtomVM virtual machine to an ESP32 device:</p>
+<ol class="simple">
+<li><p>Flashing a binary image;</p></li>
+<li><p>Building from source.</p></li>
+</ol>
+<section id="flashing-a-binary-images">
+<h4>Flashing a binary images</h4>
+<p>Flashing the ESP32 using a pre-built binary image is by far the easiest path to getting started with development on the ESP32.  Binary images contain the virtual machine image and all of the necessary components to run your application.</p>
+<p>We recommend first erasing any existing applications on the ESP32 device.  E.g.,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 115200 erase_flash
+...
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note.  Specify the device port and baud settings and AtomVM image name to suit your particular environment.</p>
+</div></blockquote>
+<p>Next, download the latest stable or nightly ESP32 release image from the <a class="reference external" href="https://atomvm.org">AtomVM web site</a>.</p>
+<blockquote>
+<div><p>Note.  Nightly images may be unstable and may result in unpredictable behavior.</p>
+</div></blockquote>
+<p>Finally, use the <code class="docutils literal notranslate"><span class="pre">esptool</span></code> to flash the image to the start address <code class="docutils literal notranslate"><span class="pre">0x1000</span></code> on the ESP32.  E.g.,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 115200 \
+    --before default_reset --after hard_reset \
+    write_flash -u --flash_mode dio --flash_freq 40m --flash_size detect \
+    0x1000 atomvm-esp32-v0.1.0.bin
+...
+</pre></div>
+</div>
+<p>Once completed, your ESP32 device is ready to run Erlang or Elixir programs targeted for AtomVM.</p>
+</section>
+<section id="building-from-source">
+<h4>Building from source</h4>
+<p>You may optionally build AtomVM from source and deploy the AtomVM virtual machine to your ESP32 device manually.  Building AtomVM from source is slightly more involved, as it requires the installation of the Espressif IDF SDK and tool chain and is typically recommended only for users who are doing development on the AtomVM virtual machine, or for developers implementing custom Nifs or ports.</p>
+<p>Instructions for building AtomVM from source are covered in the AtomVM <a class="reference internal" href="build-instructions.xhtml"><span class="doc std std-doc">Build Instructions</span></a></p>
+</section>
+</section>
+<section id="deploying-an-atomvm-application">
+<h3>Deploying an AtomVM application</h3>
+<p>An AtomVM application is a collection of BEAM files, which have been compiled using the Erlang or Elixir compiler.  These BEAM files are assembled into an AtomVM “packbeam” (<code class="docutils literal notranslate"><span class="pre">.avm</span></code>) file, which in turn is flashed to the <code class="docutils literal notranslate"><span class="pre">main</span></code> data partition on the ESP32 flash module, starting at address <code class="docutils literal notranslate"><span class="pre">0x210000</span></code>.</p>
+<p>When the AtomVM virtual machine starts, it will search for the first module that contains an exported <code class="docutils literal notranslate"><span class="pre">start/0</span></code> function in this partition, and it will begin execution of the BEAM bytecode at that function.</p>
+<p>AtomVM applications can be written in Erlang or Elixir, or a combination of both.  The AtomVM community has provided tooling for both platforms, making deployment of AtomVM applications as seamless as possible.</p>
+<p>This section describes both Erlang and Elixir tooling for deploying AtomVM applications to ESP32 devices.</p>
+<section id="erlang-tooling">
+<h4>Erlang Tooling</h4>
+<p>Deployment of AtomVM applications written in the Erlang programming language is supported via the <a class="reference external" href="https://github.com/fadushin/atomvm_rebar3_plugin"><code class="docutils literal notranslate"><span class="pre">atomvm_rebar3_plugin</span></code></a> plugin, a community-supported plugin to the <a class="reference external" href="https://rebar3.org"><code class="docutils literal notranslate"><span class="pre">rebar3</span></code></a> Erlang build tool.</p>
+<p>You can generate a simple application from scratch using the <code class="docutils literal notranslate"><span class="pre">atomvm_rebar3_plugin</span></code> template, as follows:</p>
+<p>Edit or create the <code class="docutils literal notranslate"><span class="pre">$HOME/.config/rebar3/rebar.config</span></code> file to include the <code class="docutils literal notranslate"><span class="pre">atomvm_rebar3_plugin</span></code> plugin:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%% $HOME/.config/rebar3/rebar.config
+{plugins, [
+    {atomvm_rebar3_plugin, &quot;0.3.0&quot;},
+    ...
+]}.
+</pre></div>
+</div>
+<p>In any directory in which you have write permission, issue</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ rebar3 new atomvm_app &lt;app-name&gt;
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;app-name&gt;</span></code> is the name of the application you would like to create (e.g., <code class="docutils literal notranslate"><span class="pre">myapp</span></code>).  This command will generate a rebar project under the directory <code class="docutils literal notranslate"><span class="pre">&lt;app-name&gt;</span></code>.</p>
+<p>The generated application will contain the proper <code class="docutils literal notranslate"><span class="pre">rebar.config</span></code> configuration and will contain the <code class="docutils literal notranslate"><span class="pre">&lt;app-name&gt;.erl</span></code> module, which exports the <code class="docutils literal notranslate"><span class="pre">start/0</span></code> function with a stubbed implementation.</p>
+<p>Specifically, note the following stanza in the generated <code class="docutils literal notranslate"><span class="pre">rebar.config</span></code> file:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%% rebar.config
+{plugins, [
+    {atomvm_rebar3_plugin, &quot;0.3.0&quot;},
+    ...
+]}.
+</pre></div>
+</div>
+<p>And note the <code class="docutils literal notranslate"><span class="pre">myapp</span></code> application exports a <code class="docutils literal notranslate"><span class="pre">start/0</span></code> function, e.g.,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%% erlang
+-module(myapp).
+-export([start/0]).
+
+start() -&gt;
+    ok.
+</pre></div>
+</div>
+<p>With this plugin installed, you have access to the <code class="docutils literal notranslate"><span class="pre">esp32_flash</span></code> target, which will build an AtomVM packbeam</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ rebar3 esp32_flash --port /dev/ttyUSB0
+===&gt; Fetching atomvm_rebar3_plugin v0.3.0
+===&gt; Fetching rebar3_hex v6.11.3
+===&gt; Fetching hex_core v0.7.1
+===&gt; Fetching verl v1.0.2
+===&gt; Analyzing applications...
+===&gt; Compiling verl
+===&gt; Compiling hex_core
+===&gt; Compiling rebar3_hex
+===&gt; Fetching atomvm_packbeam v0.3.0
+===&gt; Analyzing applications...
+===&gt; Compiling atomvm_rebar3_plugin
+===&gt; Compiling packbeam
+===&gt; Verifying dependencies...
+===&gt; Analyzing applications...
+===&gt; Compiling myapp
+===&gt; AVM file written to : myapp.avm
+===&gt; esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 115200 --before default_reset --after hard_reset write_flash -u --flash_mode dio --flash_freq 40m --flash_size detect 0x210000 /home/frege/myapp/_build/default/lib/myapp.avm
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note. Consult the the <a class="reference external" href="https://github.com/fadushin/atomvm_rebar3_plugin"><code class="docutils literal notranslate"><span class="pre">atomvm_rebar3_plugin</span></code></a> plugin documentation, for more detailed information about how to use this tool.</p>
+</div></blockquote>
+<p>Once the application has been flashed, you may connect to the ESP32 over the serial port using <code class="docutils literal notranslate"><span class="pre">minicom</span></code>, <code class="docutils literal notranslate"><span class="pre">screen</span></code>, or equivalent.</p>
+</section>
+<section id="elixir-tooling">
+<h4>Elixir Tooling</h4>
+<blockquote>
+<div><p>TODO mix + https://github.com/atomvm/ExAtomVM + hex</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+<section id="getting-started-on-the-stm32-platform">
+<h2>Getting Started on the STM32 platform</h2>
+<blockquote>
+<div><p>TODO will se distribute a binary image for STM32?</p>
+</div></blockquote>
+</section>
+<section id="getting-started-on-the-generic-unix-platform">
+<h2>Getting Started on the Generic UNIX platform</h2>
+<p>AtomVM may be run on UNIX-like platforms using the <code class="docutils literal notranslate"><span class="pre">AtomVM</span></code> executable.</p>
+<p>You may specify one or more AVM files on the command line when running the <code class="docutils literal notranslate"><span class="pre">AtomVM</span></code> command.  BEAM modules defined in earlier AVM modules on the command line take higher precedence that BEAM modules included in AVM files later in the argument list.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>shell$ AtomVM /path/to/myapp.avm
+</pre></div>
+</div>
+<p>Currently, the <code class="docutils literal notranslate"><span class="pre">AtomVM</span></code> executable must be built from source.</p>
+<blockquote>
+<div><p>See the AtomVM <a class="reference internal" href="build-instructions.xhtml"><span class="doc std std-doc">Build Instructions</span></a> for instructions about how to build AtomVM on the Generic UNIX platform.</p>
+</div></blockquote>
+</section>
+<section id="where-to-go-from-here">
+<h2>Where to go from here</h2>
+<p>The following resources may be useful for understanding how to develop Erlang or Elixir applications for the AtomVM platform:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="example-programs.xhtml"><span class="doc std std-doc">Example Programs</span></a></p></li>
+<li><p><a class="reference internal" href="programmers-guide.xhtml"><span class="doc std std-doc">Programmers Guide</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Memory Management</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/epub.css" /> 
+  </head><body>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <!--
+ Copyright 2019-2022 Fred Dushin <fred@dushin.net>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="memory-management">
+<h1>Memory Management</h1>
+<p>Like most managed execution environments, AtomVM provides automated memory management for compiled Erlang/Elixir applications that run on the platform, allowing developers to focus on the logic of application programs, instead of the minutiae of managing the allocation and disposal of memory in the process heap of the program.</p>
+<p>Because Erlang/Elixir, and the BEAM, specifically, is a shared-nothing, concurrency-based language, AtomVM can manage memory independently, for each unit of concurrency, viz., the Erlang process.  While there is some global state, internally, that AtomVM manages (e.g., to manage all running processes in the system), memory management for each individual process can be performed independently of any other process.</p>
+<p>AtomVM internally uses a “Context” structure, to manage aspects of a process (including memory management), and we use “execution context” and “Erlang process” interchangeably in this document.  As usual, an Erlang process should be distinguished from the Operating System (OS) process in which Erlang processes run.</p>
+<p>For any given execution context, there are three regions of memory that are relevant: i) the stack, ii) the heap, and iii) registers.  The stack and heap actually occupy one region of memory allocated in the OS process heap (via malloc or equiv), and grow in opposite directions towards each other.  Registers in AtomVM are a fixed size array of 16 elements.</p>
+<p>The fundamental unit of memory that occupies space in the stack, heap, and registers is the <code class="docutils literal notranslate"><span class="pre">term</span></code>, which is typedef’d internally to be an integral type that fits in a single word of machine memory (i.e., a C <code class="docutils literal notranslate"><span class="pre">int</span></code>).  Various tricks are used, described below, to manage and reference multi-word terms, but in general, a term (or in some cases, a term pointer) is intended to fit into a single word or memory.</p>
+<p>This document describes the memory layout for each execution context (i.e., Erlang/Elixir process), how memory is allocated and used, how terms are represented internally, and how AtomVM makes room for more terms, as memory usage increases and as terms go out of scope and are no longer used by the application, and can hence be garbage collected.</p>
+<section id="the-context-structure">
+<h2>The Context structure</h2>
+<section id="the-heap-and-stack">
+<h3>The Heap and Stack</h3>
+<p>The heap and stack for each AtomVM process are stored in a single allocated block of memory (e.g., via the <code class="docutils literal notranslate"><span class="pre">malloc</span></code> C function) in the heap space of the AtomVM program, and the AtomVM runtime manages the allocation of portions of this memory during the execution of a program.  The heap starts at the bottom of the block of memory, and grows incrementally towards the top of the allocated block, as memory is allocated in the program.  Each word in the heap and stack (or in some cases, a sequence of words) represent a term that has been allocated.</p>
+<p>The heap contains all of the allocated terms in an execution context.  In some cases, the terms occupy more than one word of memory (e.g., a tuple), but in general, the heap contains a record of memory in use by the program.</p>
+<p>The heap grows incrementally, as memory is allocated, and terms are allocated sequentially, in increasing memory addresses.  There is, therefore, no memory fragmentation, properly speaking, at least insofar as a portion of memory might be in use and then freed.  However, it is possible that previously allocated blocks of memory in the context heap are no longer referenced by the program.  In this case, the allocated blocks are “garbage”, and are reclaimed at the next garbage collection.</p>
+<blockquote>
+<div><p>Note. It is possible for the AtomVM heap, as provided by the underlying operating system, to become fragmented, as the execution context stack and heap are allocated via <code class="docutils literal notranslate"><span class="pre">malloc</span></code> or equiv.  But that is a different kind of fragmentation that does not refer to the allocated block used by an individual AtomVM process.</p>
+</div></blockquote>
+<p>The stack grows from the top of the allocated block toward the heap in decreasing addresses.  Terms in the stack, as opposed to the heap, are either single-word terms, i.e., simple terms like small integers, process ids, etc, or <em>pointers</em> to terms in the heap.  In either case, they only occupy one word of memory.</p>
+<p>The region between the stack and heap is the free space available to the Erlang/Elixir process.</p>
+<p>The following diagram illustrates an allocated block of memory that stores terms (or term pointers) in the heap and stack:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+================================+ &lt;- heap_start --
+|             word[0]            |      ^      ^
++--------------------------------+      |      |
+|             word[1]            |      |      |
++--------------------------------+      |      |
+|             word[2]            |      | heap |
++--------------------------------+      |      |
+|               ...              |      |      |
++--------------------------------+      |      |
+|                                |      v      |
++--------------------------------+ &lt;- heap_ptr |
+|                                |      ^      |
+|                                |      |      |
+|                                |      |      |
+|                                |      | free |
+|                                |      |      |
+|                                |      |      |
+|                                |      v      |
++--------------------------------+ &lt;- e ----   |
+|                                |      ^      |
++--------------------------------+      |      |
+|                                |      |      |
++--------------------------------+      | stack|
+|                                |      |      |
++--------------------------------+      |      |
+|           word[n-1]            |      v      v
++================================+ &lt;- stack_base --
+</pre></div>
+</div>
+<p>The initial size of the allocated block for the stack and heap in AtomVM is 8 words.  As heap and stack allocations grow, eventually, the amount of free space will decrease to the point where a garbage collection is required.  In this case, a new but larger (typically by 2x) block of memory is allocated by the AtomVM OS process, and terms are copied from the old stack and heap to the new stack and heap.  Garbage collection is described in more detail below.</p>
+</section>
+<section id="registers">
+<h3>Registers</h3>
+<p>Registered are allocated in an array of 16 terms (words) and are referenced by the <code class="docutils literal notranslate"><span class="pre">x</span></code> field in the Context data structure:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+---------+---------+---------+--------+
+|   x[0]  |   x[1]  |   ...   |  x[15] |
++---------+---------+---------+--------+
+</pre></div>
+</div>
+<p>Like terms in the stack, terms in registers are either single-word terms, i.e., simple terms like small integers, process ids, etc, or <em>pointers</em> to terms in the heap, in a manner described in more detail below.  In either case, they only occupy one word of memory.</p>
+<p>Registers are used as part of the BEAM instruction set to store and retrieve values that are passed between BEAM instruction opcodes.</p>
+</section>
+<section id="process-dictionary">
+<h3>Process Dictionary</h3>
+<p>AtomVM processes support a process dictionary, or map of process-specific data, as supported via the <code class="docutils literal notranslate"><span class="pre">erlang:put/2</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:get/1</span></code> functions.</p>
+<p>The Process Dictionary contains a list of key-value pairs, where each key and value is a single-word term, either a simple term like an atom or pid, or a reference to an allocated object in the process heap. (see below)</p>
+</section>
+<section id="heap-fragments">
+<h3>Heap Fragments</h3>
+<p>AtomVM makes use of heap fragments in some edge cases, such as loading external terms from the literals table in a BEAM file.  Heap fragments are individually allocated blocks of memory that contain may contain multi-word term structures.  The data in heap fragments are copied into the heap during a garbage collection event, and then deleted, so heap fragments are generally short lived.  However, during execution of a program, there may be references to term structures in such fragments from the stack, registers, the process dictionary, or from nested terms in the process heap.</p>
+</section>
+<section id="mailbox">
+<h3>Mailbox</h3>
+<p>Each Erlang process contains a process mailbox, which is a linked-list structure of messages.  Each message in this list contains a term structure, which is a copy of a term sent to it, e.g., via the <code class="docutils literal notranslate"><span class="pre">erlang:send/2</span></code> operation, or <code class="docutils literal notranslate"><span class="pre">!</span></code> operator.</p>
+<p>The representation of terms in a message is identical to that in the heap and heap fragments, with the exception that messages in the process mailbox are not garbage collected, in the way that the process heap is.  Instead, messages in the process mailbox are copied to the process heap when the message is read off the mailbox (e.g., via <code class="docutils literal notranslate"><span class="pre">receive</span> <span class="pre">...</span> <span class="pre">end</span></code>).  Messages (and their term contents) are then destroyed once they are no longer needed, and after being copied into the heap.</p>
+</section>
+<section id="memory-graph">
+<h3>Memory Graph</h3>
+<p>Memory is allocated in the execution context heap, and structured types, such as tuples and lists, generally include references to the blocks of memory that have beenn previously allocated.</p>
+<p>For example, if we look at the memory allocated for the term</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{foo, [{bar, self()}]}
+</pre></div>
+</div>
+<p>we would generally see something like the following in the execution context heap:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|           ...             |
+|                           |
++---------------------------+
+|          tuple            |&lt;--+
++---------------------------+   |
+|          bar              |   |
++---------------------------+   |
+|          &lt;0.1.0&gt;          |   |
++---------------------------+   |
+|          []               |&lt;- | --+
++---------------------------+   |   |
+|          tuple ptr        |---+   |
++---------------------------+       |
+|          tuple            |       |
++---------------------------+       |
+|          foo              |       |
++---------------------------+       |
+|          list ptr         |-------+
++---------------------------+
+|                           |
+|           ...             |
+01234567890123456789012345678901234567890123456789
+</pre></div>
+</div>
+<p>The tuple <code class="docutils literal notranslate"><span class="pre">{bar,</span> <span class="pre">self()}</span></code> is allocated in a block, and the list <code class="docutils literal notranslate"><span class="pre">[{bar,</span> <span class="pre">self()}]</span></code> (or, technically, <code class="docutils literal notranslate"><span class="pre">[{bar,</span> <span class="pre">self()}</span> <span class="pre">|</span> <span class="pre">[]]</span></code>) contains elements that <em>point</em> to it elements (in this case, <code class="docutils literal notranslate"><span class="pre">[]</span></code> and <code class="docutils literal notranslate"><span class="pre">{bar,</span> <span class="pre">self()}</span></code> – note that in general, in AtomVM, the address of the tail of a list occupies the first byte in the list – more details on that below).  Finally, the tuple <code class="docutils literal notranslate"><span class="pre">{foo,</span> <span class="pre">[{bar,</span> <span class="pre">self()}]}</span></code> contains the atom <code class="docutils literal notranslate"><span class="pre">foo</span></code> and a <em>pointer</em> to the list it contains.</p>
+<p>In this way, the set of allocated blocks in the execution context heap forms a directed graph of objects, whose nodes are structured terms (lists, tuples, etc) and whose leaves are simple terms, like atoms, pids, and so forth.  Note that because BEAM-based languages such as Erlang and Elixir are true functional programming languages, these directed graphs have no cycles.</p>
+<p>The stack, registers, and process dictionary contain pointers to terms in the heap.  We call these terms “root” nodes, and any term in the heap that is referenced by a root node, or any term that is so referenced by such a term, is in the path of a root node.  Some terms in the heap are not in the path of a root node.  We call these terms “garbage”.</p>
+<p>Note that the values in the stack and register root nodes change over time as the result of the execution of Erlang opcodes, and are dependent on the BEAM output of the Erlang compiler, along with inputs to the program being executed.  Thus, a term in the process heap may become garbage, once it is no longer reachable from the root set.  But once garbage, the termill will always remain garbage, at least until it is reclaimed during a garbage collection event.  For more information about how the garbage collector works, see the Garbage Collection section, below.</p>
+</section>
+</section>
+<section id="simple-terms">
+<h2>Simple Terms</h2>
+<p>The fundamental unit of memory in AtomVM is the <code class="docutils literal notranslate"><span class="pre">term</span></code> object, which is designed to fit either into a single machine work (single-word terms), or into multiple words (so called “boxed terms” and lists).</p>
+<p>This section enumerates the AtomVM term types, and how they are represented in memory.</p>
+<blockquote>
+<div><p>Note.  The term type is overloaded in some cases to store raw pointers to memory addresses, but this is rare and well controlled.</p>
+</div></blockquote>
+<p>The following term types take up a single word, referred to as “immediates” in the BEAM documentation[1].  The low-order bits of the word are used to represent the type of the term, and the high order bits represent the term contents, in a manner described in the following sections.</p>
+<section id="atoms">
+<h3>Atoms</h3>
+<p>An atom is represented as a single word, with the low-order 6 bits having the value <code class="docutils literal notranslate"><span class="pre">0xB</span></code> (<code class="docutils literal notranslate"><span class="pre">001011b</span></code>).  The high order word-size-6 bits are used to represent the index of the atom in the global atom table:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                          |&lt; 6  &gt;|
++=========================+======+
+|       atom index        |001011| &lt;- 0xB
++=========================+======+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<p>There may therefore only be <code class="docutils literal notranslate"><span class="pre">2^{word-size-6}</span></code> atoms in an AtomVM program (e.g., on a 32-bit platform, <code class="docutils literal notranslate"><span class="pre">67,108,864</span></code>).  Plenty to work with!</p>
+<blockquote>
+<div><p>Note. The global atom table is a table of all allocated atoms, and is generally (at least in the limit, as modules are loaded) a fixed size table.  Management of the global atom table is outside of the scope of this document.</p>
+</div></blockquote>
+</section>
+<section id="integers">
+<h3>Integers</h3>
+<p>An integer is represented as a single word, with the low-order 4 bits having the value <code class="docutils literal notranslate"><span class="pre">0xF</span></code> (<code class="docutils literal notranslate"><span class="pre">1111b</span></code>).  The high order word-size-6 bits are used to represent the integer value:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                            |&lt; 4&gt;|
++===========================+====+
+|       integer value       |1111| &lt;- 0xF
++===========================+====+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<p>The magnitude of an integer is therefore limited to <code class="docutils literal notranslate"><span class="pre">2^{word-size</span> <span class="pre">-</span> <span class="pre">4}</span></code> in an AtomVM program (e.g., on a 32-bit platform, <code class="docutils literal notranslate"><span class="pre">+-</span> <span class="pre">134,217,728</span></code>).</p>
+<blockquote>
+<div><p>Note.  Arbitrarily large integers (bignums) are not currently supported in AtomVM.</p>
+</div></blockquote>
+</section>
+<section id="nil">
+<h3>nil</h3>
+<p>The special value <code class="docutils literal notranslate"><span class="pre">nil</span></code> (typically the tail of the tail … of the tail of a list, or <code class="docutils literal notranslate"><span class="pre">[]</span></code>) is the special value 0x3B:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+================================+
+|000         ...       0000111011| &lt;- 0x3B
++================================+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+</section>
+<section id="pids">
+<h3>Pids</h3>
+<p>A Pid is represented as a single word, with the low order 4 bits indicating the Pid term type (<code class="docutils literal notranslate"><span class="pre">0x03</span></code>), and (for now), the high order <code class="docutils literal notranslate"><span class="pre">word-size</span> <span class="pre">-</span> <span class="pre">4</span></code> bits store the local process id:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                            |&lt; 4&gt;|
++===========================+====+
+|     local process id      |0011| &lt;- 0x3
++===========================+====+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<p>There may therefore only be <code class="docutils literal notranslate"><span class="pre">2^{word-size</span> <span class="pre">-</span> <span class="pre">4}</span></code> Pids in an AtomVM program (e.g., on a 32-bit platform, <code class="docutils literal notranslate"><span class="pre">268,435,456</span></code>).</p>
+<blockquote>
+<div><p>Note.  Global process IDs are not currently supported, but they may be in the future, which may result in segmentation of the high order <code class="docutils literal notranslate"><span class="pre">word-size</span> <span class="pre">-</span> <span class="pre">4</span></code> bits.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="boxed-terms">
+<h2>Boxed terms</h2>
+<p>Some term types cannot fit in a single word, and must therefore used a sequence of contiguous words to represent the term contents.  These terms are called “Boxed” terms.  Boxed terms use the low-order 6 bits of the first byte (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>) to represent the term type, and the high order <code class="docutils literal notranslate"><span class="pre">word-size</span> <span class="pre">-</span> <span class="pre">6</span></code> bits to represent the remaining size (in words) of the boxed term, not including the first word.</p>
+<section id="boxed-term-pointers">
+<h3>Boxed term pointers</h3>
+<p>Before discussing the different types of boxed terms in detail, let us first see how boxed terms are referenced from the stack, registers, process dictionary, and from embedded terms in the heap.  We call such references to boxed terms boxed term pointers.</p>
+<p>A boxed term pointer is a single-word term that contains the address of the referenced term in the high-order <code class="docutils literal notranslate"><span class="pre">word-size</span> <span class="pre">-</span> <span class="pre">2</span></code> bits, and <code class="docutils literal notranslate"><span class="pre">0x2</span></code> (<code class="docutils literal notranslate"><span class="pre">10b</span></code>) in the low-order 2 bits.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                              |2 |
++=============================+==+
+|       term address          |10| &lt;- term pointer type (2 bits)
++=============================+==+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<p>Because terms (and hence the heap) are always aligned on boundaries that are divisible by the word size, the low-order 2 bits of a term address are always 0.  Consequently, the high-order word-size - 2 (<code class="docutils literal notranslate"><span class="pre">1,073,741,824</span></code>, on a 32-bit platform) are sufficient to address any term address in the AtomVM address space, for 32-bit and greater machine architectures.</p>
+</section>
+<section id="references">
+<h3>References</h3>
+<p>A reference (e.g., created via <code class="docutils literal notranslate"><span class="pre">erlang:make_ref/0</span></code>) stores a 64-bit incrementing counter value (a “ref tick”).  On 64 bit machines, a Reference takes up two words – the boxed header and the 64-bit value, which of course can fit in a single word.  On 32-bit platforms, the high-order 28 bits are stored in <code class="docutils literal notranslate"><span class="pre">boxed[1]</span></code>, and the low-order 32 bits are stored in <code class="docutils literal notranslate"><span class="pre">boxed[2]</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                          |&lt; 6  &gt;|
++=========================+======+
+|        boxed-size       |010000| boxed[0]
++-------------------------+------+
+|     high-order ref-ticks       | boxed[1]
++================================+
+|      low-order ref-ticks       | boxed[2] (32-bit only)
++= = = = = = = = = = = = = = = ==+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+</section>
+<section id="tuples">
+<h3>Tuples</h3>
+<p>Tuples are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x00</span></code> (<code class="docutils literal notranslate"><span class="pre">000000b</span></code>), followed by a sequence of <code class="docutils literal notranslate"><span class="pre">n</span></code>-many words, which may either (copies of) single-word terms, or boxed term pointers, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the arity of the tuple:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                          |&lt; 6  &gt;|
++=========================+======+
+|    boxed-size (n)       |000000| boxed[0]
++-------------------------+------+
+|             element-1          | boxed[1]
++--------------------------------+
+|             element-2          | boxed[2]
++--------------------------------+
+|               ...              | boxed[i]
++--------------------------------+
+|             element-n          | boxed[n]
++================================+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+</section>
+<section id="maps">
+<h3>Maps</h3>
+<p>Maps are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x3C</span></code> (<code class="docutils literal notranslate"><span class="pre">111100b</span></code>), followed by:</p>
+<ul class="simple">
+<li><p>a term pointer to a tuple of arity <code class="docutils literal notranslate"><span class="pre">n</span></code> containing the keys in the map;</p></li>
+<li><p>a sequence of <code class="docutils literal notranslate"><span class="pre">n</span></code>-many words, containing the values of the map corresponding (in order) to the keys in the reference tuple.</p></li>
+</ul>
+<p>The keys and values are single word terms, i.e., either immediates or pointers to boxed terms or lists.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>        +=========================+======+
++-----&gt; |    boxed-tuple (n)      |000000|
+|       +-------------------------+------+
+|       |             key-1              |
+|       +--------------------------------+
+|       |             key-2              |
+|       +--------------------------------+
+|       |               ...              |
+|       +--------------------------------+
+|       |             key-n              |
+|       +================================+
+|       |                                |
+|                       ...
+|       |                         |&lt; 6  &gt;|
+|       +=========================+======+
+|       |    boxed-size (n)       |111100| boxed[0]
+|       +-------------------------+------+
++-----------------&lt;   keys               | boxed[1]
+        +--------------------------------+
+        |             value-1            | boxed[2]
+        +--------------------------------+
+        |               ...              | ...
+        +--------------------------------+
+        |             value-n            | boxed[2 + n]
+        +================================+
+        |                                |
+        |&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<p>The tuple of keys may or may not be contiguous with the boxed term holding the map itself (and in general will not be, after garbage collection).  In addition, maps that are modified [sic] via the <code class="docutils literal notranslate"><span class="pre">:=</span></code> operator (or via <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code>, when the key already exists in the source map) share the keys tuple, for space efficiency.</p>
+</section>
+<section id="binaries">
+<h3>Binaries</h3>
+<p>Binaries are stored in several different ways, depending on their size and the kinds of data to which they refer.</p>
+<p>Binary data less than 64 bytes in length are stored in the process heap, as so-called Heap Binaries.</p>
+<p>Binary data greater or equal to 64 bytes is stored in two manners, depending on whether the data stored is constant data (e.g., literal binary data compiled directly into a BEAM file), or dynamically allocated data, e.g., as the result of a call to the <code class="docutils literal notranslate"><span class="pre">erlang:list_to_binary/1</span></code> Nif.</p>
+<p>Non-const binaries are stored outside of the heap in dynamically allocated memory and are reference-counted, whereby references to dynamically allocated blocks are tracked from pointers in heap storage.  This way, large blocks of binary data can be efficiently shared between processes; only a relatively small term that contains a reference to the dynamically allocated storage needs to be copied.  When the reference count of non-literal binary reaches 0, the dynamically allocated memory is free’d.</p>
+<p>Const binaries share similar features to non-const binaries in the process heap; however, instead of pointing to dynamically allocated memory that requires reference counting and memory management, the boxed term in the process heap points directly to constant memory (e.g., a term literal stored in a memory-mapped BEAM file).  This is especially useful in memory constrained applications, such as the ESP32 micro-controller, where the BEAM file contents are not read into memory, but are instead directly mapped from flash storage.</p>
+<p>Finally, a special kind of binary is used in the heap to maintain the state of a match context, when, for example, matching binary terms using Erlang bit syntax.  Like non-const binaries, creation and destruction of match context binaries will affect the reference count on the binaries to which they refer.</p>
+<p>The following sub-sections describe these storage mechanisms and memory management in more detail.</p>
+<section id="heap-binaries">
+<h4>Heap Binaries</h4>
+<p>Heap binaries are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x024</span></code> (<code class="docutils literal notranslate"><span class="pre">100100b</span></code>), followed by the size in bytes of the binary, and then a sequence of <code class="docutils literal notranslate"><span class="pre">n</span></code>-many words, which contains the sequence of <code class="docutils literal notranslate"><span class="pre">size</span></code>-many bytes (<code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">word-size</span> <span class="pre">*</span> <span class="pre">n</span></code>):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                          |&lt; 6  &gt;|
++=========================+======+
+|    boxed-size (n)       |100100| boxed[0]
++-------------------------+------+
+|         size (in bytes)        | boxed[1]
++--------------------------------+
+| byte-1, byte-2, byte-3,  ...   | boxed[2]
++--------------------------------+
+|               ...              | boxed[i]
++-------------------+------------+
+| ..., byte-{size-1}| -unused-   | boxed[n+1]
++===================+============+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note.  If the number of bytes in a binary is not evenly divisible by the machine word size, then the remaining sequence of bytes in the last word are unused.</p>
+</div></blockquote>
+</section>
+<section id="reference-counted-binaries">
+<h4>Reference Counted Binaries</h4>
+<p>Reference counted binaries are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x020</span></code> (<code class="docutils literal notranslate"><span class="pre">100000b</span></code>), followed by the size in bytes of the binary data, a word containing a set of flags, and then a pointer to the off-heap data.</p>
+<p>Currently, only the low-order bit of the flags field is used.  A <code class="docutils literal notranslate"><span class="pre">0</span></code> value of indicates that the referenced binary is non-literal.</p>
+<p>The off-heap data is a block of allocated data, containing:</p>
+<ul class="simple">
+<li><p>a ListHead structure, used to maintain a list of dynamically allocated data (mostly for bookkeeping purposes);</p></li>
+<li><p>a reference count (unsigned integer);</p></li>
+<li><p>the size of the stored data;</p></li>
+<li><p>the stored data, itself.</p></li>
+</ul>
+<p>All of the above data is allocated in a single block, so that it can be easily <code class="docutils literal notranslate"><span class="pre">free</span></code>’d when no longer referenced.</p>
+<p>The reference count is initialized to 1, under the principle that that reference count is incremented for any occurrence of boxed terms that reference the same data in any heap space, including process heaps, mailbox messages, heap fragments, and so forth.  Decrementing reference counts and <code class="docutils literal notranslate"><span class="pre">free</span></code>’ing data in off-heap storage is discussed in more detail below, in the Garbage Collection section.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                               |&lt; 6  &gt;|
++--&gt; +=========================+======+
+|    |    boxed-size (5)       |100000| boxed[0]
+|    +-------------------------+------+
+|    |         size (in bytes)        | boxed[1]
+|    +--------------------------------+
+|    |             flags             0| boxed[2]
+|    +--------------------------------+                   off-heap storage
+|    |              ptr &gt;-------------- boxed[3] ---&gt; +----------------------+ ------
+|    +--------------------------------+               |         prev         |     ^
+|    |              cdr               | boxed[4]      +----------------------+     | ListHead
+|    +--------------------------------+               |         next         |     v
++-----------------&lt; car               | boxed[5]      +----------------------+ ------
+     +================================+               |   reference-count    |
+     |&lt;---------- word-size ---------&gt;|               +----------------------+
+                                                      |         size         |
+                                                      +----------------------+
+                                                      |         data         |
+                                                                 ...
+                                                      |                      |
+                                                      +----------------------+
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note. The size of a reference counted binary is stored both in the process heap (in the boxed term), as well as in the off-heap storage.  The size count in the off-heap storage is needed in order to report the amount of data in use by binaries (e.g., via <code class="docutils literal notranslate"><span class="pre">erlang:memory/0,1</span></code>).</p>
+</div></blockquote>
+<p>In addition, a reference-counted boxed term contains a cons-cell appended to the end of the boxed term, which is used by the garbage collector for tracking references.  The <code class="docutils literal notranslate"><span class="pre">car</span></code> of this cell points to the boxed term, itself, and the <code class="docutils literal notranslate"><span class="pre">cdr</span></code> points to the “previous” cons cell associated with a reference counted binary in the heap, if there is one, or the empty list (<code class="docutils literal notranslate"><span class="pre">nil</span></code>), otherwise.  The cons cell forms an element in the “Mark and Sweep Object” (MSO) list, used to reclaim unreferenced storage during a garbage collection event..  See the Garabage Collection section, below, for more information about the critical role of this structure in the process of reclaiming unused memory in the AtomVM virtual machine.</p>
+</section>
+<section id="const-binaries">
+<h4>Const Binaries</h4>
+<p>Const binaries are stored in the same manner as Reference Counted binaries, with the following exceptions:</p>
+<ul class="simple">
+<li><p>The low order bit of the flags field (<code class="docutils literal notranslate"><span class="pre">boxed[2]</span></code>) is <code class="docutils literal notranslate"><span class="pre">1</span></code>, to indicate that the reference binary is constant;</p></li>
+<li><p>The ptr field (<code class="docutils literal notranslate"><span class="pre">boxed[3]</span></code>) points directly to the constant storage (e.g., literal data stored in a memory-mapped BEAM file);</p></li>
+<li><p>The trailing cons cell elements are unused, as dynamic memory management for static storage is uncesessary.  These values are initialized to <code class="docutils literal notranslate"><span class="pre">nil</span></code>.</p></li>
+</ul>
+<p>This heap structure has the following representation:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                          |&lt; 6  &gt;|
++=========================+======+
+|    boxed-size (5)       |100000| boxed[0]
++-------------------------+------+
+|         size (in bytes)        | boxed[1]
++--------------------------------+
+|             flags             1| boxed[2]
++--------------------------------+                       static storage
+|              ptr &gt;-------------- boxed[3] -------&gt; +----------------------+
++--------------------------------+                   |          data        |
+|             unused             | boxed[4]          |                      |
++--------------------------------+                               ...
+|             unused             | boxed[5]          |                      |
++================================+                   +----------------------+
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+</section>
+<section id="match-binaries">
+<h4>Match Binaries</h4>
+<p>Match binaries are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x04</span></code> (<code class="docutils literal notranslate"><span class="pre">000100b</span></code>), and the following elements:</p>
+<ul class="simple">
+<li><p>a reference to either a binary or another match binary that refers to a binary;</p></li>
+<li><p>an offset in the referenced binary used by the match opcodes;</p></li>
+<li><p>a saved state used for backtracking unmatched clause heads;</p></li>
+</ul>
+<p>Like a reference counted binary, a match binary includes a trailing cons cell, whose <code class="docutils literal notranslate"><span class="pre">car</span></code> element points to the actual referenced binary (if the referenced binary is a reference-counted binary), and whose <code class="docutils literal notranslate"><span class="pre">cdr</span></code> points to the “previous” cons cell associated with a reference counted binary in the heap.</p>
+<blockquote>
+<div><p>Note.  If the referenced binary is not reference-counted, the trailing cons cell elements are unused and are initialized to <code class="docutils literal notranslate"><span class="pre">nil</span></code>.</p>
+</div></blockquote>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>some
+binary                            |&lt; 6  &gt;|
+^       +=========================+======+
+|       |    boxed-size (5)       |100100| boxed[0]
+|       +-------------------------+------+
+|       |      match-or-binary-ref       | boxed[1]
+|       +--------------------------------+
+|       |             offset             | boxed[2]
+|       +--------------------------------+
+|       |             saved              | boxed[3]
+|       +--------------------------------+
+|       |              cdr               | boxed[4]
+|       +--------------------------------+
++--------------------&lt; car               | boxed[5]
+        +================================+
+        |&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<p>A reference to a reference-counted binary counts as a reference, in which case the creation or copying of a match binary results in the increment of the reference-counted binary’s reference count, and the garbage collection of a match binary results in a decrement (and possible <code class="docutils literal notranslate"><span class="pre">free</span></code>ing) of a reference-counted binary.  The trailing cons cell becomes an element of the context (or message) MSO list, and plays a critical role in garbage collection.  See the garbage collection section below for more information about the role of this structure.</p>
+</section>
+<section id="sub-binaries">
+<h4>Sub-Binaries</h4>
+<p>Sub-binaries are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x28</span></code> (<code class="docutils literal notranslate"><span class="pre">001000b</span></code>)</p>
+<p>A sub-binary is a boxed term that points to a reference-counted binary, recording the offset into the binary and the length (in bytes) of the sub-binary.  An invariant for this term is that the <code class="docutils literal notranslate"><span class="pre">offset</span> <span class="pre">+</span> <span class="pre">length</span></code> is always less than or equal to the length of the referenced binary.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    some
+    refc
+    binary                            |&lt; 6  &gt;|
+    ^       +=========================+======+
+    |       |    boxed-size (3)       |001000| boxed[0]
+    |       +-------------------------+------+
+    |       |              len               | boxed[1]
+    |       +--------------------------------+
+    |       |             offset             | boxed[2]
+    |       +--------------------------------+
+    +----------------&lt; binary-ref            | boxed[3]
+            +================================+
+            |&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<p>Note than when a sub-binary is copied between processes (e.g., via <code class="docutils literal notranslate"><span class="pre">erlang:send</span></code>, or <code class="docutils literal notranslate"><span class="pre">!</span></code>), the sub-binary boxed term, as well as the boxed-term that manages the reference-counted binary is copied, as well.  Thus, sending a sub-binary to another process will result in an increment of the reference count on the referenced binary, and similarly, garbage collection of the sub-binary will result in a decrement of the referenced binary’s reference count.</p>
+<p>A sub-binary may be created from both const (literal) and non-const reference-counted binaries.  For performance reasons, sub-binaries do not reference heap binaries.</p>
+<p>Sub-binaries are created via the <code class="docutils literal notranslate"><span class="pre">binary:part/3</span></code> and <code class="docutils literal notranslate"><span class="pre">binary:split/2</span></code> Nifs, as well as via the <code class="docutils literal notranslate"><span class="pre">/binary</span></code> bit syntax specifier.</p>
+</section>
+</section>
+</section>
+<section id="lists">
+<h2>Lists</h2>
+<p>A list is, very simply, a cons cell, i.e., a sequence of two words, whose first word is a term (single word or term pointer) representing the tail (<code class="docutils literal notranslate"><span class="pre">cdr</span></code>) of the list, and the second of which represents the head (<code class="docutils literal notranslate"><span class="pre">car</span></code>) of the list.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+================================+
+|                tail            | list_elem[0]
++--------------------------------+
+|                head            | list_elem[1]
++================================+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note.  Lists are typically terminated with the empty list (<code class="docutils literal notranslate"><span class="pre">[]</span></code>), represented by the nil term, described above.  However, nothing in Erlang requires that a sequence of cons cells is <code class="docutils literal notranslate"><span class="pre">nil</span></code>-terminated.</p>
+</div></blockquote>
+<p>Unlike boxed terms, the low-order two bits of list pointers are <code class="docutils literal notranslate"><span class="pre">0x1</span></code> (<code class="docutils literal notranslate"><span class="pre">01b</span></code>):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+=============================+==+
+|       term address          |01| &lt;- list pointer type (2 bits)
++=============================+==+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<section id="strings">
+<h3>Strings</h3>
+<p>Strings are just lists of integers, but they are efficiently allocated at creation time so that a contiguous block of cons cells are created in the heap.  They otherwise have the same properties of a list described above.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+================================+
+|    address-of-next-cons     |01| elem[1]
++--------------------------------+
+|             int-value          |
++--------------------------------+
+|    address-of-next-cons     |01| elem[2]
++--------------------------------+
+|             int-value          |
++--------------------------------+
+|                ...          |01| elem[i]
++--------------------------------+
+|                ...             |
++--------------------------------+
+|                nil             | elem[n]
++--------------------------------+
+|             int-value          |
++================================+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note.  String elements may not remain contiguous after a garbage collection event.</p>
+</div></blockquote>
+</section>
+<section id="functions">
+<h3>Functions</h3>
+<p>Functions are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x14</span></code> (<code class="docutils literal notranslate"><span class="pre">010100b</span></code>), followed by the raw memory address of the Module data structure in which the function is defined, and the function index (so that the function can be located).</p>
+<p>In addition, if there are any terms that are used outside of the scope of the function (i.e., closures), these terms are copied from registers into the function objects</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                          |&lt; 6  &gt;|
++=========================+======+
+|    boxed-size (n)       |010100| boxed[0]
++-------------------------+------+
+|         module address         | boxed[1]
++--------------------------------+
+|         function index         | boxed[2]
++--------------------------------+
+|            closure_1           | boxed[3]
++- - - - - - - - - - - - - - - - +
+|               ...              |
++- - - - - - - - - - - - - - - - +
+|            closure_k           | boxed[n-1]
++= = = = = = = = = = = = = = = = +
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+</section>
+</section>
+<section id="special-stack-types">
+<h2>Special Stack Types</h2>
+<p>Some terms are only used in the stack.</p>
+<section id="continuation-pointer">
+<h3>Continuation Pointer</h3>
+<p>A continuation pointer is a raw address.  Because words are aligned on word boundaries, the low order two bits of a continuation pointer are always <code class="docutils literal notranslate"><span class="pre">0x0</span></code> (<code class="docutils literal notranslate"><span class="pre">(00000000)b</span></code>):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+================================+
+|            raw address      |00|
++================================+
+</pre></div>
+</div>
+</section>
+<section id="catch-labels">
+<h3>Catch Labels</h3>
+<p>A catch label is used to indicate a position in code to which to jump in a try-catch expression.  The term occupies a single term, with the low order 6 bits having the value <code class="docutils literal notranslate"><span class="pre">0x1B</span></code>, the high order 8 bits holding the module index (<code class="docutils literal notranslate"><span class="pre">m_i</span></code>), and the middle 18 bits holding the catch label index (<code class="docutils literal notranslate"><span class="pre">l_i</span></code>):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|&lt;   8  &gt;|&lt;     18       &gt;|&lt; 6  &gt;|
++========+================+======+
+|   m_i  |     l_i        |011011|
++========+================+======+
+|                                |
+|&lt;---------- word-size ---------&gt;|
+</pre></div>
+</div>
+<p>Module and catch label indices are stored outside of the process heap and are outside of the scope of this document.</p>
+</section>
+</section>
+<section id="garbage-collection">
+<h2>Garbage Collection</h2>
+<p>Garbage collection refers to the process of removing no-longer referenced term data stored in the heap, making room for new storage, as the program requires.  AtomVM implements <a class="reference external" href="https://en.wikipedia.org/wiki/Tracing_garbage_collection">Tracing Garbage Collection</a>, as does <a class="reference external" href="https://erlang.org/doc/apps/erts/GarbageCollection.html">Erlang Garbage Collection</a>.  Unlike some garbage collection systems (e.g., as implemented by the Java Virtual Machine), garbage collection in Erlang-based systems, is performed independently on the heap allocated for each active Erlang process; there is no single shared heap for all running Erlang processes.</p>
+<p>A given process heap and stack occupy a single region of malloc’d memory, and it is the job of the Erlang VM to manage memory within the allocated regions.  Because this region is fixed, every allocation in the heap or stack results in less free space for the Erlang process.  When free space reaches a limit, AtomVM will run a garbage collection event, which will allocate a new block of memory to hold the new heap and stack (typically, enough to allocate a requested object, plus a little extra), and then copy terms from the old heap and stack to the new heap and stack.  Any terms that no longer have references from term pointers in the old stack or registers are not copied to the new stack, and are therefore “collected” as garbage.  In addition, any objects in the old heap that reference objects in shared memory (see reference counted binaries, above) are also managed as part of this process, in a manner described below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                              +---------+ ------
+                              |   new   |    ^
+                              |   heap  |    |
+                              +---------+    |
+       ---- +----------+      |         |    |
+        ^   |          |      |         |    |
+        |   |   old    |      |         |    |  new
+old     |   |   heap   |      |         |    |  malloc&#39;d
+malloc&#39;d|   |          | ===&gt; |         |    |  region
+region  |   +==========+  gc  |  free   |    |
+        |   |   old    |      |         |    |
+        v   |   stack  |      |         |    |
+       ---- +----------+      |         |    |
+                              +---------+    |
+                              |   new   |    |
+                              |   stack |    v
+                              +---------+ -----
+
+
++---+---+---+-------------------+---+
+| 0 | 1 | 2 |                   | 15|
++---+---+---+-------------------+---+
+registers
+
+
+process dictionary
++--------+--------+
+|   k1   |   v1   |
++--------+--------+
+|   k2   |   v2   |
++--------+--------+
+|       ...       |
+</pre></div>
+</div>
+<p>Terms stored in the stack, registers, and process dictionary are either single-word terms (like atoms or pids) or term references, i.e., single-word terms that point to boxed terms or list cells in the heap.  These terms constitute the “roots” of the memory graph of all “reachable” terms in the process.</p>
+<section id="when-does-garbage-collection-happen">
+<h3>When does garbage collection happen?</h3>
+<p>Garbage collection typically occurs as the result of a request for an allocation of a multi-word term in the heap (e.g., a tuple, list, or binary, among other types), and when there is currently insufficient space in the free space between the current heap and the current stack to accommodate the allocation.</p>
+<p>Garbage collection is a <em>synchronous</em> operation in each Context (Erlang process), but conceptually no other execution contexts are impacted (i.e., no global locks, other than those required for memory allocation in the OS process heap).</p>
+<blockquote>
+<div><p>Note.  Currently, AtomVM does not support symmetric multi-processing, or execution of multiple processes in parallel on separate machine cores.</p>
+</div></blockquote>
+</section>
+<section id="garbage-collection-steps">
+<h3>Garbage Collection Steps</h3>
+<p>Garbage collection in AtomVM can be broken down into the following phases:</p>
+<ul class="simple">
+<li><p>Allocation of a new block of memory to store the new heap and stack;</p></li>
+<li><p>A “shallow copy” of all root terms (from the stack, registers, and process dictionary) into the heap, as well as updates to the references in the stack, registers, and process dictionary;</p></li>
+<li><p>An iterative “scan and copy” of the new heap, until all “live” terms are copied to the new heap;</p></li>
+<li><p>A sweep of the “Mark Sweep Object” list;</p></li>
+<li><p>Deletion of the old heap.</p></li>
+</ul>
+<p>The following subsections describe these phases in more detail.</p>
+<section id="allocation">
+<h4>Allocation</h4>
+<p>Garbage collection typically occurs as the result of a request for space on an Erlang process’s heap.  The amount of space requested is dependent on the kind of term being allocated, but in general, AtomVM will check the amount of free space in the heap, and if it is below the amount of requested space plus some extra (currently, 16 words), then a garbage collection will occur, with the requested allocation space being the current size of the heap, plus the requested size, plus an extra 16 words.</p>
+<p>Allocation is a straightforward <code class="docutils literal notranslate"><span class="pre">malloc</span></code> in the (operating system) process heap of the requested set of words.  This block of storage will become the “new heap”, as opposed to the existing, or “old heap”.</p>
+</section>
+<section id="shallow-copy">
+<h4>Shallow Copy</h4>
+<p>The garbage collector starts by traversing the current root set, i.e., the terms contained in the stack, registers, and keys and values in the process dictionary, and performs a “shallow copy” of the terms that are in or referenced from these root terms from the old heap to the new heap, while at the same time updating the values in the root set, as some of these values may be pointers into the old heap, and therefore need to be updated to pointers in the new heap.</p>
+<p>A shallow copy of a term depends on the type of the term being copied.  If the term is a single-word term, like an atom or pid, then the term only resides in the root set, itself, and nothing needs to be copied from the old heap to the new heap.  (The term <em>may</em> occur in the heap elsewhere, but as an element of another term, like a tuple, for example.)</p>
+<p>On the other hand, if the term in the root set points to a boxed term in the old heap, then three things happen:</p>
+<ul class="simple">
+<li><p>The boxed term is copied from the old heap to the new heap.  Note that if the term being copied contains pointers to other boxed terms in the old heap, the pointers are <em>not</em> updated (yet); they will be as part of the iterative scan and copy (see below);</p></li>
+<li><p>The first word of the existing boxed term that was copied is <em>over-written</em> with a marker value (<code class="docutils literal notranslate"><span class="pre">0x2b</span></code>) in the old heap, and the second word is over-written with the address of the copied boxed term in the new heap.</p></li>
+<li><p>The term in the root set is updated with the address of the copied boxed term in the new heap.</p></li>
+</ul>
+<p>This process is best illustrated with a motivating example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{foo, &lt;&lt;1,2,3,4,...,1024&gt;&gt;}
+</pre></div>
+</div>
+<p>Suppose this term resides in the old heap, and some <code class="docutils literal notranslate"><span class="pre">register[i]</span></code> is a root term pointer to this tuple in the heap:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-&gt; |              |        |             |
+|   |              |        |             |
+|   |              |        |             |  USED
+|   |              |        |             |
+          ...                     ...
+|   |              |        |             |
+|   +--------------+        +=============+ &lt;-- heap
+|   |     tuple    |&lt;---+   |             |     addr
+|   +--------------+    |   |             |
+|   |   atom foo   |    |   |             |
+|   +--------------+    |   |             |
++----&lt; refc binary |    |   |             |  FREE
+    +--------------+    |   |             |
+    |              |    |   |             |
+    |     ...      |    |   |     ...     |
+    |              |    |   |             |
+        old heap        |       new heap
+                        |
+            ---+----------------+---
+           ... |     old-ptr    | ...
+            ---+----------------+---
+                  register[i]
+</pre></div>
+</div>
+<p>The boxed term is copied to the new heap, overwritten with the marked header <code class="docutils literal notranslate"><span class="pre">0x2b</span></code>, along with a pointer to the new term, and the root term is updated with the same address:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-&gt; |              | &lt;--------+   |             |
+|   |              |          |   |             |
+|   |              |          |   |             |
+|   |              |          |   |             |
+           ...                          ...
+|   |              |          |   |             |
+|   +--------------+ &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;|&gt;&gt; +-------------+
+|   |     0x2b     |   +--+---|-&gt; |   tuple     | USED
+|   +--------------+   |  |   |   +-------------+
+|   |     ptr  --------+  |   |   |  atom foo   |
+|   +--------------+      |   |   +-------------+
++----&lt; refc binary |      |   +----&lt; refc binary|
+    +--------------+ &gt;&gt;&gt;&gt;&gt;|&gt;&gt;&gt;&gt;&gt;&gt;&gt;+=============+ &lt;-- new
+    |              |      | COPY  |             |   heap
+    |     ...      |      |       |             |   addr
+         old heap         |       |             |
+                          |       |             | FREE
+                          |
+                          |
+              ---+----------------+---
+             ... |     new-ptr    | ...
+              ---+----------------+---
+                    register[i]
+</pre></div>
+</div>
+<p>Note that the first term of the tuple (atom <code class="docutils literal notranslate"><span class="pre">foo</span></code>) is copied to the new heap, but the pointer to the refc binary is out of date – it still points to a value in the old heap.  This will be corrected in the iterative scan and copy phase, below.</p>
+<p>After a shallow copy of the root set, all terms immediately reachable from the root set have been copied to the new heap, and any boxed terms they reference have been marked as being moved.  The new heap consists of a set of contiguous copied boxed terms from the old heap, starting from the base address of the heap, to some higher address in the heap, but less than or equal to the maximum heap size on the new heap.</p>
+</section>
+<section id="iterative-scan-and-copy">
+<h4>Iterative Scan and Copy</h4>
+<p>The iterative scan and copy phase works as follows:</p>
+<ul class="simple">
+<li><p>Starting with the newly created region used in the shallow copy phase in the new heap, iterate over every term in the region  (call this the “scan&amp;copy” region);</p></li>
+<li><p>If any term in this region is a reference to a term on the old heap that has <em>not</em> been marked as copied, perform a shallow copy of it (as described above) to the new heap, but starting at the next free address below the region being iterated over;</p></li>
+<li><p>Note that after iterating over all such terms in the scan and copy region, all terms are “complete”, in that there are no references to boxed terms in the old heap in that region.  We have, however, created a new region which may have references to boxed terms in the old heap;</p></li>
+<li><p>So we repeat the process on the new region, which will complete the current scan&amp;copy requion, but which in turn may create a new region of copied terms;</p></li>
+<li><p>The process is repeated until no new reqions have been introduced.</p></li>
+</ul>
+<p>The following sequence of iterative additions to the new heap illustrates this process:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+---------------+ ===&gt; +---------------+ ===&gt; +---------------+ ...
+|   scan&amp;copy   |      |    complete   |      |    complete   |
+|   region      |      |    region     |      |    region     |
+|               |      |               |      |               |
+|               |      |               |      |               |
+|               |      |               |      |               |
+|               |      |               |      |               |
+|               |      |               |      |               |
++---------------+      +---------------+      +---------------+
+                       |     newly     |      |   scan&amp;copy   |
+                       |    copied     |      |   region      |
+                       |     terms     |      |               |
+                       +---------------+      +---------------+
+                                              |newlycpiedterms|
+                                              +---------------+
+
+
+
+ ... ===&gt; +---------------+ ===&gt; +---------------+
+          |    complete   |      |    complete   |
+          |    region     |      |    region     |
+          |               |      |               |
+          |               |      |               |
+          |               |      |               |
+          |               |      |               |
+          |               |      |               |
+          |               |      |               |
+          |               |      |               |
+          |               |      |               |
+          |               |      |               |
+          +---------------+      |               |
+          |  scan&amp;copy    |      |               |
+          +---------------+      +---------------+
+</pre></div>
+</div>
+<p>At the end of the iterative scan and copy, all reachable terms in the old heap will be copied to the new heap, and no boxed terms in the old heap will contain pointers to terms in the old heap.  Any terms that have not been copied to the new heap are “garbage”, as there are no longer any paths to them from the root set, and can therefore be destroyed,</p>
+</section>
+<section id="mso-sweep">
+<h4>MSO Sweep</h4>
+<p>As mentioned in the section above on binaries, AtomVM supports refrence-counted binaries, whereby binaries of a sufficiently large size (&gt;64 bytes) are allocated outside of the process heap, and are instead referenced from boxed terms in the heap.  This way, binaries, which are immutable objects, can be shared between processes without incurring the time and space cost of a large data copy.</p>
+<p>In order to manage the memory associated with such binaries, AtomVM tracks references to these off-heap binaries via the “Mark and Sweep Object” list, a list that keeps track of which boxed terms in the process heap have a reference to an off-heap binary.   When such a boxed term is copied (e.g., from a heap to a mailbox on a <code class="docutils literal notranslate"><span class="pre">send</span></code>, or from a mailbox to a heap on a <code class="docutils literal notranslate"><span class="pre">receive</span></code>), the reference count is incremented on the off-heap binary.</p>
+<p>The MSO list is formed via the cons cells that are appended to reference counted binary boxed terms in the process heap.  The list is initially empty (nil), but as reference counted binaries are added to the process heap, they are pre-pended to the MSO list for the process (on the mailbox message, as reference-counted binaries in the mailbox need to be managed, as well).</p>
+<p>The following diagram illustrates a set of two reference counted binaries in a process heap:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>        |                   |
++-----&gt; +-------------------+
+|       |       refc        |
+|       |      binary       |
+|       |                   |
+|       |                   |
+|       +-------------------+ &lt;----+
+|       |        nil        |      |
+|       +-------------------+      |
++---------------&lt; car       |      |
+        +-------------------+      |
+        |                   |      |
+                ...
+        |                   |      |
++-----&gt; +-------------------+      |
+|       |       refc        |      |
+|       |      binary       |      |
+|       |                   |      |
+|       |                   |      |
+|       +-------------------+ &lt;----|-------+
+|       |        cdr &gt;-------------+       |
+|       +-------------------+              |
++--------------&lt; car        |              |
+        +-------------------+              |
+        |                   |              |
+        |                   |              |
+                 ...                       |
+                                           |
+                                   +-------^--------+
+                                   |   mso_list     |
+                                   +----------------+
+</pre></div>
+</div>
+<p>After the new heap has been scanned and copied, as described above, the MSO list is traversed to determine if any reference-counted binaries are no longer referenced from the process heap.  If any reference counted binaries in the heap have not been marked as moved from the old heap, they are, effectively, no longer referenced from the root set, and the reference count on the corresponding off-heap binary can be decremented.  Furthermore, when the reference count reaches 0, the binaries can then be deleted.</p>
+<blockquote>
+<div><p>Note.  Const binaries, while they have slots for entry into the MSO list, nonetheless are never “stitched” into the MSO list, as the binary data they poont to is const, endures for the lifecycle of the program, and is never deleted.  Match binaries, on the other hand, do count as references, and can therefore be stitched into the MSO list.  However, when they are, the reference counted binaries they point to are the actual binaries in the process heap, not the match binaries, as with the case of refc binaries on the process heap.</p>
+</div></blockquote>
+</section>
+<section id="deletion">
+<h4>Deletion</h4>
+<p>Once all terms have been copied from the old heap to the new heap, and once the MSO list has been swept for unreachable references, the old heap is simply discarded via the <code class="docutils literal notranslate"><span class="pre">free</span></code> function.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

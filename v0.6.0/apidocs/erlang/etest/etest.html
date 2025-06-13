@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module etest &mdash; AtomVM 0.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/etest/etest.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=50f829f1"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="libAtomVM" href="../../libatomvm/index.html" />
+    <link rel="prev" title="The etest library" href="README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The etest library</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module etest</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module etest</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-etest">
+<h1>Module etest<a class="headerlink" href="#module-etest" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description"><span class="xref myst">Description</span></a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>This modules provides a basic testing framework for AtomVM Erlang
+libraries.</p>
+<p><a name="index"></a></p>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#assert_equals-2">assert_equals/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_exception-1">assert_exception/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_exception-2">assert_exception/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_exception-3">assert_exception/3</a></td><td></td></tr><tr><td valign="top"><a href="#assert_match-2">assert_match/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_true-1">assert_true/1</a></td><td></td></tr><tr><td valign="top"><a href="#flush_msg_queue-0">flush_msg_queue/0</a></td><td>Use optionally to flush messages in test cases that run in a single test module.</td></tr><tr><td valign="top"><a href="#test-1">test/1</a></td><td>    Test a sequence of test modules.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="assert_equals-2"></a></p>
+<section id="assert-equals-2">
+<h3>assert_equals/2<a class="headerlink" href="#assert-equals-2" title="Link to this heading"></a></h3>
+<pre><code>
+assert_equals(X::term(), Y::term()) -&gt; ok | fail
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">X</span></code>: a term<br /><code class="docutils literal notranslate"><span class="pre">Y</span></code>: a term<br /></p>
+<p>returns: ok if X and Y are equal; fail otherwise.</p>
+<p><a name="assert_exception-1"></a></p>
+</section>
+<section id="assert-exception-1">
+<h3>assert_exception/1<a class="headerlink" href="#assert-exception-1" title="Link to this heading"></a></h3>
+<pre><code>
+assert_exception(F::function()) -&gt; ok | fail
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">F</span></code>: a function to evaluate<br /></p>
+<p>returns: ok if evaluating F results in Error being raised; fail, otherwise</p>
+<p><a name="assert_exception-2"></a></p>
+</section>
+<section id="assert-exception-2">
+<h3>assert_exception/2<a class="headerlink" href="#assert-exception-2" title="Link to this heading"></a></h3>
+<pre><code>
+assert_exception(F::function(), Class::throw | error | exit) -&gt; ok | fail
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">F</span></code>: a function to evaluate<br /><code class="docutils literal notranslate"><span class="pre">Class</span></code>: expected exception class<br /></p>
+<p>returns: ok if evaluating F results in an exception of class Class being
+raised; fail, otherwise</p>
+<p><a name="assert_exception-3"></a></p>
+</section>
+<section id="assert-exception-3">
+<h3>assert_exception/3<a class="headerlink" href="#assert-exception-3" title="Link to this heading"></a></h3>
+<pre><code>
+assert_exception(F::function(), Class::throw | error | exit, E::any()) -&gt; ok | fail
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">F</span></code>: a function to evaluate<br /><code class="docutils literal notranslate"><span class="pre">Class</span></code>: expected exception class<br /><code class="docutils literal notranslate"><span class="pre">E</span></code>: expected exception value<br /></p>
+<p>returns: ok if evaluating F results in an exception of class Class and of
+value E being raised; fail, otherwise</p>
+<p><a name="assert_match-2"></a></p>
+</section>
+<section id="assert-match-2">
+<h3>assert_match/2<a class="headerlink" href="#assert-match-2" title="Link to this heading"></a></h3>
+<pre><code>
+assert_match(X::term(), Y::term()) -&gt; ok | fail
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">X</span></code>: a term<br /><code class="docutils literal notranslate"><span class="pre">Y</span></code>: a term<br /></p>
+<p>returns: ok if X and Y unify; fail otherwise.</p>
+<p><a name="assert_true-1"></a></p>
+</section>
+<section id="assert-true-1">
+<h3>assert_true/1<a class="headerlink" href="#assert-true-1" title="Link to this heading"></a></h3>
+<pre><code>
+assert_true(X::boolean()) -&gt; ok | fail
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">X</span></code>: a term<br /></p>
+<p>returns: ok if X is true; fail otherwise.</p>
+<p><a name="flush_msg_queue-0"></a></p>
+</section>
+<section id="flush-msg-queue-0">
+<h3>flush_msg_queue/0<a class="headerlink" href="#flush-msg-queue-0" title="Link to this heading"></a></h3>
+<pre><code>
+flush_msg_queue() -&gt; ok
+</code></pre>
+<br />
+<p>returns: ok after flushing all messages in the process message queue</p>
+<p>Use optionally to flush messages in test cases that run in a single test module</p>
+<p><a name="test-1"></a></p>
+</section>
+<section id="test-1">
+<h3>test/1<a class="headerlink" href="#test-1" title="Link to this heading"></a></h3>
+<pre><code>
+test(Tests::[module()]) -&gt; ok | fail
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Tests</span></code>: a list of test modules<br /></p>
+<p>returns: ok if all of the tests pass, or the atom fail, if any of the tests
+failed.</p>
+<p>Test a sequence of test modules.</p>
+<p>This function will execute the test/0 function for each module
+provided in the input list of test modules.  If all of the tests
+return the atom ok, then this function returns ok.  If any of the
+test modules return a value other than ok, then this function
+returns the atom fail.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="README.html" class="btn btn-neutral float-left" title="The etest library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../libatomvm/index.html" class="btn btn-neutral float-right" title="libAtomVM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">AtomVM Docs</span>
+      v: v0.6.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt>Versions</dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="/v0.6.0/pdf/AtomVM-v0.6.0.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.0/epub/AtomVM-v0.6.0.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

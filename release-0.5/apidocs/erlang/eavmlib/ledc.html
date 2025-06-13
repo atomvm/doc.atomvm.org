@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module ledc</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module ledc</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>LED Controller low-level APIs.
+
+
+<h2><a name="description">Description</a></h2><p>LED Controller low-level APIs</p>
+ 
+  <p>The functions in this module broadly reflect the ESP IDF-SDK LED Controller API.</p>
+ 
+  See the IDF-SDK <a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/ledc.html">LEDC</a>
+  documentation for more information about these APIs.
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-channel">channel()</a></h3>
+<p><tt>channel() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-channel_cfg">channel_cfg()</a></h3>
+<p><tt>channel_cfg() = {channel, <a href="#type-channel">channel()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-channel_config">channel_config()</a></h3>
+<p><tt>channel_config() = [<a href="#type-channel_cfg">channel_cfg()</a> | <a href="#type-duty_cfg">duty_cfg()</a> | <a href="#type-gpio_num_cfg">gpio_num_cfg()</a> | <a href="#type-speed_mode_cfg">speed_mode_cfg()</a> | <a href="#type-hpoint_cfg">hpoint_cfg()</a> | <a href="#type-timer_sel_cfg">timer_sel_cfg()</a>]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-duty">duty()</a></h3>
+<p><tt>duty() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-duty_cfg">duty_cfg()</a></h3>
+<p><tt>duty_cfg() = {duty, <a href="#type-duty">duty()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-duty_resolution">duty_resolution()</a></h3>
+<p><tt>duty_resolution() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-duty_resolution_cfg">duty_resolution_cfg()</a></h3>
+<p><tt>duty_resolution_cfg() = {duty_resolution, <a href="#type-duty_resolution">duty_resolution()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-fade_mode">fade_mode()</a></h3>
+<p><tt>fade_mode() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-freq_hz">freq_hz()</a></h3>
+<p><tt>freq_hz() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-freq_hz_cfg">freq_hz_cfg()</a></h3>
+<p><tt>freq_hz_cfg() = {freq_hz, <a href="#type-freq_hz">freq_hz()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-gpio_num">gpio_num()</a></h3>
+<p><tt>gpio_num() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-gpio_num_cfg">gpio_num_cfg()</a></h3>
+<p><tt>gpio_num_cfg() = {gpio_num, <a href="#type-gpio_num">gpio_num()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-hpoint">hpoint()</a></h3>
+<p><tt>hpoint() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-hpoint_cfg">hpoint_cfg()</a></h3>
+<p><tt>hpoint_cfg() = {hpoint, <a href="#type-hpoint">hpoint()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ledc_error_code">ledc_error_code()</a></h3>
+<p><tt>ledc_error_code() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-speed_mode">speed_mode()</a></h3>
+<p><tt>speed_mode() = '?LEDC_LOW_SPEED_MODE' | '?LEDC_HIGH_SPEED_MODE'</tt></p>
+
+
+<h3 class="typedecl"><a name="type-speed_mode_cfg">speed_mode_cfg()</a></h3>
+<p><tt>speed_mode_cfg() = {speed_mode, <a href="#type-speed_mode">speed_mode()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-timer_config">timer_config()</a></h3>
+<p><tt>timer_config() = [<a href="#type-duty_resolution_cfg">duty_resolution_cfg()</a> | <a href="#type-freq_hz_cfg">freq_hz_cfg()</a> | <a href="#type-speed_mode_cfg">speed_mode_cfg()</a> | <a href="#type-timer_num_cfg">timer_num_cfg()</a>]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-timer_num">timer_num()</a></h3>
+<p><tt>timer_num() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-timer_num_cfg">timer_num_cfg()</a></h3>
+<p><tt>timer_num_cfg() = {timer_num, <a href="#type-timer_num">timer_num()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-timer_sel">timer_sel()</a></h3>
+<p><tt>timer_sel() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-timer_sel_cfg">timer_sel_cfg()</a></h3>
+<p><tt>timer_sel_cfg() = {timer_sel, <a href="#type-timer_sel">timer_sel()</a>}</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#channel_config-1">channel_config/1</a></td><td>    LEDC timer configuration.</td></tr>
+<tr><td valign="top"><a href="#fade_func_install-1">fade_func_install/1</a></td><td>    Install LEDC fade function.</td></tr>
+<tr><td valign="top"><a href="#fade_func_uninstall-0">fade_func_uninstall/0</a></td><td>    Uninstall LEDC fade function.</td></tr>
+<tr><td valign="top"><a href="#fade_start-3">fade_start/3</a></td><td>    Start LEDC fading.</td></tr>
+<tr><td valign="top"><a href="#get_duty-2">get_duty/2</a></td><td>    LEDC get duty.</td></tr>
+<tr><td valign="top"><a href="#get_freq-2">get_freq/2</a></td><td>    LEDC get channel frequency (Hz).</td></tr>
+<tr><td valign="top"><a href="#set_duty-3">set_duty/3</a></td><td>    LEDC set duty.</td></tr>
+<tr><td valign="top"><a href="#set_fade_with_step-5">set_fade_with_step/5</a></td><td>    Set LEDC fade function.</td></tr>
+<tr><td valign="top"><a href="#set_fade_with_time-4">set_fade_with_time/4</a></td><td>    Set LEDC fade function, with a limited time.</td></tr>
+<tr><td valign="top"><a href="#set_freq-3">set_freq/3</a></td><td>    LEDC get channel frequency (Hz).</td></tr>
+<tr><td valign="top"><a href="#stop-3">stop/3</a></td><td>    LEDC stop.</td></tr>
+<tr><td valign="top"><a href="#timer_config-1">timer_config/1</a></td><td>    LEDC timer configuration.</td></tr>
+<tr><td valign="top"><a href="#update_duty-2">update_duty/2</a></td><td>    LEDC update channel parameters.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="channel_config-1">channel_config/1</a></h3>
+<div class="spec">
+<p><tt>channel_config(Config::<a href="#type-channel_config">channel_config()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>Config</tt>: timer configuration<br>
+</p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+</div><p><p>    LEDC timer configuration.</p>
+ 
+           Configure LEDC timer with the given source timer/frequency(Hz)/duty_resolution.</p>
+
+<h3 class="function"><a name="fade_func_install-1">fade_func_install/1</a></h3>
+<div class="spec">
+<p><tt>fade_func_install(Flags::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>Flags</tt>: Flags used to allocate the interrupt. One or multiple (ORred)
+                   ESP_INTR_FLAG_* values. See esp_intr_alloc.h for more info.<br>
+</p>
+<p>returns:         ok | {error, ledc_error_code()}</p>
+</div><p><p>    Install LEDC fade function.</p>
+ 
+           This function will occupy interrupt of LEDC module.</p>
+
+<h3 class="function"><a name="fade_func_uninstall-0">fade_func_uninstall/0</a></h3>
+<div class="spec">
+<p><tt>fade_func_uninstall() -&gt; ok</tt><br></p>
+<p>returns: ok</p>
+</div><p>    Uninstall LEDC fade function.</p>
+
+<h3 class="function"><a name="fade_start-3">fade_start/3</a></h3>
+<div class="spec">
+<p><tt>fade_start(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, FadeMode::<a href="#type-fade_mode">fade_mode()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>SpeedMode</tt>: Select the LEDC channel group with specified speed mode.
+                       Note that not all targets support high speed mode.<br>
+<tt>Channel</tt>: LEDC channel index (0-7).<br>
+<tt>FadeMode</tt>: Whether to block until fading done.<br>
+</p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+</div><p><p>    Start LEDC fading.</p>
+ 
+           Note. Call ledc:fade_func_install() once before calling this function.
+           Call ledc:fade_start() after this to start fading.</p>
+
+<h3 class="function"><a name="get_duty-2">get_duty/2</a></h3>
+<div class="spec">
+<p><tt>get_duty(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>SpeedMode</tt>: Select the LEDC channel group with specified speed mode.
+                       Note that not all targets support high speed mode.<br>
+<tt>Channel</tt>: LEDC channel index (0-7).<br>
+</p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+</div><p>    LEDC get duty.</p>
+
+<h3 class="function"><a name="get_freq-2">get_freq/2</a></h3>
+<div class="spec">
+<p><tt>get_freq(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, TimerNum::<a href="#type-timer_num">timer_num()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>SpeedMode</tt>: Select the LEDC channel group with specified speed mode.<br>
+<tt>TimerNum</tt>: LEDC timer index (0-3).<br>
+</p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+</div><p>    LEDC get channel frequency (Hz)</p>
+
+<h3 class="function"><a name="set_duty-3">set_duty/3</a></h3>
+<div class="spec">
+<p><tt>set_duty(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, Duty::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>SpeedMode</tt>: Select the LEDC channel group with specified speed mode.
+                       Note that not all targets support high speed mode.<br>
+<tt>Channel</tt>: LEDC channel index (0-7).<br>
+<tt>Duty</tt>: Set the LEDC duty, the range of duty setting is [0, (2**duty_resolution)]<br>
+</p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+</div><p>    LEDC set duty.</p>
+
+<h3 class="function"><a name="set_fade_with_step-5">set_fade_with_step/5</a></h3>
+<div class="spec">
+<p><tt>set_fade_with_step(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, TargetDuty::non_neg_integer(), Scale::non_neg_integer(), CycleNum::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>SpeedMode</tt>: Select the LEDC channel group with specified speed mode.
+                       Note that not all targets support high speed mode.<br>
+<tt>Channel</tt>: LEDC channel index (0-7).<br>
+<tt>TargetDuty</tt>: Target duty of fading.(0..(2^duty_resolution-1)))<br>
+<tt>Scale</tt>: Controls the increase or decrease step scale.<br>
+<tt>CycleNum</tt>: increase or decrease the duty every cycle_num cycles<br>
+</p>
+<p>returns:         ok | {error, ledc_error_code()}</p>
+</div><p><p>    Set LEDC fade function</p>
+ 
+           Note. Call ledc:fade_func_install() once before calling this function.
+           Call ledc:fade_start() after this to start fading.</p>
+
+<h3 class="function"><a name="set_fade_with_time-4">set_fade_with_time/4</a></h3>
+<div class="spec">
+<p><tt>set_fade_with_time(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, TargetDuty::non_neg_integer(), MaxFadeTimeMs::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>SpeedMode</tt>: Select the LEDC channel group with specified speed mode.
+                       Note that not all targets support high speed mode.<br>
+<tt>Channel</tt>: LEDC channel index (0-7).<br>
+<tt>TargetDuty</tt>: Target duty of fading.(0..(2^duty_resolution-1)))<br>
+<tt>MaxFadeTimeMs</tt>: The maximum time of the fading (ms).<br>
+</p>
+<p>returns:         ok | {error, ledc_error_code()}</p>
+</div><p><p>    Set LEDC fade function, with a limited time.</p>
+ 
+           Note. Call ledc:fade_func_install() once before calling this function.
+           Call ledc:fade_start() after this to start fading.</p>
+
+<h3 class="function"><a name="set_freq-3">set_freq/3</a></h3>
+<div class="spec">
+<p><tt>set_freq(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, TimerNum::<a href="#type-timer_num">timer_num()</a>, FreqHz::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>SpeedMode</tt>: Select the LEDC channel group with specified speed mode.<br>
+<tt>TimerNum</tt>: LEDC timer index (0-3).<br>
+</p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+</div><p>    LEDC get channel frequency (Hz)</p>
+
+<h3 class="function"><a name="stop-3">stop/3</a></h3>
+<div class="spec">
+<p><tt>stop(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>, IdleLevel::non_neg_integer()) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>SpeedMode</tt>: Select the LEDC channel group with specified speed mode.
+                       Note that not all targets support high speed mode.<br>
+<tt>Channel</tt>: LEDC channel index (0-7).<br>
+<tt>IdleLevel</tt>: Set output idle level after LEDC stops.<br>
+</p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+</div><p>    LEDC stop. Disable LEDC output, and set idle level.</p>
+
+<h3 class="function"><a name="timer_config-1">timer_config/1</a></h3>
+<div class="spec">
+<p><tt>timer_config(Config::<a href="#type-timer_config">timer_config()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>Config</tt>: timer configuration<br>
+</p>
+<p>returns: ok | {error, Reason}</p>
+</div><p><p>    LEDC timer configuration.</p>
+ 
+           Configure LEDC timer with the given source timer/frequency(Hz)/duty_resolution.</p>
+
+<h3 class="function"><a name="update_duty-2">update_duty/2</a></h3>
+<div class="spec">
+<p><tt>update_duty(SpeedMode::<a href="#type-speed_mode">speed_mode()</a>, Channel::<a href="#type-channel">channel()</a>) -&gt; ok | {error, <a href="#type-ledc_error_code">ledc_error_code()</a>}</tt><br></p>
+<p><tt>SpeedMode</tt>: Select the LEDC channel group with specified speed mode.
+                       Note that not all targets support high speed mode.<br>
+<tt>Channel</tt>: LEDC channel index (0-7).<br>
+</p>
+<p>returns: ok | {error, ledc_error_code()}</p>
+</div><p>    LEDC update channel parameters.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

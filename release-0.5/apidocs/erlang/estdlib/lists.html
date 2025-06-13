@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module lists</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module lists</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>An implementation of the Erlang/OTP lists interface.
+
+
+<h2><a name="description">Description</a></h2><p>An implementation of the Erlang/OTP lists interface.</p>
+ 
+  This module implements a strict susbset of the Erlang/OTP lists
+  interface.
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#all-2">all/2</a></td><td>    Evaluates to true iff Fun(E) =:= true, for all E in List.</td></tr>
+<tr><td valign="top"><a href="#any-2">any/2</a></td><td>    Evaluates to true iff Fun(E) =:= true, for some E in List.</td></tr>
+<tr><td valign="top"><a href="#delete-2">delete/2</a></td><td>    Remove E from L.</td></tr>
+<tr><td valign="top"><a href="#filter-2">filter/2</a></td><td>    Filter a list by a predicate, returning the list of elements
+           for which the predicate is true.</td></tr>
+<tr><td valign="top"><a href="#flatten-1">flatten/1</a></td><td>    recursively flattens elements of L into a single list.</td></tr>
+<tr><td valign="top"><a href="#foldl-3">foldl/3</a></td><td>    Fold over a list of terms, from left to right, applying Fun(E, Accum)
+           to each successive element in List.</td></tr>
+<tr><td valign="top"><a href="#foldr-3">foldr/3</a></td><td>    Fold over a list of terms, from right to left, applying Fun(E, Accum)
+           to each successive element in List.</td></tr>
+<tr><td valign="top"><a href="#foreach-2">foreach/2</a></td><td>    Applies given fun to each list element.</td></tr>
+<tr><td valign="top"><a href="#join-2">join/2</a></td><td>    Inserts Sep between every element of List.</td></tr>
+<tr><td valign="top"><a href="#keydelete-3">keydelete/3</a></td><td>    Delete the entry in L whose Ith element matches K.</td></tr>
+<tr><td valign="top"><a href="#keyfind-3">keyfind/3</a></td><td>    Find the entry in L whose Ith element matches K.</td></tr>
+<tr><td valign="top"><a href="#keymember-3">keymember/3</a></td><td>    Returns true if a Ith element matches K.</td></tr>
+<tr><td valign="top"><a href="#keyreplace-4">keyreplace/4</a></td><td>    Returns the result of replacing the first element in L who's Ith element matches K.</td></tr>
+<tr><td valign="top"><a href="#map-2">map/2</a></td><td>    Map a list of terms, applying Fun(E).</td></tr>
+<tr><td valign="top"><a href="#member-2">member/2</a></td><td>    Determine whether a term is a member of a list.</td></tr>
+<tr><td valign="top"><a href="#nth-2">nth/2</a></td><td>    Get the value in a list at position N.</td></tr>
+<tr><td valign="top"><a href="#reverse-1">reverse/1</a></td><td>    Reverse the elements of L.</td></tr>
+<tr><td valign="top"><a href="#search-2">search/2</a></td><td>    If there is a Value in List such that Pred(Value) returns true,
+           returns {value, Value} for the first such Value, otherwise returns false.</td></tr>
+<tr><td valign="top"><a href="#seq-2">seq/2</a></td><td>    Returns a sequence of integers in a specified range.</td></tr>
+<tr><td valign="top"><a href="#seq-3">seq/3</a></td><td>    Returns a sequence of integers in a specified range incremented by a specified value.</td></tr>
+<tr><td valign="top"><a href="#sort-1">sort/1</a></td><td>    Returns a sorted list, using <code>&lt;</code> operator to determine sort order.</td></tr>
+<tr><td valign="top"><a href="#sort-2">sort/2</a></td><td>    Returns a sorted list, using Fun(A, B) to determine sort order.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="all-2">all/2</a></h3>
+<div class="spec">
+<p><tt>all(Fun::fun((Elem::term()) -&gt; boolean()), List::list()) -&gt; boolean()</tt><br></p>
+<p><tt>Fun</tt>: the predicate to evaluate<br>
+<tt>List</tt>: the list over which to evaluate elements<br>
+</p>
+<p>returns: true if Fun(E) evaluates to true, for all elements in List</p>
+</div><p>    Evaluates to true iff Fun(E) =:= true, for all E in List</p>
+
+<h3 class="function"><a name="any-2">any/2</a></h3>
+<div class="spec">
+<p><tt>any(Fun::fun((Elem::term()) -&gt; boolean()), List::list()) -&gt; boolean()</tt><br></p>
+<p><tt>Fun</tt>: the predicate to evaluate<br>
+<tt>List</tt>: the list over which to evaluate elements<br>
+</p>
+<p>returns: true if Fun(E) evaluates to true, for at least one in List</p>
+</div><p>    Evaluates to true iff Fun(E) =:= true, for some E in List</p>
+
+<h3 class="function"><a name="delete-2">delete/2</a></h3>
+<div class="spec">
+<p><tt>delete(E::term(), L::list()) -&gt; Result::list()</tt><br></p>
+<p><tt>E</tt>: the member to delete<br>
+<tt>L</tt>: the list from which to delete the value<br>
+</p>
+<p>returns: the result of removing E from L, if it exists in L; otherwise, L.</p>
+</div><p>    Remove E from L</p>
+
+<h3 class="function"><a name="filter-2">filter/2</a></h3>
+<div class="spec">
+<p><tt>filter(Pred::fun((Elem::term()) -&gt; boolean()), List::list()) -&gt; list()</tt><br></p>
+<p><tt>Pred</tt>: the predicate to apply to elements in List<br>
+<tt>List</tt>: list<br>
+</p>
+<p>returns: all values in L for which Pred is true.</p>
+</div><p>    Filter a list by a predicate, returning the list of elements
+           for which the predicate is true.</p>
+
+<h3 class="function"><a name="flatten-1">flatten/1</a></h3>
+<div class="spec">
+<p><tt>flatten(L::list()) -&gt; list()</tt><br></p>
+<p><tt>L</tt>: the list to flatten<br>
+</p>
+<p>returns: flattened list</p>
+</div><p>    recursively flattens elements of L into a single list</p>
+
+<h3 class="function"><a name="foldl-3">foldl/3</a></h3>
+<div class="spec">
+<p><tt>foldl(Fun::fun((Elem::term(), AccIn::term()) -&gt; AccOut::term()), Acc0::term(), List::list()) -&gt; Acc1::term()</tt><br></p>
+<p><tt>Fun</tt>: the function to apply<br>
+<tt>List</tt>: the list over which to fold<br>
+</p>
+<p>returns: the result of folding Fun over L</p>
+</div><p>    Fold over a list of terms, from left to right, applying Fun(E, Accum)
+           to each successive element in List</p>
+
+<h3 class="function"><a name="foldr-3">foldr/3</a></h3>
+<div class="spec">
+<p><tt>foldr(Fun::fun((Elem::term(), AccIn::term()) -&gt; AccOut::term()), Acc0::term(), List::list()) -&gt; Acc1::term()</tt><br></p>
+</div><p>Equivalent to <a href="#foldl-3"><tt>foldl(Fun, Acc0, reverse(List))</tt></a>.</p>
+<p>    Fold over a list of terms, from right to left, applying Fun(E, Accum)
+           to each successive element in List</p>
+
+<h3 class="function"><a name="foreach-2">foreach/2</a></h3>
+<div class="spec">
+<p><tt>foreach(Fun::fun((Elem::term()) -&gt; term()), List::list()) -&gt; ok</tt><br></p>
+<p><tt>Fun</tt>: the predicate to evaluate<br>
+<tt>List</tt>: the list over which to evaluate elements<br>
+</p>
+<p>returns: ok</p>
+</div><p>    Applies given fun to each list element</p>
+
+<h3 class="function"><a name="join-2">join/2</a></h3>
+<div class="spec">
+<p><tt>join(Sep::list(), List::list()) -&gt; list()</tt><br></p>
+<p><tt>Sep</tt>: the separator<br>
+<tt>List</tt>: list<br>
+</p>
+<p>returns: the result of inserting Sep between every element of List.</p>
+</div><p>    Inserts Sep between every element of List.</p>
+
+<h3 class="function"><a name="keydelete-3">keydelete/3</a></h3>
+<div class="spec">
+<p><tt>keydelete(K::term(), I::pos_integer(), L::list()) -&gt; list()</tt><br></p>
+<p><tt>K</tt>: the key to match<br>
+<tt>I</tt>: the position in the tuple to compare (1..tuple_size)<br>
+<tt>L</tt>: the list from which to delete the element<br>
+</p>
+<p>returns: the result of deleting any element in L who's Ith element matches K</p>
+</div><p>    Delete the entry in L whose Ith element matches K.</p>
+
+<h3 class="function"><a name="keyfind-3">keyfind/3</a></h3>
+<div class="spec">
+<p><tt>keyfind(K::term(), I::pos_integer(), L::[tuple()]) -&gt; tuple() | false</tt><br></p>
+<p><tt>K</tt>: the key to match<br>
+<tt>I</tt>: the position in the tuple to compare (1..tuple_size)<br>
+<tt>L</tt>: the list from which to find the element<br>
+</p>
+<p>returns: the tuple in L who's Ith element matches K; the atom false, otherwise</p>
+</div><p>    Find the entry in L whose Ith element matches K.</p>
+
+<h3 class="function"><a name="keymember-3">keymember/3</a></h3>
+<div class="spec">
+<p><tt>keymember(K::term(), I::pos_integer(), L::[tuple()]) -&gt; boolean()</tt><br></p>
+<p><tt>K</tt>: the key to match<br>
+<tt>I</tt>: the position in the tuple to compare (1..tuple_size)<br>
+<tt>L</tt>: the list from which to find the element<br>
+</p>
+<p>returns: true if there is a tuple in L who's Ith element matches K; the atom false, otherwise</p>
+</div><p>    Returns true if a Ith element matches K.</p>
+
+<h3 class="function"><a name="keyreplace-4">keyreplace/4</a></h3>
+<div class="spec">
+<p><tt>keyreplace(K::term(), I::pos_integer(), L::[tuple()], NewTuple::{NewKey::term(), Val::term()}) -&gt; boolean()</tt><br></p>
+<p><tt>K</tt>: the key to match<br>
+<tt>I</tt>: the position in the tuple to compare (1..tuple_size)<br>
+<tt>L</tt>: the list from which to find the element<br>
+</p>
+<p>returns: result of replacing the first element in L who's Ith element matches K.</p>
+</div><p>    Returns the result of replacing the first element in L who's Ith element matches K.</p>
+
+<h3 class="function"><a name="map-2">map/2</a></h3>
+<div class="spec">
+<p><tt>map(Fun::fun((Elem::term()) -&gt; Out::term()), List::list()) -&gt; OutList::term()</tt><br></p>
+<p><tt>Fun</tt>: the function to apply<br>
+<tt>List</tt>: the list over which to map<br>
+</p>
+<p>returns: the result of mapping over L</p>
+</div><p>    Map a list of terms, applying Fun(E)</p>
+
+<h3 class="function"><a name="member-2">member/2</a></h3>
+<div class="spec">
+<p><tt>member(E::term(), L::list()) -&gt; boolean()</tt><br></p>
+<p><tt>E</tt>: the member to search for<br>
+<tt>L</tt>: the list from which to get the value<br>
+</p>
+<p>returns: true if E is a member of L; false, otherwise.</p>
+</div><p>    Determine whether a term is a member of a list.</p>
+
+<h3 class="function"><a name="nth-2">nth/2</a></h3>
+<div class="spec">
+<p><tt>nth(N::non_neg_integer(), L::list()) -&gt; term()</tt><br></p>
+<p><tt>N</tt>: the index in the list to get<br>
+<tt>L</tt>: the list from which to get the value<br>
+</p>
+<p>returns: the value in the list at position N.</p>
+</div><p><p>    Get the value in a list at position N.</p>
+ 
+           Returns the value at the specified position in the list.
+           The bhavior of this function is undefined if N is outside of the
+           {1..length(L)}.</p>
+
+<h3 class="function"><a name="reverse-1">reverse/1</a></h3>
+<div class="spec">
+<p><tt>reverse(L::list()) -&gt; list()</tt><br></p>
+<p><tt>L</tt>: the list to reverse<br>
+</p>
+<p>returns: the elements of L in reverse order</p>
+</div><p>    Reverse the elements of L.</p>
+
+<h3 class="function"><a name="search-2">search/2</a></h3>
+<div class="spec">
+<p><tt>search(Pred::fun((Elem::term()) -&gt; boolean()), List::list()) -&gt; {value, Value::term()} | false</tt><br></p>
+<p><tt>Pred</tt>: the predicate to apply to elements in List<br>
+<tt>List</tt>: search<br>
+</p>
+<p>returns: the first {value, Val}, if Pred(Val); false, otherwise.</p>
+</div><p>    If there is a Value in List such that Pred(Value) returns true,
+           returns {value, Value} for the first such Value, otherwise returns false.</p>
+
+<h3 class="function"><a name="seq-2">seq/2</a></h3>
+<div class="spec">
+<p><tt>seq(From, To) -&gt; any()</tt></p>
+</div><p><p>    Returns a sequence of integers in a specified range.</p>
+ 
+           This function is equivalent to <code>lists:seq(From, To, 1)</code>.</p>
+
+<h3 class="function"><a name="seq-3">seq/3</a></h3>
+<div class="spec">
+<p><tt>seq(From, To, Incr) -&gt; any()</tt></p>
+</div><p><p>    Returns a sequence of integers in a specified range incremented by a specified value.</p>
+ 
+ </p>
+
+<h3 class="function"><a name="sort-1">sort/1</a></h3>
+<div class="spec">
+<p><tt>sort(List) -&gt; any()</tt></p>
+</div><p>    Returns a sorted list, using <code>&lt;</code> operator to determine sort order.
+ </p>
+
+<h3 class="function"><a name="sort-2">sort/2</a></h3>
+<div class="spec">
+<p><tt>sort(Fun, List) -&gt; any()</tt></p>
+</div><p>    Returns a sorted list, using Fun(A, B) to determine sort order.
+ </p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

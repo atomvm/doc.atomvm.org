@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module network</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module network</h1>
+<ul class="index"><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+
+
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-ap_config">ap_config()</a></h3>
+<p><tt>ap_config() = {sta, [<a href="#type-ap_config_property">ap_config_property()</a>]}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ap_config_property">ap_config_property()</a></h3>
+<p><tt>ap_config_property() = <a href="#type-ssid_config">ssid_config()</a> | <a href="#type-psk_config">psk_config()</a> | <a href="#type-ap_ssid_hidden_config">ap_ssid_hidden_config()</a> | <a href="#type-ap_max_connections_config">ap_max_connections_config()</a> | <a href="#type-ap_started_config">ap_started_config()</a> | <a href="#type-ap_sta_connected_config">ap_sta_connected_config()</a> | <a href="#type-ap_sta_disconnected_config">ap_sta_disconnected_config()</a> | <a href="#type-ap_sta_ip_assigned_config">ap_sta_ip_assigned_config()</a></tt></p>
+
+
+<h3 class="typedecl"><a name="type-ap_max_connections_config">ap_max_connections_config()</a></h3>
+<p><tt>ap_max_connections_config() = {ap_max_connections, non_neg_integer()}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ap_ssid_hidden_config">ap_ssid_hidden_config()</a></h3>
+<p><tt>ap_ssid_hidden_config() = {ap_ssid_hidden, boolean()}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ap_sta_connected_config">ap_sta_connected_config()</a></h3>
+<p><tt>ap_sta_connected_config() = {sta_connected, fun((<a href="#type-mac">mac()</a>) -&gt; term())}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ap_sta_disconnected_config">ap_sta_disconnected_config()</a></h3>
+<p><tt>ap_sta_disconnected_config() = {sta_disconnected, fun((<a href="#type-mac">mac()</a>) -&gt; term())}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ap_sta_ip_assigned_config">ap_sta_ip_assigned_config()</a></h3>
+<p><tt>ap_sta_ip_assigned_config() = {sta_ip_assigned, fun((<a href="#type-ipv4_address">ipv4_address()</a>) -&gt; term())}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ap_started_config">ap_started_config()</a></h3>
+<p><tt>ap_started_config() = {ap_started, fun(() -&gt; term())}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-dhcp_hostname_config">dhcp_hostname_config()</a></h3>
+<p><tt>dhcp_hostname_config() = {dhcp_hostname, string() | binary()}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ip_info">ip_info()</a></h3>
+<p><tt>ip_info() = <a href="#type-ipv4_info">ipv4_info()</a></tt></p>
+
+
+<h3 class="typedecl"><a name="type-ipv4_address">ipv4_address()</a></h3>
+<p><tt>ipv4_address() = {<a href="#type-octet">octet()</a>, <a href="#type-octet">octet()</a>, <a href="#type-octet">octet()</a>, <a href="#type-octet">octet()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ipv4_info">ipv4_info()</a></h3>
+<p><tt>ipv4_info() = {IPAddress::<a href="#type-ipv4_address">ipv4_address()</a>, NetMask::<a href="#type-ipv4_address">ipv4_address()</a>, Gateway::<a href="#type-ipv4_address">ipv4_address()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-mac">mac()</a></h3>
+<p><tt>mac() = binary()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-network_config">network_config()</a></h3>
+<p><tt>network_config() = [<a href="#type-sta_config">sta_config()</a> | <a href="#type-ap_config">ap_config()</a> | <a href="#type-sntp_config">sntp_config()</a>]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-octet">octet()</a></h3>
+<p><tt>octet() = 0..255</tt></p>
+
+
+<h3 class="typedecl"><a name="type-psk_config">psk_config()</a></h3>
+<p><tt>psk_config() = {psk, string() | binary()}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-sntp_config">sntp_config()</a></h3>
+<p><tt>sntp_config() = {sntp, [<a href="#type-sntp_config_property">sntp_config_property()</a>]}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-sntp_config_property">sntp_config_property()</a></h3>
+<p><tt>sntp_config_property() = {host, string() | binary()}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-ssid_config">ssid_config()</a></h3>
+<p><tt>ssid_config() = {ssid, string() | binary()}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-sta_config">sta_config()</a></h3>
+<p><tt>sta_config() = {sta, [<a href="#type-sta_config_property">sta_config_property()</a>]}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-sta_config_property">sta_config_property()</a></h3>
+<p><tt>sta_config_property() = <a href="#type-ssid_config">ssid_config()</a> | <a href="#type-psk_config">psk_config()</a> | <a href="#type-dhcp_hostname_config">dhcp_hostname_config()</a> | <a href="#type-sta_connected_config">sta_connected_config()</a> | <a href="#type-sta_disconnected_config">sta_disconnected_config()</a> | <a href="#type-sta_got_ip_config">sta_got_ip_config()</a></tt></p>
+
+
+<h3 class="typedecl"><a name="type-sta_connected_config">sta_connected_config()</a></h3>
+<p><tt>sta_connected_config() = {connected, fun(() -&gt; term())}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-sta_disconnected_config">sta_disconnected_config()</a></h3>
+<p><tt>sta_disconnected_config() = {disconnected, fun(() -&gt; term())}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-sta_got_ip_config">sta_got_ip_config()</a></h3>
+<p><tt>sta_got_ip_config() = {got_ip, fun((<a href="#type-ip_info">ip_info()</a>) -&gt; term())}</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#start-1">start/1</a></td><td>    Start a network_fsm.</td></tr>
+<tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>    Stop a network_fsm.</td></tr>
+<tr><td valign="top"><a href="#wait_for_ap-0">wait_for_ap/0</a></td><td>    Equivalent to wait_for_ap(15000).</td></tr>
+<tr><td valign="top"><a href="#wait_for_ap-1">wait_for_ap/1</a></td><td>    Equivalent to wait_for_ap([], Timeout) or wait_for_ap(StaConfig, 15000).</td></tr>
+<tr><td valign="top"><a href="#wait_for_ap-2">wait_for_ap/2</a></td><td>    Start a network_fsm in access point mode and wait the AP to be           
+up and running.</td></tr>
+<tr><td valign="top"><a href="#wait_for_sta-0">wait_for_sta/0</a></td><td>    Equivalent to wait_for_sta(15000).</td></tr>
+<tr><td valign="top"><a href="#wait_for_sta-1">wait_for_sta/1</a></td><td>    Equivalent to wait_for_sta([], Timeout) or wait_for_sta(StaConfig, 15000).</td></tr>
+<tr><td valign="top"><a href="#wait_for_sta-2">wait_for_sta/2</a></td><td>    Start a network_fsm in station mode and wait for a connection to be established.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="start-1">start/1</a></h3>
+<div class="spec">
+<p><tt>start(Config::<a href="#type-network_config">network_config()</a>) -&gt; ok | {error, Reason::term()}</tt><br></p>
+<p><tt>Config</tt>: The network configuration<br>
+</p>
+<p>returns: ok, if the network_fsm was started, or {error, Reason} if
+           a failure occurred (e.g., due to malformed network configuration).</p>
+</div><p><p>    Start a network_fsm.</p>
+ 
+           This function will start a network_fsm, which will attempt to
+           connect to an AP endpoint in the background.  Specify callback
+           functions to receive definitive
+           information that the connection succeeded.  See the AtomVM Network
+           FSM Programming Manual for more information.</p>
+
+<h3 class="function"><a name="stop-0">stop/0</a></h3>
+<div class="spec">
+<p><tt>stop() -&gt; ok | {error, Reason::term()}</tt><br></p>
+<p>returns: ok, if the network_fsm was stopped, or {error, Reason} if
+           a failure occurred.</p>
+</div><p>    Stop a network_fsm.</p>
+
+<h3 class="function"><a name="wait_for_ap-0">wait_for_ap/0</a></h3>
+<div class="spec">
+<p><tt>wait_for_ap() -&gt; ok | {error, Reason::term()}</tt><br></p>
+</div><p>    Equivalent to wait_for_ap(15000).</p>
+
+<h3 class="function"><a name="wait_for_ap-1">wait_for_ap/1</a></h3>
+<div class="spec">
+<p><tt>wait_for_ap(TimeoutOrStaConfig::non_neg_integer() | [<a href="#type-ap_config_property">ap_config_property()</a>]) -&gt; ok | {error, Reason::term()}</tt><br></p>
+</div><p>    Equivalent to wait_for_ap([], Timeout) or wait_for_ap(StaConfig, 15000).</p>
+
+<h3 class="function"><a name="wait_for_ap-2">wait_for_ap/2</a></h3>
+<div class="spec">
+<p><tt>wait_for_ap(ApConfig::[<a href="#type-ap_config_property">ap_config_property()</a>], Timeout::non_neg_integer()) -&gt; ok | {error, Reason::term()}</tt><br></p>
+<p><tt>ApConfig</tt>: The AP network configuration<br>
+<tt>Timeout</tt>: amount of time in milliseconds to wait for a connection<br>
+</p>
+<p>returns: ok, when the nework_fsm has started the AP, or {error, Reason} if
+           a failure occurred (e.g., due to malformed network configuration).</p>
+</div><p><p>    Start a network_fsm in access point mode and wait the AP to be           
+up and running</p>
+ 
+           This function will start a network_fsm in AP mode, and will wait
+           until the network is up and ready to be connected.  This is a convenience function,
+           for applications that do not need to be notified of connectivity
+           changes in the network.</p>
+
+<h3 class="function"><a name="wait_for_sta-0">wait_for_sta/0</a></h3>
+<div class="spec">
+<p><tt>wait_for_sta() -&gt; {ok, <a href="#type-ip_info">ip_info()</a>} | {error, Reason::term()}</tt><br></p>
+</div><p>    Equivalent to wait_for_sta(15000).</p>
+
+<h3 class="function"><a name="wait_for_sta-1">wait_for_sta/1</a></h3>
+<div class="spec">
+<p><tt>wait_for_sta(TimeoutOrStaConfig::non_neg_integer() | [<a href="#type-sta_config_property">sta_config_property()</a>]) -&gt; {ok, <a href="#type-ip_info">ip_info()</a>} | {error, Reason::term()}</tt><br></p>
+</div><p>    Equivalent to wait_for_sta([], Timeout) or wait_for_sta(StaConfig, 15000).</p>
+
+<h3 class="function"><a name="wait_for_sta-2">wait_for_sta/2</a></h3>
+<div class="spec">
+<p><tt>wait_for_sta(StaConfig::[<a href="#type-sta_config_property">sta_config_property()</a>], Timeout::non_neg_integer()) -&gt; {ok, <a href="#type-ip_info">ip_info()</a>} | {error, Reason::term()}</tt><br></p>
+<p><tt>StaConfig</tt>: The STA network configuration<br>
+<tt>Timeout</tt>: amount of time in milliseconds to wait for a connection<br>
+</p>
+<p>returns: {ok, IpInfo}, if the network_fsm was started, or {error, Reason} if
+           a failure occurred (e.g., due to malformed network configuration).</p>
+</div><p><p>    Start a network_fsm in station mode and wait for a connection to be established</p>
+ 
+           This function will start a network_fsm in station mode, and will wait
+           for a connection to be established.  This is a convenience function,
+           for applications that do not need to be notified of connectivity
+           changes in the network.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

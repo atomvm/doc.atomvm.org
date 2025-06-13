@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module logger</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module logger</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>A simple logging module.
+
+
+<h2><a name="description">Description</a></h2><p>A simple logging module.</p>
+ 
+  <p>This module can be used to log messages to the console.</p>
+ 
+  Most applications should use the logging macros defined in logger.hrl
+  to do logging.
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-config">config()</a></h3>
+<p><tt>config() = [<a href="#type-config_item">config_item()</a>]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-config_item">config_item()</a></h3>
+<p><tt>config_item() = {levels, [<a href="#type-level">level()</a>]}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-level">level()</a></h3>
+<p><tt>level() = debug | info | warning | error</tt></p>
+
+
+<h3 class="typedecl"><a name="type-location">location()</a></h3>
+<p><tt>location() = {Module::module(), Function::atom(), Arity::non_neg_integer(), Line::non_neg_integer()}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-sink">sink()</a></h3>
+<p><tt>sink() = {atom(), atom()}</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#get_filter-0">get_filter/0</a></td><td>    Get the current filter in the logger.</td></tr>
+<tr><td valign="top"><a href="#get_levels-0">get_levels/0</a></td><td>    Get the current levels in the logger.</td></tr>
+<tr><td valign="top"><a href="#get_sinks-0">get_sinks/0</a></td><td>    Get the current sinks in the logger.</td></tr>
+<tr><td valign="top"><a href="#log-3">log/3</a></td><td>    Log a message the the specified location with the specified level.</td></tr>
+<tr><td valign="top"><a href="#set_filter-1">set_filter/1</a></td><td>    Set the filter in the logger.</td></tr>
+<tr><td valign="top"><a href="#set_levels-1">set_levels/1</a></td><td>    Set the levels in the logger.</td></tr>
+<tr><td valign="top"><a href="#set_sinks-1">set_sinks/1</a></td><td>    Set the sinks in the logger.</td></tr>
+<tr><td valign="top"><a href="#start-0">start/0</a></td><td>    Start the logger.</td></tr>
+<tr><td valign="top"><a href="#start-1">start/1</a></td><td>    Start the logger.</td></tr>
+<tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>    Stop the logger.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="get_filter-0">get_filter/0</a></h3>
+<div class="spec">
+<p><tt>get_filter() -&gt; {ok, Filter::[module()]} | {error, timeout}</tt><br></p>
+<p>returns:  the current filter set in the logger</p>
+</div><p>    Get the current filter in the logger.</p>
+
+<h3 class="function"><a name="get_levels-0">get_levels/0</a></h3>
+<div class="spec">
+<p><tt>get_levels() -&gt; {ok, Levels::[<a href="#type-level">level()</a>]} | {error, timeout}</tt><br></p>
+<p>returns:  the current list of levels set in the logger</p>
+</div><p>    Get the current levels in the logger.</p>
+
+<h3 class="function"><a name="get_sinks-0">get_sinks/0</a></h3>
+<div class="spec">
+<p><tt>get_sinks() -&gt; {ok, Sinks::[<a href="#type-sink">sink()</a>]} | {error, timeout}</tt><br></p>
+<p>returns:  the current list of sinks set in the logger</p>
+</div><p>    Get the current sinks in the logger.</p>
+
+<h3 class="function"><a name="log-3">log/3</a></h3>
+<div class="spec">
+<p><tt>log(Location::<a href="#type-location">location()</a>, Level::<a href="#type-level">level()</a>, MsgFormat::{Format::string(), Args::[term()]}) -&gt; ok</tt><br></p>
+<p><tt>Location</tt>: the location in the source module<br>
+</p>
+</div><p><p>    Log a message the the specified location with the specified level.</p>
+ 
+           Users should use the logging macros in logger.hrl instead of
+           calling this function directly.</p>
+
+<h3 class="function"><a name="set_filter-1">set_filter/1</a></h3>
+<div class="spec">
+<p><tt>set_filter(Filter::[module()]) -&gt; ok</tt><br></p>
+<p><tt>Filter</tt>: the filter to set<br>
+</p>
+<p>returns:  ok</p>
+</div><p>    Set the filter in the logger.
+           Currently, a filter is a set of module names.  If the filter is
+           non-empty, then a log will be triggered only if the module
+           being logged is in the filter list; otherwise, if the filter is
+           empty, then the log will be triggered (if the level matches, as well)</p>
+
+<h3 class="function"><a name="set_levels-1">set_levels/1</a></h3>
+<div class="spec">
+<p><tt>set_levels(Levels::[<a href="#type-level">level()</a>]) -&gt; ok</tt><br></p>
+<p><tt>Levels</tt>: the list of levels to set<br>
+</p>
+<p>returns:  ok</p>
+</div><p>    Set the levels in the logger.</p>
+
+<h3 class="function"><a name="set_sinks-1">set_sinks/1</a></h3>
+<div class="spec">
+<p><tt>set_sinks(Sinks::[<a href="#type-sink">sink()</a>]) -&gt; ok</tt><br></p>
+<p><tt>Sinks</tt>: the list of sinks to set<br>
+</p>
+<p>returns:  ok</p>
+</div><p>    Set the sinks in the logger.</p>
+
+<h3 class="function"><a name="start-0">start/0</a></h3>
+<div class="spec">
+<p><tt>start() -&gt; {ok, pid()}</tt><br></p>
+</div><p>Equivalent to <a href="#start-1"><tt>start([{levels, [info, warning, error]}])</tt></a>.</p>
+<p>    Start the logger.</p>
+
+<h3 class="function"><a name="start-1">start/1</a></h3>
+<div class="spec">
+<p><tt>start(Config::<a href="#type-config">config()</a>) -&gt; {ok, pid()}</tt><br></p>
+<p><tt>Config</tt>: the logging configuration<br>
+</p>
+<p>returns: {ok, Pid}</p>
+</div><p><p>    Start the logger.</p>
+ 
+           This function will start the logger with the specified configuration.</p>
+
+<h3 class="function"><a name="stop-0">stop/0</a></h3>
+<div class="spec">
+<p><tt>stop() -&gt; ok</tt><br></p>
+</div><p><p>    Stop the logger.</p>
+ 
+           This function is rarely used.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module network &mdash; AtomVM 0.6.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/eavmlib/network.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=18b66ea0"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module network_fsm" href="network_fsm.html" />
+    <link rel="prev" title="Module ledc" href="ledc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.6.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ahttp_client.html">Module ahttp_client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm.html">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="emscripten.html">Module emscripten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp.html">Module esp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gpio.html">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="i2c.html">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ledc.html">Module ledc</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uart.html">Module uart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module network</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-network">
+<h1>Module network<a class="headerlink" href="#module-network" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="ap-channel-cfg">
+<h3><a name="type-ap_channel_cfg">ap_channel_cfg()</a><a class="headerlink" href="#ap-channel-cfg" title="Link to this heading"></a></h3>
+<pre><code>
+ap_channel_cfg() = {ap_channel, <a href="#type-wifi_channel">wifi_channel()</a>}
+</code></pre>
+</section>
+<section id="ap-config">
+<h3><a name="type-ap_config">ap_config()</a><a class="headerlink" href="#ap-config" title="Link to this heading"></a></h3>
+<pre><code>
+ap_config() = {ap, [<a href="#type-ap_config_property">ap_config_property()</a>]}
+</code></pre>
+</section>
+<section id="ap-config-property">
+<h3><a name="type-ap_config_property">ap_config_property()</a><a class="headerlink" href="#ap-config-property" title="Link to this heading"></a></h3>
+<pre><code>
+ap_config_property() = <a href="#type-ssid_config">ssid_config()</a> | <a href="#type-psk_config">psk_config()</a> | <a href="#type-ap_channel_cfg">ap_channel_cfg()</a> | <a href="#type-ap_ssid_hidden_config">ap_ssid_hidden_config()</a> | <a href="#type-ap_max_connections_config">ap_max_connections_config()</a> | <a href="#type-ap_started_config">ap_started_config()</a> | <a href="#type-ap_sta_connected_config">ap_sta_connected_config()</a> | <a href="#type-ap_sta_disconnected_config">ap_sta_disconnected_config()</a> | <a href="#type-ap_sta_ip_assigned_config">ap_sta_ip_assigned_config()</a>
+</code></pre>
+</section>
+<section id="ap-max-connections-config">
+<h3><a name="type-ap_max_connections_config">ap_max_connections_config()</a><a class="headerlink" href="#ap-max-connections-config" title="Link to this heading"></a></h3>
+<pre><code>
+ap_max_connections_config() = {ap_max_connections, non_neg_integer()}
+</code></pre>
+</section>
+<section id="ap-ssid-hidden-config">
+<h3><a name="type-ap_ssid_hidden_config">ap_ssid_hidden_config()</a><a class="headerlink" href="#ap-ssid-hidden-config" title="Link to this heading"></a></h3>
+<pre><code>
+ap_ssid_hidden_config() = {ap_ssid_hidden, boolean()}
+</code></pre>
+</section>
+<section id="ap-sta-connected-config">
+<h3><a name="type-ap_sta_connected_config">ap_sta_connected_config()</a><a class="headerlink" href="#ap-sta-connected-config" title="Link to this heading"></a></h3>
+<pre><code>
+ap_sta_connected_config() = {sta_connected, fun((<a href="#type-mac">mac()</a>) -&gt; term())}
+</code></pre>
+</section>
+<section id="ap-sta-disconnected-config">
+<h3><a name="type-ap_sta_disconnected_config">ap_sta_disconnected_config()</a><a class="headerlink" href="#ap-sta-disconnected-config" title="Link to this heading"></a></h3>
+<pre><code>
+ap_sta_disconnected_config() = {sta_disconnected, fun((<a href="#type-mac">mac()</a>) -&gt; term())}
+</code></pre>
+</section>
+<section id="ap-sta-ip-assigned-config">
+<h3><a name="type-ap_sta_ip_assigned_config">ap_sta_ip_assigned_config()</a><a class="headerlink" href="#ap-sta-ip-assigned-config" title="Link to this heading"></a></h3>
+<pre><code>
+ap_sta_ip_assigned_config() = {sta_ip_assigned, fun((<a href="#type-ipv4_address">ipv4_address()</a>) -&gt; term())}
+</code></pre>
+</section>
+<section id="ap-started-config">
+<h3><a name="type-ap_started_config">ap_started_config()</a><a class="headerlink" href="#ap-started-config" title="Link to this heading"></a></h3>
+<pre><code>
+ap_started_config() = {ap_started, fun(() -&gt; term())}
+</code></pre>
+</section>
+<section id="db">
+<h3><a name="type-db">db()</a><a class="headerlink" href="#db" title="Link to this heading"></a></h3>
+<pre><code>
+db() = integer()
+</code></pre>
+</section>
+<section id="dhcp-hostname-config">
+<h3><a name="type-dhcp_hostname_config">dhcp_hostname_config()</a><a class="headerlink" href="#dhcp-hostname-config" title="Link to this heading"></a></h3>
+<pre><code>
+dhcp_hostname_config() = {dhcp_hostname, string() | binary()}
+</code></pre>
+</section>
+<section id="ghz24-channel">
+<h3><a name="type-ghz24_channel">ghz24_channel()</a><a class="headerlink" href="#ghz24-channel" title="Link to this heading"></a></h3>
+<pre><code>
+ghz24_channel() = 1..14
+</code></pre>
+<p>This is the global 2.4 Ghz WiFI channel range, check your local jurisdiction for allowed channels in your geographic region.</p>
+</section>
+<section id="ghz5-160mhz-channel">
+<h3><a name="type-ghz5_160mhz_channel">ghz5_160mhz_channel()</a><a class="headerlink" href="#ghz5-160mhz-channel" title="Link to this heading"></a></h3>
+<pre><code>
+ghz5_160mhz_channel() = 50 | 82 | 114 | 163
+</code></pre>
+<p>This is the global 5 Ghz WiFI channel range when using 160Mhz bandwidth channels, check your local jurisdiction for allowed channels in your geographic region.</p>
+</section>
+<section id="ghz5-20mhz-channel">
+<h3><a name="type-ghz5_20mhz_channel">ghz5_20mhz_channel()</a><a class="headerlink" href="#ghz5-20mhz-channel" title="Link to this heading"></a></h3>
+<pre><code>
+ghz5_20mhz_channel() = 32 | 36 | 40 | 44 | 48 | 52 | 56 | 60 | 64 | 68 | 96 | 104 | 108 | 112 | 116 | 120 | 122 | 128 | 132 | 136 | 140 | 144 | 149 | 153 | 157 | 161 | 165 | 169 | 173 | 177
+</code></pre>
+<p>This is the global 5 Ghz WiFI channel range when using 20Mhz bandwidth channels, check your local jurisdiction for allowed channels in your geographic region.</p>
+</section>
+<section id="ghz5-40mhz-channel">
+<h3><a name="type-ghz5_40mhz_channel">ghz5_40mhz_channel()</a><a class="headerlink" href="#ghz5-40mhz-channel" title="Link to this heading"></a></h3>
+<pre><code>
+ghz5_40mhz_channel() = 38 | 46 | 54 | 62 | 102 | 110 | 118 | 126 | 134 | 142 | 151 | 159 | 167 | 175
+</code></pre>
+<p>This is the global 5 Ghz WiFI channel range when using 40Mhz bandwidth channels, check your local jurisdiction for allowed channels in your geographic region.</p>
+</section>
+<section id="ghz5-80mhz-channel">
+<h3><a name="type-ghz5_80mhz_channel">ghz5_80mhz_channel()</a><a class="headerlink" href="#ghz5-80mhz-channel" title="Link to this heading"></a></h3>
+<pre><code>
+ghz5_80mhz_channel() = 42 | 58 | 74 | 90 | 106 | 122 | 138 | 155 | 171
+</code></pre>
+<p>This is the global 5 Ghz WiFI channel range when using 80Mhz bandwidth channels, check your local jurisdiction for allowed channels in your geographic region.</p>
+</section>
+<section id="ip-info">
+<h3><a name="type-ip_info">ip_info()</a><a class="headerlink" href="#ip-info" title="Link to this heading"></a></h3>
+<pre><code>
+ip_info() = <a href="#type-ipv4_info">ipv4_info()</a>
+</code></pre>
+</section>
+<section id="ipv4-address">
+<h3><a name="type-ipv4_address">ipv4_address()</a><a class="headerlink" href="#ipv4-address" title="Link to this heading"></a></h3>
+<pre><code>
+ipv4_address() = {<a href="#type-octet">octet()</a>, <a href="#type-octet">octet()</a>, <a href="#type-octet">octet()</a>, <a href="#type-octet">octet()</a>}
+</code></pre>
+</section>
+<section id="ipv4-info">
+<h3><a name="type-ipv4_info">ipv4_info()</a><a class="headerlink" href="#ipv4-info" title="Link to this heading"></a></h3>
+<pre><code>
+ipv4_info() = {IPAddress::<a href="#type-ipv4_address">ipv4_address()</a>, NetMask::<a href="#type-ipv4_address">ipv4_address()</a>, Gateway::<a href="#type-ipv4_address">ipv4_address()</a>}
+</code></pre>
+</section>
+<section id="mac">
+<h3><a name="type-mac">mac()</a><a class="headerlink" href="#mac" title="Link to this heading"></a></h3>
+<pre><code>
+mac() = binary()
+</code></pre>
+</section>
+<section id="network-config">
+<h3><a name="type-network_config">network_config()</a><a class="headerlink" href="#network-config" title="Link to this heading"></a></h3>
+<pre><code>
+network_config() = [<a href="#type-sta_config">sta_config()</a> | <a href="#type-ap_config">ap_config()</a> | <a href="#type-sntp_config">sntp_config()</a>]
+</code></pre>
+</section>
+<section id="octet">
+<h3><a name="type-octet">octet()</a><a class="headerlink" href="#octet" title="Link to this heading"></a></h3>
+<pre><code>
+octet() = 0..255
+</code></pre>
+</section>
+<section id="psk-config">
+<h3><a name="type-psk_config">psk_config()</a><a class="headerlink" href="#psk-config" title="Link to this heading"></a></h3>
+<pre><code>
+psk_config() = {psk, string() | binary()}
+</code></pre>
+</section>
+<section id="sntp-config">
+<h3><a name="type-sntp_config">sntp_config()</a><a class="headerlink" href="#sntp-config" title="Link to this heading"></a></h3>
+<pre><code>
+sntp_config() = {sntp, [<a href="#type-sntp_config_property">sntp_config_property()</a>]}
+</code></pre>
+</section>
+<section id="sntp-config-property">
+<h3><a name="type-sntp_config_property">sntp_config_property()</a><a class="headerlink" href="#sntp-config-property" title="Link to this heading"></a></h3>
+<pre><code>
+sntp_config_property() = <a href="#type-sntp_host_config">sntp_host_config()</a> | <a href="#type-sntp_synchronized_config">sntp_synchronized_config()</a>
+</code></pre>
+</section>
+<section id="sntp-host-config">
+<h3><a name="type-sntp_host_config">sntp_host_config()</a><a class="headerlink" href="#sntp-host-config" title="Link to this heading"></a></h3>
+<pre><code>
+sntp_host_config() = {host, string() | binary()}
+</code></pre>
+</section>
+<section id="sntp-synchronized-config">
+<h3><a name="type-sntp_synchronized_config">sntp_synchronized_config()</a><a class="headerlink" href="#sntp-synchronized-config" title="Link to this heading"></a></h3>
+<pre><code>
+sntp_synchronized_config() = {synchronized, fun(({non_neg_integer(), non_neg_integer()}) -&gt; term())}
+</code></pre>
+</section>
+<section id="ssid-config">
+<h3><a name="type-ssid_config">ssid_config()</a><a class="headerlink" href="#ssid-config" title="Link to this heading"></a></h3>
+<pre><code>
+ssid_config() = {ssid, string() | binary()}
+</code></pre>
+</section>
+<section id="sta-config">
+<h3><a name="type-sta_config">sta_config()</a><a class="headerlink" href="#sta-config" title="Link to this heading"></a></h3>
+<pre><code>
+sta_config() = {sta, [<a href="#type-sta_config_property">sta_config_property()</a>]}
+</code></pre>
+</section>
+<section id="sta-config-property">
+<h3><a name="type-sta_config_property">sta_config_property()</a><a class="headerlink" href="#sta-config-property" title="Link to this heading"></a></h3>
+<pre><code>
+sta_config_property() = <a href="#type-ssid_config">ssid_config()</a> | <a href="#type-psk_config">psk_config()</a> | <a href="#type-dhcp_hostname_config">dhcp_hostname_config()</a> | <a href="#type-sta_connected_config">sta_connected_config()</a> | <a href="#type-sta_disconnected_config">sta_disconnected_config()</a> | <a href="#type-sta_got_ip_config">sta_got_ip_config()</a>
+</code></pre>
+</section>
+<section id="sta-connected-config">
+<h3><a name="type-sta_connected_config">sta_connected_config()</a><a class="headerlink" href="#sta-connected-config" title="Link to this heading"></a></h3>
+<pre><code>
+sta_connected_config() = {connected, fun(() -&gt; term())}
+</code></pre>
+</section>
+<section id="sta-disconnected-config">
+<h3><a name="type-sta_disconnected_config">sta_disconnected_config()</a><a class="headerlink" href="#sta-disconnected-config" title="Link to this heading"></a></h3>
+<pre><code>
+sta_disconnected_config() = {disconnected, fun(() -&gt; term())}
+</code></pre>
+</section>
+<section id="sta-got-ip-config">
+<h3><a name="type-sta_got_ip_config">sta_got_ip_config()</a><a class="headerlink" href="#sta-got-ip-config" title="Link to this heading"></a></h3>
+<pre><code>
+sta_got_ip_config() = {got_ip, fun((<a href="#type-ip_info">ip_info()</a>) -&gt; term())}
+</code></pre>
+</section>
+<section id="wifi-channel">
+<h3><a name="type-wifi_channel">wifi_channel()</a><a class="headerlink" href="#wifi-channel" title="Link to this heading"></a></h3>
+<pre><code>
+wifi_channel() = <a href="#type-ghz24_channel">ghz24_channel()</a> | <a href="#type-ghz5_20mhz_channel">ghz5_20mhz_channel()</a> | <a href="#type-ghz5_40mhz_channel">ghz5_40mhz_channel()</a> | <a href="#type-ghz5_80mhz_channel">ghz5_80mhz_channel()</a> | <a href="#type-ghz5_160mhz_channel">ghz5_160mhz_channel()</a>
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#sta_rssi-0">sta_rssi/0</a></td><td>    Get the rssi information of AP to which the device is associated with.</td></tr><tr><td valign="top"><a href="#start-1">start/1</a></td><td>    Start a network interface.</td></tr><tr><td valign="top"><a href="#start_link-1">start_link/1</a></td><td></td></tr><tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>    Stop a network interface.</td></tr><tr><td valign="top"><a href="#wait_for_ap-0">wait_for_ap/0</a></td><td>    Equivalent to wait_for_ap(15000).</td></tr><tr><td valign="top"><a href="#wait_for_ap-1">wait_for_ap/1</a></td><td>    Equivalent to wait_for_ap([], Timeout) or wait_for_ap(StaConfig, 15000).</td></tr><tr><td valign="top"><a href="#wait_for_ap-2">wait_for_ap/2</a></td><td>    Start a network interface in access point mode and wait the AP to be
+up and running.</td></tr><tr><td valign="top"><a href="#wait_for_sta-0">wait_for_sta/0</a></td><td>    Equivalent to wait_for_sta(15000).</td></tr><tr><td valign="top"><a href="#wait_for_sta-1">wait_for_sta/1</a></td><td>    Equivalent to wait_for_sta([], Timeout) or wait_for_sta(StaConfig, 15000).</td></tr><tr><td valign="top"><a href="#wait_for_sta-2">wait_for_sta/2</a></td><td>    Start a network interface in station mode and wait for a connection to be established.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="sta_rssi-0"></a></p>
+<section id="sta-rssi-0">
+<h3>sta_rssi/0<a class="headerlink" href="#sta-rssi-0" title="Link to this heading"></a></h3>
+<pre><code>
+sta_rssi() -&gt; {ok, Rssi::<a href="#type-db">db()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p>returns: {ok, Rssi} in decibels, or {error, Reason}.</p>
+<p>Get the rssi information of AP to which the device is associated with.</p>
+<p><a name="start-1"></a></p>
+</section>
+<section id="start-1">
+<h3>start/1<a class="headerlink" href="#start-1" title="Link to this heading"></a></h3>
+<pre><code>
+start(Config::<a href="#type-network_config">network_config()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Config</span></code>: The network configuration<br /></p>
+<p>returns: ok, if the network interface was started, or {error, Reason} if
+a failure occurred (e.g., due to malformed network configuration).</p>
+<p>Start a network interface.</p>
+<p>This function will start a network interface, which will attempt to
+connect to an AP endpoint in the background.  Specify callback
+functions to receive definitive
+information that the connection succeeded.  See the AtomVM Network
+FSM Programming Manual for more information.</p>
+<p><a name="start_link-1"></a></p>
+</section>
+<section id="start-link-1">
+<h3>start_link/1<a class="headerlink" href="#start-link-1" title="Link to this heading"></a></h3>
+<pre><code>
+start_link(Config::<a href="#type-network_config">network_config()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><a name="stop-0"></a></p>
+</section>
+<section id="stop-0">
+<h3>stop/0<a class="headerlink" href="#stop-0" title="Link to this heading"></a></h3>
+<pre><code>
+stop() -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p>returns: ok, if the network interface was stopped, or {error, Reason} if
+a failure occurred.</p>
+<p>Stop a network interface.</p>
+<p><a name="wait_for_ap-0"></a></p>
+</section>
+<section id="wait-for-ap-0">
+<h3>wait_for_ap/0<a class="headerlink" href="#wait-for-ap-0" title="Link to this heading"></a></h3>
+<pre><code>
+wait_for_ap() -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p>Equivalent to wait_for_ap(15000).</p>
+<p><a name="wait_for_ap-1"></a></p>
+</section>
+<section id="wait-for-ap-1">
+<h3>wait_for_ap/1<a class="headerlink" href="#wait-for-ap-1" title="Link to this heading"></a></h3>
+<pre><code>
+wait_for_ap(TimeoutOrApConfig::non_neg_integer() | [<a href="#type-ap_config_property">ap_config_property()</a>]) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">TimeoutOrApConfig</span></code>: The AP network configuration or timeout in ms.<br /></p>
+<p>Equivalent to wait_for_ap([], Timeout) or wait_for_ap(StaConfig, 15000).</p>
+<p><a name="wait_for_ap-2"></a></p>
+</section>
+<section id="wait-for-ap-2">
+<h3>wait_for_ap/2<a class="headerlink" href="#wait-for-ap-2" title="Link to this heading"></a></h3>
+<pre><code>
+wait_for_ap(ApConfig::[<a href="#type-ap_config_property">ap_config_property()</a>], Timeout::non_neg_integer()) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ApConfig</span></code>: The AP network configuration<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: amount of time in milliseconds to wait for a connection<br /></p>
+<p>returns: ok, when the network has started the AP, or {error, Reason} if
+a failure occurred (e.g., due to malformed network configuration).</p>
+<p>Start a network interface in access point mode and wait the AP to be
+up and running</p>
+<p>This function will start a network interface in AP mode, and will wait
+until the network is up and ready to be connected.  This is a convenience function,
+for applications that do not need to be notified of connectivity
+changes in the network.</p>
+<p><a name="wait_for_sta-0"></a></p>
+</section>
+<section id="wait-for-sta-0">
+<h3>wait_for_sta/0<a class="headerlink" href="#wait-for-sta-0" title="Link to this heading"></a></h3>
+<pre><code>
+wait_for_sta() -&gt; {ok, <a href="#type-ip_info">ip_info()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p>Equivalent to wait_for_sta(15000).</p>
+<p><a name="wait_for_sta-1"></a></p>
+</section>
+<section id="wait-for-sta-1">
+<h3>wait_for_sta/1<a class="headerlink" href="#wait-for-sta-1" title="Link to this heading"></a></h3>
+<pre><code>
+wait_for_sta(TimeoutOrStaConfig::non_neg_integer() | [<a href="#type-sta_config_property">sta_config_property()</a>]) -&gt; {ok, <a href="#type-ip_info">ip_info()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">TimeoutOrStaConfig</span></code>: The STA network configuration or timeout in ms.<br /></p>
+<p>Equivalent to wait_for_sta([], Timeout) or wait_for_sta(StaConfig, 15000).</p>
+<p><a name="wait_for_sta-2"></a></p>
+</section>
+<section id="wait-for-sta-2">
+<h3>wait_for_sta/2<a class="headerlink" href="#wait-for-sta-2" title="Link to this heading"></a></h3>
+<pre><code>
+wait_for_sta(StaConfig::[<a href="#type-sta_config_property">sta_config_property()</a>], Timeout::non_neg_integer()) -&gt; {ok, <a href="#type-ip_info">ip_info()</a>} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">StaConfig</span></code>: The STA network configuration<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: amount of time in milliseconds to wait for a connection<br /></p>
+<p>returns: {ok, IpInfo}, if the network interface was started, or {error, Reason} if
+a failure occurred (e.g., due to malformed network configuration).</p>
+<p>Start a network interface in station mode and wait for a connection to be established</p>
+<p>This function will start a network interface in station mode, and will wait
+for a connection to be established.  This is a convenience function,
+for applications that do not need to be notified of connectivity
+changes in the network.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ledc.html" class="btn btn-neutral float-left" title="Module ledc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="network_fsm.html" class="btn btn-neutral float-right" title="Module network_fsm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      v0.6.4
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/v0.6.4/pdf/AtomVM-v0.6.4.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.4/epub/AtomVM-v0.6.4.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

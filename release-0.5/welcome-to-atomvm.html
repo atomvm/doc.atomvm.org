@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to AtomVM! &mdash; AtomVM 0.5.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started Guide" href="getting-started-guide.html" />
+    <link rel="prev" title="Welcome to AtomVM!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> AtomVM
+          </a>
+              <div class="version">
+                0.5.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Welcome to AtomVM!</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-atomvm">What is AtomVM?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-erlang-elixir">Why Erlang/Elixir?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-philosophy">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#licensing">Licensing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-code">Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#where-to-go-from-here">Where to go from here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-programs.html">Example Programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Welcome to AtomVM!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/welcome-to-atomvm.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+ Copyright 2021-2022 Fred Dushin <fred@dushin.net>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="welcome-to-atomvm">
+<h1>Welcome to AtomVM!<a class="headerlink" href="#welcome-to-atomvm" title="Permalink to this headline"></a></h1>
+<p>Welcome to AtomVM, the Erlang virtual machine for IoT devices!</p>
+<section id="what-is-atomvm">
+<h2>What is AtomVM?<a class="headerlink" href="#what-is-atomvm" title="Permalink to this headline"></a></h2>
+<p>AtomVM is a ground-up implementation of the <a class="reference external" href="https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)">Bogdan Erlang Abstract Machine</a> (a.k.a the BEAM) and is designed specifically to run on small systems, such as the <a class="reference external" href="https://www.espressif.com">Espressif</a> <a class="reference external" href="https://www.espressif.com/en/products/socs/esp32">ESP32</a> and <a class="reference external" href="https://www.st.com/content/st_com/en.html">ST Microelectronics</a> <a class="reference external" href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html">STM32</a> micro-controllers.  It allows developers to implement IoT applications in the Erlang or Elixir programming languages and to deploy those applications onto tiny devices.  (Users may also target their applications for fully-fledged operating systems, such as Linux, FreeBSD, and MacOS, though in most cases deployment to traditional computers is done for development and testing purposes, only.)</p>
+<p>AtomVM features include:</p>
+<ul class="simple">
+<li><p>An Erlang runtime, capable of executing bytecode instructions in compiled BEAM files;</p></li>
+<li><p>Support for all the major Erlang and Elixir types, including integers, strings, lists, maps, binaries, Enums, and more;</p></li>
+<li><p>A memory-managed environment, with efficient garbage collection and shared data, where permissible;</p></li>
+<li><p>Support for truly functional programming languages, making your programs easier to understand and debug;</p></li>
+<li><p>A concurrency-oriented platform, allowing users to spawn, monitor, and communicate with lightweight processes, making it easy for your IoT devices to perform tasks simultaneously;</p></li>
+<li><p>A rich set of networking APIs, for writing robust IoT applications that communicate over IP networks;</p></li>
+<li><p>A rich set of APIs for interfacing with standard device protocols, such as GPIO, I2C, SPI, and UART;</p></li>
+<li><p>And more!</p></li>
+</ul>
+</section>
+<section id="why-erlang-elixir">
+<h2>Why Erlang/Elixir?<a class="headerlink" href="#why-erlang-elixir" title="Permalink to this headline"></a></h2>
+<p>The environments on which AtomVM applications are deployed are significantly more constrained than typical programming environments.  For example, the typical ESP32 ships with 520K of RAM and 4MB of flash storage, roughly the specs of a mind 1980s desktop computer.  Moreover, most micro-controller environments do not support native POSIX APIs for interfacing with an operating system, and in many cases, common operating system abstractions, such as processes, threads, or files, are simply unavailable.</p>
+<p>However, because the BEAM is provides a pre-emptive multitasking environment for your applications, many of the common operating system abstractions, particularly involving threading and concurrency, are simply not needed.  As concurrently-oriented languages, Erlang and Elixir support lightweight “processes”, with message passing as the mechanism for inter-(erlang)process communication, pre-emptive multi-tasking, and per-process heap allocation and garbage collection.</p>
+<p>In many ways, the programming model for Erlang and Elixir is closer to that of an operating system and multiple concurrent processes running on it, where operating system processes are single execution units, communicate through message passing (signals), and don’t share any state with one another.  Contrast that with most popular programming languages today (C, C++, Java, Python, etc), which use threading abstractions to achieve concurrency within a single memory space, and which subsequently require close attention to cases in which multiple CPUs operate on a shared region of memory, requiring threads, locks, semaphores, and so forth.</p>
+<p>As an implementation of the BEAM, AtomVM provides a modern, memory managed, and concurrency-oriented environment for developing applications on small devices.  This makes writing concurrent code for micro-controllers (e.g., and application that reads sensor data, services HTTP requests, and updates the system clock, all at the same time) incredibly simple and natural – far easier than writing programs that use concurrency than C, C++, or even, for example, Micropython.</p>
+<p>In addition, because it is targeted for micro-controller environments, AtomVM provides interfaces for integrating with features commonly seen on micro-controllers, such as GPIO pins, analog-to-digital conversion, and common industry peripheral interfaces, such as I2C, SPI, and UART, making AtomVM a rich platform for developing IoT applications.</p>
+<p>Finally, one of the exciting aspects about modern micro-controllers, such as the ESP32, is their integration with modern networking technologies, such as WiFi and Bluetooth.  AtomVM leverages Erlang and Elixir’s natural affinity with telecommunications technologies to open up further possibilities for developing networked and wireless IoT devices.</p>
+<p>We think you will agree that AtomVM provides a compelling environment not only for Erlang and Elixir development, but also as a home for interesting and fun IoT projects.</p>
+</section>
+<section id="design-philosophy">
+<h2>Design Philosophy<a class="headerlink" href="#design-philosophy" title="Permalink to this headline"></a></h2>
+<p>AtomVM is designed from the start to run on small, cheap embedded devices, where system resources (memory, cpu, storage) are tightly constrained.  The smallest environment in which AtomVM runs has around 512k of addressable RAM, some of which is used by the underlying runtime (FreeRTOS), and some of which is used by the AtomVM virtual machine, itself, leaving even less RAM for your own applications.  Where there is a tradeoff between memory consumption and performance, minimizing memory consumption (and heap fragmentation) always wins.</p>
+<p>From the developer’s point of view, AtomVM is designed to make use of the existing tool chain from the Erlang and Elixir ecosystems.  This includes the Erlang and Elixir compilers, which will compile Erlang and Elixir source code to BEAM bytecode.  Where possible, AtomVM makes use of existing tool chains to reduce the amount of unnecessary features in AtomVM, thus reducing complexity, as well as the amount of system resources in use by the runtime.  AtomVM is designed to be as small and lean as possible, providing as many resources to user applications, as possible.</p>
+</section>
+<section id="licensing">
+<h2>Licensing<a class="headerlink" href="#licensing" title="Permalink to this headline"></a></h2>
+<p>AtomVM is licensed under the terms of the <a class="reference external" href="https://www.apache.org/licenses/LICENSE-2.0">Apache2</a> and <a class="reference external" href="https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html">LGPLv2</a> licenses.</p>
+</section>
+<section id="source-code">
+<h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline"></a></h2>
+<p>The <a class="reference external" href="https://github.com/atomvm/AtomVM">AtomVM Github Repository</a> contains the AtomVM source code, including the AtomVM virtual machine and core libraries.  The AtomVM <a class="reference internal" href="build-instructions.html"><span class="doc std std-doc">Build Instructions</span></a> contains instructions for building AtomVM for Generic UNIX, ESP32, and STM32 platforms.</p>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline"></a></h2>
+<p>The AtomVM community welcomes contributions tot he AtomVM code base and upstream and downstream projects.  Please see the <a class="reference internal" href="CONTRIBUTING.html"><span class="doc std std-doc">contributing guidelines</span></a> for information about how to contribute.</p>
+<p>AtomVM developers can be reached on the #AtomVM discord server.</p>
+</section>
+<section id="where-to-go-from-here">
+<h2>Where to go from here<a class="headerlink" href="#where-to-go-from-here" title="Permalink to this headline"></a></h2>
+<p>The following guides provide more detailed information about getting started with the AtomVM virtual machine, how to develop and deploy applications, and implementation information, for anyone interested in getting more involved:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="getting-started-guide.html"><span class="doc std std-doc">Getting Started Guide</span></a></p></li>
+<li><p><a class="reference internal" href="programmers-guide.html"><span class="doc std std-doc">Programmers Guide</span></a></p></li>
+<li><p><a class="reference internal" href="example-programs.html"><span class="doc std std-doc">Example Programs</span></a></p></li>
+<li><p><a class="reference internal" href="build-instructions.html"><span class="doc std std-doc">Build Instructions</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to AtomVM!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getting-started-guide.html" class="btn btn-neutral float-right" title="Getting Started Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2022, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

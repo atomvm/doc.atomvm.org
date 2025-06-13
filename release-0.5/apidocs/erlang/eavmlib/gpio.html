@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module gpio</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module gpio</h1>
+<ul class="index"><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+
+
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-direction">direction()</a></h3>
+<p><tt>direction() = input | output | output_od</tt></p>
+
+
+<h3 class="typedecl"><a name="type-gpio">gpio()</a></h3>
+<p><tt>gpio() = pid()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-high_level">high_level()</a></h3>
+<p><tt>high_level() = high | 1</tt></p>
+
+
+<h3 class="typedecl"><a name="type-level">level()</a></h3>
+<p><tt>level() = <a href="#type-low_level">low_level()</a> | <a href="#type-high_level">high_level()</a></tt></p>
+
+
+<h3 class="typedecl"><a name="type-low_level">low_level()</a></h3>
+<p><tt>low_level() = low | 0</tt></p>
+
+
+<h3 class="typedecl"><a name="type-pin">pin()</a></h3>
+<p><tt>pin() = non_neg_integer()</tt></p>
+
+
+<h3 class="typedecl"><a name="type-pull">pull()</a></h3>
+<p><tt>pull() = up | down | up_down | floating</tt></p>
+
+
+<h3 class="typedecl"><a name="type-trigger">trigger()</a></h3>
+<p><tt>trigger() = none | rising | falling | both | low | high</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#attach_interrupt-2">attach_interrupt/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#deep_sleep_hold_dis-0">deep_sleep_hold_dis/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#deep_sleep_hold_en-0">deep_sleep_hold_en/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#detach_interrupt-1">detach_interrupt/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#digital_read-1">digital_read/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#digital_write-2">digital_write/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#hold_dis-1">hold_dis/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#hold_en-1">hold_en/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#open-0">open/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#read-2">read/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#remove_int-2">remove_int/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#set_direction-3">set_direction/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#set_int-3">set_int/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#set_level-3">set_level/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#set_pin_mode-2">set_pin_mode/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#set_pin_pull-2">set_pin_pull/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#start-0">start/0</a></td><td></td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="attach_interrupt-2">attach_interrupt/2</a></h3>
+<div class="spec">
+<p><tt>attach_interrupt(GPIONum, Mode) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="deep_sleep_hold_dis-0">deep_sleep_hold_dis/0</a></h3>
+<div class="spec">
+<p><tt>deep_sleep_hold_dis() -&gt; ok</tt><br></p>
+</div>
+
+<h3 class="function"><a name="deep_sleep_hold_en-0">deep_sleep_hold_en/0</a></h3>
+<div class="spec">
+<p><tt>deep_sleep_hold_en() -&gt; ok</tt><br></p>
+</div>
+
+<h3 class="function"><a name="detach_interrupt-1">detach_interrupt/1</a></h3>
+<div class="spec">
+<p><tt>detach_interrupt(GPIONum) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="digital_read-1">digital_read/1</a></h3>
+<div class="spec">
+<p><tt>digital_read(GPIONum::<a href="#type-pin">pin()</a>) -&gt; high | low</tt><br></p>
+</div>
+
+<h3 class="function"><a name="digital_write-2">digital_write/2</a></h3>
+<div class="spec">
+<p><tt>digital_write(GPIONum::<a href="#type-pin">pin()</a>, Level::<a href="#type-level">level()</a>) -&gt; ok | error</tt><br></p>
+</div>
+
+<h3 class="function"><a name="hold_dis-1">hold_dis/1</a></h3>
+<div class="spec">
+<p><tt>hold_dis(GPIONum::<a href="#type-pin">pin()</a>) -&gt; ok | error</tt><br></p>
+</div>
+
+<h3 class="function"><a name="hold_en-1">hold_en/1</a></h3>
+<div class="spec">
+<p><tt>hold_en(GPIONum::<a href="#type-pin">pin()</a>) -&gt; ok | error</tt><br></p>
+</div>
+
+<h3 class="function"><a name="open-0">open/0</a></h3>
+<div class="spec">
+<p><tt>open() -&gt; <a href="#type-gpio">gpio()</a></tt><br></p>
+</div>
+
+<h3 class="function"><a name="read-2">read/2</a></h3>
+<div class="spec">
+<p><tt>read(GPIO::<a href="#type-gpio">gpio()</a>, GPIONum::<a href="#type-pin">pin()</a>) -&gt; high | low</tt><br></p>
+</div>
+
+<h3 class="function"><a name="remove_int-2">remove_int/2</a></h3>
+<div class="spec">
+<p><tt>remove_int(GPIO::<a href="#type-gpio">gpio()</a>, GPIONum::<a href="#type-pin">pin()</a>) -&gt; ok | error</tt><br></p>
+</div>
+
+<h3 class="function"><a name="set_direction-3">set_direction/3</a></h3>
+<div class="spec">
+<p><tt>set_direction(GPIO::<a href="#type-gpio">gpio()</a>, GPIONum::<a href="#type-pin">pin()</a>, Direction::<a href="#type-direction">direction()</a>) -&gt; ok | error</tt><br></p>
+</div>
+
+<h3 class="function"><a name="set_int-3">set_int/3</a></h3>
+<div class="spec">
+<p><tt>set_int(GPIO::<a href="#type-gpio">gpio()</a>, GPIONum::<a href="#type-pin">pin()</a>, Trigger::<a href="#type-trigger">trigger()</a>) -&gt; ok | error</tt><br></p>
+</div>
+
+<h3 class="function"><a name="set_level-3">set_level/3</a></h3>
+<div class="spec">
+<p><tt>set_level(GPIO::<a href="#type-gpio">gpio()</a>, GPIONum::<a href="#type-pin">pin()</a>, Level::<a href="#type-level">level()</a>) -&gt; ok | error</tt><br></p>
+</div>
+
+<h3 class="function"><a name="set_pin_mode-2">set_pin_mode/2</a></h3>
+<div class="spec">
+<p><tt>set_pin_mode(GPIONum::<a href="#type-pin">pin()</a>, Direction::<a href="#type-direction">direction()</a>) -&gt; ok | error</tt><br></p>
+</div>
+
+<h3 class="function"><a name="set_pin_pull-2">set_pin_pull/2</a></h3>
+<div class="spec">
+<p><tt>set_pin_pull(GPIONum::<a href="#type-pin">pin()</a>, Pull::<a href="#type-pull">pull()</a>) -&gt; ok | error</tt><br></p>
+</div>
+
+<h3 class="function"><a name="start-0">start/0</a></h3>
+<div class="spec">
+<p><tt>start() -&gt; <a href="#type-gpio">gpio()</a></tt><br></p>
+</div>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

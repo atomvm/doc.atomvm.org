@@ -1,0 +1,1406 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module erlang &mdash; AtomVM 0.6.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/estdlib/erlang.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7c79bee4"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module erts_debug" href="erts_debug.html" />
+    <link rel="prev" title="Module crypto" href="crypto.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module erlang</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-erlang">
+<h1>Module erlang<a class="headerlink" href="#module-erlang" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description"><span class="xref myst">Description</span></a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>An implementation of the Erlang/OTP erlang module, for functions
+that are not already defined as NIFs.</p>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="atom-encoding">
+<h3><a name="type-atom_encoding">atom_encoding()</a><a class="headerlink" href="#atom-encoding" title="Link to this heading"></a></h3>
+<pre><code>
+atom_encoding() = latin1 | utf8 | unicode
+</code></pre>
+</section>
+<section id="demonitor-option">
+<h3><a name="type-demonitor_option">demonitor_option()</a><a class="headerlink" href="#demonitor-option" title="Link to this heading"></a></h3>
+<pre><code>
+demonitor_option() = flush | {flush, boolean()} | info | {info, boolean()}
+</code></pre>
+</section>
+<section id="float-format-option">
+<h3><a name="type-float_format_option">float_format_option()</a><a class="headerlink" href="#float-format-option" title="Link to this heading"></a></h3>
+<pre><code>
+float_format_option() = {decimals, Decimals::0..57} | {scientific, Decimals::0..57} | compact
+</code></pre>
+</section>
+<section id="heap-growth-strategy">
+<h3><a name="type-heap_growth_strategy">heap_growth_strategy()</a><a class="headerlink" href="#heap-growth-strategy" title="Link to this heading"></a></h3>
+<pre><code>
+heap_growth_strategy() = bounded_free | minimum | fibonacci
+</code></pre>
+</section>
+<section id="mem-type">
+<h3><a name="type-mem_type">mem_type()</a><a class="headerlink" href="#mem-type" title="Link to this heading"></a></h3>
+<pre><code>
+mem_type() = binary
+</code></pre>
+</section>
+<section id="spawn-option">
+<h3><a name="type-spawn_option">spawn_option()</a><a class="headerlink" href="#spawn-option" title="Link to this heading"></a></h3>
+<pre><code>
+spawn_option() = {min_heap_size, pos_integer()} | {max_heap_size, pos_integer()} | {atomvm_heap_growth, <a href="#type-heap_growth_strategy">heap_growth_strategy()</a>} | link | monitor
+</code></pre>
+</section>
+<section id="time-unit">
+<h3><a name="type-time_unit">time_unit()</a><a class="headerlink" href="#time-unit" title="Link to this heading"></a></h3>
+<pre><code>
+time_unit() = second | millisecond | microsecond
+</code></pre>
+</section>
+<section id="timestamp">
+<h3><a name="type-timestamp">timestamp()</a><a class="headerlink" href="#timestamp" title="Link to this heading"></a></h3>
+<pre><code>
+timestamp() = {MegaSecs::non_neg_integer(), Secs::non_neg_integer(), MicroSecs::non_neg_integer}
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#apply-2">apply/2</a></td><td>    Returns the result of applying Function to Args.</td></tr><tr><td valign="top"><a href="#apply-3">apply/3</a></td><td>    Returns the result of applying Function in Module to Args.</td></tr><tr><td valign="top"><a href="#atom_to_binary-1">atom_to_binary/1</a></td><td>    Convert an atom to a binary, defaults to utf8.</td></tr><tr><td valign="top"><a href="#atom_to_binary-2">atom_to_binary/2</a></td><td>    Convert an atom to a binary.</td></tr><tr><td valign="top"><a href="#atom_to_list-1">atom_to_list/1</a></td><td>    Convert an atom to a string.</td></tr><tr><td valign="top"><a href="#binary_to_atom-1">binary_to_atom/1</a></td><td>    Convert a binary to atom, defaults to utf8.</td></tr><tr><td valign="top"><a href="#binary_to_atom-2">binary_to_atom/2</a></td><td>    Convert a binary to atom.</td></tr><tr><td valign="top"><a href="#binary_to_integer-1">binary_to_integer/1</a></td><td>    Parse the text in a given binary as an integer.</td></tr><tr><td valign="top"><a href="#binary_to_integer-2">binary_to_integer/2</a></td><td>    Parse the text in a given binary as an integer.</td></tr><tr><td valign="top"><a href="#binary_to_list-1">binary_to_list/1</a></td><td>    Convert a binary to a list of bytes.</td></tr><tr><td valign="top"><a href="#binary_to_term-1">binary_to_term/1</a></td><td>Decode a term that was previously encodes with <code>term_to_binary/1</code>
+This function should be mostly compatible with its Erlang/OTP counterpart.</td></tr><tr><td valign="top"><a href="#demonitor-1">demonitor/1</a></td><td>    Remove a monitor.</td></tr><tr><td valign="top"><a href="#demonitor-2">demonitor/2</a></td><td>    Remove a monitor, with options.</td></tr><tr><td valign="top"><a href="#display-1">display/1</a></td><td>    Print a term to stdout.</td></tr><tr><td valign="top"><a href="#erase-1">erase/1</a></td><td>    Erase a key from the process dictionary.</td></tr><tr><td valign="top"><a href="#exit-1">exit/1</a></td><td>    Raises an exception of class <code>exit</code> with reason <code>Reason</code>.</td></tr><tr><td valign="top"><a href="#exit-2">exit/2</a></td><td>    Send an exit signal to target process.</td></tr><tr><td valign="top"><a href="#float_to_binary-1">float_to_binary/1</a></td><td>    Convert a float to a binary.</td></tr><tr><td valign="top"><a href="#float_to_binary-2">float_to_binary/2</a></td><td>    Convert a float to a binary.</td></tr><tr><td valign="top"><a href="#float_to_list-1">float_to_list/1</a></td><td>    Convert a float to a string.</td></tr><tr><td valign="top"><a href="#float_to_list-2">float_to_list/2</a></td><td>    Convert a float to a string.</td></tr><tr><td valign="top"><a href="#fun_to_list-1">fun_to_list/1</a></td><td>    Create a string representing a function.</td></tr><tr><td valign="top"><a href="#function_exported-3">function_exported/3</a></td><td>    Determine if a function is exported.</td></tr><tr><td valign="top"><a href="#garbage_collect-0">garbage_collect/0</a></td><td>    Run a garbage collect in current process.</td></tr><tr><td valign="top"><a href="#garbage_collect-1">garbage_collect/1</a></td><td>    Run a garbage collect in a given process.</td></tr><tr><td valign="top"><a href="#get-1">get/1</a></td><td>    Return a value associated with a given key in the process dictionary.</td></tr><tr><td valign="top"><a href="#get_module_info-1">get_module_info/1</a></td><td>    Get info for a given module.</td></tr><tr><td valign="top"><a href="#get_module_info-2">get_module_info/2</a></td><td>    Get specific info for a given module.</td></tr><tr><td valign="top"><a href="#group_leader-0">group_leader/0</a></td><td>    Return the pid of the group leader of caller.</td></tr><tr><td valign="top"><a href="#group_leader-2">group_leader/2</a></td><td>Set the group leader for a given process.</td></tr><tr><td valign="top"><a href="#integer_to_binary-1">integer_to_binary/1</a></td><td>    Convert an integer to a binary.</td></tr><tr><td valign="top"><a href="#integer_to_binary-2">integer_to_binary/2</a></td><td>    Convert an integer to a binary.</td></tr><tr><td valign="top"><a href="#integer_to_list-1">integer_to_list/1</a></td><td>    Convert an integer to a string.</td></tr><tr><td valign="top"><a href="#integer_to_list-2">integer_to_list/2</a></td><td>    Convert an integer to a string.</td></tr><tr><td valign="top"><a href="#iolist_to_binary-1">iolist_to_binary/1</a></td><td>    Convert an IO list to binary.</td></tr><tr><td valign="top"><a href="#is_map-1">is_map/1</a></td><td>    Return <code>true</code> if <code>Map</code> is a map; <code>false</code>, otherwise.</td></tr><tr><td valign="top"><a href="#is_map_key-2">is_map_key/2</a></td><td>    Return <code>true</code> if <code>Key</code> is associated with a value in <code>Map</code>; <code>false</code>, otherwise.</td></tr><tr><td valign="top"><a href="#is_process_alive-1">is_process_alive/1</a></td><td>    Determine if a process is alive.</td></tr><tr><td valign="top"><a href="#link-1">link/1</a></td><td>    Link current process with a given process.</td></tr><tr><td valign="top"><a href="#list_to_atom-1">list_to_atom/1</a></td><td>    Convert a string into an atom.</td></tr><tr><td valign="top"><a href="#list_to_binary-1">list_to_binary/1</a></td><td>    Convert a list into a binary.</td></tr><tr><td valign="top"><a href="#list_to_existing_atom-1">list_to_existing_atom/1</a></td><td>    Convert a string into an atom.</td></tr><tr><td valign="top"><a href="#list_to_integer-1">list_to_integer/1</a></td><td>    Convert a string (list of characters) to integer.</td></tr><tr><td valign="top"><a href="#list_to_integer-2">list_to_integer/2</a></td><td>    Convert a string (list of characters) to integer in specified base.</td></tr><tr><td valign="top"><a href="#list_to_tuple-1">list_to_tuple/1</a></td><td>    Convert a list to a tuple with the same size.</td></tr><tr><td valign="top"><a href="#localtime-0">localtime/0</a></td><td>Return the current time and day for system local timezone.</td></tr><tr><td valign="top"><a href="#make_ref-0">make_ref/0</a></td><td>    Create a new reference.</td></tr><tr><td valign="top"><a href="#map_get-2">map_get/2</a></td><td>    Get the value in <code>Map</code> associated with <code>Key</code>, if it exists.</td></tr><tr><td valign="top"><a href="#map_size-1">map_size/1</a></td><td>Returns the size of (i.e., the number of entries in) the map.</td></tr><tr><td valign="top"><a href="#max-2">max/2</a></td><td>    Return the maximum value of two terms.</td></tr><tr><td valign="top"><a href="#md5-1">md5/1</a></td><td>    Computes the MD5 hash of an input binary, as defined by
+https://www.ietf.org/rfc/rfc1321.txt.</td></tr><tr><td valign="top"><a href="#memory-1">memory/1</a></td><td>    Return the amount of memory (in bytes) used of the specified type.</td></tr><tr><td valign="top"><a href="#min-2">min/2</a></td><td>    Return the minimum value of two terms.</td></tr><tr><td valign="top"><a href="#monitor-2">monitor/2</a></td><td>    Create a monitor on a process or on a port.</td></tr><tr><td valign="top"><a href="#monotonic_time-1">monotonic_time/1</a></td><td>    Return the monotonic time in the specified units.</td></tr><tr><td valign="top"><a href="#open_port-2">open_port/2</a></td><td>    Open a port.</td></tr><tr><td valign="top"><a href="#pid_to_list-1">pid_to_list/1</a></td><td>    Create a string representing a pid.</td></tr><tr><td valign="top"><a href="#process_flag-2">process_flag/2</a></td><td>    Set a flag for the current process.</td></tr><tr><td valign="top"><a href="#process_info-2">process_info/2</a></td><td>    Return process information.</td></tr><tr><td valign="top"><a href="#processes-0">processes/0</a></td><td>    Return a list of all current processes.</td></tr><tr><td valign="top"><a href="#put-2">put/2</a></td><td>    Store a value with a given key in the process dictionary.</td></tr><tr><td valign="top"><a href="#ref_to_list-1">ref_to_list/1</a></td><td>    Create a string representing a reference.</td></tr><tr><td valign="top"><a href="#register-2">register/2</a></td><td>    Register a name for a given process.</td></tr><tr><td valign="top"><a href="#send-2">send/2</a></td><td>    Send a message to a given process.</td></tr><tr><td valign="top"><a href="#send_after-3">send_after/3</a></td><td>    Send Msg to Dest after Time ms.</td></tr><tr><td valign="top"><a href="#spawn-1">spawn/1</a></td><td>    Create a new process.</td></tr><tr><td valign="top"><a href="#spawn-3">spawn/3</a></td><td>    Create a new process by calling exported Function from Module with Args.</td></tr><tr><td valign="top"><a href="#spawn_link-1">spawn_link/1</a></td><td>    Create a new process and link it.</td></tr><tr><td valign="top"><a href="#spawn_link-3">spawn_link/3</a></td><td>    Create a new process by calling exported Function from Module with Args
+and link it.</td></tr><tr><td valign="top"><a href="#spawn_opt-2">spawn_opt/2</a></td><td>    Create a new process.</td></tr><tr><td valign="top"><a href="#spawn_opt-4">spawn_opt/4</a></td><td>    Create a new process by calling exported Function from Module with Args.</td></tr><tr><td valign="top"><a href="#start_timer-3">start_timer/3</a></td><td>    Start a timer, and send {timeout, TimerRef, Msg} to Dest after
+Time ms, where TimerRef is the reference returned from this function.</td></tr><tr><td valign="top"><a href="#system_flag-2">system_flag/2</a></td><td>    Update system flags.</td></tr><tr><td valign="top"><a href="#system_info-1">system_info/1</a></td><td>    Return system information.</td></tr><tr><td valign="top"><a href="#system_time-1">system_time/1</a></td><td>    Get the current system time in provided unit.</td></tr><tr><td valign="top"><a href="#term_to_binary-1">term_to_binary/1</a></td><td>Encode a term to a binary that can later be decoded with <code>binary_to_term/1</code>.</td></tr><tr><td valign="top"><a href="#timestamp-0">timestamp/0</a></td><td>Return the timestamp in <code>{MegaSec, Sec, MicroSec}</code> format.</td></tr><tr><td valign="top"><a href="#universaltime-0">universaltime/0</a></td><td>Return the current time and day for UTC.</td></tr><tr><td valign="top"><a href="#unlink-1">unlink/1</a></td><td>    Unlink current process from a given process.</td></tr><tr><td valign="top"><a href="#unregister-1">unregister/1</a></td><td>    Lookup a process by name.</td></tr><tr><td valign="top"><a href="#whereis-1">whereis/1</a></td><td>    Lookup a process by name.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="apply-2"></a></p>
+<section id="apply-2">
+<h3>apply/2<a class="headerlink" href="#apply-2" title="Link to this heading"></a></h3>
+<pre><code>
+apply(Function::function(), Args::[term()]) -&gt; term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Function</span></code>: Function to call<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: Parameters to pass to function (max 6)<br /></p>
+<p>returns: Returns the result of Function(Args).</p>
+<p>Returns the result of applying Function to Args. The arity of the
+function is the length of Args. Example:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">              </span><span class="o">&gt;</span><span class="w"> </span><span class="kr">apply</span><span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">lists</span><span class="o">:</span><span class="n">reverse</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="kd">end,</span><span class="w"> </span><span class="p">[[</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">]]).</span>
+<span class="w">           </span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">]</span>
+<span class="w">           </span><span class="o">&gt;</span><span class="w"> </span><span class="kr">apply</span><span class="p">(</span><span class="n">fun</span><span class="w"> </span><span class="n">erlang</span><span class="o">:</span><span class="n">atom_to_list</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;AtomVM&#39;</span><span class="p">]).</span>
+<span class="w">           </span><span class="s">&quot;AtomVM&quot;</span>
+</pre></div>
+</div>
+<p>If the number of arguments are known at compile time, the call is better
+written as Function(Arg1, Arg2, …, ArgN).</p>
+<p><a name="apply-3"></a></p>
+</section>
+<section id="apply-3">
+<h3>apply/3<a class="headerlink" href="#apply-3" title="Link to this heading"></a></h3>
+<pre><code>
+apply(Module::module(), Function::function(), Args::[term()]) -&gt; term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: Name of module<br /><code class="docutils literal notranslate"><span class="pre">Function</span></code>: Exported function name<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: Parameters to pass to function (max 6)<br /></p>
+<p>returns: Returns the result of Module:Function(Args).</p>
+<p>Returns the result of applying Function in Module to Args. The applied
+function must be exported from Module. The arity of the function is the
+length of Args. Example:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="k">              &gt; </span><span class="ge">apply(lists, reverse, [[a, b, c]]).</span>
+           [c,b,a]
+<span class="k">           &gt; </span><span class="ge">apply(erlang, atom_to_list, [&#39;AtomVM&#39;]).</span>
+           &quot;AtomVM&quot;
+</pre></div>
+</div>
+<p>If the number of arguments are known at compile time, the call is better
+written as Module:Function(Arg1, Arg2, …, ArgN).</p>
+<p><a name="atom_to_binary-1"></a></p>
+</section>
+<section id="atom-to-binary-1">
+<h3>atom_to_binary/1<a class="headerlink" href="#atom-to-binary-1" title="Link to this heading"></a></h3>
+<pre><code>
+atom_to_binary(Atom::atom()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Atom</span></code>: Atom to convert<br /></p>
+<p>returns: a binary with the atom’s name</p>
+<p>Convert an atom to a binary, defaults to utf8.
+Only latin1 encoding is supported.</p>
+<p><a name="atom_to_binary-2"></a></p>
+</section>
+<section id="atom-to-binary-2">
+<h3>atom_to_binary/2<a class="headerlink" href="#atom-to-binary-2" title="Link to this heading"></a></h3>
+<pre><code>
+atom_to_binary(Atom::atom(), Encoding::<a href="#type-atom_encoding">atom_encoding()</a>) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Atom</span></code>: Atom to convert<br /><code class="docutils literal notranslate"><span class="pre">Encoding</span></code>: Encoding for conversion (any of latin1, utf8 or unicode)<br /></p>
+<p>returns: a binary with the atom’s name</p>
+<p>Convert an atom to a binary.
+Only latin1 encoding is supported.</p>
+<p><a name="atom_to_list-1"></a></p>
+</section>
+<section id="atom-to-list-1">
+<h3>atom_to_list/1<a class="headerlink" href="#atom-to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+atom_to_list(Atom::atom()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Atom</span></code>: Atom to convert<br /></p>
+<p>returns: a string with the atom’s name</p>
+<p>Convert an atom to a string.</p>
+<p><a name="binary_to_atom-1"></a></p>
+</section>
+<section id="binary-to-atom-1">
+<h3>binary_to_atom/1<a class="headerlink" href="#binary-to-atom-1" title="Link to this heading"></a></h3>
+<pre><code>
+binary_to_atom(Binary::binary()) -&gt; atom()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: Binary to convert to atom<br /></p>
+<p>returns: an atom from passed binary</p>
+<p>Convert a binary to atom, defaults to utf8.</p>
+<p><a name="binary_to_atom-2"></a></p>
+</section>
+<section id="binary-to-atom-2">
+<h3>binary_to_atom/2<a class="headerlink" href="#binary-to-atom-2" title="Link to this heading"></a></h3>
+<pre><code>
+binary_to_atom(Binary::binary(), Encoding::<a href="#type-atom_encoding">atom_encoding()</a>) -&gt; atom()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: Binary to convert to atom<br /><code class="docutils literal notranslate"><span class="pre">Encoding</span></code>: encoding for conversion (any of latin1, utf8 or unicode)<br /></p>
+<p>returns: an atom from passed binary</p>
+<p>Convert a binary to atom.</p>
+<p><a name="binary_to_integer-1"></a></p>
+</section>
+<section id="binary-to-integer-1">
+<h3>binary_to_integer/1<a class="headerlink" href="#binary-to-integer-1" title="Link to this heading"></a></h3>
+<pre><code>
+binary_to_integer(Binary::binary()) -&gt; integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: Binary to parse for integer<br /></p>
+<p>returns: the integer represented by the binary</p>
+<p>Parse the text in a given binary as an integer.</p>
+<p><a name="binary_to_integer-2"></a></p>
+</section>
+<section id="binary-to-integer-2">
+<h3>binary_to_integer/2<a class="headerlink" href="#binary-to-integer-2" title="Link to this heading"></a></h3>
+<pre><code>
+binary_to_integer(Binary::binary(), Base::2..36) -&gt; integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: Binary to parse for integer<br /></p>
+<p>returns: the integer represented by the binary</p>
+<p>Parse the text in a given binary as an integer.</p>
+<p><a name="binary_to_list-1"></a></p>
+</section>
+<section id="binary-to-list-1">
+<h3>binary_to_list/1<a class="headerlink" href="#binary-to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+binary_to_list(Binary::binary()) -&gt; [byte()]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: Binary to convert to list<br /></p>
+<p>returns: a list of bytes from the binary</p>
+<p>Convert a binary to a list of bytes.</p>
+<p><a name="binary_to_term-1"></a></p>
+</section>
+<section id="binary-to-term-1">
+<h3>binary_to_term/1<a class="headerlink" href="#binary-to-term-1" title="Link to this heading"></a></h3>
+<pre><code>
+binary_to_term(Binary::binary()) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: binary to decode<br /></p>
+<p>returns: A term decoded from passed binary</p>
+<p>Decode a term that was previously encodes with <code class="docutils literal notranslate"><span class="pre">term_to_binary/1</span></code>
+This function should be mostly compatible with its Erlang/OTP counterpart.
+Unlike modern Erlang/OTP, resources are currently serialized as empty
+binaries and cannot be unserialized.</p>
+<p><a name="demonitor-1"></a></p>
+</section>
+<section id="demonitor-1">
+<h3>demonitor/1<a class="headerlink" href="#demonitor-1" title="Link to this heading"></a></h3>
+<pre><code>
+demonitor(Monitor::reference()) -&gt; true
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Monitor</span></code>: reference of monitor to remove<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Remove a monitor</p>
+<p><a name="demonitor-2"></a></p>
+</section>
+<section id="demonitor-2">
+<h3>demonitor/2<a class="headerlink" href="#demonitor-2" title="Link to this heading"></a></h3>
+<pre><code>
+demonitor(Monitor::reference(), Options::[<a href="#type-demonitor_option">demonitor_option()</a>]) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Monitor</span></code>: reference of monitor to remove<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: options list<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Remove a monitor, with options.
+If <code class="docutils literal notranslate"><span class="pre">flush</span></code>, monitor messages are flushed and guaranteed to not be received.
+If <code class="docutils literal notranslate"><span class="pre">info</span></code>, return <code class="docutils literal notranslate"><span class="pre">true</span></code> if monitor was removed, <code class="docutils literal notranslate"><span class="pre">false</span></code> if it was not found.
+If both options are provivded, return <code class="docutils literal notranslate"><span class="pre">false</span></code> if flush was needed.</p>
+<p><a name="display-1"></a></p>
+</section>
+<section id="display-1">
+<h3>display/1<a class="headerlink" href="#display-1" title="Link to this heading"></a></h3>
+<pre><code>
+display(Term::any()) -&gt; true
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Term</span></code>: term to print<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Print a term to stdout.</p>
+<p><a name="erase-1"></a></p>
+</section>
+<section id="erase-1">
+<h3>erase/1<a class="headerlink" href="#erase-1" title="Link to this heading"></a></h3>
+<pre><code>
+erase(Key::any()) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key to erase from the process dictionary<br /></p>
+<p>returns: the previous value associated with this key or undefined</p>
+<p>Erase a key from the process dictionary.</p>
+<p><a name="exit-1"></a></p>
+</section>
+<section id="exit-1">
+<h3>exit/1<a class="headerlink" href="#exit-1" title="Link to this heading"></a></h3>
+<pre><code>
+exit(Reason::any()) -&gt; no_return()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Reason</span></code>: reason for exit<br /></p>
+<p>Raises an exception of class <code class="docutils literal notranslate"><span class="pre">exit</span></code> with reason <code class="docutils literal notranslate"><span class="pre">Reason</span></code>.
+The exception can be caught. If it is not, the process exits.
+If the exception is not caught the signal is sent to linked processes.
+In this case, if <code class="docutils literal notranslate"><span class="pre">Reason</span></code> is <code class="docutils literal notranslate"><span class="pre">kill</span></code>, it is not transformed into <code class="docutils literal notranslate"><span class="pre">killed</span></code> and
+linked processes can trap it (unlike <code class="docutils literal notranslate"><span class="pre">exit/2</span></code>).</p>
+<p><a name="exit-2"></a></p>
+</section>
+<section id="exit-2">
+<h3>exit/2<a class="headerlink" href="#exit-2" title="Link to this heading"></a></h3>
+<pre><code>
+exit(Process::pid(), Reason::any()) -&gt; true
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Process</span></code>: target process<br /><code class="docutils literal notranslate"><span class="pre">Reason</span></code>: reason for exit<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Send an exit signal to target process.
+The consequences of the exit signal depends on <code class="docutils literal notranslate"><span class="pre">Reason</span></code>, on whether
+<code class="docutils literal notranslate"><span class="pre">Process</span></code> is self() or another process and whether target process is
+trapping exit.
+If <code class="docutils literal notranslate"><span class="pre">Reason</span></code> is not <code class="docutils literal notranslate"><span class="pre">kill</span></code> nor <code class="docutils literal notranslate"><span class="pre">normal</span></code>:</p>
+<ul class="simple">
+<li><p>If target process is not trapping exits, it exits with <code class="docutils literal notranslate"><span class="pre">Reason</span></code></p></li>
+<li><p>If traget process is trapping exits, it receives a message
+<code class="docutils literal notranslate"><span class="pre">{'EXIT',</span> <span class="pre">From,</span> <span class="pre">Reason}</span></code> where <code class="docutils literal notranslate"><span class="pre">From</span></code> is the caller of <code class="docutils literal notranslate"><span class="pre">exit/2</span></code>.</p></li>
+</ul>
+<p>If <code class="docutils literal notranslate"><span class="pre">Reason</span></code> is <code class="docutils literal notranslate"><span class="pre">kill</span></code>, the target process exits with <code class="docutils literal notranslate"><span class="pre">Reason</span></code> changed to
+<code class="docutils literal notranslate"><span class="pre">killed</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">Reason</span></code> is <code class="docutils literal notranslate"><span class="pre">normal</span></code> and <code class="docutils literal notranslate"><span class="pre">Process</span></code> is not <code class="docutils literal notranslate"><span class="pre">self()</span></code>:</p>
+<ul class="simple">
+<li><p>If target process is not trapping exits, nothing happens.</p></li>
+<li><p>If traget process is trapping exits, it receives a message
+<code class="docutils literal notranslate"><span class="pre">{'EXIT',</span> <span class="pre">From,</span> <span class="pre">normal}</span></code> where <code class="docutils literal notranslate"><span class="pre">From</span></code> is the caller of <code class="docutils literal notranslate"><span class="pre">exit/2</span></code>.</p></li>
+</ul>
+<p>If <code class="docutils literal notranslate"><span class="pre">Reason</span></code> is <code class="docutils literal notranslate"><span class="pre">normal</span></code> and <code class="docutils literal notranslate"><span class="pre">Process</span></code> is <code class="docutils literal notranslate"><span class="pre">self()</span></code>:</p>
+<ul class="simple">
+<li><p>If target process is not trapping exits, it exits with <code class="docutils literal notranslate"><span class="pre">normal</span></code>.</p></li>
+<li><p>If traget process is trapping exits, it receives a message
+<code class="docutils literal notranslate"><span class="pre">{'EXIT',</span> <span class="pre">From,</span> <span class="pre">normal}</span></code> where <code class="docutils literal notranslate"><span class="pre">From</span></code> is the caller of <code class="docutils literal notranslate"><span class="pre">exit/2</span></code>.</p></li>
+</ul>
+<p><a name="float_to_binary-1"></a></p>
+</section>
+<section id="float-to-binary-1">
+<h3>float_to_binary/1<a class="headerlink" href="#float-to-binary-1" title="Link to this heading"></a></h3>
+<pre><code>
+float_to_binary(Float::float()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Float</span></code>: Float to convert<br /></p>
+<p>returns: a binary with a text representation of the float</p>
+<p>Convert a float to a binary.</p>
+<p><a name="float_to_binary-2"></a></p>
+</section>
+<section id="float-to-binary-2">
+<h3>float_to_binary/2<a class="headerlink" href="#float-to-binary-2" title="Link to this heading"></a></h3>
+<pre><code>
+float_to_binary(Float::float(), Options::[<a href="#type-float_format_option">float_format_option()</a>]) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Float</span></code>: Float to convert<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: Options for conversion<br /></p>
+<p>returns: a binary with a text representation of the float</p>
+<p>Convert a float to a binary.</p>
+<p><a name="float_to_list-1"></a></p>
+</section>
+<section id="float-to-list-1">
+<h3>float_to_list/1<a class="headerlink" href="#float-to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+float_to_list(Float::float()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Float</span></code>: Float to convert<br /></p>
+<p>returns: a string with a text representation of the float</p>
+<p>Convert a float to a string.</p>
+<p><a name="float_to_list-2"></a></p>
+</section>
+<section id="float-to-list-2">
+<h3>float_to_list/2<a class="headerlink" href="#float-to-list-2" title="Link to this heading"></a></h3>
+<pre><code>
+float_to_list(Float::float(), Options::[<a href="#type-float_format_option">float_format_option()</a>]) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Float</span></code>: Float to convert<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: Options for conversion<br /></p>
+<p>returns: a string with a text representation of the float</p>
+<p>Convert a float to a string.</p>
+<p><a name="fun_to_list-1"></a></p>
+</section>
+<section id="fun-to-list-1">
+<h3>fun_to_list/1<a class="headerlink" href="#fun-to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+fun_to_list(Fun::function()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: function to convert to a string<br /></p>
+<p>returns: a string representation of the function</p>
+<p>Create a string representing a function.</p>
+<p><a name="function_exported-3"></a></p>
+</section>
+<section id="function-exported-3">
+<h3>function_exported/3<a class="headerlink" href="#function-exported-3" title="Link to this heading"></a></h3>
+<pre><code>
+function_exported(Module::module(), Function::atom(), Arity::arity()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: module to test<br /><code class="docutils literal notranslate"><span class="pre">Function</span></code>: function to test<br /><code class="docutils literal notranslate"><span class="pre">Arity</span></code>: arity to test<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code> if Module exports a Function with this Arity</p>
+<p>Determine if a function is exported</p>
+<p><a name="garbage_collect-0"></a></p>
+</section>
+<section id="garbage-collect-0">
+<h3>garbage_collect/0<a class="headerlink" href="#garbage-collect-0" title="Link to this heading"></a></h3>
+<pre><code>
+garbage_collect() -&gt; true
+</code></pre>
+<br />
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Run a garbage collect in current process</p>
+<p><a name="garbage_collect-1"></a></p>
+</section>
+<section id="garbage-collect-1">
+<h3>garbage_collect/1<a class="headerlink" href="#garbage-collect-1" title="Link to this heading"></a></h3>
+<pre><code>
+garbage_collect(Pid::pid()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: pid of the process to garbage collect<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code> if the process no longer exists</p>
+<p>Run a garbage collect in a given process.
+The function returns before the garbage collect actually happens.</p>
+<p><a name="get-1"></a></p>
+</section>
+<section id="get-1">
+<h3>get/1<a class="headerlink" href="#get-1" title="Link to this heading"></a></h3>
+<pre><code>
+get(Key::any()) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key in the process dictionary<br /></p>
+<p>returns: value associated with this key or undefined</p>
+<p>Return a value associated with a given key in the process dictionary</p>
+<p><a name="get_module_info-1"></a></p>
+</section>
+<section id="get-module-info-1">
+<h3>get_module_info/1<a class="headerlink" href="#get-module-info-1" title="Link to this heading"></a></h3>
+<pre><code>
+get_module_info(Module::atom()) -&gt; [{atom(), any()}]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: module to get info for<br /></p>
+<p>returns: A list of module info tuples</p>
+<p>Get info for a given module.
+This function is not meant to be called directly but through
+<code class="docutils literal notranslate"><span class="pre">Module:module_info/0</span></code> exported function.</p>
+<p><a name="get_module_info-2"></a></p>
+</section>
+<section id="get-module-info-2">
+<h3>get_module_info/2<a class="headerlink" href="#get-module-info-2" title="Link to this heading"></a></h3>
+<pre><code>
+get_module_info(Module::atom(), InfoKey::atom()) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: module to get info for<br /><code class="docutils literal notranslate"><span class="pre">InfoKey</span></code>: info to get<br /></p>
+<p>returns: A term representing info for given module</p>
+<p>Get specific info for a given module.
+This function is not meant to be called directly but through
+<code class="docutils literal notranslate"><span class="pre">Module:module_info/1</span></code> exported function.
+Supported info keys are <code class="docutils literal notranslate"><span class="pre">module</span></code>, <code class="docutils literal notranslate"><span class="pre">exports</span></code>, <code class="docutils literal notranslate"><span class="pre">compile</span></code> and <code class="docutils literal notranslate"><span class="pre">attributes</span></code>.</p>
+<p><a name="group_leader-0"></a></p>
+</section>
+<section id="group-leader-0">
+<h3>group_leader/0<a class="headerlink" href="#group-leader-0" title="Link to this heading"></a></h3>
+<pre><code>
+group_leader() -&gt; pid()
+</code></pre>
+<br />
+<p>returns: Pid of group leader or self() if no group leader is set.</p>
+<p>Return the pid of the group leader of caller.</p>
+<p><a name="group_leader-2"></a></p>
+</section>
+<section id="group-leader-2">
+<h3>group_leader/2<a class="headerlink" href="#group-leader-2" title="Link to this heading"></a></h3>
+<pre><code>
+group_leader(Leader::pid(), Pid::pid()) -&gt; true
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Leader</span></code>: pid of process to set as leader<br /><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: pid of process to set a Leader<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Set the group leader for a given process.</p>
+<p><a name="integer_to_binary-1"></a></p>
+</section>
+<section id="integer-to-binary-1">
+<h3>integer_to_binary/1<a class="headerlink" href="#integer-to-binary-1" title="Link to this heading"></a></h3>
+<pre><code>
+integer_to_binary(Integer::integer()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Integer</span></code>: integer to convert to a binary<br /></p>
+<p>returns: a binary with a text representation of the integer</p>
+<p>Convert an integer to a binary.</p>
+<p><a name="integer_to_binary-2"></a></p>
+</section>
+<section id="integer-to-binary-2">
+<h3>integer_to_binary/2<a class="headerlink" href="#integer-to-binary-2" title="Link to this heading"></a></h3>
+<pre><code>
+integer_to_binary(Integer::integer(), Base::2..36) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Integer</span></code>: integer to convert to a binary<br /><code class="docutils literal notranslate"><span class="pre">Base</span></code>: base for representation<br /></p>
+<p>returns: a binary with a text representation of the integer</p>
+<p>Convert an integer to a binary.</p>
+<p><a name="integer_to_list-1"></a></p>
+</section>
+<section id="integer-to-list-1">
+<h3>integer_to_list/1<a class="headerlink" href="#integer-to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+integer_to_list(Integer::integer()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Integer</span></code>: integer to convert to a string<br /></p>
+<p>returns: a string representation of the integer</p>
+<p>Convert an integer to a string.</p>
+<p><a name="integer_to_list-2"></a></p>
+</section>
+<section id="integer-to-list-2">
+<h3>integer_to_list/2<a class="headerlink" href="#integer-to-list-2" title="Link to this heading"></a></h3>
+<pre><code>
+integer_to_list(Integer::integer(), Base::2..36) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Integer</span></code>: integer to convert to a string<br /><code class="docutils literal notranslate"><span class="pre">Base</span></code>: base for representation<br /></p>
+<p>returns: a string representation of the integer</p>
+<p>Convert an integer to a string.</p>
+<p><a name="iolist_to_binary-1"></a></p>
+</section>
+<section id="iolist-to-binary-1">
+<h3>iolist_to_binary/1<a class="headerlink" href="#iolist-to-binary-1" title="Link to this heading"></a></h3>
+<pre><code>
+iolist_to_binary(IOList::iolist()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">IOList</span></code>: IO list to convert to binary<br /></p>
+<p>returns: a binary with the bytes of the IO list</p>
+<p>Convert an IO list to binary.</p>
+<p><a name="is_map-1"></a></p>
+</section>
+<section id="is-map-1">
+<h3>is_map/1<a class="headerlink" href="#is-map-1" title="Link to this heading"></a></h3>
+<pre><code>
+is_map(Map::map()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map to test<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is a map; <code class="docutils literal notranslate"><span class="pre">false</span></code>, otherwise.</p>
+<p>Return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is a map; <code class="docutils literal notranslate"><span class="pre">false</span></code>, otherwise.</p>
+<p>This function may be used in a guard expression.</p>
+<p><a name="is_map_key-2"></a></p>
+</section>
+<section id="is-map-key-2">
+<h3>is_map_key/2<a class="headerlink" href="#is-map-key-2" title="Link to this heading"></a></h3>
+<pre><code>
+is_map_key(Key::term(), Map::map()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key<br /><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Key</span></code> is associated with a value in <code class="docutils literal notranslate"><span class="pre">Map</span></code>; <code class="docutils literal notranslate"><span class="pre">false</span></code>, otherwise.</p>
+<p>Return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Key</span></code> is associated with a value in <code class="docutils literal notranslate"><span class="pre">Map</span></code>; <code class="docutils literal notranslate"><span class="pre">false</span></code>, otherwise.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p>This function may be used in a guard expression.</p>
+<p><a name="is_process_alive-1"></a></p>
+</section>
+<section id="is-process-alive-1">
+<h3>is_process_alive/1<a class="headerlink" href="#is-process-alive-1" title="Link to this heading"></a></h3>
+<pre><code>
+is_process_alive(Pid::pid()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: pid of the process to test<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code> if the process is alive, <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise</p>
+<p>Determine if a process is alive</p>
+<p><a name="link-1"></a></p>
+</section>
+<section id="link-1">
+<h3>link/1<a class="headerlink" href="#link-1" title="Link to this heading"></a></h3>
+<pre><code>
+link(Pid::pid()) -&gt; true
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: process to link to<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Link current process with a given process.</p>
+<p><a name="list_to_atom-1"></a></p>
+</section>
+<section id="list-to-atom-1">
+<h3>list_to_atom/1<a class="headerlink" href="#list-to-atom-1" title="Link to this heading"></a></h3>
+<pre><code>
+list_to_atom(String::string()) -&gt; atom()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">String</span></code>: string to convert to an atom<br /></p>
+<p>returns: an atom from the string</p>
+<p>Convert a string into an atom.
+Unlike Erlang/OTP 20+, atoms are limited to ISO-8859-1 characters. The VM
+currently aborts if passed unicode characters.
+Atoms are also limited to 255 characters. Errors with system_limit_atom if
+the passed string is longer.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#list_to_existing_atom-1"><span class="xref myst">list_to_existing_atom/1</span></a>.</p>
+<p><a name="list_to_binary-1"></a></p>
+</section>
+<section id="list-to-binary-1">
+<h3>list_to_binary/1<a class="headerlink" href="#list-to-binary-1" title="Link to this heading"></a></h3>
+<pre><code>
+list_to_binary(IOList::iolist()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">IOList</span></code>: iolist to convert to binary<br /></p>
+<p>returns: a binary composed of bytes and binaries from the list</p>
+<p>Convert a list into a binary.
+Errors with <code class="docutils literal notranslate"><span class="pre">badarg</span></code> if the list is not an iolist.</p>
+<p><a name="list_to_existing_atom-1"></a></p>
+</section>
+<section id="list-to-existing-atom-1">
+<h3>list_to_existing_atom/1<a class="headerlink" href="#list-to-existing-atom-1" title="Link to this heading"></a></h3>
+<pre><code>
+list_to_existing_atom(String::string()) -&gt; atom()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">String</span></code>: string to convert to an atom<br /></p>
+<p>returns: an atom from the string</p>
+<p>Convert a string into an atom.
+This function will error with badarg if the atom does not exist</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#list_to_atom-1"><span class="xref myst">list_to_atom/1</span></a>.</p>
+<p><a name="list_to_integer-1"></a></p>
+</section>
+<section id="list-to-integer-1">
+<h3>list_to_integer/1<a class="headerlink" href="#list-to-integer-1" title="Link to this heading"></a></h3>
+<pre><code>
+list_to_integer(String::string()) -&gt; integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">String</span></code>: string to convert to integer<br /></p>
+<p>returns: an integer value from its string representation</p>
+<p>Convert a string (list of characters) to integer.
+Errors with <code class="docutils literal notranslate"><span class="pre">badarg</span></code> if the string is not a representation of an integer.</p>
+<p><a name="list_to_integer-2"></a></p>
+</section>
+<section id="list-to-integer-2">
+<h3>list_to_integer/2<a class="headerlink" href="#list-to-integer-2" title="Link to this heading"></a></h3>
+<pre><code>
+list_to_integer(String::string(), Base::2..36) -&gt; integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">String</span></code>: string to convert to integer<br /><code class="docutils literal notranslate"><span class="pre">Base</span></code>: string to convert to integer<br /></p>
+<p>returns: an integer value from its string representation</p>
+<p>Convert a string (list of characters) to integer in specified base.
+Errors with <code class="docutils literal notranslate"><span class="pre">badarg</span></code> if the string is not a representation of an integer or
+the base is out of bounds.</p>
+<p><a name="list_to_tuple-1"></a></p>
+</section>
+<section id="list-to-tuple-1">
+<h3>list_to_tuple/1<a class="headerlink" href="#list-to-tuple-1" title="Link to this heading"></a></h3>
+<pre><code>
+list_to_tuple(List::[any()]) -&gt; tuple()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: list to convert to tuple<br /></p>
+<p>returns: a tuple with elements of the list</p>
+<p>Convert a list to a tuple with the same size.</p>
+<p><a name="localtime-0"></a></p>
+</section>
+<section id="localtime-0">
+<h3>localtime/0<a class="headerlink" href="#localtime-0" title="Link to this heading"></a></h3>
+<pre><code>
+localtime() -&gt; <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/calendar.md#type-datetime">calendar:datetime()</a>
+</code></pre>
+<br />
+<p>returns: A tuple representing the current local time.</p>
+<p>Return the current time and day for system local timezone.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#universaltime-0"><span class="xref myst">universaltime/0</span></a>.</p>
+<p><a name="make_ref-0"></a></p>
+</section>
+<section id="make-ref-0">
+<h3>make_ref/0<a class="headerlink" href="#make-ref-0" title="Link to this heading"></a></h3>
+<pre><code>
+make_ref() -&gt; reference()
+</code></pre>
+<br />
+<p>returns: a new reference</p>
+<p>Create a new reference</p>
+<p><a name="map_get-2"></a></p>
+</section>
+<section id="map-get-2">
+<h3>map_get/2<a class="headerlink" href="#map-get-2" title="Link to this heading"></a></h3>
+<pre><code>
+map_get(Key::term(), Map::map()) -&gt; Value::term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key to get<br /><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map from which to get the value<br /></p>
+<p>returns: the value in <code class="docutils literal notranslate"><span class="pre">Map</span></code> associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code>, if it exists.</p>
+<p>Get the value in <code class="docutils literal notranslate"><span class="pre">Map</span></code> associated with <code class="docutils literal notranslate"><span class="pre">Key</span></code>, if it exists.</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badkey,</span> <span class="pre">Key}</span></code> error if ‘Key’ does not occur in
+<code class="docutils literal notranslate"><span class="pre">Map</span></code> or a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p>This function may be used in a guard expression.</p>
+<p><a name="map_size-1"></a></p>
+</section>
+<section id="map-size-1">
+<h3>map_size/1<a class="headerlink" href="#map-size-1" title="Link to this heading"></a></h3>
+<pre><code>
+map_size(Map::map()) -&gt; non_neg_integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Map</span></code>: the map<br /></p>
+<p>returns: the size of the map</p>
+<p>Returns the size of (i.e., the number of entries in) the map</p>
+<p>This function raises a <code class="docutils literal notranslate"><span class="pre">{badmap,</span> <span class="pre">Map}</span></code> error if <code class="docutils literal notranslate"><span class="pre">Map</span></code> is not a map.</p>
+<p>This function may be used in a guard expression.</p>
+<p><a name="max-2"></a></p>
+</section>
+<section id="max-2">
+<h3>max/2<a class="headerlink" href="#max-2" title="Link to this heading"></a></h3>
+<pre><code>
+max(A::any(), B::any()) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">A</span></code>: any term<br /><code class="docutils literal notranslate"><span class="pre">B</span></code>: any term<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">A</span></code> if <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&gt;</span> <span class="pre">B</span></code>; <code class="docutils literal notranslate"><span class="pre">B</span></code>, otherwise.</p>
+<p>Return the maximum value of two terms</p>
+<p>Terms are compared using <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> and follow the ordering principles defined in
+https://www.erlang.org/doc/reference_manual/expressions.html#term-comparisons</p>
+<p><a name="md5-1"></a></p>
+</section>
+<section id="md5-1">
+<h3>md5/1<a class="headerlink" href="#md5-1" title="Link to this heading"></a></h3>
+<pre><code>
+md5(Data::binary()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: data to compute hash of, as a binary.<br /></p>
+<p>returns: the md5 hash of the input Data, as a 16-byte binary.</p>
+<p>Computes the MD5 hash of an input binary, as defined by
+https://www.ietf.org/rfc/rfc1321.txt</p>
+<p><a name="memory-1"></a></p>
+</section>
+<section id="memory-1">
+<h3>memory/1<a class="headerlink" href="#memory-1" title="Link to this heading"></a></h3>
+<pre><code>
+memory(Type::<a href="#type-mem_type">mem_type()</a>) -&gt; non_neg_integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Type</span></code>: the type of memory to request<br /></p>
+<p>returns: the amount of memory (in bytes) used of the specified type</p>
+<p>Return the amount of memory (in bytes) used of the specified type</p>
+<p><a name="min-2"></a></p>
+</section>
+<section id="min-2">
+<h3>min/2<a class="headerlink" href="#min-2" title="Link to this heading"></a></h3>
+<pre><code>
+min(A::any(), B::any()) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">A</span></code>: any term<br /><code class="docutils literal notranslate"><span class="pre">B</span></code>: any term<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">A</span></code> if <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&lt;</span> <span class="pre">B</span></code>; <code class="docutils literal notranslate"><span class="pre">B</span></code>, otherwise.</p>
+<p>Return the minimum value of two terms</p>
+<p>Terms are compared using <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> and follow the ordering principles defined in
+https://www.erlang.org/doc/reference_manual/expressions.html#term-comparisons</p>
+<p><a name="monitor-2"></a></p>
+</section>
+<section id="monitor-2">
+<h3>monitor/2<a class="headerlink" href="#monitor-2" title="Link to this heading"></a></h3>
+<pre><code>
+monitor(Type::process | port, Pid::pid()) -&gt; reference()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Type</span></code>: type of monitor to create<br /><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: pid of the object to monitor<br /></p>
+<p>returns: a monitor reference</p>
+<p>Create a monitor on a process or on a port.
+When the process or the port terminates, the following message is sent to
+the caller of this function:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {&#39;DOWN&#39;, MonitorRef, Type, Pid, Reason}
+</pre></div>
+</div>
+<p>Unlike Erlang/OTP, monitors are only supported for processes and ports.</p>
+<p><a name="monotonic_time-1"></a></p>
+</section>
+<section id="monotonic-time-1">
+<h3>monotonic_time/1<a class="headerlink" href="#monotonic-time-1" title="Link to this heading"></a></h3>
+<pre><code>
+monotonic_time(Unit::<a href="#type-time_unit">time_unit()</a>) -&gt; integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Unit</span></code>: time unit<br /></p>
+<p>returns: monotonic time in the specified units</p>
+<p>Return the monotonic time in the specified units.</p>
+<p>Monotonic time varies from system to system, and should not be used
+to determine, for example the wall clock time.</p>
+<p>Instead, monotonic time should be used to compute time differences,
+where the function is guaranteed to return a (not necessarily strictly)
+monotonically increasing value.</p>
+<p>For example, on ESP32 system, monotonic time is reported as the difference from
+the current time and the time the ESP32 device was started, whereas on UNIX
+systems the value may vary among UNIX systems (e.g., Linux, macOS, FreeBSD).</p>
+<p><a name="open_port-2"></a></p>
+</section>
+<section id="open-port-2">
+<h3>open_port/2<a class="headerlink" href="#open-port-2" title="Link to this heading"></a></h3>
+<pre><code>
+open_port(PortName::{spawn, iodata()}, Options::[any()] | map()) -&gt; pid()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">PortName</span></code>: Tuple {spawn, Name} identifying the port<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: Options, meaningful for the port<br /></p>
+<p>returns: A pid identifying the open port</p>
+<p>Open a port.
+Unlike Erlang/OTP, ports are identified by pids.</p>
+<p><a name="pid_to_list-1"></a></p>
+</section>
+<section id="pid-to-list-1">
+<h3>pid_to_list/1<a class="headerlink" href="#pid-to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+pid_to_list(Pid::pid()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: pid to convert to a string<br /></p>
+<p>returns: a string representation of the pid</p>
+<p>Create a string representing a pid.</p>
+<p><a name="process_flag-2"></a></p>
+</section>
+<section id="process-flag-2">
+<h3>process_flag/2<a class="headerlink" href="#process-flag-2" title="Link to this heading"></a></h3>
+<pre><code>
+process_flag(Flag::trap_exit, Value::boolean()) -&gt; pid()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Flag</span></code>: flag to change<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: new value of the flag<br /></p>
+<p>returns: Previous value of the flag</p>
+<p>Set a flag for the current process.
+When <code class="docutils literal notranslate"><span class="pre">trap_exit</span></code> is true, exit signals are converted to messages</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>{<span class="s1">&#39;EXIT&#39;</span>,<span class="w"> </span><span class="nv">From</span>,<span class="w"> </span><span class="nv">Reason</span>}
+</pre></div>
+</div>
+<p>and the process does not exit if <code class="docutils literal notranslate"><span class="pre">Reason</span></code> is not <code class="docutils literal notranslate"><span class="pre">normal</span></code>.</p>
+<p><a name="process_info-2"></a></p>
+</section>
+<section id="process-info-2">
+<h3>process_info/2<a class="headerlink" href="#process-info-2" title="Link to this heading"></a></h3>
+<pre><code>
+process_info(Pid::pid(), Key::heap_size) -&gt; {heap_size, non_neg_integer()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: the process pid.<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to find process information.<br /></p>
+<pre><code>
+process_info(Pid::pid(), Key::total_heap_size) -&gt; {total_heap_size, non_neg_integer()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: the process pid.<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to find process information.<br /></p>
+<pre><code>
+process_info(Pid::pid(), Key::stack_size) -&gt; {stack_size, non_neg_integer()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: the process pid.<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to find process information.<br /></p>
+<pre><code>
+process_info(Pid::pid(), Key::message_queue_len) -&gt; {message_queue_len, non_neg_integer()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: the process pid.<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to find process information.<br /></p>
+<pre><code>
+process_info(Pid::pid(), Key::memory) -&gt; {memory, non_neg_integer()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: the process pid.<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to find process information.<br /></p>
+<pre><code>
+process_info(Pid::pid(), Key::links) -&gt; {links, [pid()]}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: the process pid.<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to find process information.<br /></p>
+<p>returns: process information for the specified pid defined by the specified key.</p>
+<p>Return process information.</p>
+<p>This function returns information about the specified process.
+The type of information returned is dependent on the specified key.</p>
+<p>The following keys are supported:</p>
+<ul class="simple">
+<li><p><strong>heap_size</strong> the number of words used in the heap (integer), including the stack but excluding fragments</p></li>
+<li><p><strong>total_heap_size</strong> the number of words used in the heap (integer) including fragments</p></li>
+<li><p><strong>stack_size</strong> the number of words used in the stack (integer)</p></li>
+<li><p><strong>message_queue_len</strong> the number of messages enqueued for the process (integer)</p></li>
+<li><p><strong>memory</strong> the estimated total number of bytes in use by the process (integer)</p></li>
+<li><p><strong>links</strong> the list of linked processes</p></li>
+</ul>
+<p>Specifying an unsupported term or atom raises a bad_arg error.</p>
+<p><a name="processes-0"></a></p>
+</section>
+<section id="processes-0">
+<h3>processes/0<a class="headerlink" href="#processes-0" title="Link to this heading"></a></h3>
+<pre><code>
+processes() -&gt; [pid()]
+</code></pre>
+<br />
+<p>returns: A list of pids of all processes</p>
+<p>Return a list of all current processes.
+Compared to Erlang/OTP, this function also returns native processes (ports).</p>
+<p><a name="put-2"></a></p>
+</section>
+<section id="put-2">
+<h3>put/2<a class="headerlink" href="#put-2" title="Link to this heading"></a></h3>
+<pre><code>
+put(Key::any(), Value::any()) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key to add to the process dictionary<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: value to store in the process dictionary<br /></p>
+<p>returns: the previous value associated with this key or undefined</p>
+<p>Store a value with a given key in the process dictionary.</p>
+<p><a name="ref_to_list-1"></a></p>
+</section>
+<section id="ref-to-list-1">
+<h3>ref_to_list/1<a class="headerlink" href="#ref-to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+ref_to_list(Ref::reference()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Ref</span></code>: reference to convert to a string<br /></p>
+<p>returns: a string representation of the reference</p>
+<p>Create a string representing a reference.</p>
+<p><a name="register-2"></a></p>
+</section>
+<section id="register-2">
+<h3>register/2<a class="headerlink" href="#register-2" title="Link to this heading"></a></h3>
+<pre><code>
+register(Name::atom(), Pid::pid()) -&gt; true
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: name of the process to register<br /><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: pid of the process to register<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Register a name for a given process.
+Processes can be registered with several names.
+Unlike Erlang/OTP, ports are not distinguished from processes.
+Errors with <code class="docutils literal notranslate"><span class="pre">badarg</span></code> if the name is already registered.</p>
+<p><a name="send-2"></a></p>
+</section>
+<section id="send-2">
+<h3>send/2<a class="headerlink" href="#send-2" title="Link to this heading"></a></h3>
+<pre><code>
+send(Pid::pid(), Message) -&gt; Message
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: process to send the message to<br /><code class="docutils literal notranslate"><span class="pre">Message</span></code>: message to send<br /></p>
+<p>returns: the sent message</p>
+<p>Send a message to a given process</p>
+<p><a name="send_after-3"></a></p>
+</section>
+<section id="send-after-3">
+<h3>send_after/3<a class="headerlink" href="#send-after-3" title="Link to this heading"></a></h3>
+<pre><code>
+send_after(Time::non_neg_integer(), Dest::pid() | atom(), Msg::term()) -&gt; reference()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Time</span></code>: time in milliseconds after which to send the message.<br /><code class="docutils literal notranslate"><span class="pre">Dest</span></code>: Pid or server name to which to send the message.<br /><code class="docutils literal notranslate"><span class="pre">Msg</span></code>: Message to send to Dest after Time ms.<br /></p>
+<p>returns: a reference that can be used to cancel the timer, if desired.</p>
+<p>Send Msg to Dest after Time ms.</p>
+<p><a name="spawn-1"></a></p>
+</section>
+<section id="spawn-1">
+<h3>spawn/1<a class="headerlink" href="#spawn-1" title="Link to this heading"></a></h3>
+<pre><code>
+spawn(Function::function()) -&gt; pid()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Function</span></code>: function to create a process from<br /></p>
+<p>returns: pid of the new process</p>
+<p>Create a new process</p>
+<p><a name="spawn-3"></a></p>
+</section>
+<section id="spawn-3">
+<h3>spawn/3<a class="headerlink" href="#spawn-3" title="Link to this heading"></a></h3>
+<pre><code>
+spawn(Module::module(), Function::atom(), Args::[any()]) -&gt; pid()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: module of the function to create a process from<br /><code class="docutils literal notranslate"><span class="pre">Function</span></code>: name of the function to create a process from<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: arguments to pass to the function to create a process from<br /></p>
+<p>returns: pid of the new process</p>
+<p>Create a new process by calling exported Function from Module with Args.</p>
+<p><a name="spawn_link-1"></a></p>
+</section>
+<section id="spawn-link-1">
+<h3>spawn_link/1<a class="headerlink" href="#spawn-link-1" title="Link to this heading"></a></h3>
+<pre><code>
+spawn_link(Function::function()) -&gt; pid()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Function</span></code>: function to create a process from<br /></p>
+<p>returns: pid of the new process</p>
+<p>Create a new process and link it.</p>
+<p><a name="spawn_link-3"></a></p>
+</section>
+<section id="spawn-link-3">
+<h3>spawn_link/3<a class="headerlink" href="#spawn-link-3" title="Link to this heading"></a></h3>
+<pre><code>
+spawn_link(Module::module(), Function::atom(), Args::[any()]) -&gt; pid()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: module of the function to create a process from<br /><code class="docutils literal notranslate"><span class="pre">Function</span></code>: name of the function to create a process from<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: arguments to pass to the function to create a process from<br /></p>
+<p>returns: pid of the new process</p>
+<p>Create a new process by calling exported Function from Module with Args
+and link it.</p>
+<p><a name="spawn_opt-2"></a></p>
+</section>
+<section id="spawn-opt-2">
+<h3>spawn_opt/2<a class="headerlink" href="#spawn-opt-2" title="Link to this heading"></a></h3>
+<pre><code>
+spawn_opt(Function::function(), Options::[<a href="#type-spawn_option">spawn_option()</a>]) -&gt; pid() | {pid(), reference()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Function</span></code>: function to create a process from<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: additional options.<br /></p>
+<p>returns: pid of the new process</p>
+<p>Create a new process.</p>
+<p><a name="spawn_opt-4"></a></p>
+</section>
+<section id="spawn-opt-4">
+<h3>spawn_opt/4<a class="headerlink" href="#spawn-opt-4" title="Link to this heading"></a></h3>
+<pre><code>
+spawn_opt(Module::module(), Function::atom(), Args::[any()], Options::[<a href="#type-spawn_option">spawn_option()</a>]) -&gt; pid() | {pid(), reference()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: module of the function to create a process from<br /><code class="docutils literal notranslate"><span class="pre">Function</span></code>: name of the function to create a process from<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: arguments to pass to the function to create a process from<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: additional options.<br /></p>
+<p>returns: pid of the new process</p>
+<p>Create a new process by calling exported Function from Module with Args.</p>
+<p><a name="start_timer-3"></a></p>
+</section>
+<section id="start-timer-3">
+<h3>start_timer/3<a class="headerlink" href="#start-timer-3" title="Link to this heading"></a></h3>
+<pre><code>
+start_timer(Time::non_neg_integer(), Dest::pid() | atom(), Msg::term()) -&gt; reference()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Time</span></code>: time in milliseconds after which to send the timeout message.<br /><code class="docutils literal notranslate"><span class="pre">Dest</span></code>: Pid or server name to which to send the timeout message.<br /><code class="docutils literal notranslate"><span class="pre">Msg</span></code>: Message to send to Dest after Time ms.<br /></p>
+<p>returns: a reference that can be used to cancel the timer, if desired.</p>
+<p>Start a timer, and send {timeout, TimerRef, Msg} to Dest after
+Time ms, where TimerRef is the reference returned from this function.</p>
+<p><a name="system_flag-2"></a></p>
+</section>
+<section id="system-flag-2">
+<h3>system_flag/2<a class="headerlink" href="#system-flag-2" title="Link to this heading"></a></h3>
+<pre><code>
+system_flag(Key::atom(), Value::term()) -&gt; term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to change system flag.<br /><code class="docutils literal notranslate"><span class="pre">Value</span></code>: value to change<br /></p>
+<p>returns: previous value of the flag.</p>
+<p>Update system flags.</p>
+<p>This function allows to modify system flags at runtime.</p>
+<p>The following key is supported on SMP builds:</p>
+<ul class="simple">
+<li><p><strong>schedulers_online</strong> the number of schedulers online</p></li>
+</ul>
+<p>Specifying an unsupported atom key will result in a bad_arg error.
+Specifying a term that is not an atom will result in a bad_arg error.</p>
+<p><a name="system_info-1"></a></p>
+</section>
+<section id="system-info-1">
+<h3>system_info/1<a class="headerlink" href="#system-info-1" title="Link to this heading"></a></h3>
+<pre><code>
+system_info(Key::atom()) -&gt; term()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to find system information.<br /></p>
+<p>returns: system information defined by the specified key.</p>
+<p>Return system information.</p>
+<p>This function returns information about the system on which AtomVM is
+running. The type of information returned is dependent on the specified key.</p>
+<p>The following keys are supported on all platforms:</p>
+<ul class="simple">
+<li><p><strong>process_count</strong> the number of processes running in the node (integer)</p></li>
+<li><p><strong>port_count</strong> the number of ports running in the node (integer)</p></li>
+<li><p><strong>atom_count</strong> the number of atoms currently allocated (integer)</p></li>
+<li><p><strong>system_architecture</strong> the processor and OS architecture (binary)</p></li>
+<li><p><strong>version</strong> the version of the AtomVM executable image (binary)</p></li>
+<li><p><strong>wordsize</strong> the number of bytes in a machine word on the current platform (integer)</p></li>
+<li><p><strong>schedulers</strong> the number of schedulers, equal to the number of online processors (integer)</p></li>
+<li><p><strong>schedulers_online</strong> the current number of schedulers (integer)</p></li>
+</ul>
+<p>The following keys are supported on the ESP32 platform:</p>
+<ul class="simple">
+<li><p><strong>esp32_free_heap_size</strong> the number of (noncontiguous) free bytes in the ESP32 heap (integer)</p></li>
+<li><p><strong>esp32_largest_free_block</strong> the number of the largest contiguous free bytes in the ESP32 heap (integer)</p></li>
+<li><p><strong>esp32_minimum_free_size</strong> the smallest number of free bytes in the ESP32 heap since boot (integer)</p></li>
+</ul>
+<p>Additional keys may be supported on some platforms that are not documented here.</p>
+<p>Specifying an unsupported atom key will results in returning the atom ‘undefined’.</p>
+<p>Specifying a term that is not an atom will result in a bad_arg error.</p>
+<p><a name="system_time-1"></a></p>
+</section>
+<section id="system-time-1">
+<h3>system_time/1<a class="headerlink" href="#system-time-1" title="Link to this heading"></a></h3>
+<pre><code>
+system_time(Unit::<a href="#type-time_unit">time_unit()</a>) -&gt; non_neg_integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Unit</span></code>: Unit to return system time in<br /></p>
+<p>returns: An integer representing system time</p>
+<p>Get the current system time in provided unit.</p>
+<p><a name="term_to_binary-1"></a></p>
+</section>
+<section id="term-to-binary-1">
+<h3>term_to_binary/1<a class="headerlink" href="#term-to-binary-1" title="Link to this heading"></a></h3>
+<pre><code>
+term_to_binary(Term::any()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Term</span></code>: term to encode<br /></p>
+<p>returns: A binary encoding passed term.</p>
+<p>Encode a term to a binary that can later be decoded with <code class="docutils literal notranslate"><span class="pre">binary_to_term/1</span></code>.
+This function should be mostly compatible with its Erlang/OTP counterpart.
+Unlike modern Erlang/OTP, resources are currently serialized as empty
+binaries.</p>
+<p><a name="timestamp-0"></a></p>
+</section>
+<section id="timestamp-0">
+<h3>timestamp/0<a class="headerlink" href="#timestamp-0" title="Link to this heading"></a></h3>
+<pre><code>
+timestamp() -&gt; <a href="/__w/AtomVM/AtomVM/build/doc/edoc/erts/doc/erlang.md#type-timestamp">erlang:timestamp()</a>
+</code></pre>
+<br />
+<p>returns: A tuple representing the current timestamp.</p>
+<p>Return the timestamp in <code class="docutils literal notranslate"><span class="pre">{MegaSec,</span> <span class="pre">Sec,</span> <span class="pre">MicroSec}</span></code> format.
+This the old format returned by <code class="docutils literal notranslate"><span class="pre">erlang:now/0</span></code>. Please note that the latter
+which is deprecated in Erlang/OTP is not implemented by AtomVM.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#monotonic_time-1"><span class="xref myst">monotonic_time/1</span></a>, <a class="reference internal" href="#system_time-1"><span class="xref myst">system_time/1</span></a>.</p>
+<p><a name="universaltime-0"></a></p>
+</section>
+<section id="universaltime-0">
+<h3>universaltime/0<a class="headerlink" href="#universaltime-0" title="Link to this heading"></a></h3>
+<pre><code>
+universaltime() -&gt; <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/calendar.md#type-datetime">calendar:datetime()</a>
+</code></pre>
+<br />
+<p>returns: A tuple representing the current universal time.</p>
+<p>Return the current time and day for UTC.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#localtime-0"><span class="xref myst">localtime/0</span></a>.</p>
+<p><a name="unlink-1"></a></p>
+</section>
+<section id="unlink-1">
+<h3>unlink/1<a class="headerlink" href="#unlink-1" title="Link to this heading"></a></h3>
+<pre><code>
+unlink(Pid::pid()) -&gt; true
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: process to unlink from<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Unlink current process from a given process.</p>
+<p><a name="unregister-1"></a></p>
+</section>
+<section id="unregister-1">
+<h3>unregister/1<a class="headerlink" href="#unregister-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister(Name::atom()) -&gt; true
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: name to unregister<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p>Lookup a process by name.
+Unlike Erlang/OTP, ports are not distinguished from processes.
+Errors with <code class="docutils literal notranslate"><span class="pre">badarg</span></code> if the name is not registered.</p>
+<p><a name="whereis-1"></a></p>
+</section>
+<section id="whereis-1">
+<h3>whereis/1<a class="headerlink" href="#whereis-1" title="Link to this heading"></a></h3>
+<pre><code>
+whereis(Name::atom()) -&gt; pid() | undefined
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: name of the process to locate<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">undefined</span></code> or the pid of the registered process</p>
+<p>Lookup a process by name.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="crypto.html" class="btn btn-neutral float-left" title="Module crypto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="erts_debug.html" class="btn btn-neutral float-right" title="Module erts_debug" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      v0.6.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.0/">v0.6.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.1/">v0.6.0-alpha.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-alpha.2/">v0.6.0-alpha.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.0/">v0.6.0-beta.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-beta.1/">v0.6.0-beta.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0-rc.0/">v0.6.0-rc.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/v0.6.5/pdf/AtomVM-v0.6.5.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.5/epub/AtomVM-v0.6.5.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

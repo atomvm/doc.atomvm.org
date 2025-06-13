@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Packbeam Format &mdash; AtomVM 0.5.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference Documentation" href="api-reference-documentation.html" />
+    <link rel="prev" title="Memory Management" href="memory-management.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> AtomVM
+          </a>
+              <div class="version">
+                0.5.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example-programs.html">Example Programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Packbeam Format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#packbeam-header">Packbeam Header</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#file-encodings">File encodings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#file-header">File Header</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#beam-files">BEAM files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#normal-files">Normal Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#end-file"><code class="docutils literal notranslate"><span class="pre">end</span></code> file</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Packbeam Format</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/packbeam-format.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+ Copyright 2020-2022 Fred Dushin <fred@dushin.net>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="packbeam-format">
+<h1>Packbeam Format<a class="headerlink" href="#packbeam-format" title="Permalink to this headline"></a></h1>
+<p>AtomVM makes use of the packbeam format for aggregating beam and other file types into a single file that is used as the code base for an AtomVM application.  Typically, on an embedded device, packbeam files are uploaded (e.g., via serial connection) to a specific location on flash media.  The AtomVM runtime will locate the entrypoint into the application, and use the beam and other files flashed to the local media to run the uploaded application.</p>
+<p>AtomVM provides a simple tool for generating packbeam files, but other tools have emerged for manipulation packbeam files using standard Erlang and Elixir tool chains, notably <code class="docutils literal notranslate"><span class="pre">Mix</span></code> and <code class="docutils literal notranslate"><span class="pre">rebar3</span></code>.</p>
+<p>This document describes the packbeam format, so that both AtomVM and upstream/downstream tooling have a reference document on which to base implementations.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<p>Packbeam files are binary-encoded aggregations of BEAM and plain data files.  At a high level, a packbeam file consists of a packbeam header, followed by a sequence of files (beam or otherwise), each of which is prefixed with a header, including data about the file (name, size, flags, etc).</p>
+<p>All binary integer values are 32-bit, in network order (big-endian).  Headers and encoded files are padded when necessary and aligned on 4-byte boundaries.</p>
+<p>At present, the AtomVM runtime treats data in packbeam files as <em>read-only</em> data.  There is no support for modifying the contents on an AtomVM file by the runtime.</p>
+</section>
+<section id="packbeam-header">
+<h2>Packbeam Header<a class="headerlink" href="#packbeam-header" title="Permalink to this headline"></a></h2>
+<p>All AtomVM files begin with the packbeam header, a fixed 24-byte sequence of octets:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0x23, 0x21, 0x2f, 0x75,
+0x73, 0x72, 0x2f, 0x62,
+0x69, 0x6e, 0x2f, 0x65,
+0x6e, 0x76, 0x20, 0x41,
+0x74, 0x6f, 0x6d, 0x56,
+0x4d, 0x0a, 0x00, 0x00
+</pre></div>
+</div>
+<p>The ASCII encoding of this sequence is</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env AtomVM\n
+</pre></div>
+</div>
+<p>followed by two nil (<code class="docutils literal notranslate"><span class="pre">0x00</span></code>) bytes.</p>
+<p>The packbeam header is followed by a sequence of 0 or more encoded files.  The number of files in a packbeam file is not indicated in the packbeam header; however, packbeam files do contain a special <code class="docutils literal notranslate"><span class="pre">end</span></code> file header, marking the end of the sequence of encoded files.</p>
+</section>
+<section id="file-encodings">
+<h2>File encodings<a class="headerlink" href="#file-encodings" title="Permalink to this headline"></a></h2>
+<p>Each embedded file in a packbeam file contains a file header, followed by the file contents.</p>
+<section id="file-header">
+<h3>File Header<a class="headerlink" href="#file-header" title="Permalink to this headline"></a></h3>
+<p>The file header consists of the following 4 fields:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code> (32 bit, big-endian)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flags</span></code> (32-bit, big endian)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reserved</span></code> (32-bit, big-endian, currently unused)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">module_name</span></code> (null-terminated sequence of bytes)</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">size</span></code> field indicates the size (in bytes) of the encoded file following the header.  This size includes the file content length, in addition to any padding that may have been added to the file, in order for it to align on a 4-byte boundary.</p>
+<p>Currently, the two low-order bits of the <code class="docutils literal notranslate"><span class="pre">flags</span></code> field are used.  <code class="docutils literal notranslate"><span class="pre">0x02</span></code> indicates the file is a BEAM file, and <code class="docutils literal notranslate"><span class="pre">0x01</span></code> indicates that the file contains a <code class="docutils literal notranslate"><span class="pre">start/0</span></code> function, and is therefore suitable as an entrypoint to start code execution.</p>
+<blockquote>
+<div><p>When AtomVM starts, it will scan the BEAM files in the AtomVM file, from start to finish, with which it is initialized to find the entrypoint to start code execution.  It will start execution on the first BEAM file with a <code class="docutils literal notranslate"><span class="pre">start/0</span></code> function, i.e., whose flags mask against <code class="docutils literal notranslate"><span class="pre">0x03</span></code>.  It is conventional, but not required, for the first file in an AtomVM file to be a BEAM file that has a <code class="docutils literal notranslate"><span class="pre">start/0</span></code> entrypoint.</p>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">reserved</span></code> field is currently unused.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">module_name</span></code> is variable length, null terminated sequence of characters.  Because the module name is variable-length, the header may be padded with null characters (<code class="docutils literal notranslate"><span class="pre">0x00</span></code>), in order to align the start of the file contents on a 4-byte boundary.</p>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>The following BEAM header indicates a BEAM file with a length of 308 bytes (<code class="docutils literal notranslate"><span class="pre">0x00000134</span></code>), with a <code class="docutils literal notranslate"><span class="pre">start/0</span></code> entrypoint (<code class="docutils literal notranslate"><span class="pre">0x00000003</span></code>), and named <code class="docutils literal notranslate"><span class="pre">mylib.beam</span></code> (<code class="docutils literal notranslate"><span class="pre">0x6D796C69</span> <span class="pre">622E6265</span> <span class="pre">616D00</span></code>).  The header has a 1-byte padding of null (<code class="docutils literal notranslate"><span class="pre">0x00</span></code>) characters.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>00000134 00000003 00000000 6D796C69 622E6265 616D0000
+</pre></div>
+</div>
+</section>
+<section id="beam-files">
+<h3>BEAM files<a class="headerlink" href="#beam-files" title="Permalink to this headline"></a></h3>
+<p>BEAM files obey <a href="https://en.wikipedia.org/wiki/Interchange_File_Format">IFF</a> encoding as detailed <a href="http://www.erlang.se/~bjorn/beam_file_format.html">here</a>, but certain information in BEAM files is stripped out in order to minimize the amount of data stored on flash.</p>
+<p>The following BEAM chunks are included in BEAM files:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AtU8</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Code</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ExpT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LocT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ImpT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LitU</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FunT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StrT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LitT</span></code></p></li>
+</ul>
+<p>Any other chunks are stripped out of the BEAM files before insertion into AVM files.</p>
+<p>In addition, data in the literals table (<code class="docutils literal notranslate"><span class="pre">LitT</span></code>) are uncompressed before insertion into AVM files, as the AtomVM runtime does not include support for <code class="docutils literal notranslate"><span class="pre">zlib</span></code> decompression.</p>
+<p>BEAM files may be padded at the end with a sequence of 1-3 null (<code class="docutils literal notranslate"><span class="pre">0x00</span></code>) characters, in order to align on 4-byte boundaries.</p>
+<blockquote>
+<div><p>Note.  The <code class="docutils literal notranslate"><span class="pre">module_name</span></code> field in the file header will only contain the “base” name of the BEAM file, i.e., the file name stripped of any path information.</p>
+</div></blockquote>
+</section>
+<section id="normal-files">
+<h3>Normal Files<a class="headerlink" href="#normal-files" title="Permalink to this headline"></a></h3>
+<p>Normal files (e.g., text files, data files, etc.) can be stored in packbeam AVM files, as well as BEAM files.  For example, a normal file might contain static configuration information, or data that is interpreted at runtime.</p>
+<p>Normal files contain a 32-bit big-endian size prefix, indicating the size of the file data (without padding).  Note that the <code class="docutils literal notranslate"><span class="pre">size</span></code> field in the file header includes the size of the data with padding, if applicable.</p>
+<p>The AtomVM runtime provides access to data files via the <code class="docutils literal notranslate"><span class="pre">atomvm:read_priv/2</span></code> NIF.  This function will create a path name formed by the <code class="docutils literal notranslate"><span class="pre">App</span></code> (atom) and <code class="docutils literal notranslate"><span class="pre">Path</span></code> (string) terms provided by this function, separated by <code class="docutils literal notranslate"><span class="pre">&quot;/priv/&quot;</span></code>.  For example, the expression</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>atomvm:read_priv(mylib, &quot;sample.txt&quot;)
+</pre></div>
+</div>
+<p>yields a <code class="docutils literal notranslate"><span class="pre">binary</span></code> containing the contents of <code class="docutils literal notranslate"><span class="pre">mylib/priv/sample.txt</span></code>, if it exists, in the AtomVM packbeam file.</p>
+<p>As a consequence, normal files should be included in packbeam files using module names that obey the above patterns.</p>
+<blockquote>
+<div><p>Note. Normal file names may encode virtual directory names, such as <code class="docutils literal notranslate"><span class="pre">mylib/priv/another/sample/text/file</span></code>.  There is no requirement that the <code class="docutils literal notranslate"><span class="pre">Path</span></code> component of a normal file be a simple file name.</p>
+</div></blockquote>
+</section>
+<section id="end-file">
+<h3><code class="docutils literal notranslate"><span class="pre">end</span></code> file<a class="headerlink" href="#end-file" title="Permalink to this headline"></a></h3>
+<p>Packbeam files end with a special <code class="docutils literal notranslate"><span class="pre">end</span></code> header.  The <code class="docutils literal notranslate"><span class="pre">size</span></code> field of the <code class="docutils literal notranslate"><span class="pre">end</span></code> header is 0 bytes.</p>
+<section id="id1">
+<h4>Example<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
+<p>The following sequence of bytes encodes the <code class="docutils literal notranslate"><span class="pre">end</span></code> header:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>00000000 00000000 00000000 656E6400
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="memory-management.html" class="btn btn-neutral float-left" title="Memory Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api-reference-documentation.html" class="btn btn-neutral float-right" title="API Reference Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2022, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

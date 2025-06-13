@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module esp</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module esp</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>ESP32-specific APIs.
+
+
+<h2><a name="description">Description</a></h2><p>ESP32-specific APIs</p>
+ 
+  This module contains functions that are specific to the ESP32 platform.
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-esp_reset_reason">esp_reset_reason()</a></h3>
+<p><tt>esp_reset_reason() = esp_rst_unknown | esp_rst_poweron | esp_rst_ext | esp_rst_sw | esp_rst_panic | esp_rst_int_wdt | esp_rst_task_wdt | esp_rst_wdt | esp_rst_deepsleep | esp_rst_brownout | esp_rst_sdio</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#freq_hz-0">freq_hz/0</a></td><td>    Return the clock frequency on the chip.</td></tr>
+<tr><td valign="top"><a href="#nvs_erase_all-0">nvs_erase_all/0</a></td><td>Equivalent to nvs_erase_all(?ATOMVM_NVS_NS).</td></tr>
+<tr><td valign="top"><a href="#nvs_erase_all-1">nvs_erase_all/1</a></td><td>    Erase all values in the specified namespace.</td></tr>
+<tr><td valign="top"><a href="#nvs_erase_key-1">nvs_erase_key/1</a></td><td>Equivalent to nvs_erase_key(?ATOMVM_NVS_NS, Key).</td></tr>
+<tr><td valign="top"><a href="#nvs_erase_key-2">nvs_erase_key/2</a></td><td>    Erase the value associated with a key.</td></tr>
+<tr><td valign="top"><a href="#nvs_get_binary-1">nvs_get_binary/1</a></td><td>Equivalent to nvs_get_binary(?ATOMVM_NVS_NS, Key).</td></tr>
+<tr><td valign="top"><a href="#nvs_get_binary-2">nvs_get_binary/2</a></td><td>    Get the binary value associated with a key, or undefined, if
+           there is no value associated with this key.</td></tr>
+<tr><td valign="top"><a href="#nvs_get_binary-3">nvs_get_binary/3</a></td><td>    Get the binary value associated with a key, or Default, if
+           there is no value associated with this key.</td></tr>
+<tr><td valign="top"><a href="#nvs_reformat-0">nvs_reformat/0</a></td><td>    Reformat the entire NVS partition.</td></tr>
+<tr><td valign="top"><a href="#nvs_set_binary-2">nvs_set_binary/2</a></td><td>Equivalent to nvs_set_binary(?ATOMVM_NVS_NS, Key, Value).</td></tr>
+<tr><td valign="top"><a href="#nvs_set_binary-3">nvs_set_binary/3</a></td><td>    Set an binary value associated with a key.</td></tr>
+<tr><td valign="top"><a href="#reset_reason-0">reset_reason/0</a></td><td>    Returns the reason for the restart.</td></tr>
+<tr><td valign="top"><a href="#restart-0">restart/0</a></td><td>    Restarts the ESP device.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="freq_hz-0">freq_hz/0</a></h3>
+<div class="spec">
+<p><tt>freq_hz() -&gt; non_neg_integer()</tt><br></p>
+<p>returns: Clock frequency (in hz)</p>
+</div><p>    Return the clock frequency on the chip</p>
+
+<h3 class="function"><a name="nvs_erase_all-0">nvs_erase_all/0</a></h3>
+<div class="spec">
+<p><tt>nvs_erase_all() -&gt; ok</tt><br></p>
+</div><p>Equivalent to nvs_erase_all(?ATOMVM_NVS_NS).</p>
+
+<h3 class="function"><a name="nvs_erase_all-1">nvs_erase_all/1</a></h3>
+<div class="spec">
+<p><tt>nvs_erase_all(Namespace::atom()) -&gt; ok</tt><br></p>
+<p><tt>Namespace</tt>: NVS namespace<br>
+</p>
+<p>returns: ok</p>
+</div><p>    Erase all values in the specified namespace.</p>
+
+<h3 class="function"><a name="nvs_erase_key-1">nvs_erase_key/1</a></h3>
+<div class="spec">
+<p><tt>nvs_erase_key(Key::atom()) -&gt; ok</tt><br></p>
+</div><p>Equivalent to nvs_erase_key(?ATOMVM_NVS_NS, Key).</p>
+
+<h3 class="function"><a name="nvs_erase_key-2">nvs_erase_key/2</a></h3>
+<div class="spec">
+<p><tt>nvs_erase_key(Namespace::atom(), Key::atom()) -&gt; ok</tt><br></p>
+<p><tt>Namespace</tt>: NVS namespace<br>
+<tt>Key</tt>: NVS key<br>
+</p>
+<p>returns: ok</p>
+</div><p>    Erase the value associated with a key.  If a value does not exist
+           for the specified key, no action is performed.</p>
+
+<h3 class="function"><a name="nvs_get_binary-1">nvs_get_binary/1</a></h3>
+<div class="spec">
+<p><tt>nvs_get_binary(Key::atom()) -&gt; binary() | undefined</tt><br></p>
+</div><p>Equivalent to nvs_get_binary(?ATOMVM_NVS_NS, Key).</p>
+
+<h3 class="function"><a name="nvs_get_binary-2">nvs_get_binary/2</a></h3>
+<div class="spec">
+<p><tt>nvs_get_binary(Namespace::atom(), Key::atom()) -&gt; binary() | undefined</tt><br></p>
+<p><tt>Namespace</tt>: NVS namespace<br>
+<tt>Key</tt>: NVS key<br>
+</p>
+<p>returns: binary value associated with this key in NV storage, or undefined
+           if there is no value associated with this key.</p>
+</div><p>    Get the binary value associated with a key, or undefined, if
+           there is no value associated with this key.</p>
+
+<h3 class="function"><a name="nvs_get_binary-3">nvs_get_binary/3</a></h3>
+<div class="spec">
+<p><tt>nvs_get_binary(Namespace::atom(), Key::atom(), Default::binary()) -&gt; binary() | undefined</tt><br></p>
+<p><tt>Namespace</tt>: NVS namespace<br>
+<tt>Key</tt>: NVS key<br>
+<tt>Default</tt>: default binary value, if Key is not set in Namespace<br>
+</p>
+<p>returns: binary value associated with this key in NV storage, or Default
+           if there is no value associated with this key.</p>
+</div><p>    Get the binary value associated with a key, or Default, if
+           there is no value associated with this key.</p>
+
+<h3 class="function"><a name="nvs_reformat-0">nvs_reformat/0</a></h3>
+<div class="spec">
+<p><tt>nvs_reformat() -&gt; ok</tt><br></p>
+<p>returns: ok</p>
+</div><p>    Reformat the entire NVS partition.
+           WARNING.  This will result in deleting all NVS data and should
+           be used with extreme caution!</p>
+
+<h3 class="function"><a name="nvs_set_binary-2">nvs_set_binary/2</a></h3>
+<div class="spec">
+<p><tt>nvs_set_binary(Key::atom(), Value::binary()) -&gt; ok</tt><br></p>
+</div><p>Equivalent to nvs_set_binary(?ATOMVM_NVS_NS, Key, Value).</p>
+
+<h3 class="function"><a name="nvs_set_binary-3">nvs_set_binary/3</a></h3>
+<div class="spec">
+<p><tt>nvs_set_binary(Namespace::atom(), Key::atom(), Value::binary()) -&gt; ok</tt><br></p>
+<p><tt>Namespace</tt>: NVS namespace<br>
+<tt>Key</tt>: NVS key<br>
+<tt>Value</tt>: binary value<br>
+</p>
+<p>returns: ok</p>
+</div><p>    Set an binary value associated with a key.  If a value exists
+           for the specified key, it is over-written.</p>
+
+<h3 class="function"><a name="reset_reason-0">reset_reason/0</a></h3>
+<div class="spec">
+<p><tt>reset_reason() -&gt; <a href="#type-esp_reset_reason">esp_reset_reason()</a></tt><br></p>
+<p>returns: the reason for the restart</p>
+</div><p>    Returns the reason for the restart</p>
+
+<h3 class="function"><a name="restart-0">restart/0</a></h3>
+<div class="spec">
+<p><tt>restart() -&gt; ok</tt><br></p>
+</div><p>    Restarts the ESP device</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>
