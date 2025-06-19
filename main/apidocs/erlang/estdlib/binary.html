@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module binary &mdash; AtomVM 0.7.0-dev+git.58fe3aec documentation</title>
+  <title>Module binary &mdash; AtomVM 0.7.0-dev+git.fb8b95a2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/binary.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=5baf98b5"></script>
+      <script src="../../../_static/documentation_options.js?v=3379ef8f"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -153,7 +153,7 @@
 <p><a name="index"></a></p>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#at-2">at/2</a></td><td>    Get a byte from a binary by index.</td></tr><tr><td valign="top"><a href="#decode_hex-1">decode_hex/1</a></td><td>    Decodes a hex encoded binary into a binary.</td></tr><tr><td valign="top"><a href="#encode_hex-1">encode_hex/1</a></td><td>    Encodes a binary into a hex encoded binary using the specified case for the hexadecimal digits "a" to "f".</td></tr><tr><td valign="top"><a href="#encode_hex-2">encode_hex/2</a></td><td>    Encodes a binary into a hex encoded binary using the specified case for the hexadecimal digits "a" to "f".</td></tr><tr><td valign="top"><a href="#part-3">part/3</a></td><td>Get the part of a given binary.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>Split a binary according to pattern.</td></tr><tr><td valign="top"><a href="#split-3">split/3</a></td><td>Split a binary according to pattern.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#at-2">at/2</a></td><td>    Get a byte from a binary by index.</td></tr><tr><td valign="top"><a href="#decode_hex-1">decode_hex/1</a></td><td>    Decodes a hex encoded binary into a binary.</td></tr><tr><td valign="top"><a href="#encode_hex-1">encode_hex/1</a></td><td>    Encodes a binary into a hex encoded binary using the specified case for the hexadecimal digits "a" to "f".</td></tr><tr><td valign="top"><a href="#encode_hex-2">encode_hex/2</a></td><td>    Encodes a binary into a hex encoded binary using the specified case for the hexadecimal digits "a" to "f".</td></tr><tr><td valign="top"><a href="#part-3">part/3</a></td><td>Get the part of a given binary.</td></tr><tr><td valign="top"><a href="#replace-3">replace/3</a></td><td>    Replaces first occurrence of Pattern in Binary with Replacement.</td></tr><tr><td valign="top"><a href="#replace-4">replace/4</a></td><td>    Replaces occurrences of Pattern in Binary with Replacement.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>Split a binary according to pattern.</td></tr><tr><td valign="top"><a href="#split-3">split/3</a></td><td>Split a binary according to pattern.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -213,6 +213,35 @@ part(Binary::binary(), Pos::non_neg_integer(), Len::integer()) -&gt; binary()
 <p>returns: a subbinary from Binary</p>
 <p>Get the part of a given binary.
 A negative length can be passed to count bytes backwards.</p>
+<p><a name="replace-3"></a></p>
+</section>
+<section id="replace-3">
+<h3>replace/3<a class="headerlink" href="#replace-3" title="Link to this heading"></a></h3>
+<pre><code>
+replace(Binary::binary(), Pattern::binary(), Replacement::binary()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: binary where the replacements should occur<br /><code class="docutils literal notranslate"><span class="pre">Pattern</span></code>: binary pattern which is to be replaced<br /><code class="docutils literal notranslate"><span class="pre">Replacement</span></code>: binary which will replace the pattern<br /></p>
+<p>returns:  resulting binary after replacements</p>
+<p>Equivalent to <a class="reference internal" href="#replace-4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">replace(Binary,</span> <span class="pre">Pattern,</span> <span class="pre">Replacement,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p>Replaces first occurrence of Pattern in Binary with Replacement.
+If Pattern is not found, returns the original binary unchanged.
+Pattern and Replacement must be binaries.</p>
+<p><a name="replace-4"></a></p>
+</section>
+<section id="replace-4">
+<h3>replace/4<a class="headerlink" href="#replace-4" title="Link to this heading"></a></h3>
+<pre><code>
+replace(Binary::binary(), Pattern::binary(), Replacement::binary(), Options::[global] | []) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: binary where the replacements should occur<br /><code class="docutils literal notranslate"><span class="pre">Pattern</span></code>: binary pattern which is to be replaced<br /><code class="docutils literal notranslate"><span class="pre">Replacement</span></code>: binary which will replace the pattern<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: list of options for the replacement operations.<br /></p>
+<p>returns:  resulting binary after replacements</p>
+<p>Replaces occurrences of Pattern in Binary with Replacement.
+If Options includes <code class="docutils literal notranslate"><span class="pre">global</span></code>, replaces all occurrences; otherwise, replaces just the first occurrence.
+If Pattern is not found, returns the original binary unchanged.
+Pattern and Replacement must be binaries.
+Only implemented option is <code class="docutils literal notranslate"><span class="pre">global</span></code>.</p>
 <p><a name="split-2"></a></p>
 </section>
 <section id="split-2">
