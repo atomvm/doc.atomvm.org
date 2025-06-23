@@ -1,0 +1,807 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module queue &mdash; AtomVM 0.6.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/estdlib/queue.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d129ce28"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module sets" href="sets.html" />
+    <link rel="prev" title="Module proplists" href="proplists.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module queue</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-queue">
+<h1>Module queue<a class="headerlink" href="#module-queue" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="queue">
+<h3><a name="type-queue">queue()</a><a class="headerlink" href="#queue" title="Link to this heading"></a></h3>
+<pre><code>
+queue() = <a href="#type-queue">queue</a>(term())
+</code></pre>
+</section>
+<section id="id1">
+<h3><a name="type-queue">queue()</a><a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">queue(Item)</span></code></p>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#all-2">all/2</a></td><td>    Returns <code>true</code> if <code>Pred(Item)</code> returns <code>true</code> for all items <code>Item</code> in <code>Q</code>,
+otherwise <code>false</code>.</td></tr><tr><td valign="top"><a href="#any-2">any/2</a></td><td>    Returns <code>true</code> if <code>Pred(Item)</code> returns <code>true</code> for at least one item <code>Item</code> in
+<code>Q</code>, otherwise <code>false</code>.</td></tr><tr><td valign="top"><a href="#delete-2">delete/2</a></td><td>    Returns a copy of <code>Q1</code> where the first item matching <code>Item</code> is deleted, if there
+is such an item.</td></tr><tr><td valign="top"><a href="#delete_r-2">delete_r/2</a></td><td>    Returns a copy of <code>Q1</code> where the last item matching <code>Item</code> is deleted, if there
+is such an item.</td></tr><tr><td valign="top"><a href="#delete_with-2">delete_with/2</a></td><td>    Returns a copy of <code>Q1</code> where the first item for which <code>Pred</code> returns <code>true</code> is
+deleted, if there is such an item.</td></tr><tr><td valign="top"><a href="#delete_with_r-2">delete_with_r/2</a></td><td>    Returns a copy of <code>Q1</code> where the last item for which <code>Pred</code> returns <code>true</code> is
+deleted, if there is such an item.</td></tr><tr><td valign="top"><a href="#drop-1">drop/1</a></td><td>    Returns a queue <code>Q2</code> that is the result of removing the front item from <code>Q1</code>.</td></tr><tr><td valign="top"><a href="#drop_r-1">drop_r/1</a></td><td>    Returns a queue <code>Q2</code> that is the result of removing the rear item from <code>Q1</code>.</td></tr><tr><td valign="top"><a href="#filter-2">filter/2</a></td><td>    Returns a queue <code>Q2</code> that is the result of calling <code>Fun(Item)</code> on all items in <code>Q1</code>.</td></tr><tr><td valign="top"><a href="#filtermap-2">filtermap/2</a></td><td>    Returns a queue <code>Q2</code> that is the result of calling <code>Fun(Item)</code> on all items in <code>Q1</code>.</td></tr><tr><td valign="top"><a href="#fold-3">fold/3</a></td><td>    Calls <code>Fun(Item, AccIn)</code> on successive items <code>Item</code> of <code>Queue</code>, starting with
+<code>AccIn == Acc0</code>.</td></tr><tr><td valign="top"><a href="#from_list-1">from_list/1</a></td><td>    Returns a queue containing the items in <code>L</code> in the same order; the head
+item of the list becomes the front item of the queue.</td></tr><tr><td valign="top"><a href="#get-1">get/1</a></td><td>    Returns <code>Item</code> at the front of queue <code>Q</code>.</td></tr><tr><td valign="top"><a href="#get_r-1">get_r/1</a></td><td>    Returns <code>Item</code> at the rear of queue <code>Q</code>.</td></tr><tr><td valign="top"><a href="#in-2">in/2</a></td><td>    Inserts <code>Item</code> at the rear of queue <code>Q1</code>.</td></tr><tr><td valign="top"><a href="#in_r-2">in_r/2</a></td><td>    Inserts <code>Item</code> at the front of queue <code>Q1</code>.</td></tr><tr><td valign="top"><a href="#is_empty-1">is_empty/1</a></td><td>    Tests if <code>Q</code> is empty and returns <code>true</code> if so, otherwise <code>false</code>.</td></tr><tr><td valign="top"><a href="#is_queue-1">is_queue/1</a></td><td>    Tests if <code>Term</code> is a queue and returns <code>true</code> if so, otherwise <code>false</code>.</td></tr><tr><td valign="top"><a href="#join-2">join/2</a></td><td>    Returns a queue <code>Q3</code> that is the result of joining <code>Q1</code> and <code>Q2</code> with
+<code>Q1</code> in front of <code>Q2</code>.</td></tr><tr><td valign="top"><a href="#len-1">len/1</a></td><td>    Calculates and returns the length of queue <code>Q</code>.</td></tr><tr><td valign="top"><a href="#member-2">member/2</a></td><td>    Returns <code>true</code> if <code>Item</code> matches some element in <code>Q</code>, otherwise <code>false</code>.</td></tr><tr><td valign="top"><a href="#new-0">new/0</a></td><td>    This function returns an empty queue.</td></tr><tr><td valign="top"><a href="#out-1">out/1</a></td><td>    Removes the item at the front of queue <code>Q1</code>.</td></tr><tr><td valign="top"><a href="#out_r-1">out_r/1</a></td><td>    Removes the item at the rear of queue <code>Q1</code>.</td></tr><tr><td valign="top"><a href="#peek-1">peek/1</a></td><td>    Returns tuple <code>{value, Item}</code>, where <code>Item</code> is the front item of <code>Q</code>,
+or <code>empty</code> if <code>Q</code> is empty.</td></tr><tr><td valign="top"><a href="#peek_r-1">peek_r/1</a></td><td>    Returns tuple <code>{value, Item}</code>, where <code>Item</code> is the rear item of <code>Q</code>,
+or <code>empty</code> if <code>Q</code> is empty.</td></tr><tr><td valign="top"><a href="#reverse-1">reverse/1</a></td><td>    Returns a queue <code>Q2</code> containing the items of <code>Q1</code> in reverse order.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>    Splits <code>Q1</code> in two.</td></tr><tr><td valign="top"><a href="#to_list-1">to_list/1</a></td><td>    Returns a list of the items in the queue in the same order; the front
+item of the queue becomes the head of the list.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="all-2"></a></p>
+<section id="all-2">
+<h3>all/2<a class="headerlink" href="#all-2" title="Link to this heading"></a></h3>
+<pre><code>
+all(Pred, Q::<a href="#type-queue">queue</a>(Item)) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Pred = fun((Item) -&gt; boolean())</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Pred</span></code>: the predicate function to apply to each item<br /><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue to check against the predicate<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Pred(Item)</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> for all items <code class="docutils literal notranslate"><span class="pre">Item</span></code> in <code class="docutils literal notranslate"><span class="pre">Q</span></code>,
+otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Pred(Item)</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> for all items <code class="docutils literal notranslate"><span class="pre">Item</span></code> in <code class="docutils literal notranslate"><span class="pre">Q</span></code>,
+otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">queue:all(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">E</span> <span class="pre">&gt;</span> <span class="pre">3</span> <span class="pre">end,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">false</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:all(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">E</span> <span class="pre">&gt;</span> <span class="pre">0</span> <span class="pre">end,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p><a name="any-2"></a></p>
+</section>
+<section id="any-2">
+<h3>any/2<a class="headerlink" href="#any-2" title="Link to this heading"></a></h3>
+<pre><code>
+any(Pred, Q::<a href="#type-queue">queue</a>(Item)) -&gt; boolean()
+</code></pre>
+<ul class="definitions"><li><code>Pred = fun((Item) -&gt; boolean())</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Pred</span></code>: the predicate function to apply to each item<br /><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue to check against the predicate<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Pred(Item)</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> for at least one item <code class="docutils literal notranslate"><span class="pre">Item</span></code> in
+<code class="docutils literal notranslate"><span class="pre">Q</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Pred(Item)</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> for at least one item <code class="docutils literal notranslate"><span class="pre">Item</span></code> in
+<code class="docutils literal notranslate"><span class="pre">Q</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">queue:any(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">E</span> <span class="pre">&gt;</span> <span class="pre">10</span> <span class="pre">end,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">false</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:any(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">E</span> <span class="pre">&gt;</span> <span class="pre">3</span> <span class="pre">end,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p><a name="delete-2"></a></p>
+</section>
+<section id="delete-2">
+<h3>delete/2<a class="headerlink" href="#delete-2" title="Link to this heading"></a></h3>
+<pre><code>
+delete(Item, Q1) -&gt; Q2
+</code></pre>
+<ul class="definitions"><li><code>Item = T</code></li><li><code>Q1 = <a href="#type-queue">queue</a>(T)</code></li><li><code>Q2 = <a href="#type-queue">queue</a>(T)</code></li><li><code>T = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Item</span></code>: the item to delete from the queue<br /><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue from which the item will be deleted<br /></p>
+<p>returns: Returns a copy of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> where the first item matching <code class="docutils literal notranslate"><span class="pre">Item</span></code> is deleted, if there
+is such an item.</p>
+<p>Returns a copy of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> where the first item matching <code class="docutils literal notranslate"><span class="pre">Item</span></code> is deleted, if there
+is such an item.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:delete(3,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:member(3,</span> <span class="pre">Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+<p><a name="delete_r-2"></a></p>
+</section>
+<section id="delete-r-2">
+<h3>delete_r/2<a class="headerlink" href="#delete-r-2" title="Link to this heading"></a></h3>
+<pre><code>
+delete_r(Item, Q1) -&gt; Q2
+</code></pre>
+<ul class="definitions"><li><code>Item = T</code></li><li><code>Q1 = <a href="#type-queue">queue</a>(T)</code></li><li><code>Q2 = <a href="#type-queue">queue</a>(T)</code></li><li><code>T = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Item</span></code>: the item to delete from the queue<br /><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue from which the item will be deleted<br /></p>
+<p>returns: Returns a copy of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> where the last item matching <code class="docutils literal notranslate"><span class="pre">Item</span></code> is deleted, if there
+is such an item.</p>
+<p>Returns a copy of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> where the last item matching <code class="docutils literal notranslate"><span class="pre">Item</span></code> is deleted, if there
+is such an item.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,3,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:delete_r(3,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5]</span></code></p>
+<p><a name="delete_with-2"></a></p>
+</section>
+<section id="delete-with-2">
+<h3>delete_with/2<a class="headerlink" href="#delete-with-2" title="Link to this heading"></a></h3>
+<pre><code>
+delete_with(Pred, Q1) -&gt; Q2
+</code></pre>
+<ul class="definitions"><li><code>Pred = fun((Item) -&gt; boolean())</code></li><li><code>Q1 = <a href="#type-queue">queue</a>(Item)</code></li><li><code>Q2 = <a href="#type-queue">queue</a>(Item)</code></li><li><code>Item = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Pred</span></code>: the predicate function to apply to each item<br /><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue from which the item will be deleted<br /></p>
+<p>returns: Returns a copy of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> where the first item for which <code class="docutils literal notranslate"><span class="pre">Pred</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> is
+deleted, if there is such an item.</p>
+<p>Returns a copy of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> where the first item for which <code class="docutils literal notranslate"><span class="pre">Pred</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> is
+deleted, if there is such an item.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([100,1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:delete_with(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">E</span> <span class="pre">&gt;</span> <span class="pre">0,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5]</span></code></p>
+<p><a name="delete_with_r-2"></a></p>
+</section>
+<section id="delete-with-r-2">
+<h3>delete_with_r/2<a class="headerlink" href="#delete-with-r-2" title="Link to this heading"></a></h3>
+<pre><code>
+delete_with_r(Pred, Q1) -&gt; Q2
+</code></pre>
+<ul class="definitions"><li><code>Pred = fun((Item) -&gt; boolean())</code></li><li><code>Q1 = <a href="#type-queue">queue</a>(Item)</code></li><li><code>Q2 = <a href="#type-queue">queue</a>(Item)</code></li><li><code>Item = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Pred</span></code>: the predicate function to apply to each item<br /><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue from which the item will be deleted<br /></p>
+<p>returns: Returns a copy of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> where the last item for which <code class="docutils literal notranslate"><span class="pre">Pred</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> is
+deleted, if there is such an item.</p>
+<p>Returns a copy of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> where the last item for which <code class="docutils literal notranslate"><span class="pre">Pred</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> is
+deleted, if there is such an item.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5,100]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:delete_with_r(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">E</span> <span class="pre">&gt;</span> <span class="pre">10,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5]</span></code></p>
+<p><a name="drop-1"></a></p>
+</section>
+<section id="drop-1">
+<h3>drop/1<a class="headerlink" href="#drop-1" title="Link to this heading"></a></h3>
+<pre><code>
+drop(Q1::<a href="#type-queue">queue</a>(Item)) -&gt; Q2::<a href="#type-queue">queue</a>(Item)
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue from which the first element will be removed<br /></p>
+<p>returns: Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> that is the result of removing the front item from <code class="docutils literal notranslate"><span class="pre">Q1</span></code>.
+Fails with reason <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q1</span></code> is empty</p>
+<p>Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> that is the result of removing the front item from <code class="docutils literal notranslate"><span class="pre">Q1</span></code>.
+Fails with reason <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q1</span></code> is empty.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:drop(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[2,3,4,5]</span></code></p>
+<p><a name="drop_r-1"></a></p>
+</section>
+<section id="drop-r-1">
+<h3>drop_r/1<a class="headerlink" href="#drop-r-1" title="Link to this heading"></a></h3>
+<pre><code>
+drop_r(Q1::<a href="#type-queue">queue</a>(Item)) -&gt; Q2::<a href="#type-queue">queue</a>(Item)
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue from which the last element will be removed<br /></p>
+<p>returns: Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> that is the result of removing the rear item from <code class="docutils literal notranslate"><span class="pre">Q1</span></code>.
+Fails with reason <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q1</span></code> is empty</p>
+<p>Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> that is the result of removing the rear item from <code class="docutils literal notranslate"><span class="pre">Q1</span></code>.
+Fails with reason <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q1</span></code> is empty.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:drop_r(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[1,2,3,4]</span></code></p>
+<p><a name="filter-2"></a></p>
+</section>
+<section id="filter-2">
+<h3>filter/2<a class="headerlink" href="#filter-2" title="Link to this heading"></a></h3>
+<pre><code>
+filter(Fun, Q1::<a href="#type-queue">queue</a>(Item)) -&gt; Q2::<a href="#type-queue">queue</a>(Item)
+</code></pre>
+<ul class="definitions"><li><code>Fun = fun((Item) -&gt; boolean() | [Item])</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the function to be applied to each item in the queue<br /><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue where the function will be applied<br /></p>
+<p>returns: Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> that is the result of calling <code class="docutils literal notranslate"><span class="pre">Fun(Item)</span></code> on all items in <code class="docutils literal notranslate"><span class="pre">Q1</span></code></p>
+<p>Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> that is the result of calling <code class="docutils literal notranslate"><span class="pre">Fun(Item)</span></code> on all items in <code class="docutils literal notranslate"><span class="pre">Q1</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">Fun(Item)</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">Item</span></code> is copied to the result queue. If it returns
+<code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">Item</span></code> is not copied. If it returns a list, the list elements are inserted
+instead of <code class="docutils literal notranslate"><span class="pre">Item</span></code> in the result queue.</p>
+<p>Example 1:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:filter(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">E</span> <span class="pre">&gt;</span> <span class="pre">2</span> <span class="pre">end,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5],[3,4]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[3,4,5]</span></code></p>
+<p>Example 2:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:filter(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">[E,</span> <span class="pre">E+1]</span> <span class="pre">end,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[6,5,5,4,4,3],[1,2,2,3]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[1,2,2,3,3,4,4,5,5,6]</span></code></p>
+<p><a name="filtermap-2"></a></p>
+</section>
+<section id="filtermap-2">
+<h3>filtermap/2<a class="headerlink" href="#filtermap-2" title="Link to this heading"></a></h3>
+<pre><code>
+filtermap(Fun, Q1) -&gt; Q2
+</code></pre>
+<ul class="definitions"><li><code>Fun = fun((Item) -&gt; boolean() | {true, Value})</code></li><li><code>Q1 = <a href="#type-queue">queue</a>(Item)</code></li><li><code>Q2 = <a href="#type-queue">queue</a>(Item | Value)</code></li><li><code>Item = term()</code></li><li><code>Value = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the function to be applied to each item in the queue<br /><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue where the function will be applied<br /></p>
+<p>returns: Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> that is the result of calling <code class="docutils literal notranslate"><span class="pre">Fun(Item)</span></code> on all items in <code class="docutils literal notranslate"><span class="pre">Q1</span></code></p>
+<p>Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> that is the result of calling <code class="docutils literal notranslate"><span class="pre">Fun(Item)</span></code> on all items in <code class="docutils literal notranslate"><span class="pre">Q1</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">Fun(Item)</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">Item</span></code> is copied to the result queue. If it returns
+<code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">Item</span></code> is not copied. If it returns <code class="docutils literal notranslate"><span class="pre">{true,</span> <span class="pre">NewItem}</span></code>, the queue element
+at this position is replaced with <code class="docutils literal notranslate"><span class="pre">NewItem</span></code> in the result queue.</p>
+<p>Example 1:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:filtermap(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">E</span> <span class="pre">&gt;</span> <span class="pre">2</span> <span class="pre">end,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5],[3,4]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[3,4,5]</span></code>
+<code class="docutils literal notranslate"><span class="pre">4&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:filtermap(fun</span> <span class="pre">(E)</span> <span class="pre">-&gt;</span> <span class="pre">{true,</span> <span class="pre">E+100}</span> <span class="pre">end,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[105,104,103],[101,102]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">5&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[101,102,103,104,105]</span></code></p>
+<p><a name="fold-3"></a></p>
+</section>
+<section id="fold-3">
+<h3>fold/3<a class="headerlink" href="#fold-3" title="Link to this heading"></a></h3>
+<pre><code>
+fold(Fun, Acc0, Q::<a href="#type-queue">queue</a>(Item)) -&gt; Acc1
+</code></pre>
+<ul class="definitions"><li><code>Fun = fun((Item, AccIn) -&gt; AccOut)</code></li><li><code>Acc0 = term()</code></li><li><code>Acc1 = term()</code></li><li><code>AccIn = term()</code></li><li><code>AccOut = term()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Fun</span></code>: the function to be applied to each item and accumulator<br /><code class="docutils literal notranslate"><span class="pre">Acc0</span></code>: the initial accumulator value<br /><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue over which the function will be folded<br /></p>
+<p>returns: Returns the final value of the accumulator after folding over the queue</p>
+<p>Calls <code class="docutils literal notranslate"><span class="pre">Fun(Item,</span> <span class="pre">AccIn)</span></code> on successive items <code class="docutils literal notranslate"><span class="pre">Item</span></code> of <code class="docutils literal notranslate"><span class="pre">Queue</span></code>, starting with
+<code class="docutils literal notranslate"><span class="pre">AccIn</span> <span class="pre">==</span> <span class="pre">Acc0</span></code>. The queue is traversed in queue order, that is, from front to
+rear. <code class="docutils literal notranslate"><span class="pre">Fun/2</span></code> must return a new accumulator, which is passed to the next call.
+The function returns the final value of the accumulator. <code class="docutils literal notranslate"><span class="pre">Acc0</span></code> is returned if
+the queue is empty.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">queue:fold(fun(X,</span> <span class="pre">Sum)</span> <span class="pre">-&gt;</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">Sum</span> <span class="pre">end,</span> <span class="pre">0,</span> <span class="pre">queue:from_list([1,2,3,4,5])).</span></code>
+<code class="docutils literal notranslate"><span class="pre">15</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">queue:fold(fun(X,</span> <span class="pre">Prod)</span> <span class="pre">-&gt;</span> <span class="pre">X</span> <span class="pre">*</span> <span class="pre">Prod</span> <span class="pre">end,</span> <span class="pre">1,</span> <span class="pre">queue:from_list([1,2,3,4,5])).</span></code>
+<code class="docutils literal notranslate"><span class="pre">120</span></code></p>
+<p><a name="from_list-1"></a></p>
+</section>
+<section id="from-list-1">
+<h3>from_list/1<a class="headerlink" href="#from-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+from_list(L::[Item]) -&gt; <a href="#type-queue">queue</a>(Item)
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list to be converted to a queue<br /></p>
+<p>returns: Returns a queue containing the items in <code class="docutils literal notranslate"><span class="pre">L</span></code> in the same order</p>
+<p>Returns a queue containing the items in <code class="docutils literal notranslate"><span class="pre">L</span></code> in the same order; the head
+item of the list becomes the front item of the queue.
+This function is part of the Original API.</p>
+<p><a name="get-1"></a></p>
+</section>
+<section id="get-1">
+<h3>get/1<a class="headerlink" href="#get-1" title="Link to this heading"></a></h3>
+<pre><code>
+get(Q::<a href="#type-queue">queue</a>(Item)) -&gt; Item
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue from which the first element will be returned<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">Item</span></code> at the front of queue <code class="docutils literal notranslate"><span class="pre">Q</span></code>. Fails with reason <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">Item</span></code> at the front of queue <code class="docutils literal notranslate"><span class="pre">Q</span></code>.
+Fails with reason <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">1</span> <span class="pre">==</span> <span class="pre">queue:get(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p><a name="get_r-1"></a></p>
+</section>
+<section id="get-r-1">
+<h3>get_r/1<a class="headerlink" href="#get-r-1" title="Link to this heading"></a></h3>
+<pre><code>
+get_r(Q::<a href="#type-queue">queue</a>(Item)) -&gt; Item
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue from which the last element will be returned<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">Item</span></code> at the rear of queue <code class="docutils literal notranslate"><span class="pre">Q</span></code>. Fails with reason <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">Item</span></code> at the rear of queue <code class="docutils literal notranslate"><span class="pre">Q</span></code>.
+Fails with reason <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">5</span> <span class="pre">==</span> <span class="pre">queue:get_r(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+<p><a name="in-2"></a></p>
+</section>
+<section id="in-2">
+<h3>in/2<a class="headerlink" href="#in-2" title="Link to this heading"></a></h3>
+<pre><code>
+in(Item, Q1::<a href="#type-queue">queue</a>(Item)) -&gt; Q2::<a href="#type-queue">queue</a>(Item)
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Item</span></code>: the item that will be enqueued (inserted at the rear of the queue)<br /><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue where the item will be inserted in<br /></p>
+<p>returns: Returns the queue with <code class="docutils literal notranslate"><span class="pre">Item</span></code> inserted at the rear of the queue</p>
+<p>Inserts <code class="docutils literal notranslate"><span class="pre">Item</span></code> at the rear of queue <code class="docutils literal notranslate"><span class="pre">Q1</span></code>. Returns the resulting queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code>.
+This function is part of the Original API</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:in(100,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[100,5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5,100]</span></code></p>
+<p><a name="in_r-2"></a></p>
+</section>
+<section id="in-r-2">
+<h3>in_r/2<a class="headerlink" href="#in-r-2" title="Link to this heading"></a></h3>
+<pre><code>
+in_r(Item, Q1::<a href="#type-queue">queue</a>(Item)) -&gt; Q2::<a href="#type-queue">queue</a>(Item)
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Item</span></code>: the item that will be enqueued (inserted at the front of the queue)<br /><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue where the item will be inserted in<br /></p>
+<p>returns: Returns the queue with <code class="docutils literal notranslate"><span class="pre">Item</span></code> inserted at the front of the queue</p>
+<p>Inserts <code class="docutils literal notranslate"><span class="pre">Item</span></code> at the front of queue <code class="docutils literal notranslate"><span class="pre">Q1</span></code>. Returns the resulting queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code>.
+This function is part of the Original API</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:in_r(100,</span> <span class="pre">Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[100,1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[100,1,2,3,4,5]</span></code></p>
+<p><a name="is_empty-1"></a></p>
+</section>
+<section id="is-empty-1">
+<h3>is_empty/1<a class="headerlink" href="#is-empty-1" title="Link to this heading"></a></h3>
+<pre><code>
+is_empty(Q::<a href="#type-queue">queue()</a>) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue to be tested<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+<p>Tests if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty and returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if so, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.
+This function is part of the Original API.</p>
+<p><a name="is_queue-1"></a></p>
+</section>
+<section id="is-queue-1">
+<h3>is_queue/1<a class="headerlink" href="#is-queue-1" title="Link to this heading"></a></h3>
+<pre><code>
+is_queue(Term::term()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Term</span></code>: the term to be tested<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Term</span></code> is a queue, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+<p>Tests if <code class="docutils literal notranslate"><span class="pre">Term</span></code> is a queue and returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if so, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.
+Note that the test will return <code class="docutils literal notranslate"><span class="pre">true</span></code> for a term coinciding with the
+representation of a queue, even when not constructed by this module.
+This function is part of the Original API.</p>
+<p><a name="join-2"></a></p>
+</section>
+<section id="join-2">
+<h3>join/2<a class="headerlink" href="#join-2" title="Link to this heading"></a></h3>
+<pre><code>
+join(Q1::<a href="#type-queue">queue</a>(Item), Q2::<a href="#type-queue">queue</a>(Item)) -&gt; Q3::<a href="#type-queue">queue</a>(Item)
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the first queue to be joined<br /><code class="docutils literal notranslate"><span class="pre">Q2</span></code>: the second queue to be joined<br /></p>
+<p>returns: Returns a queue <code class="docutils literal notranslate"><span class="pre">Q3</span></code> that is the result of joining <code class="docutils literal notranslate"><span class="pre">Q1</span></code> and <code class="docutils literal notranslate"><span class="pre">Q2</span></code> with
+<code class="docutils literal notranslate"><span class="pre">Q1</span></code> in front of <code class="docutils literal notranslate"><span class="pre">Q2</span></code></p>
+<p>Returns a queue <code class="docutils literal notranslate"><span class="pre">Q3</span></code> that is the result of joining <code class="docutils literal notranslate"><span class="pre">Q1</span></code> and <code class="docutils literal notranslate"><span class="pre">Q2</span></code> with
+<code class="docutils literal notranslate"><span class="pre">Q1</span></code> in front of <code class="docutils literal notranslate"><span class="pre">Q2</span></code>.
+This function is part of the Original API</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,3]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[3],[1]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue2</span> <span class="pre">=</span> <span class="pre">queue:from_list([2,4]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[4],[2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(queue:join(Queue1,</span> <span class="pre">Queue2)).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[1,3,2,4]</span></code></p>
+<p><a name="len-1"></a></p>
+</section>
+<section id="len-1">
+<h3>len/1<a class="headerlink" href="#len-1" title="Link to this heading"></a></h3>
+<pre><code>
+len(Q::<a href="#type-queue">queue()</a>) -&gt; non_neg_integer()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue whose length is to be calculated<br /></p>
+<p>returns: Returns the length of queue <code class="docutils literal notranslate"><span class="pre">Q</span></code></p>
+<p>Calculates and returns the length of queue <code class="docutils literal notranslate"><span class="pre">Q</span></code>.
+This function is part of the Original API.</p>
+<p><a name="member-2"></a></p>
+</section>
+<section id="member-2">
+<h3>member/2<a class="headerlink" href="#member-2" title="Link to this heading"></a></h3>
+<pre><code>
+member(Item, Q::<a href="#type-queue">queue</a>(Item)) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Item</span></code>: the item to be searched in the queue<br /><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue to be searched<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Item</span></code> matches some element in <code class="docutils literal notranslate"><span class="pre">Q</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">Item</span></code> matches some element in <code class="docutils literal notranslate"><span class="pre">Q</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.
+This function is part of the Original API.</p>
+<p><a name="new-0"></a></p>
+</section>
+<section id="new-0">
+<h3>new/0<a class="headerlink" href="#new-0" title="Link to this heading"></a></h3>
+<pre><code>
+new() -&gt; <a href="#type-queue">queue</a>(none())
+</code></pre>
+<br />
+<p>returns: Returns an empty queue.</p>
+<p>This function returns an empty queue.
+This function is part of the Original API.</p>
+<p><a name="out-1"></a></p>
+</section>
+<section id="out-1">
+<h3>out/1<a class="headerlink" href="#out-1" title="Link to this heading"></a></h3>
+<pre><code>
+out(Q1::<a href="#type-queue">queue</a>(Item)) -&gt; {{value, Item}, Q2::<a href="#type-queue">queue</a>(Item)} | {empty, Q1::<a href="#type-queue">queue</a>(Item)}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue from which the item will be dequeued (removed from the front)<br /></p>
+<p>returns: Returns a tuple <code class="docutils literal notranslate"><span class="pre">{{value,</span> <span class="pre">Item},</span> <span class="pre">Q2}</span></code> where <code class="docutils literal notranslate"><span class="pre">Item</span></code> is the item removed
+and <code class="docutils literal notranslate"><span class="pre">Q2</span></code> is the resulting queue. If <code class="docutils literal notranslate"><span class="pre">Q1</span></code> is empty, tuple <code class="docutils literal notranslate"><span class="pre">{empty,</span> <span class="pre">Q1}</span></code> is returned</p>
+<p>Removes the item at the front of queue <code class="docutils literal notranslate"><span class="pre">Q1</span></code>. Returns tuple
+<code class="docutils literal notranslate"><span class="pre">{{value,</span> <span class="pre">Item},</span> <span class="pre">Q2}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Item</span></code> is the item removed and <code class="docutils literal notranslate"><span class="pre">Q2</span></code> is the
+resulting queue. If <code class="docutils literal notranslate"><span class="pre">Q1</span></code> is empty, tuple <code class="docutils literal notranslate"><span class="pre">{empty,</span> <span class="pre">Q1}</span></code> is returned.
+This function is part of the Original API</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">{{value,</span> <span class="pre">1=Item},</span> <span class="pre">Queue1}</span> <span class="pre">=</span> <span class="pre">queue:out(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{{value,1},{[5,4,3],[2]}}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[2,3,4,5]</span></code></p>
+<p><a name="out_r-1"></a></p>
+</section>
+<section id="out-r-1">
+<h3>out_r/1<a class="headerlink" href="#out-r-1" title="Link to this heading"></a></h3>
+<pre><code>
+out_r(Q1::<a href="#type-queue">queue</a>(Item)) -&gt; {{value, Item}, Q2::<a href="#type-queue">queue</a>(Item)} | {empty, Q1::<a href="#type-queue">queue</a>(Item)}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue from which the item will be dequeued (removed from the rear)<br /></p>
+<p>returns: Returns a tuple <code class="docutils literal notranslate"><span class="pre">{{value,</span> <span class="pre">Item},</span> <span class="pre">Q2}</span></code> where <code class="docutils literal notranslate"><span class="pre">Item</span></code> is the item removed
+and <code class="docutils literal notranslate"><span class="pre">Q2</span></code> is the resulting queue. If <code class="docutils literal notranslate"><span class="pre">Q1</span></code> is empty, tuple <code class="docutils literal notranslate"><span class="pre">{empty,</span> <span class="pre">Q1}</span></code> is returned</p>
+<p>Removes the item at the rear of queue <code class="docutils literal notranslate"><span class="pre">Q1</span></code>. Returns tuple <code class="docutils literal notranslate"><span class="pre">{{value,</span> <span class="pre">Item},</span> <span class="pre">Q2}</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">Item</span></code> is the item removed and <code class="docutils literal notranslate"><span class="pre">Q2</span></code> is the new queue. If <code class="docutils literal notranslate"><span class="pre">Q1</span></code> is empty,
+tuple <code class="docutils literal notranslate"><span class="pre">{empty,</span> <span class="pre">Q1}</span></code> is returned.
+This function is part of the Original API</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">{{value,</span> <span class="pre">5=Item},</span> <span class="pre">Queue1}</span> <span class="pre">=</span> <span class="pre">queue:out_r(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{{value,5},{[4,3],[1,2]}}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:to_list(Queue1).</span></code>
+<code class="docutils literal notranslate"><span class="pre">[1,2,3,4]</span></code></p>
+<p><a name="peek-1"></a></p>
+</section>
+<section id="peek-1">
+<h3>peek/1<a class="headerlink" href="#peek-1" title="Link to this heading"></a></h3>
+<pre><code>
+peek(Q::<a href="#type-queue">queue</a>(Item)) -&gt; empty | {value, Item}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue from which the first element will be returned<br /></p>
+<p>returns: Returns tuple <code class="docutils literal notranslate"><span class="pre">{value,</span> <span class="pre">Item}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Item</span></code> is the front item of <code class="docutils literal notranslate"><span class="pre">Q</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty</p>
+<p>Returns tuple <code class="docutils literal notranslate"><span class="pre">{value,</span> <span class="pre">Item}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Item</span></code> is the front item of <code class="docutils literal notranslate"><span class="pre">Q</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">queue:peek(queue:new()).</span></code>
+<code class="docutils literal notranslate"><span class="pre">empty</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:peek(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{value,</span> <span class="pre">1}</span></code></p>
+<p><a name="peek_r-1"></a></p>
+</section>
+<section id="peek-r-1">
+<h3>peek_r/1<a class="headerlink" href="#peek-r-1" title="Link to this heading"></a></h3>
+<pre><code>
+peek_r(Q::<a href="#type-queue">queue</a>(Item)) -&gt; empty | {value, Item}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue from which the last element will be returned<br /></p>
+<p>returns: Returns tuple <code class="docutils literal notranslate"><span class="pre">{value,</span> <span class="pre">Item}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Item</span></code> is the rear item of <code class="docutils literal notranslate"><span class="pre">Q</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty</p>
+<p>Returns tuple <code class="docutils literal notranslate"><span class="pre">{value,</span> <span class="pre">Item}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Item</span></code> is the rear item of <code class="docutils literal notranslate"><span class="pre">Q</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">empty</span></code> if <code class="docutils literal notranslate"><span class="pre">Q</span></code> is empty.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">queue:peek_r(queue:new()).</span></code>
+<code class="docutils literal notranslate"><span class="pre">empty</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">3&gt;</span> <span class="pre">queue:peek_r(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{value,</span> <span class="pre">5}</span></code></p>
+<p><a name="reverse-1"></a></p>
+</section>
+<section id="reverse-1">
+<h3>reverse/1<a class="headerlink" href="#reverse-1" title="Link to this heading"></a></h3>
+<pre><code>
+reverse(Q1::<a href="#type-queue">queue</a>(Item)) -&gt; Q2::<a href="#type-queue">queue</a>(Item)
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue to be reversed<br /></p>
+<p>returns: Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> containing the items of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> in reverse order</p>
+<p>Returns a queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code> containing the items of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> in reverse order.
+This function is part of the Original API</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">Queue1</span> <span class="pre">=</span> <span class="pre">queue:reverse(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[2,1],[3,4,5]}</span></code></p>
+<p><a name="split-2"></a></p>
+</section>
+<section id="split-2">
+<h3>split/2<a class="headerlink" href="#split-2" title="Link to this heading"></a></h3>
+<pre><code>
+split(N::non_neg_integer(), Q1::<a href="#type-queue">queue</a>(Item)) -&gt; {Q2::<a href="#type-queue">queue</a>(Item), Q3::<a href="#type-queue">queue</a>(Item)}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">N</span></code>: the number of items to be put in the first resulting queue <code class="docutils literal notranslate"><span class="pre">Q2</span></code><br /><code class="docutils literal notranslate"><span class="pre">Q1</span></code>: the queue to be split<br /></p>
+<p>returns: Returns a tuple <code class="docutils literal notranslate"><span class="pre">{Q2,</span> <span class="pre">Q3}</span></code> where <code class="docutils literal notranslate"><span class="pre">Q2</span></code> contains the first <code class="docutils literal notranslate"><span class="pre">N</span></code> items
+of <code class="docutils literal notranslate"><span class="pre">Q1</span></code> and <code class="docutils literal notranslate"><span class="pre">Q3</span></code> contains the remaining items</p>
+<p>Splits <code class="docutils literal notranslate"><span class="pre">Q1</span></code> in two. The <code class="docutils literal notranslate"><span class="pre">N</span></code> front items are put in <code class="docutils literal notranslate"><span class="pre">Q2</span></code> and the rest
+in <code class="docutils literal notranslate"><span class="pre">Q3</span></code>.
+This function is part of the Original API</p>
+<p><a name="to_list-1"></a></p>
+</section>
+<section id="to-list-1">
+<h3>to_list/1<a class="headerlink" href="#to-list-1" title="Link to this heading"></a></h3>
+<pre><code>
+to_list(Q::<a href="#type-queue">queue</a>(Item)) -&gt; [Item]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Q</span></code>: the queue to be converted to a list<br /></p>
+<p>returns: Returns a list of the items in the queue</p>
+<p>Returns a list of the items in the queue in the same order; the front
+item of the queue becomes the head of the list.</p>
+<p>Example:
+<code class="docutils literal notranslate"><span class="pre">1&gt;</span> <span class="pre">Queue</span> <span class="pre">=</span> <span class="pre">queue:from_list([1,2,3,4,5]).</span></code>
+<code class="docutils literal notranslate"><span class="pre">{[5,4,3],[1,2]}</span></code>
+<code class="docutils literal notranslate"><span class="pre">2&gt;</span> <span class="pre">List</span> <span class="pre">==</span> <span class="pre">queue:to_list(Queue).</span></code>
+<code class="docutils literal notranslate"><span class="pre">true</span></code>
+This function is part of the Original API.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="proplists.html" class="btn btn-neutral float-left" title="Module proplists" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sets.html" class="btn btn-neutral float-right" title="Module sets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      v0.6.6
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.6/">v0.6.6</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/v0.6.6/pdf/AtomVM-v0.6.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.6/epub/AtomVM-v0.6.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

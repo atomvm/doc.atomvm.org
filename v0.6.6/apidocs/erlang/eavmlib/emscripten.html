@@ -1,0 +1,1412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module emscripten &mdash; AtomVM 0.6.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/release-0.6/apidocs/erlang/eavmlib/emscripten.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d129ce28"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module esp" href="esp.html" />
+    <link rel="prev" title="Module console" href="console.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The eavmlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ahttp_client.html">Module ahttp_client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm.html">Module atomvm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avm_pubsub.html">Module avm_pubsub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console.html">Module console</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module emscripten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp.html">Module esp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp_adc.html">Module esp_adc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gpio.html">Module gpio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="http_server.html">Module http_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="i2c.html">Module i2c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json_encoder.html">Module json_encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ledc.html">Module ledc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network.html">Module network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="network_fsm.html">Module network_fsm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pico.html">Module pico</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.html">Module port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">Module spi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timestamp_util.html">Module timestamp_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uart.html">Module uart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module emscripten</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-emscripten">
+<h1>Module emscripten<a class="headerlink" href="#module-emscripten" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>emscripten API.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>The functions in this module broadly reflect emscripten’s API and obviously
+are only implemented for the emscripten platform.</p>
+<p>See Emscripten’s <a class="reference external" href="https://emscripten.org/docs/api_reference/index.md">API documentation</a>
+for more information about these APIs.</p>
+<p>The counterpart of functions defined in this module are two main Javascript
+functions that can be used to send messages to Erlang.</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">Module</span><span class="p">.</span><span class="n">cast</span><span class="p">(</span><span class="c">&#39;some_proc&#39;, &#39;message&#39;)</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Module</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="c">&#39;some_proc&#39;, &#39;message&#39;)</span>
+</pre></div>
+</div>
+<p>These respectively send the following messages to Erlang process registered as <code class="docutils literal notranslate"><span class="pre">some_proc</span></code>:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {cast, &lt;&lt;&quot;message&quot;&gt;&gt;}}
+  {emscripten, {call, Promise, &lt;&lt;&quot;message&quot;&gt;&gt;}}
+</pre></div>
+</div>
+<p>Promise should be passed to <code class="docutils literal notranslate"><span class="pre">promise_resolve/1,2</span></code> or <code class="docutils literal notranslate"><span class="pre">promise_reject/1,2</span></code> as
+documented below.</p>
+<p><a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="focus-event">
+<h3><a name="type-focus_event">focus_event()</a><a class="headerlink" href="#focus-event" title="Link to this heading"></a></h3>
+<pre><code>
+focus_event() = #{node_name =&gt; <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-unicode_binary">unicode:unicode_binary()</a>, id =&gt; <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-unicode_binary">unicode:unicode_binary()</a>}
+</code></pre>
+</section>
+<section id="html5-target">
+<h3><a name="type-html5_target">html5_target()</a><a class="headerlink" href="#html5-target" title="Link to this heading"></a></h3>
+<pre><code>
+html5_target() = window | document | screen | iodata()
+</code></pre>
+</section>
+<section id="keyboard-event">
+<h3><a name="type-keyboard_event">keyboard_event()</a><a class="headerlink" href="#keyboard-event" title="Link to this heading"></a></h3>
+<pre><code>
+keyboard_event() = #{timestamp =&gt; float(), location =&gt; integer(), ctrl_key =&gt; boolean(), shift_key =&gt; boolean(), alt_key =&gt; boolean(), meta_key =&gt; boolean(), repeat =&gt; boolean(), char_code =&gt; integer(), key_code =&gt; integer(), which =&gt; integer(), key =&gt; <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-unicode_binary">unicode:unicode_binary()</a>, code =&gt; <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-unicode_binary">unicode:unicode_binary()</a>, char_value =&gt; <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-unicode_binary">unicode:unicode_binary()</a>, locale =&gt; <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-unicode_binary">unicode:unicode_binary()</a>}
+</code></pre>
+</section>
+<section id="listener-handle">
+<h3><a name="type-listener_handle">listener_handle()</a><a class="headerlink" href="#listener-handle" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">listener_handle()</span></code></p>
+</section>
+<section id="mouse-event">
+<h3><a name="type-mouse_event">mouse_event()</a><a class="headerlink" href="#mouse-event" title="Link to this heading"></a></h3>
+<pre><code>
+mouse_event() = #{timestamp =&gt; float(), screen_x =&gt; integer(), screen_y =&gt; integer(), client_x =&gt; integer(), client_y =&gt; integer(), ctrl_key =&gt; boolean(), shift_key =&gt; boolean(), alt_key =&gt; boolean(), meta_key =&gt; boolean(), button =&gt; integer(), buttons =&gt; integer(), movement_x =&gt; integer(), movement_y =&gt; integer(), target_x =&gt; integer(), target_y =&gt; integer(), padding =&gt; integer()}
+</code></pre>
+</section>
+<section id="promise">
+<h3><a name="type-promise">promise()</a><a class="headerlink" href="#promise" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">promise()</span></code></p>
+</section>
+<section id="register-error-reason">
+<h3><a name="type-register_error_reason">register_error_reason()</a><a class="headerlink" href="#register-error-reason" title="Link to this heading"></a></h3>
+<pre><code>
+register_error_reason() = not_supported | failed_not_deferred | invalid_target | unknown_target | failed | no_data | timed_out | integer()
+</code></pre>
+</section>
+<section id="register-option">
+<h3><a name="type-register_option">register_option()</a><a class="headerlink" href="#register-option" title="Link to this heading"></a></h3>
+<pre><code>
+register_option() = {use_capture, boolean()} | {prevent_default, boolean()}
+</code></pre>
+</section>
+<section id="register-options">
+<h3><a name="type-register_options">register_options()</a><a class="headerlink" href="#register-options" title="Link to this heading"></a></h3>
+<pre><code>
+register_options() = boolean() | [<a href="#type-register_option">register_option()</a>]
+</code></pre>
+</section>
+<section id="register-result">
+<h3><a name="type-register_result">register_result()</a><a class="headerlink" href="#register-result" title="Link to this heading"></a></h3>
+<pre><code>
+register_result() = {ok, <a href="#type-listener_handle">listener_handle()</a>} | {ok, <a href="#type-listener_handle">listener_handle()</a>, deferred} | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+</section>
+<section id="run-script-opt">
+<h3><a name="type-run_script_opt">run_script_opt()</a><a class="headerlink" href="#run-script-opt" title="Link to this heading"></a></h3>
+<pre><code>
+run_script_opt() = main_thread | async
+</code></pre>
+</section>
+<section id="touch-event">
+<h3><a name="type-touch_event">touch_event()</a><a class="headerlink" href="#touch-event" title="Link to this heading"></a></h3>
+<pre><code>
+touch_event() = #{timestamp =&gt; float(), ctrl_key =&gt; boolean(), shift_key =&gt; boolean(), alt_key =&gt; boolean(), meta_key =&gt; boolean(), touches =&gt; [<a href="#type-touch_point">touch_point()</a>]}
+</code></pre>
+</section>
+<section id="touch-point">
+<h3><a name="type-touch_point">touch_point()</a><a class="headerlink" href="#touch-point" title="Link to this heading"></a></h3>
+<pre><code>
+touch_point() = #{identifier =&gt; integer(), screen_x =&gt; integer(), screen_y =&gt; integer(), client_x =&gt; integer(), client_y =&gt; integer(), page_x =&gt; integer(), page_y =&gt; integer(), is_changed =&gt; boolean(), on_target =&gt; boolean(), target_x =&gt; integer(), target_y =&gt; integer()}
+</code></pre>
+</section>
+<section id="ui-event">
+<h3><a name="type-ui_event">ui_event()</a><a class="headerlink" href="#ui-event" title="Link to this heading"></a></h3>
+<pre><code>
+ui_event() = #{detail =&gt; integer(), document_body_client_width =&gt; integer(), document_body_client_height =&gt; integer(), window_inner_width =&gt; integer(), window_inner_height =&gt; integer(), window_outer_width =&gt; integer(), window_outer_height =&gt; integer(), scroll_top =&gt; integer(), scroll_left =&gt; integer()}
+</code></pre>
+</section>
+<section id="wheel-event">
+<h3><a name="type-wheel_event">wheel_event()</a><a class="headerlink" href="#wheel-event" title="Link to this heading"></a></h3>
+<pre><code>
+wheel_event() = #{timestamp =&gt; float(), screen_x =&gt; integer(), screen_y =&gt; integer(), client_x =&gt; integer(), client_y =&gt; integer(), ctrl_key =&gt; boolean(), shift_key =&gt; boolean(), alt_key =&gt; boolean(), meta_key =&gt; boolean(), button =&gt; integer(), buttons =&gt; integer(), movement_x =&gt; integer(), movement_y =&gt; integer(), target_x =&gt; integer(), target_y =&gt; integer(), padding =&gt; integer(), delta_x =&gt; integer(), delta_y =&gt; integer(), delta_z =&gt; integer(), delta_mode =&gt; integer()}
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#promise_reject-1">promise_reject/1</a></td><td>Equivalent to <a href="#promise_reject-2"><tt>promise_reject(_Promise, 0)</tt></a>.</td></tr><tr><td valign="top"><a href="#promise_reject-2">promise_reject/2</a></td><td>Reject a promise with a given result.</td></tr><tr><td valign="top"><a href="#promise_resolve-1">promise_resolve/1</a></td><td>Equivalent to <a href="#promise_resolve-2"><tt>promise_resolve(_Promise, 0)</tt></a>.</td></tr><tr><td valign="top"><a href="#promise_resolve-2">promise_resolve/2</a></td><td>Successfully resolve a promise with a given result.</td></tr><tr><td valign="top"><a href="#register_blur_callback-1">register_blur_callback/1</a></td><td>Equivalent to <a href="#register_blur_callback-2"><tt>register_blur_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_blur_callback-2">register_blur_callback/2</a></td><td>Register for blur events.</td></tr><tr><td valign="top"><a href="#register_blur_callback-3">register_blur_callback/3</a></td><td>Register for blur events.</td></tr><tr><td valign="top"><a href="#register_click_callback-1">register_click_callback/1</a></td><td>Equivalent to <a href="#register_click_callback-2"><tt>register_click_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_click_callback-2">register_click_callback/2</a></td><td>Register for click events.</td></tr><tr><td valign="top"><a href="#register_click_callback-3">register_click_callback/3</a></td><td>Register for click events.</td></tr><tr><td valign="top"><a href="#register_dblclick_callback-1">register_dblclick_callback/1</a></td><td>Equivalent to <a href="#register_dblclick_callback-2"><tt>register_dblclick_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_dblclick_callback-2">register_dblclick_callback/2</a></td><td>Register for dblclick events.</td></tr><tr><td valign="top"><a href="#register_dblclick_callback-3">register_dblclick_callback/3</a></td><td>Register for dblclick events.</td></tr><tr><td valign="top"><a href="#register_focus_callback-1">register_focus_callback/1</a></td><td>Equivalent to <a href="#register_focus_callback-2"><tt>register_focus_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_focus_callback-2">register_focus_callback/2</a></td><td>Register for focus events.</td></tr><tr><td valign="top"><a href="#register_focus_callback-3">register_focus_callback/3</a></td><td>Register for focus events.</td></tr><tr><td valign="top"><a href="#register_focusin_callback-1">register_focusin_callback/1</a></td><td>Equivalent to <a href="#register_focusin_callback-2"><tt>register_focusin_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_focusin_callback-2">register_focusin_callback/2</a></td><td>Register for focusin events.</td></tr><tr><td valign="top"><a href="#register_focusin_callback-3">register_focusin_callback/3</a></td><td>Register for focusin events.</td></tr><tr><td valign="top"><a href="#register_focusout_callback-1">register_focusout_callback/1</a></td><td>Equivalent to <a href="#register_focusout_callback-2"><tt>register_focusout_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_focusout_callback-2">register_focusout_callback/2</a></td><td>Register for focusout events.</td></tr><tr><td valign="top"><a href="#register_focusout_callback-3">register_focusout_callback/3</a></td><td>Register for focusout events.</td></tr><tr><td valign="top"><a href="#register_keydown_callback-1">register_keydown_callback/1</a></td><td>Equivalent to <a href="#register_keydown_callback-2"><tt>register_keydown_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_keydown_callback-2">register_keydown_callback/2</a></td><td>Register for keydown events.</td></tr><tr><td valign="top"><a href="#register_keydown_callback-3">register_keydown_callback/3</a></td><td>Register for keydown events.</td></tr><tr><td valign="top"><a href="#register_keypress_callback-1">register_keypress_callback/1</a></td><td>Equivalent to <a href="#register_keypress_callback-2"><tt>register_keypress_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_keypress_callback-2">register_keypress_callback/2</a></td><td>Register for keypress events.</td></tr><tr><td valign="top"><a href="#register_keypress_callback-3">register_keypress_callback/3</a></td><td>Register for keypress events.</td></tr><tr><td valign="top"><a href="#register_keyup_callback-1">register_keyup_callback/1</a></td><td>Equivalent to <a href="#register_keyup_callback-2"><tt>register_keyup_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_keyup_callback-2">register_keyup_callback/2</a></td><td>Register for keyup events.</td></tr><tr><td valign="top"><a href="#register_keyup_callback-3">register_keyup_callback/3</a></td><td>Register for keyup events.</td></tr><tr><td valign="top"><a href="#register_mousedown_callback-1">register_mousedown_callback/1</a></td><td>Equivalent to <a href="#register_mousedown_callback-2"><tt>register_mousedown_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_mousedown_callback-2">register_mousedown_callback/2</a></td><td>Register for mousedown events.</td></tr><tr><td valign="top"><a href="#register_mousedown_callback-3">register_mousedown_callback/3</a></td><td>Register for mousedown events.</td></tr><tr><td valign="top"><a href="#register_mouseenter_callback-1">register_mouseenter_callback/1</a></td><td>Equivalent to <a href="#register_mouseenter_callback-2"><tt>register_mouseenter_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_mouseenter_callback-2">register_mouseenter_callback/2</a></td><td>Register for mouseenter events.</td></tr><tr><td valign="top"><a href="#register_mouseenter_callback-3">register_mouseenter_callback/3</a></td><td>Register for mouseenter events.</td></tr><tr><td valign="top"><a href="#register_mouseleave_callback-1">register_mouseleave_callback/1</a></td><td>Equivalent to <a href="#register_mouseleave_callback-2"><tt>register_mouseleave_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_mouseleave_callback-2">register_mouseleave_callback/2</a></td><td>Register for mouseleave events.</td></tr><tr><td valign="top"><a href="#register_mouseleave_callback-3">register_mouseleave_callback/3</a></td><td>Register for mouseleave events.</td></tr><tr><td valign="top"><a href="#register_mousemove_callback-1">register_mousemove_callback/1</a></td><td>Equivalent to <a href="#register_mousemove_callback-2"><tt>register_mousemove_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_mousemove_callback-2">register_mousemove_callback/2</a></td><td>Register for mousemove events.</td></tr><tr><td valign="top"><a href="#register_mousemove_callback-3">register_mousemove_callback/3</a></td><td>Register for mousemove events.</td></tr><tr><td valign="top"><a href="#register_mouseout_callback-1">register_mouseout_callback/1</a></td><td>Equivalent to <a href="#register_mouseout_callback-2"><tt>register_mouseout_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_mouseout_callback-2">register_mouseout_callback/2</a></td><td>Register for mouseout events.</td></tr><tr><td valign="top"><a href="#register_mouseout_callback-3">register_mouseout_callback/3</a></td><td>Register for mouseout events.</td></tr><tr><td valign="top"><a href="#register_mouseover_callback-1">register_mouseover_callback/1</a></td><td>Equivalent to <a href="#register_mouseover_callback-2"><tt>register_mouseover_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_mouseover_callback-2">register_mouseover_callback/2</a></td><td>Register for mouseover events.</td></tr><tr><td valign="top"><a href="#register_mouseover_callback-3">register_mouseover_callback/3</a></td><td>Register for mouseover events.</td></tr><tr><td valign="top"><a href="#register_mouseup_callback-1">register_mouseup_callback/1</a></td><td>Equivalent to <a href="#register_mouseup_callback-2"><tt>register_mouseup_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_mouseup_callback-2">register_mouseup_callback/2</a></td><td>Register for mouseup events.</td></tr><tr><td valign="top"><a href="#register_mouseup_callback-3">register_mouseup_callback/3</a></td><td>Register for mouseup events.</td></tr><tr><td valign="top"><a href="#register_resize_callback-1">register_resize_callback/1</a></td><td>Equivalent to <a href="#register_resize_callback-2"><tt>register_resize_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_resize_callback-2">register_resize_callback/2</a></td><td>Register for resize events.</td></tr><tr><td valign="top"><a href="#register_resize_callback-3">register_resize_callback/3</a></td><td>Register for resize events.</td></tr><tr><td valign="top"><a href="#register_scroll_callback-1">register_scroll_callback/1</a></td><td>Equivalent to <a href="#register_scroll_callback-2"><tt>register_scroll_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_scroll_callback-2">register_scroll_callback/2</a></td><td>Register for scroll events.</td></tr><tr><td valign="top"><a href="#register_scroll_callback-3">register_scroll_callback/3</a></td><td>Register for scroll events.</td></tr><tr><td valign="top"><a href="#register_touchcancel_callback-1">register_touchcancel_callback/1</a></td><td>Equivalent to <a href="#register_touchcancel_callback-2"><tt>register_touchcancel_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_touchcancel_callback-2">register_touchcancel_callback/2</a></td><td>Register for touchcancel events.</td></tr><tr><td valign="top"><a href="#register_touchcancel_callback-3">register_touchcancel_callback/3</a></td><td>Register for touchcancel events.</td></tr><tr><td valign="top"><a href="#register_touchend_callback-1">register_touchend_callback/1</a></td><td>Equivalent to <a href="#register_touchend_callback-2"><tt>register_touchend_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_touchend_callback-2">register_touchend_callback/2</a></td><td>Register for touchend events.</td></tr><tr><td valign="top"><a href="#register_touchend_callback-3">register_touchend_callback/3</a></td><td>Register for touchend events.</td></tr><tr><td valign="top"><a href="#register_touchmove_callback-1">register_touchmove_callback/1</a></td><td>Equivalent to <a href="#register_touchmove_callback-2"><tt>register_touchmove_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_touchmove_callback-2">register_touchmove_callback/2</a></td><td>Register for touchmove events.</td></tr><tr><td valign="top"><a href="#register_touchmove_callback-3">register_touchmove_callback/3</a></td><td>Register for touchmove events.</td></tr><tr><td valign="top"><a href="#register_touchstart_callback-1">register_touchstart_callback/1</a></td><td>Equivalent to <a href="#register_touchstart_callback-2"><tt>register_touchstart_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_touchstart_callback-2">register_touchstart_callback/2</a></td><td>Register for touchstart events.</td></tr><tr><td valign="top"><a href="#register_touchstart_callback-3">register_touchstart_callback/3</a></td><td>Register for touchstart events.</td></tr><tr><td valign="top"><a href="#register_wheel_callback-1">register_wheel_callback/1</a></td><td>Equivalent to <a href="#register_wheel_callback-2"><tt>register_wheel_callback(_Target, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#register_wheel_callback-2">register_wheel_callback/2</a></td><td>Register for wheel events.</td></tr><tr><td valign="top"><a href="#register_wheel_callback-3">register_wheel_callback/3</a></td><td>Register for wheel events.</td></tr><tr><td valign="top"><a href="#run_script-1">run_script/1</a></td><td>Equivalent to <a href="#run_script-2"><tt>run_script(_Script, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#run_script-2">run_script/2</a></td><td>Run a script.</td></tr><tr><td valign="top"><a href="#unregister_blur_callback-1">unregister_blur_callback/1</a></td><td>Unregister a blur event handler.</td></tr><tr><td valign="top"><a href="#unregister_click_callback-1">unregister_click_callback/1</a></td><td>Unregister a click event handler.</td></tr><tr><td valign="top"><a href="#unregister_dblclick_callback-1">unregister_dblclick_callback/1</a></td><td>Unregister a dblclick event handler.</td></tr><tr><td valign="top"><a href="#unregister_focus_callback-1">unregister_focus_callback/1</a></td><td>Unregister a focus event handler.</td></tr><tr><td valign="top"><a href="#unregister_focusin_callback-1">unregister_focusin_callback/1</a></td><td>Unregister a focusin event handler.</td></tr><tr><td valign="top"><a href="#unregister_focusout_callback-1">unregister_focusout_callback/1</a></td><td>Unregister a focusout event handler.</td></tr><tr><td valign="top"><a href="#unregister_keydown_callback-1">unregister_keydown_callback/1</a></td><td>Unregister a keydown event handler.</td></tr><tr><td valign="top"><a href="#unregister_keypress_callback-1">unregister_keypress_callback/1</a></td><td>Unregister a keypress listener.</td></tr><tr><td valign="top"><a href="#unregister_keyup_callback-1">unregister_keyup_callback/1</a></td><td>Unregister a keyup event handler.</td></tr><tr><td valign="top"><a href="#unregister_mousedown_callback-1">unregister_mousedown_callback/1</a></td><td>Unregister a mousedown event handler.</td></tr><tr><td valign="top"><a href="#unregister_mouseenter_callback-1">unregister_mouseenter_callback/1</a></td><td>Unregister a mouseenter event handler.</td></tr><tr><td valign="top"><a href="#unregister_mouseleave_callback-1">unregister_mouseleave_callback/1</a></td><td>Unregister a mouseleave event handler.</td></tr><tr><td valign="top"><a href="#unregister_mousemove_callback-1">unregister_mousemove_callback/1</a></td><td>Unregister a mousemove event handler.</td></tr><tr><td valign="top"><a href="#unregister_mouseout_callback-1">unregister_mouseout_callback/1</a></td><td>Unregister a mouseout event handler.</td></tr><tr><td valign="top"><a href="#unregister_mouseover_callback-1">unregister_mouseover_callback/1</a></td><td>Unregister a mouseover event handler.</td></tr><tr><td valign="top"><a href="#unregister_mouseup_callback-1">unregister_mouseup_callback/1</a></td><td>Unregister a mouseup event handler.</td></tr><tr><td valign="top"><a href="#unregister_resize_callback-1">unregister_resize_callback/1</a></td><td>Unregister a resize event handler.</td></tr><tr><td valign="top"><a href="#unregister_scroll_callback-1">unregister_scroll_callback/1</a></td><td>Unregister a scroll event handler.</td></tr><tr><td valign="top"><a href="#unregister_touchcancel_callback-1">unregister_touchcancel_callback/1</a></td><td>Unregister a touchcancel event handler.</td></tr><tr><td valign="top"><a href="#unregister_touchend_callback-1">unregister_touchend_callback/1</a></td><td>Unregister a touchend event handler.</td></tr><tr><td valign="top"><a href="#unregister_touchmove_callback-1">unregister_touchmove_callback/1</a></td><td>Unregister a touchmove event handler.</td></tr><tr><td valign="top"><a href="#unregister_touchstart_callback-1">unregister_touchstart_callback/1</a></td><td>Unregister a touchstart event handler.</td></tr><tr><td valign="top"><a href="#unregister_wheel_callback-1">unregister_wheel_callback/1</a></td><td>Unregister a wheel event handler.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="promise_reject-1"></a></p>
+<section id="promise-reject-1">
+<h3>promise_reject/1<a class="headerlink" href="#promise-reject-1" title="Link to this heading"></a></h3>
+<pre><code>
+promise_reject(Promise::<a href="#type-promise">promise()</a>) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#promise_reject-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">promise_reject(_Promise,</span> <span class="pre">0)</span></code></span></a>.</p>
+<p><a name="promise_reject-2"></a></p>
+</section>
+<section id="promise-reject-2">
+<h3>promise_reject/2<a class="headerlink" href="#promise-reject-2" title="Link to this heading"></a></h3>
+<pre><code>
+promise_reject(_Promise::<a href="#type-promise">promise()</a>, _Value::integer() | iodata()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">_Promise</span></code>: Opaque promise resource<br /><code class="docutils literal notranslate"><span class="pre">_Value</span></code>: Value to send to Javascript, must be an integer or a string.<br /></p>
+<p>Reject a promise with a given result.
+This is similar to <code class="docutils literal notranslate"><span class="pre">promise_resolve</span></code> except the promise is rejected.</p>
+<p><a name="promise_resolve-1"></a></p>
+</section>
+<section id="promise-resolve-1">
+<h3>promise_resolve/1<a class="headerlink" href="#promise-resolve-1" title="Link to this heading"></a></h3>
+<pre><code>
+promise_resolve(Promise::<a href="#type-promise">promise()</a>) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#promise_resolve-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">promise_resolve(_Promise,</span> <span class="pre">0)</span></code></span></a>.</p>
+<p><a name="promise_resolve-2"></a></p>
+</section>
+<section id="promise-resolve-2">
+<h3>promise_resolve/2<a class="headerlink" href="#promise-resolve-2" title="Link to this heading"></a></h3>
+<pre><code>
+promise_resolve(_Promise::<a href="#type-promise">promise()</a>, _Value::integer() | iodata()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">_Promise</span></code>: Opaque promise resource<br /><code class="docutils literal notranslate"><span class="pre">_Value</span></code>: Value to send to Javascript, must be an integer or a string.<br /></p>
+<p>Successfully resolve a promise with a given result.
+A promise is currently only obtained through synchronous calls using
+<code class="docutils literal notranslate"><span class="pre">Module.call()</span></code> javascript function.
+If Javascript calls:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  await Module.call(&#39;some_proc&#39;, &#39;message&#39;)
+</pre></div>
+</div>
+<p>and if an Erlang process is registered as <code class="docutils literal notranslate"><span class="pre">some_proc</span></code>, then the process
+will receive a message:</p>
+<pre><code>
+{emscripten, {call, Promise, <<"message">>}}
+</code></pre>
+<p>and the Javascript caller will wait until <code class="docutils literal notranslate"><span class="pre">promise_resolve</span></code> or <code class="docutils literal notranslate"><span class="pre">promise_reject</span></code>
+is called. If the process doesn’t exist, the promise will be rejected with
+‘no_proc’. Likewise if the Promise is garbage collected by the Erlang VM.</p>
+<p><a name="register_blur_callback-1"></a></p>
+</section>
+<section id="register-blur-callback-1">
+<h3>register_blur_callback/1<a class="headerlink" href="#register-blur-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_blur_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_blur_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_blur_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_blur_callback-2"></a></p>
+</section>
+<section id="register-blur-callback-2">
+<h3>register_blur_callback/2<a class="headerlink" href="#register-blur-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_blur_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for blur events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {blur, focus_event()}}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_blur_callback-3"></a></p>
+</section>
+<section id="register-blur-callback-3">
+<h3>register_blur_callback/3<a class="headerlink" href="#register-blur-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_blur_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for blur events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {blur, focus_event()}, UserData}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_click_callback-1"></a></p>
+</section>
+<section id="register-click-callback-1">
+<h3>register_click_callback/1<a class="headerlink" href="#register-click-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_click_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_click_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_click_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_click_callback-2"></a></p>
+</section>
+<section id="register-click-callback-2">
+<h3>register_click_callback/2<a class="headerlink" href="#register-click-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_click_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for click events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {click, mouse_event()}}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_click_callback-3"></a></p>
+</section>
+<section id="register-click-callback-3">
+<h3>register_click_callback/3<a class="headerlink" href="#register-click-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_click_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for click events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {click, mouse_event()}, UserData}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_dblclick_callback-1"></a></p>
+</section>
+<section id="register-dblclick-callback-1">
+<h3>register_dblclick_callback/1<a class="headerlink" href="#register-dblclick-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_dblclick_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_dblclick_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_dblclick_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_dblclick_callback-2"></a></p>
+</section>
+<section id="register-dblclick-callback-2">
+<h3>register_dblclick_callback/2<a class="headerlink" href="#register-dblclick-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_dblclick_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for dblclick events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_dblclick_callback-3"></a></p>
+</section>
+<section id="register-dblclick-callback-3">
+<h3>register_dblclick_callback/3<a class="headerlink" href="#register-dblclick-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_dblclick_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for dblclick events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_focus_callback-1"></a></p>
+</section>
+<section id="register-focus-callback-1">
+<h3>register_focus_callback/1<a class="headerlink" href="#register-focus-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_focus_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_focus_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_focus_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_focus_callback-2"></a></p>
+</section>
+<section id="register-focus-callback-2">
+<h3>register_focus_callback/2<a class="headerlink" href="#register-focus-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_focus_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for focus events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_blur_callback-2"><span class="xref myst">register_blur_callback/2</span></a>.</p>
+<p><a name="register_focus_callback-3"></a></p>
+</section>
+<section id="register-focus-callback-3">
+<h3>register_focus_callback/3<a class="headerlink" href="#register-focus-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_focus_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for focus events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_blur_callback-2"><span class="xref myst">register_blur_callback/2</span></a>.</p>
+<p><a name="register_focusin_callback-1"></a></p>
+</section>
+<section id="register-focusin-callback-1">
+<h3>register_focusin_callback/1<a class="headerlink" href="#register-focusin-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_focusin_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_focusin_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_focusin_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_focusin_callback-2"></a></p>
+</section>
+<section id="register-focusin-callback-2">
+<h3>register_focusin_callback/2<a class="headerlink" href="#register-focusin-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_focusin_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for focusin events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_blur_callback-2"><span class="xref myst">register_blur_callback/2</span></a>.</p>
+<p><a name="register_focusin_callback-3"></a></p>
+</section>
+<section id="register-focusin-callback-3">
+<h3>register_focusin_callback/3<a class="headerlink" href="#register-focusin-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_focusin_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for focusin events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_blur_callback-2"><span class="xref myst">register_blur_callback/2</span></a>.</p>
+<p><a name="register_focusout_callback-1"></a></p>
+</section>
+<section id="register-focusout-callback-1">
+<h3>register_focusout_callback/1<a class="headerlink" href="#register-focusout-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_focusout_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_focusout_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_focusout_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_focusout_callback-2"></a></p>
+</section>
+<section id="register-focusout-callback-2">
+<h3>register_focusout_callback/2<a class="headerlink" href="#register-focusout-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_focusout_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for focusout events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_blur_callback-2"><span class="xref myst">register_blur_callback/2</span></a>.</p>
+<p><a name="register_focusout_callback-3"></a></p>
+</section>
+<section id="register-focusout-callback-3">
+<h3>register_focusout_callback/3<a class="headerlink" href="#register-focusout-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_focusout_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for focusout events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_blur_callback-2"><span class="xref myst">register_blur_callback/2</span></a>.</p>
+<p><a name="register_keydown_callback-1"></a></p>
+</section>
+<section id="register-keydown-callback-1">
+<h3>register_keydown_callback/1<a class="headerlink" href="#register-keydown-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_keydown_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_keydown_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_keydown_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_keydown_callback-2"></a></p>
+</section>
+<section id="register-keydown-callback-2">
+<h3>register_keydown_callback/2<a class="headerlink" href="#register-keydown-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_keydown_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for keydown events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_keydown_callback-3"></a></p>
+</section>
+<section id="register-keydown-callback-3">
+<h3>register_keydown_callback/3<a class="headerlink" href="#register-keydown-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_keydown_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for keydown events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_keypress_callback-1"></a></p>
+</section>
+<section id="register-keypress-callback-1">
+<h3>register_keypress_callback/1<a class="headerlink" href="#register-keypress-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_keypress_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_keypress_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_keypress_callback-2"></a></p>
+</section>
+<section id="register-keypress-callback-2">
+<h3>register_keypress_callback/2<a class="headerlink" href="#register-keypress-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_keypress_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for keypress events.
+This function registers with no user data and events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {keypress, keyboard_event()}}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-3"><span class="xref myst">register_keypress_callback/3</span></a>.</p>
+<p><a name="register_keypress_callback-3"></a></p>
+</section>
+<section id="register-keypress-callback-3">
+<h3>register_keypress_callback/3<a class="headerlink" href="#register-keypress-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_keypress_callback(_Target::<a href="#type.md5_target">html5_target()</a>, _Options::<a href="#type-register_options">register_options()</a>, _UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">_Target</span></code>: target to register keypress on<br /><code class="docutils literal notranslate"><span class="pre">_Options</span></code>: options for event handling<br /><code class="docutils literal notranslate"><span class="pre">_UserData</span></code>: user data passed back<br /></p>
+<p>Register for keypress events.
+This function registers keypress events on a given target.
+Target can be specified as special atoms <code class="docutils literal notranslate"><span class="pre">window</span></code> for Javascript’s window,
+<code class="docutils literal notranslate"><span class="pre">document</span></code> for window.document. <code class="docutils literal notranslate"><span class="pre">screen</span></code> is also supported, but it doesn’t
+seem to work, see <a class="reference external" href="https://github.com/emscripten-core/emscripten/issues/19865"><code class="docutils literal notranslate"><span class="pre">https://github.com/emscripten-core/emscripten/issues/19865</span></code></a></p>
+<p>Second parameter specifies options which can be a <code class="docutils literal notranslate"><span class="pre">boolean()</span></code> to match
+<code class="docutils literal notranslate"><span class="pre">useCapture</span></code> in Emscripten’s API. Alternatively, the option can be a proplist()
+with <code class="docutils literal notranslate"><span class="pre">use_capture</span></code> and <code class="docutils literal notranslate"><span class="pre">prevent_default</span></code> keys. <code class="docutils literal notranslate"><span class="pre">prevent_default</span></code> determines
+what the handler should return to Javascript, <code class="docutils literal notranslate"><span class="pre">true</span></code> meaning that the default
+should be prevented.</p>
+<p>Third parameter is user data that is passed back. Indeed, when an event
+occurs, the following message is sent to the process that registered the
+event:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {keypress, keyboard_event()}, UserData}
+</pre></div>
+</div>
+<p>The function eventually returns a <code class="docutils literal notranslate"><span class="pre">listener_handle()</span></code> or an error. The
+handler is an opaque resource that actually contains a copy of <code class="docutils literal notranslate"><span class="pre">UserData</span></code>.
+Please note that if the calling process dies, the callback and any callback
+for the same event on the same target are unregistered.</p>
+<p><a name="register_keyup_callback-1"></a></p>
+</section>
+<section id="register-keyup-callback-1">
+<h3>register_keyup_callback/1<a class="headerlink" href="#register-keyup-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_keyup_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_keyup_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_keyup_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_keyup_callback-2"></a></p>
+</section>
+<section id="register-keyup-callback-2">
+<h3>register_keyup_callback/2<a class="headerlink" href="#register-keyup-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_keyup_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for keyup events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_keyup_callback-3"></a></p>
+</section>
+<section id="register-keyup-callback-3">
+<h3>register_keyup_callback/3<a class="headerlink" href="#register-keyup-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_keyup_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for keyup events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_mousedown_callback-1"></a></p>
+</section>
+<section id="register-mousedown-callback-1">
+<h3>register_mousedown_callback/1<a class="headerlink" href="#register-mousedown-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_mousedown_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_mousedown_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_mousedown_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_mousedown_callback-2"></a></p>
+</section>
+<section id="register-mousedown-callback-2">
+<h3>register_mousedown_callback/2<a class="headerlink" href="#register-mousedown-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_mousedown_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mousedown events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mousedown_callback-3"></a></p>
+</section>
+<section id="register-mousedown-callback-3">
+<h3>register_mousedown_callback/3<a class="headerlink" href="#register-mousedown-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_mousedown_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mousedown events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseenter_callback-1"></a></p>
+</section>
+<section id="register-mouseenter-callback-1">
+<h3>register_mouseenter_callback/1<a class="headerlink" href="#register-mouseenter-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseenter_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_mouseenter_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_mouseenter_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_mouseenter_callback-2"></a></p>
+</section>
+<section id="register-mouseenter-callback-2">
+<h3>register_mouseenter_callback/2<a class="headerlink" href="#register-mouseenter-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseenter_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseenter events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseenter_callback-3"></a></p>
+</section>
+<section id="register-mouseenter-callback-3">
+<h3>register_mouseenter_callback/3<a class="headerlink" href="#register-mouseenter-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseenter_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseenter events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseleave_callback-1"></a></p>
+</section>
+<section id="register-mouseleave-callback-1">
+<h3>register_mouseleave_callback/1<a class="headerlink" href="#register-mouseleave-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseleave_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_mouseleave_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_mouseleave_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_mouseleave_callback-2"></a></p>
+</section>
+<section id="register-mouseleave-callback-2">
+<h3>register_mouseleave_callback/2<a class="headerlink" href="#register-mouseleave-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseleave_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseleave events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseleave_callback-3"></a></p>
+</section>
+<section id="register-mouseleave-callback-3">
+<h3>register_mouseleave_callback/3<a class="headerlink" href="#register-mouseleave-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseleave_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseleave events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mousemove_callback-1"></a></p>
+</section>
+<section id="register-mousemove-callback-1">
+<h3>register_mousemove_callback/1<a class="headerlink" href="#register-mousemove-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_mousemove_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_mousemove_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_mousemove_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_mousemove_callback-2"></a></p>
+</section>
+<section id="register-mousemove-callback-2">
+<h3>register_mousemove_callback/2<a class="headerlink" href="#register-mousemove-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_mousemove_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mousemove events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mousemove_callback-3"></a></p>
+</section>
+<section id="register-mousemove-callback-3">
+<h3>register_mousemove_callback/3<a class="headerlink" href="#register-mousemove-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_mousemove_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mousemove events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseout_callback-1"></a></p>
+</section>
+<section id="register-mouseout-callback-1">
+<h3>register_mouseout_callback/1<a class="headerlink" href="#register-mouseout-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseout_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_mouseout_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_mouseout_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_mouseout_callback-2"></a></p>
+</section>
+<section id="register-mouseout-callback-2">
+<h3>register_mouseout_callback/2<a class="headerlink" href="#register-mouseout-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseout_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseout events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseout_callback-3"></a></p>
+</section>
+<section id="register-mouseout-callback-3">
+<h3>register_mouseout_callback/3<a class="headerlink" href="#register-mouseout-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseout_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseout events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseover_callback-1"></a></p>
+</section>
+<section id="register-mouseover-callback-1">
+<h3>register_mouseover_callback/1<a class="headerlink" href="#register-mouseover-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseover_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_mouseover_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_mouseover_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_mouseover_callback-2"></a></p>
+</section>
+<section id="register-mouseover-callback-2">
+<h3>register_mouseover_callback/2<a class="headerlink" href="#register-mouseover-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseover_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseover events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseover_callback-3"></a></p>
+</section>
+<section id="register-mouseover-callback-3">
+<h3>register_mouseover_callback/3<a class="headerlink" href="#register-mouseover-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseover_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseover events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseup_callback-1"></a></p>
+</section>
+<section id="register-mouseup-callback-1">
+<h3>register_mouseup_callback/1<a class="headerlink" href="#register-mouseup-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseup_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_mouseup_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_mouseup_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_mouseup_callback-2"></a></p>
+</section>
+<section id="register-mouseup-callback-2">
+<h3>register_mouseup_callback/2<a class="headerlink" href="#register-mouseup-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseup_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseup events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_mouseup_callback-3"></a></p>
+</section>
+<section id="register-mouseup-callback-3">
+<h3>register_mouseup_callback/3<a class="headerlink" href="#register-mouseup-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_mouseup_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for mouseup events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_click_callback-2"><span class="xref myst">register_click_callback/2</span></a>.</p>
+<p><a name="register_resize_callback-1"></a></p>
+</section>
+<section id="register-resize-callback-1">
+<h3>register_resize_callback/1<a class="headerlink" href="#register-resize-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_resize_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_resize_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_resize_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_resize_callback-2"></a></p>
+</section>
+<section id="register-resize-callback-2">
+<h3>register_resize_callback/2<a class="headerlink" href="#register-resize-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_resize_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for resize events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {resize, ui_event()}}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_resize_callback-3"></a></p>
+</section>
+<section id="register-resize-callback-3">
+<h3>register_resize_callback/3<a class="headerlink" href="#register-resize-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_resize_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for resize events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {resize, ui_event()}, UserData}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_scroll_callback-1"></a></p>
+</section>
+<section id="register-scroll-callback-1">
+<h3>register_scroll_callback/1<a class="headerlink" href="#register-scroll-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_scroll_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_scroll_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_scroll_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_scroll_callback-2"></a></p>
+</section>
+<section id="register-scroll-callback-2">
+<h3>register_scroll_callback/2<a class="headerlink" href="#register-scroll-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_scroll_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for scroll events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_resize_callback-2"><span class="xref myst">register_resize_callback/2</span></a>.</p>
+<p><a name="register_scroll_callback-3"></a></p>
+</section>
+<section id="register-scroll-callback-3">
+<h3>register_scroll_callback/3<a class="headerlink" href="#register-scroll-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_scroll_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for scroll events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_resize_callback-2"><span class="xref myst">register_resize_callback/2</span></a>.</p>
+<p><a name="register_touchcancel_callback-1"></a></p>
+</section>
+<section id="register-touchcancel-callback-1">
+<h3>register_touchcancel_callback/1<a class="headerlink" href="#register-touchcancel-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchcancel_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_touchcancel_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_touchcancel_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_touchcancel_callback-2"></a></p>
+</section>
+<section id="register-touchcancel-callback-2">
+<h3>register_touchcancel_callback/2<a class="headerlink" href="#register-touchcancel-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchcancel_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for touchcancel events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_touchstart_callback-2"><span class="xref myst">register_touchstart_callback/2</span></a>.</p>
+<p><a name="register_touchcancel_callback-3"></a></p>
+</section>
+<section id="register-touchcancel-callback-3">
+<h3>register_touchcancel_callback/3<a class="headerlink" href="#register-touchcancel-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchcancel_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for touchcancel events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_touchstart_callback-2"><span class="xref myst">register_touchstart_callback/2</span></a>.</p>
+<p><a name="register_touchend_callback-1"></a></p>
+</section>
+<section id="register-touchend-callback-1">
+<h3>register_touchend_callback/1<a class="headerlink" href="#register-touchend-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchend_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_touchend_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_touchend_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_touchend_callback-2"></a></p>
+</section>
+<section id="register-touchend-callback-2">
+<h3>register_touchend_callback/2<a class="headerlink" href="#register-touchend-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchend_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for touchend events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_touchstart_callback-2"><span class="xref myst">register_touchstart_callback/2</span></a>.</p>
+<p><a name="register_touchend_callback-3"></a></p>
+</section>
+<section id="register-touchend-callback-3">
+<h3>register_touchend_callback/3<a class="headerlink" href="#register-touchend-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchend_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for touchend events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_touchstart_callback-2"><span class="xref myst">register_touchstart_callback/2</span></a>.</p>
+<p><a name="register_touchmove_callback-1"></a></p>
+</section>
+<section id="register-touchmove-callback-1">
+<h3>register_touchmove_callback/1<a class="headerlink" href="#register-touchmove-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchmove_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_touchmove_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_touchmove_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_touchmove_callback-2"></a></p>
+</section>
+<section id="register-touchmove-callback-2">
+<h3>register_touchmove_callback/2<a class="headerlink" href="#register-touchmove-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchmove_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for touchmove events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_touchstart_callback-2"><span class="xref myst">register_touchstart_callback/2</span></a>.</p>
+<p><a name="register_touchmove_callback-3"></a></p>
+</section>
+<section id="register-touchmove-callback-3">
+<h3>register_touchmove_callback/3<a class="headerlink" href="#register-touchmove-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchmove_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for touchmove events.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_touchstart_callback-2"><span class="xref myst">register_touchstart_callback/2</span></a>.</p>
+<p><a name="register_touchstart_callback-1"></a></p>
+</section>
+<section id="register-touchstart-callback-1">
+<h3>register_touchstart_callback/1<a class="headerlink" href="#register-touchstart-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchstart_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_touchstart_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_touchstart_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_touchstart_callback-2"></a></p>
+</section>
+<section id="register-touchstart-callback-2">
+<h3>register_touchstart_callback/2<a class="headerlink" href="#register-touchstart-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchstart_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for touchstart events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {touchstart, touch_event()}}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_touchstart_callback-3"></a></p>
+</section>
+<section id="register-touchstart-callback-3">
+<h3>register_touchstart_callback/3<a class="headerlink" href="#register-touchstart-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_touchstart_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for touchstart events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {touchstart, touch_event()}, UserData}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_wheel_callback-1"></a></p>
+</section>
+<section id="register-wheel-callback-1">
+<h3>register_wheel_callback/1<a class="headerlink" href="#register-wheel-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+register_wheel_callback(Target::<a href="#type.md5_target">html5_target()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#register_wheel_callback-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">register_wheel_callback(_Target,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="register_wheel_callback-2"></a></p>
+</section>
+<section id="register-wheel-callback-2">
+<h3>register_wheel_callback/2<a class="headerlink" href="#register-wheel-callback-2" title="Link to this heading"></a></h3>
+<pre><code>
+register_wheel_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for wheel events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {wheel, wheel_event()}}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="register_wheel_callback-3"></a></p>
+</section>
+<section id="register-wheel-callback-3">
+<h3>register_wheel_callback/3<a class="headerlink" href="#register-wheel-callback-3" title="Link to this heading"></a></h3>
+<pre><code>
+register_wheel_callback(Target::<a href="#type.md5_target">html5_target()</a>, Options::<a href="#type-register_options">register_options()</a>, UserData::any()) -&gt; <a href="#type-register_result">register_result()</a>
+</code></pre>
+<br />
+<p>Register for wheel events.
+Events are sent as:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {wheel, mouse_event()}, UserData}
+</pre></div>
+</div>
+<p><strong>See also:</strong> <a class="reference internal" href="#register_keypress_callback-2"><span class="xref myst">register_keypress_callback/2</span></a>.</p>
+<p><a name="run_script-1"></a></p>
+</section>
+<section id="run-script-1">
+<h3>run_script/1<a class="headerlink" href="#run-script-1" title="Link to this heading"></a></h3>
+<pre><code>
+run_script(Script::iodata()) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#run_script-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">run_script(_Script,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="run_script-2"></a></p>
+</section>
+<section id="run-script-2">
+<h3>run_script/2<a class="headerlink" href="#run-script-2" title="Link to this heading"></a></h3>
+<pre><code>
+run_script(_Script::iodata(), _Options::[<a href="#type-run_script_opt">run_script_opt()</a>]) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">_Script</span></code>: Script to run<br /><code class="docutils literal notranslate"><span class="pre">_Options</span></code>: List of options. If <code class="docutils literal notranslate"><span class="pre">main_thread</span></code> is specified, the script
+is run on the main thread. If <code class="docutils literal notranslate"><span class="pre">async</span></code>, the script is run asynchronously, i.e.
+the caller does not wait for completion. Only applies if <code class="docutils literal notranslate"><span class="pre">main_thread</span></code> is specified.<br /></p>
+<p>returns: ok</p>
+<p>Run a script.
+By default, the script is run in the current worker thread, which arguably
+may not be very useful. Please note that exception handling is disabled, so
+the script should not throw and should compile, otherwise this will crash
+the VM.</p>
+<p><a name="unregister_blur_callback-1"></a></p>
+</section>
+<section id="unregister-blur-callback-1">
+<h3>unregister_blur_callback/1<a class="headerlink" href="#unregister-blur-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_blur_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a blur event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_keypress_callback-1"><span class="xref myst">unregister_keypress_callback/1</span></a>.</p>
+<p><a name="unregister_click_callback-1"></a></p>
+</section>
+<section id="unregister-click-callback-1">
+<h3>unregister_click_callback/1<a class="headerlink" href="#unregister-click-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_click_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a click event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_keypress_callback-1"><span class="xref myst">unregister_keypress_callback/1</span></a>.</p>
+<p><a name="unregister_dblclick_callback-1"></a></p>
+</section>
+<section id="unregister-dblclick-callback-1">
+<h3>unregister_dblclick_callback/1<a class="headerlink" href="#unregister-dblclick-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_dblclick_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a dblclick event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_click_callback-1"><span class="xref myst">unregister_click_callback/1</span></a>.</p>
+<p><a name="unregister_focus_callback-1"></a></p>
+</section>
+<section id="unregister-focus-callback-1">
+<h3>unregister_focus_callback/1<a class="headerlink" href="#unregister-focus-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_focus_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a focus event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_blur_callback-1"><span class="xref myst">unregister_blur_callback/1</span></a>.</p>
+<p><a name="unregister_focusin_callback-1"></a></p>
+</section>
+<section id="unregister-focusin-callback-1">
+<h3>unregister_focusin_callback/1<a class="headerlink" href="#unregister-focusin-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_focusin_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a focusin event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_blur_callback-1"><span class="xref myst">unregister_blur_callback/1</span></a>.</p>
+<p><a name="unregister_focusout_callback-1"></a></p>
+</section>
+<section id="unregister-focusout-callback-1">
+<h3>unregister_focusout_callback/1<a class="headerlink" href="#unregister-focusout-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_focusout_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a focusout event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_blur_callback-1"><span class="xref myst">unregister_blur_callback/1</span></a>.</p>
+<p><a name="unregister_keydown_callback-1"></a></p>
+</section>
+<section id="unregister-keydown-callback-1">
+<h3>unregister_keydown_callback/1<a class="headerlink" href="#unregister-keydown-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_keydown_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a keydown event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_keypress_callback-1"><span class="xref myst">unregister_keypress_callback/1</span></a>.</p>
+<p><a name="unregister_keypress_callback-1"></a></p>
+</section>
+<section id="unregister-keypress-callback-1">
+<h3>unregister_keypress_callback/1<a class="headerlink" href="#unregister-keypress-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_keypress_callback(_TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">_TargetOrHandle</span></code>: Target or handle<br /></p>
+<p>returns: ok or an error</p>
+<p>Unregister a keypress listener.</p>
+<p>To match Emscripten’s API, this function can take a target. This function
+unregisters every keypress listeners on the specified target.</p>
+<p>Alternatively, this function can take a listener_handle() returned by
+<code class="docutils literal notranslate"><span class="pre">register_keypress_callback/1,2,3</span></code>. This will still unregister every
+keypress listeners on the same target.</p>
+<p>Passing a <code class="docutils literal notranslate"><span class="pre">listener_handle()</span></code> is recommended to avoid surprises and for
+memory efficiency. If a handle is passed, it can then be garbage collected.
+If a handle is not passed, but the process dies, every keypress listener
+on the same target will be unregistered, including listeners that were
+later registered. This is a known limitation of the implementation that
+favored avoiding memory leaks and crashes.</p>
+<p><a name="unregister_keyup_callback-1"></a></p>
+</section>
+<section id="unregister-keyup-callback-1">
+<h3>unregister_keyup_callback/1<a class="headerlink" href="#unregister-keyup-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_keyup_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a keyup event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_keypress_callback-1"><span class="xref myst">unregister_keypress_callback/1</span></a>.</p>
+<p><a name="unregister_mousedown_callback-1"></a></p>
+</section>
+<section id="unregister-mousedown-callback-1">
+<h3>unregister_mousedown_callback/1<a class="headerlink" href="#unregister-mousedown-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_mousedown_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a mousedown event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_click_callback-1"><span class="xref myst">unregister_click_callback/1</span></a>.</p>
+<p><a name="unregister_mouseenter_callback-1"></a></p>
+</section>
+<section id="unregister-mouseenter-callback-1">
+<h3>unregister_mouseenter_callback/1<a class="headerlink" href="#unregister-mouseenter-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_mouseenter_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a mouseenter event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_click_callback-1"><span class="xref myst">unregister_click_callback/1</span></a>.</p>
+<p><a name="unregister_mouseleave_callback-1"></a></p>
+</section>
+<section id="unregister-mouseleave-callback-1">
+<h3>unregister_mouseleave_callback/1<a class="headerlink" href="#unregister-mouseleave-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_mouseleave_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a mouseleave event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_click_callback-1"><span class="xref myst">unregister_click_callback/1</span></a>.</p>
+<p><a name="unregister_mousemove_callback-1"></a></p>
+</section>
+<section id="unregister-mousemove-callback-1">
+<h3>unregister_mousemove_callback/1<a class="headerlink" href="#unregister-mousemove-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_mousemove_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a mousemove event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_click_callback-1"><span class="xref myst">unregister_click_callback/1</span></a>.</p>
+<p><a name="unregister_mouseout_callback-1"></a></p>
+</section>
+<section id="unregister-mouseout-callback-1">
+<h3>unregister_mouseout_callback/1<a class="headerlink" href="#unregister-mouseout-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_mouseout_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a mouseout event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_click_callback-1"><span class="xref myst">unregister_click_callback/1</span></a>.</p>
+<p><a name="unregister_mouseover_callback-1"></a></p>
+</section>
+<section id="unregister-mouseover-callback-1">
+<h3>unregister_mouseover_callback/1<a class="headerlink" href="#unregister-mouseover-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_mouseover_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a mouseover event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_click_callback-1"><span class="xref myst">unregister_click_callback/1</span></a>.</p>
+<p><a name="unregister_mouseup_callback-1"></a></p>
+</section>
+<section id="unregister-mouseup-callback-1">
+<h3>unregister_mouseup_callback/1<a class="headerlink" href="#unregister-mouseup-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_mouseup_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a mouseup event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_click_callback-1"><span class="xref myst">unregister_click_callback/1</span></a>.</p>
+<p><a name="unregister_resize_callback-1"></a></p>
+</section>
+<section id="unregister-resize-callback-1">
+<h3>unregister_resize_callback/1<a class="headerlink" href="#unregister-resize-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_resize_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a resize event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_keypress_callback-1"><span class="xref myst">unregister_keypress_callback/1</span></a>.</p>
+<p><a name="unregister_scroll_callback-1"></a></p>
+</section>
+<section id="unregister-scroll-callback-1">
+<h3>unregister_scroll_callback/1<a class="headerlink" href="#unregister-scroll-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_scroll_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a scroll event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_resize_callback-1"><span class="xref myst">unregister_resize_callback/1</span></a>.</p>
+<p><a name="unregister_touchcancel_callback-1"></a></p>
+</section>
+<section id="unregister-touchcancel-callback-1">
+<h3>unregister_touchcancel_callback/1<a class="headerlink" href="#unregister-touchcancel-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_touchcancel_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a touchcancel event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_touchstart_callback-1"><span class="xref myst">unregister_touchstart_callback/1</span></a>.</p>
+<p><a name="unregister_touchend_callback-1"></a></p>
+</section>
+<section id="unregister-touchend-callback-1">
+<h3>unregister_touchend_callback/1<a class="headerlink" href="#unregister-touchend-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_touchend_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a touchend event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_touchstart_callback-1"><span class="xref myst">unregister_touchstart_callback/1</span></a>.</p>
+<p><a name="unregister_touchmove_callback-1"></a></p>
+</section>
+<section id="unregister-touchmove-callback-1">
+<h3>unregister_touchmove_callback/1<a class="headerlink" href="#unregister-touchmove-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_touchmove_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a touchmove event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_touchstart_callback-1"><span class="xref myst">unregister_touchstart_callback/1</span></a>.</p>
+<p><a name="unregister_touchstart_callback-1"></a></p>
+</section>
+<section id="unregister-touchstart-callback-1">
+<h3>unregister_touchstart_callback/1<a class="headerlink" href="#unregister-touchstart-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_touchstart_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a touchstart event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_keypress_callback-1"><span class="xref myst">unregister_keypress_callback/1</span></a>.</p>
+<p><a name="unregister_wheel_callback-1"></a></p>
+</section>
+<section id="unregister-wheel-callback-1">
+<h3>unregister_wheel_callback/1<a class="headerlink" href="#unregister-wheel-callback-1" title="Link to this heading"></a></h3>
+<pre><code>
+unregister_wheel_callback(TargetOrHandle::<a href="#type.md5_target">html5_target()</a> | <a href="#type-listener_handle">listener_handle()</a>) -&gt; ok | {error, <a href="#type-register_error_reason">register_error_reason()</a>}
+</code></pre>
+<br />
+<p>Unregister a wheel event handler.</p>
+<p><strong>See also:</strong> <a class="reference internal" href="#unregister_keypress_callback-1"><span class="xref myst">unregister_keypress_callback/1</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="console.html" class="btn btn-neutral float-left" title="Module console" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="esp.html" class="btn btn-neutral float-right" title="Module esp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      v0.6.6
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.6.6/">v0.6.6</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/v0.6.6/pdf/AtomVM-v0.6.6.pdf">pdf</a></dd>
+        
+          <dd><a href="/v0.6.6/epub/AtomVM-v0.6.6.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
