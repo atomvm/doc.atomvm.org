@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; AtomVM 0.7.0-dev+git.214b3efd documentation</title>
+  <title>Functions &mdash; AtomVM 0.7.0-dev+git.a8d35e5c documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/functions.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=bd63f5a1"></script>
+      <script src="../../_static/documentation_options.js?v=4e7bdf9a"></script>
       <script src="../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -179,7 +179,7 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.atom_write_mfa">
-<span class="target" id="libatomvmatom_8h_1a506a5727d7bb2c949eb44b9a53102277"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">atom_write_mfa</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">buf_size</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">module</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">function</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">arity</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.atom_write_mfa" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmatom_8h_1a86cebfbce23e648256d86165c3a1cf37"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">atom_write_mfa</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">buf_size</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">module_name_len</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">module_data</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">function_name_len</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">function_data</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">arity</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.atom_write_mfa" title="Link to this definition"></a><br /></dt>
 <dd><p>Write module:function/arity to the supplied buffer. </p>
 <p>Write module:function/arity to the supplied buffer. This function will abort if the written module, function, and arity are longer than the supplied buffer size. </p>
 <dl class="field-list simple">
@@ -187,8 +187,10 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>buf</strong> – the buffer to write into </p></li>
 <li><p><strong>buf_size</strong> – the amount of room in the buffer </p></li>
-<li><p><strong>module</strong> – the module name </p></li>
-<li><p><strong>function</strong> – the function name </p></li>
+<li><p><strong>module_name_len</strong> – length of the module name </p></li>
+<li><p><strong>module_data</strong> – the module name </p></li>
+<li><p><strong>function_name_len</strong> – length of the function name </p></li>
+<li><p><strong>function_data</strong> – the function name </p></li>
 <li><p><strong>arity</strong> – the function arity </p></li>
 </ul>
 </dd>
@@ -1260,24 +1262,10 @@ terms in a heap fragment, otherwise terms are stored in the context heap.</p></l
 </dl>
 </dd></dl>
 
-<dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.functions.globalcontext_atomstring_from_term">
-<span class="target" id="libatomvmglobalcontext_8h_1aec726fa48672a93022f560a2dddae226"></span><span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_atomstring_from_term</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_atomstring_from_term" title="Link to this definition"></a><br /></dt>
-<dd><p>Returns the AtomString value of a term. </p>
-<p>This function fetches the AtomString value of the atom associated with the supplied term. The input term must be an atom type. If no such atom is registered in the global table, this function returns NULL. The caller should NOT free the data associated with the returned value. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>glb</strong> – the global context </p></li>
-<li><p><strong>t</strong> – the atom term </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the AtomString associated with the supplied atom term. </p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “globalcontext_atomstring_from_term” in doxygen xml output for project “libatomvm” from directory: /__w/AtomVM/AtomVM/build/doc/xml/</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>doxygenfunction: Cannot find function “globalcontext_demonitor” in doxygen xml output for project “libatomvm” from directory: /__w/AtomVM/AtomVM/build/doc/xml/</p>
@@ -1316,7 +1304,7 @@ terms in a heap fragment, otherwise terms are stored in the context heap.</p></l
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.globalcontext_get_module">
-<span class="target" id="libatomvmglobalcontext_8h_1a0c1c3dde17db9f6287c59cfc3b9ee5a7"></span><a class="reference internal" href="../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_get_module</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">module_name_atom</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_get_module" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmglobalcontext_8h_1a0c959a3d57e1647958a018183b638cad"></span><a class="reference internal" href="../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_get_module</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span>, <span class="n"><span class="pre">atom_index_t</span></span><span class="w"> </span><span class="n"><span class="pre">module_name_atom</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_get_module" title="Link to this definition"></a><br /></dt>
 <dd><p>Returns the module with the given name. </p>
 <p>Tries to get the module with the given name from the modules table and eventually loads it. </p>
 <dl class="field-list simple">
@@ -1455,15 +1443,13 @@ terms in a heap fragment, otherwise terms are stored in the context heap.</p></l
 </dl>
 </dd></dl>
 
-<dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.functions.globalcontext_insert_atom">
-<span class="target" id="libatomvmglobalcontext_8h_1a68aa1059550866b7452f6ff4cc5265ad"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_insert_atom</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">atom_string</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_insert_atom" title="Link to this definition"></a><br /></dt>
-<dd><p>equivalent to globalcontext_insert_atom_maybe_copy(glb, atom_string, 0); </p>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “globalcontext_insert_atom” in doxygen xml output for project “libatomvm” from directory: /__w/AtomVM/AtomVM/build/doc/xml/</p>
+</div>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.globalcontext_insert_atom_maybe_copy">
-<span class="target" id="libatomvmglobalcontext_8h_1aad3db4e7c935ab1cbc8345d06f2eb3ce"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_insert_atom_maybe_copy</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">atom_string</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">copy</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_insert_atom_maybe_copy" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmglobalcontext_8h_1a5007f646ca99f59b1b37011b831a120e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_insert_atom_maybe_copy</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">atom_data</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">atom_len</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">copy</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_insert_atom_maybe_copy" title="Link to this definition"></a><br /></dt>
 <dd><p>Inserts an atom into the global atoms table, making a copy of the supplied atom string, if copy is non-zero. </p>
 <p>Inserts an atom into the global atoms table and returns its id. </p>
 <dl class="field-list simple">
@@ -1471,11 +1457,11 @@ terms in a heap fragment, otherwise terms are stored in the context heap.</p></l
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>glb</strong> – the global context. </p></li>
 <li><p><strong>atom_string</strong> – the atom string that will be added to the global atoms table, it will not be copied so it must stay allocated and valid. </p></li>
-<li><p><strong>copy</strong> – if non-zero, make a copy of the input atom_string if the atom is not already in the table. The table assumes “ownership” of the allocated memory. </p></li>
+<li><p><strong>copy</strong> – if <code class="docutils literal notranslate"><span class="pre">true</span></code>, make a copy of the input atom_string if the atom is not already in the table. The table assumes “ownership” of the allocated memory. </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>newly added atom id or -1 in case of failure. </p>
+<dd class="field-even"><p>newly added atom id or <a class="reference internal" href="src/term.h.html#libatomvmterm_8h_1a94e2218b5d376c7edf7f9037adad4a17"><span class="std std-ref">term_invalid_term()</span></a> in case of failure. </p>
 </dd>
 </dl>
 </dd></dl>
@@ -1500,7 +1486,7 @@ terms in a heap fragment, otherwise terms are stored in the context heap.</p></l
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.globalcontext_is_atom_index_equal_to_atom_string">
-<span class="target" id="libatomvmglobalcontext_8h_1a766e0b6d1e5269b6dc42a0e4eaea3ed3"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_is_atom_index_equal_to_atom_string</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">atom_index_a</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">atom_string_b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_is_atom_index_equal_to_atom_string" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmglobalcontext_8h_1ac7256a26f46dd925f7ea50f7f4cf2247"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_is_atom_index_equal_to_atom_string</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="n"><span class="pre">atom_index_t</span></span><span class="w"> </span><span class="n"><span class="pre">atom_index_a</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">atom_string_b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_is_atom_index_equal_to_atom_string" title="Link to this definition"></a><br /></dt>
 <dd><p>Compares an atom table index with an AtomString. </p>
 <p>Checks if the given atom table index and the given AtomString refers to the same atom. </p>
 <dl class="field-list simple">
@@ -1538,14 +1524,14 @@ terms in a heap fragment, otherwise terms are stored in the context heap.</p></l
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.globalcontext_make_atom">
-<span class="target" id="libatomvmglobalcontext_8h_1ae69aad55a76db5fa0cf97082ca839438"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_make_atom</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_make_atom" title="Link to this definition"></a><br /></dt>
-<dd><p>Returns a term representing an atom, from the suppliend string. </p>
-<p>Converts a string to an atom. Note that this function may have a side-effect on the global context. </p>
+<span class="target" id="libatomvmglobalcontext_8h_1af52738db69b3074af71ad9118f392e1c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_make_atom</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">atom_string</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.globalcontext_make_atom" title="Link to this definition"></a><br /></dt>
+<dd><p>Returns a term representing an atom, from the supplied string. </p>
+<p>Converts a string to an atom. Note that this function may have a side-effect on the global context. It doesn’t copy the atom string and is meant to be called with constant atom strings in code. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>glb</strong> – pointer to the global context </p></li>
-<li><p><strong>string</strong> – an AtomString </p></li>
+<li><p><strong>atom_string</strong> – an AtomString </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2517,25 +2503,10 @@ this function requires that at least INET_ADDR4_TUPLE_SIZE terms are free on the
 </dl>
 </dd></dl>
 
-<dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.functions.module_get_atom_string_by_id">
-<span class="target" id="libatomvmmodule_8h_1a7569b5a045cbcdf5430d552bfda19680"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_get_atom_string_by_id</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">local_atom_id</span></span>, <a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.module_get_atom_string_by_id" title="Link to this definition"></a><br /></dt>
-<dd><p>Gets the AtomString for the given local atom id. </p>
-<p>Gets an AtomString for the given local atom id from the global table. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mod</strong> – the module that owns the atom. </p></li>
-<li><p><strong>local_atom_id</strong> – module atom table index. </p></li>
-<li><p><strong>glb</strong> – the global context. </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the AtomString for the given module atom index. </p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “module_get_atom_string_by_id” in doxygen xml output for project “libatomvm” from directory: /__w/AtomVM/AtomVM/build/doc/xml/</p>
+</div>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.module_get_atom_term_by_id">
 <span class="target" id="libatomvmmodule_8h_1adffdc5005d36cedd4590d210a85e454a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_get_atom_term_by_id</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">local_atom_id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.module_get_atom_term_by_id" title="Link to this definition"></a><br /></dt>
@@ -2556,7 +2527,7 @@ this function requires that at least INET_ADDR4_TUPLE_SIZE terms are free on the
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.module_get_exported_functions">
-<span class="target" id="libatomvmmodule_8h_1a656f9353523f6f584e5d2bba4fa89400"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_get_exported_functions</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">this_module</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.module_get_exported_functions" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmmodule_8h_1a15620c976b414b9a99940a982a89d06d"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_get_exported_functions</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">this_module</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.module_get_exported_functions" title="Link to this definition"></a><br /></dt>
 <dd><p>Get the list of exported functions. </p>
 <p>Create a list of exported functions of the form <code class="docutils literal notranslate"><span class="pre">{FunctionName,</span> <span class="pre">Arity}</span></code> To create this list, the heap must be grown by <code class="docutils literal notranslate"><span class="pre">module_get_exported_functions_list_size</span></code> terms.</p>
 <dl class="field-list simple">
@@ -2564,7 +2535,6 @@ this function requires that at least INET_ADDR4_TUPLE_SIZE terms are free on the
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>this_module</strong> – the module to count exported functions of </p></li>
 <li><p><strong>heap</strong> – heap to allocate tuples </p></li>
-<li><p><strong>global</strong> – global context to fetch atoms </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2682,7 +2652,7 @@ this function requires that at least INET_ADDR4_TUPLE_SIZE terms are free on the
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.module_search_exported_function">
-<span class="target" id="libatomvmmodule_8h_1a87757f4eea5a5f1c1ac768ea8fe49aef"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_search_exported_function</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">this_module</span></span>, <span class="n"><span class="pre">AtomString</span></span><span class="w"> </span><span class="n"><span class="pre">func_name</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">func_arity</span></span>, <a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.module_search_exported_function" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmmodule_8h_1aa11fe71ce2d012748aff8015c3cbac91"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_search_exported_function</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">this_module</span></span>, <span class="n"><span class="pre">atom_index_t</span></span><span class="w"> </span><span class="n"><span class="pre">func_name</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">func_arity</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.module_search_exported_function" title="Link to this definition"></a><br /></dt>
 <dd><p>Gets exported function index by searching it by function name and arity. </p>
 <p>Gets exported function index by searching it by function name and arity </p>
 <dl class="field-list simple">
@@ -2691,7 +2661,6 @@ this function requires that at least INET_ADDR4_TUPLE_SIZE terms are free on the
 <li><p><strong>this_module</strong> – the module on which the function will be searched. </p></li>
 <li><p><strong>func_name</strong> – function name atom string. </p></li>
 <li><p><strong>func_arity</strong> – function arity. </p></li>
-<li><p><strong>glb</strong> – the global context </p></li>
 </ul>
 </dd>
 </dl>
@@ -3910,7 +3879,7 @@ This function must be implemented in otp_socket_platform.c. Platforms using lwIP
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.term_from_atom_index">
-<span class="target" id="libatomvmterm_8h_1a93914bd3a1f28440052aeceed7d53aec"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_from_atom_index</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">atom_index</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.term_from_atom_index" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmterm_8h_1abd9735b629c5dfc485801bbf8a879860"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_from_atom_index</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">atom_index_t</span></span><span class="w"> </span><span class="n"><span class="pre">atom_index</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.term_from_atom_index" title="Link to this definition"></a><br /></dt>
 <dd><p>Term from global atom table index. </p>
 <p>Returns a term from the given global atom table index. </p>
 <dl class="field-list simple">
@@ -4644,7 +4613,7 @@ This function must be implemented in otp_socket_platform.c. Platforms using lwIP
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.term_to_atom_index">
-<span class="target" id="libatomvmterm_8h_1abdf79cad0ed1ad33381c4d9e0dd643e4"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_atom_index</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.term_to_atom_index" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmterm_8h_1a2b4d4884bf05e005af45fa454d9ff1e9"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">atom_index_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_atom_index</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.term_to_atom_index" title="Link to this definition"></a><br /></dt>
 <dd><p>Gets global atom table index. </p>
 <p>Returns atom table index for given atom term. </p>
 <dl class="field-list simple">
