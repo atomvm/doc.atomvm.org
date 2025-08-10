@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module erlang &mdash; AtomVM 0.7.0-dev+git.630c11d0 documentation</title>
+  <title>Module erlang &mdash; AtomVM 0.7.0-dev+git.3b6901bc documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/erlang.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=4d6c6d02"></script>
+      <script src="../../../_static/documentation_options.js?v=151dca08"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -184,6 +184,12 @@ heap_growth_strategy() = bounded_free | minimum | fibonacci
 <h3><a name="type-mem_type">mem_type()</a><a class="headerlink" href="#mem-type" title="Link to this heading"></a></h3>
 <pre><code>
 mem_type() = binary
+</code></pre>
+</section>
+<section id="resource">
+<h3><a name="type-resource">resource()</a><a class="headerlink" href="#resource" title="Link to this heading"></a></h3>
+<pre><code>
+resource() = binary()
 </code></pre>
 </section>
 <section id="send-destination">
@@ -1119,6 +1125,11 @@ process_info(Pid::pid(), Key::links) -&gt; {links, [pid()]}
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: the process pid.<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to find process information.<br /></p>
+<pre><code>
+process_info(Pid::pid(), Key::monitored_by) -&gt; {monitored_by, [pid() | <a href="#type-resource">resource()</a> | port()]}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: the process pid.<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: key used to find process information.<br /></p>
 <p>returns: process information for the specified pid defined by the specified key.</p>
 <p>Return process information.</p>
 <p>This function returns information about the specified process.
@@ -1132,6 +1143,7 @@ The type of information returned is dependent on the specified key.</p>
 <li><p><strong>message_queue_len</strong> the number of messages enqueued for the process (integer)</p></li>
 <li><p><strong>memory</strong> the estimated total number of bytes in use by the process (integer)</p></li>
 <li><p><strong>links</strong> the list of linked processes</p></li>
+<li><p><strong>monitored_by</strong> the list of processes, NIF resources or ports that monitor the process</p></li>
 </ul>
 <p>Specifying an unsupported term or atom raises a bad_arg error.</p>
 <p><a name="processes-0"></a></p>
