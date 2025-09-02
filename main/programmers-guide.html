@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.101ceada documentation</title>
+  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.ba980b2d documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/programmers-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=504250f8"></script>
+      <script src="_static/documentation_options.js?v=99e9a074"></script>
       <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -1341,26 +1341,26 @@ will be truncated.</p>
 storage, as the flash storage may degrade more rapidly with repeated writes to the medium.</p>
 </div>
 <p>NVS entries are stored under a namespace and key, both of which are expressed as atoms.  AtomVM uses the namespace <code class="docutils literal notranslate"><span class="pre">atomvm</span></code> for entries under its control.  Applications may read from and write to the <code class="docutils literal notranslate"><span class="pre">atomvm</span></code> namespace, but they are strongly discouraged from doing so, except when explicitly stated otherwise.</p>
-<p>To set a value in non-volatile storage, use the <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#nvs-set-binary-3"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:nvs_set_binary/3</span></code></span></a> function, and specify a namespace, key, and value:</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;my-namespace&quot;</span><span class="o">&gt;&gt;</span><span class="p">,</span>
-<span class="nv">Key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;my-key&quot;</span><span class="o">&gt;&gt;</span><span class="p">,</span>
-<span class="nn">esp</span><span class="p">:</span><span class="nf">set_binary</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">,</span><span class="w"> </span><span class="nv">Key</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;some-value&quot;</span><span class="o">&gt;&gt;</span><span class="p">).</span>
+<p>To set a value in non-volatile storage, use the <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#nvs-put-binary-3"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:nvs_put_binary/3</span></code></span></a> function, and specify a namespace, key, and value:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">my_namespace_atom</span><span class="p">,</span>
+<span class="nv">Key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">my_key_atom</span><span class="p">,</span>
+<span class="nn">esp</span><span class="p">:</span><span class="nf">nvs_put_binary</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">,</span><span class="w"> </span><span class="nv">Key</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;some-value&quot;</span><span class="o">&gt;&gt;</span><span class="p">).</span>
 </pre></div>
 </div>
 <p>To retrieve a value in non-volatile storage, use the <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#nvs-get-binary-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:nvs_get_binary/2</span></code></span></a> function, and specify a namespace and key.  You can optionally specify a default value (of any desired type), if an entry does not exist in non-volatile storage:</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">get_binary</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">,</span><span class="w"> </span><span class="nv">Key</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;default-value&quot;</span><span class="o">&gt;&gt;</span><span class="p">).</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">nvs_get_binary</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">,</span><span class="w"> </span><span class="nv">Key</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;default-value&quot;</span><span class="o">&gt;&gt;</span><span class="p">).</span>
 </pre></div>
 </div>
 <p>To delete an entry, use the <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#nvs-erase-key-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:nvs_erase_key/2</span></code></span></a> function, and specify a namespace and key:</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">erase_key</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">,</span><span class="w"> </span><span class="nv">Key</span><span class="p">).</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">nvs_erase_key</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">,</span><span class="w"> </span><span class="nv">Key</span><span class="p">).</span>
 </pre></div>
 </div>
 <p>You can delete all entries in a namespace via the <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#nvs-erase-all-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:nvs_erase_all/1</span></code></span></a> function:</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">erase_all</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">).</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">nvs_erase_all</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">).</span>
 </pre></div>
 </div>
 <p>Finally, you can delete all entries in all namespaces on the NVS partition via the <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#nvs-reformat-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:nvs_reformat/0</span></code></span></a> function:</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">reformat</span><span class="p">().</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">nvs_reformat</span><span class="p">().</span>
 </pre></div>
 </div>
 <p>Applications should use the <code class="docutils literal notranslate"><span class="pre">esp:nvs_reformat/0</span></code> function with caution, in case other applications are making using the non-volatile storage.</p>
