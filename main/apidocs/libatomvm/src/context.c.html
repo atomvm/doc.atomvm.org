@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>context.c &mdash; AtomVM 0.7.0-dev+git.ba980b2d documentation</title>
+  <title>context.c &mdash; AtomVM 0.7.0-dev+git.390c50bf documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/context.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=99e9a074"></script>
+      <script src="../../../_static/documentation_options.js?v=3da4968d"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -193,7 +193,7 @@
 </div>
 <p>Include dependency graph for context.c:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-b72d6b553eba365047bc92135195967f79fb4b68.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-dfa1994909d81445b41be844b4f58c9e1e21b4c6.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -268,6 +268,7 @@
     &quot;1&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;18&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;27&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;24&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;20&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;19&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;36&quot; [dir=forward tooltip=&quot;include&quot;]
@@ -622,7 +623,26 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>monitor_pid</strong> – monitoring process </p></li>
+<li><p><strong>monitor_pid</strong> – monitored process </p></li>
+<li><p><strong>ref_ticks</strong> – reference of the monitor </p></li>
+<li><p><strong>is_monitoring</strong> – if ctx is the monitoring process </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the allocated monitor or NULL if allocation failed </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.context.c.monitor_registeredname_monitor_new">
+<span class="target" id="libatomvmcontext_8c_1ad7ca30627468eccda2c321f8588a8f86"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">Monitor</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">monitor_registeredname_monitor_new</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">monitor_process_id</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">monitor_name</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.monitor_registeredname_monitor_new" title="Link to this definition"></a><br /></dt>
+<dd><p>Create a monitor on a process by registered name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monitor_process_id</strong> – monitored process id </p></li>
+<li><p><strong>monitor_name</strong> – name of the monitor (atom) </p></li>
 <li><p><strong>ref_ticks</strong> – reference of the monitor </p></li>
 <li><p><strong>is_monitoring</strong> – if ctx is the monitoring process </p></li>
 </ul>
@@ -748,7 +768,7 @@
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>pid of monitoring process, self() if process is monitoring (and not monitored) or term_invalid() if no monitor could be found. </p>
+<dd class="field-even"><p>pid of monitored or monitoring process or term_invalid() if no monitor could be found. </p>
 </dd>
 </dl>
 </dd></dl>

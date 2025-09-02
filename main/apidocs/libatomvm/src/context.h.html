@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>context.h &mdash; AtomVM 0.7.0-dev+git.ba980b2d documentation</title>
+  <title>context.h &mdash; AtomVM 0.7.0-dev+git.390c50bf documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/context.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=99e9a074"></script>
+      <script src="../../../_static/documentation_options.js?v=3da4968d"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -596,6 +596,11 @@
 <span class="target" id="libatomvmcontext_8h_1a2894ef6da11074e2ed1813fd098dbcb9ab5755d3ce307a628a0179231ea3ce86b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CONTEXT_MONITOR_LINK_REMOTE</span></span></span><a class="headerlink" href="#c.libAtomVM.context.h.ContextMonitorType.CONTEXT_MONITOR_LINK_REMOTE" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.context.h.ContextMonitorType.CONTEXT_MONITOR_MONITORING_LOCAL_REGISTEREDNAME">
+<span class="target" id="libatomvmcontext_8h_1a2894ef6da11074e2ed1813fd098dbcb9a4cce088a6b57af7624f12f7e2b990120"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CONTEXT_MONITOR_MONITORING_LOCAL_REGISTEREDNAME</span></span></span><a class="headerlink" href="#c.libAtomVM.context.h.ContextMonitorType.CONTEXT_MONITOR_MONITORING_LOCAL_REGISTEREDNAME" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
@@ -981,7 +986,26 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>monitor_pid</strong> – monitoring process </p></li>
+<li><p><strong>monitor_pid</strong> – monitored process </p></li>
+<li><p><strong>ref_ticks</strong> – reference of the monitor </p></li>
+<li><p><strong>is_monitoring</strong> – if ctx is the monitoring process </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the allocated monitor or NULL if allocation failed </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.context.h.monitor_registeredname_monitor_new">
+<span class="target" id="libatomvmcontext_8h_1ad7ca30627468eccda2c321f8588a8f86"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.context.h.Monitor" title="Monitor"><span class="n"><span class="pre">Monitor</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">monitor_registeredname_monitor_new</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">monitor_process_id</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">monitor_name</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.h.monitor_registeredname_monitor_new" title="Link to this definition"></a><br /></dt>
+<dd><p>Create a monitor on a process by registered name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monitor_process_id</strong> – monitored process id </p></li>
+<li><p><strong>monitor_name</strong> – name of the monitor (atom) </p></li>
 <li><p><strong>ref_ticks</strong> – reference of the monitor </p></li>
 <li><p><strong>is_monitoring</strong> – if ctx is the monitoring process </p></li>
 </ul>
@@ -1089,7 +1113,7 @@
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>pid of monitoring process, self() if process is monitoring (and not monitored) or term_invalid() if no monitor could be found. </p>
+<dd class="field-even"><p>pid of monitored or monitoring process or term_invalid() if no monitor could be found. </p>
 </dd>
 </dl>
 </dd></dl>
@@ -1523,6 +1547,52 @@
 <dl class="c var">
 <dt class="sig sig-object c" id="c.libAtomVM.context.h.MonitorLocalMonitor.monitor_obj">
 <span class="target" id="libatomvmstruct_monitor_local_monitor_1ab7d1761f7d2323e5cbae5930c77a2bf2"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">monitor_obj</span></span></span><a class="headerlink" href="#c.libAtomVM.context.h.MonitorLocalMonitor.monitor_obj" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor">
+<span class="target" id="libatomvmstruct_monitor_local_registered_name_monitor"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MonitorLocalRegisteredNameMonitor</span></span></span><a class="headerlink" href="#c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;context.h&gt;</em></div>
+<p>Collaboration diagram for MonitorLocalRegisteredNameMonitor:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-e872da4683385126656c26b80a9c78dc67d4828e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;2&quot; [label=&quot;Monitor&quot; tooltip=&quot;Monitor&quot;]
+    &quot;3&quot; [label=&quot;ListHead&quot; tooltip=&quot;ListHead&quot;]
+    &quot;1&quot; [label=&quot;MonitorLocalRegisteredNameMonitor&quot; tooltip=&quot;MonitorLocalRegisteredNameMonitor&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;2&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor.monitor">
+<span class="target" id="libatomvmstruct_monitor_local_registered_name_monitor_1a607ac947d66eb18c3f231bd98245af69"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.context.h.Monitor" title="Monitor"><span class="n"><span class="pre">Monitor</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">monitor</span></span></span><a class="headerlink" href="#c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor.monitor" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor.ref_ticks">
+<span class="target" id="libatomvmstruct_monitor_local_registered_name_monitor_1a326bd91f588b22214c21f4239acfd36e"></span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ref_ticks</span></span></span><a class="headerlink" href="#c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor.ref_ticks" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor.monitor_process_id">
+<span class="target" id="libatomvmstruct_monitor_local_registered_name_monitor_1af155ac0b59247019f6274830693d683a"></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">monitor_process_id</span></span></span><a class="headerlink" href="#c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor.monitor_process_id" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor.monitor_name">
+<span class="target" id="libatomvmstruct_monitor_local_registered_name_monitor_1ac001e3bf843923707229ee3e4a9dc002"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">monitor_name</span></span></span><a class="headerlink" href="#c.libAtomVM.context.h.MonitorLocalRegisteredNameMonitor.monitor_name" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 </div>
