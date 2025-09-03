@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to AtomVM! &mdash; AtomVM 0.7.0-dev+git.390c50bf documentation</title>
+  <title>Welcome to AtomVM! &mdash; AtomVM 0.7.0-dev+git.3e84fd7c documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/welcome-to-atomvm.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3da4968d"></script>
+      <script src="_static/documentation_options.js?v=6922c063"></script>
       <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -65,6 +65,7 @@
 <li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
@@ -125,8 +126,8 @@
 <section id="why-erlang-elixir">
 <h2>Why Erlang/Elixir?<a class="headerlink" href="#why-erlang-elixir" title="Link to this heading"></a></h2>
 <p>The environments on which AtomVM applications are deployed are significantly more constrained than typical programming environments.  For example, the typical ESP32 ships with 520K of RAM and 4MB of flash storage, roughly the specs of a mid 1980s desktop computer.  Moreover, most micro-controller environments do not support native POSIX APIs for interfacing with an operating system, and in many cases, common operating system abstractions, such as processes, threads, or files, are simply unavailable.</p>
-<p>However, because the BEAM is provides a pre-emptive multitasking environment for your applications, many of the common operating system abstractions, particularly involving threading and concurrency, are simply not needed.  As concurrently-oriented languages, Erlang and Elixir support lightweight “processes”, with message passing as the mechanism for inter-(erlang)process communication, pre-emptive multi-tasking, and per-process heap allocation and garbage collection.</p>
-<p>In many ways, the programming model for Erlang and Elixir is closer to that of an operating system and multiple concurrent processes running on it, where operating system processes are single execution units, communicate through message passing (signals), and don’t share any state with one another.  Contrast that with most popular programming languages today (C, C++, Java, Python, etc), which use threading abstractions to achieve concurrency within a single memory space, and which subsequently require close attention to cases in which multiple CPUs operate on a shared region of memory, requiring threads, locks, semaphores, and so forth.</p>
+<p>However, because the BEAM provides a pre-emptive multitasking environment for your applications, many of the common operating system abstractions, particularly involving threading and concurrency, are simply not needed.  As concurrently-oriented languages, Erlang, Elixir and Gleam support lightweight “processes”, with message passing as the mechanism for inter-(erlang)process communication, pre-emptive multi-tasking, and per-process heap allocation and garbage collection.</p>
+<p>In many ways, the programming model for Erlang, Elixir and Gleam is closer to that of an operating system and multiple concurrent processes running on it, where operating system processes are single execution units, communicate through message passing (signals), and don’t share any state with one another.  Contrast that with most popular programming languages today (C, C++, Java, Python, etc), which use threading abstractions to achieve concurrency within a single memory space, and which subsequently require close attention to cases in which multiple CPUs operate on a shared region of memory, requiring threads, locks, semaphores, and so forth.</p>
 <p>As an implementation of the BEAM, AtomVM provides a modern, memory managed, and concurrency-oriented environment for developing applications on small devices.  This makes writing concurrent code for micro-controllers (e.g., and application that reads sensor data, services HTTP requests, and updates the system clock, all at the same time) incredibly simple and natural – far easier writing programs that use concurrency than C, C++, or even, for example, Micropython.</p>
 <p>In addition, because it is targeted for micro-controller environments, AtomVM provides interfaces for integrating with features commonly seen on micro-controllers, such as GPIO pins, analog-to-digital conversion, and common industry peripheral interfaces, such as I2C, SPI, and UART, making AtomVM a rich platform for developing IoT applications.</p>
 <p>Finally, one of the exciting aspects about modern micro-controllers, such as the ESP32, is their integration with modern networking technologies, such as WiFi and Bluetooth.  AtomVM leverages Erlang and Elixir’s natural affinity with telecommunications technologies to open up further possibilities for developing networked and wireless IoT devices.</p>
@@ -134,8 +135,10 @@
 </section>
 <section id="design-philosophy">
 <h2>Design Philosophy<a class="headerlink" href="#design-philosophy" title="Link to this heading"></a></h2>
-<p>AtomVM is designed from the start to run on small, cheap embedded devices, where system resources (memory, cpu, storage) are tightly constrained.  The smallest environment in which AtomVM runs has around 512k of addressable RAM, some of which is used by the underlying runtime (FreeRTOS), and some of which is used by the AtomVM virtual machine, itself, leaving even less RAM for your own applications.  Where there is a tradeoff between memory consumption and performance, minimizing memory consumption (and heap fragmentation) always wins.</p>
-<p>From the developer’s point of view, AtomVM is designed to make use of the existing tool chain from the Erlang and Elixir ecosystems.  This includes the Erlang and Elixir compilers, which will compile Erlang and Elixir source code to BEAM bytecode.  Where possible, AtomVM makes use of existing tool chains to reduce the amount of unnecessary features in AtomVM, thus reducing complexity, as well as the amount of system resources in use by the runtime.  AtomVM is designed to be as small and lean as possible, providing as many resources to user applications, as possible.</p>
+<p>AtomVM is designed from the start to run on small, cheap embedded devices, where system resources (memory, cpu, storage) are tightly constrained.  The smallest environment in which AtomVM runs has around 128k of addressable RAM, some of which is used by the AtomVM virtual machine, itself, leaving even less RAM for your own applications.  Where there is a tradeoff between memory consumption and performance, minimizing memory consumption (and heap fragmentation) always wins.</p>
+<p>From the developer’s point of view, AtomVM is designed to make use of the existing tool chains from the Erlang, Elixir and Gleam ecosystems.  This includes the Erlang, Elixir and Gleam compilers, which will compile Erlang, Elixir. and Gleam source code to BEAM bytecode.  Where possible, AtomVM makes use of existing tool chains to reduce the amount of unnecessary features in AtomVM, thus reducing complexity, as well as the amount of system resources in use by the runtime.  AtomVM is designed to be as small and lean as possible, providing as many resources to user applications, as possible.</p>
+<p>AtomVM exhibits some significant differences and limitations compared to BEAM. These are documented
+in a dedicated <a class="reference internal" href="differences-with-beam.html"><span class="std std-doc">page</span></a>.</p>
 </section>
 <section id="licensing">
 <h2>Licensing<a class="headerlink" href="#licensing" title="Link to this heading"></a></h2>
@@ -156,6 +159,7 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="getting-started-guide.html"><span class="std std-doc">Getting Started Guide</span></a></p></li>
 <li><p><a class="reference internal" href="programmers-guide.html"><span class="std std-doc">Programmers Guide</span></a></p></li>
+<li><p><a class="reference internal" href="differences-with-beam.html"><span class="std std-doc">Differences with BEAM</span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/atomvm/atomvm_examples">Example Programs</a></p></li>
 <li><p><a class="reference internal" href="build-instructions.html"><span class="std std-doc">Build Instructions</span></a></p></li>
 </ul>

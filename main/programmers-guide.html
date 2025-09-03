@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.390c50bf documentation</title>
+  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.3e84fd7c documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/programmers-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3da4968d"></script>
+      <script src="_static/documentation_options.js?v=6922c063"></script>
       <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -167,6 +167,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
@@ -255,19 +256,10 @@
 </ul>
 <section id="limitations">
 <h3>Limitations<a class="headerlink" href="#limitations" title="Link to this heading"></a></h3>
-<p>While the list of supported features is long and growing, the currently unsupported Erlang/OTP and BEAM features include (but are not limited to):</p>
-<ul class="simple">
-<li><p>Atoms. Atoms larger than 255 bytes (255 ascii characters) are not supported.</p></li>
-<li><p>Bignums.  Integer values are restricted to 64-bit values.</p></li>
-<li><p>Bit Syntax.  While packing and unpacking of arbitrary (but less than 64-bit) bit values is supported, packing and unpacking of integer values at the start or end of a binary, or bordering binary packing or extraction must align on 8-bit boundaries.  Arbitrary bit length binaries are not currently supported.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">epmd</span></code> and the <code class="docutils literal notranslate"><span class="pre">disterl</span></code> protocols are not supported.</p></li>
-<li><p>There is no support for code hot swapping.</p></li>
-<li><p>There is no support for a Read-Eval-Print-Loop. (REPL)</p></li>
-<li><p>Numerous modules and functions from Erlang/OTP standard libraries (<code class="docutils literal notranslate"><span class="pre">kernel</span></code>, <code class="docutils literal notranslate"><span class="pre">stdlib</span></code>, <code class="docutils literal notranslate"><span class="pre">sasl</span></code>, etc) are not implemented.</p></li>
-</ul>
-<p>AtomVM bit syntax is restricted to alignment on 8-bit boundaries.  Little-endian and signed insertion and extraction of integer values is restricted to 8, 16, and 32-bit values.  Only unsigned big and little endian 64-bit values can be inserted into or extracted from binaries.</p>
-<p>It is highly unlikely that an existing Erlang program targeted for Erlang/OTP will run unmodified on AtomVM.  And indeed, even as AtomVM matures and additional features are added, it is more likely than not that Erlang applications will need to targeted specifically for the AtomVM platform.  The intended target environment (small, cheap micro-controllers) differs enough from desktop or server-class systems in both scale and APIs that special care and attention is needed to target applications for such embedded environments.</p>
+<p>Numerous modules and functions from Erlang/OTP standard libraries (<code class="docutils literal notranslate"><span class="pre">kernel</span></code>, <code class="docutils literal notranslate"><span class="pre">stdlib</span></code>, <code class="docutils literal notranslate"><span class="pre">sasl</span></code>, etc) are not implemented.</p>
+<p>For this reason, it is highly unlikely that an existing Erlang program targeted for Erlang/OTP will run unmodified on AtomVM.  And indeed, even as AtomVM matures and additional features are added, it is more likely than not that Erlang applications will need to targeted specifically for the AtomVM platform.  The intended target environment (small, cheap micro-controllers) differs enough from desktop or server-class systems in both scale and APIs that special care and attention is needed to target applications for such embedded environments.</p>
 <p>That being said, many of the features of the BEAM are supported and provide a rich and compelling development environment for embedded devices, which Erlang and Elixir developers will find natural and productive.</p>
+<p>Other differences between AtomVM and BEAM are detailed in a <a class="reference internal" href="differences-with-beam.html"><span class="std std-doc">dedicated page</span></a>.</p>
 </section>
 </section>
 <section id="atomvm-development">
