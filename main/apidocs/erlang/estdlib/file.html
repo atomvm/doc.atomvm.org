@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module unicode &mdash; AtomVM 0.7.0-dev+git.b94dfea9 documentation</title>
+  <title>Module file &mdash; AtomVM 0.7.0-dev+git.b94dfea9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
@@ -14,7 +14,7 @@
 
   
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
-    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/unicode.html" />
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/file.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../../_static/documentation_options.js?v=31c29b1b"></script>
@@ -23,8 +23,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="The eavmlib library" href="../eavmlib/README.html" />
-    <link rel="prev" title="Module timer" href="timer.html" /> 
+    <link rel="next" title="Module gen_event" href="gen_event.html" />
+    <link rel="prev" title="Module ets" href="ets.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -77,7 +77,7 @@
 <li class="toctree-l4"><a class="reference internal" href="erpc.html">Module erpc</a></li>
 <li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ets.html">Module ets</a></li>
-<li class="toctree-l4"><a class="reference internal" href="file.html">Module file</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
 <li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
 <li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
@@ -106,7 +106,7 @@
 <li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
 <li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Module unicode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
@@ -137,7 +137,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
-      <li class="breadcrumb-item active">Module unicode</li>
+      <li class="breadcrumb-item active">Module file</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -146,137 +146,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-unicode">
-<h1>Module unicode<a class="headerlink" href="#module-unicode" title="Link to this heading"></a></h1>
+  <section id="module-file">
+<h1>Module file<a class="headerlink" href="#module-file" title="Link to this heading"></a></h1>
 <ul class="simple">
-<li><p><a class="reference internal" href="#description">Description</a></p></li>
-<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
 <li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
 <li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
 </ul>
-<p>An implementation of the Erlang/OTP unicode interface.</p>
-<p><a name="description"></a></p>
-<section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
-<p>This module implements a strict subset of the Erlang/OTP unicode
-interface.
-<a name="types"></a></p>
-</section>
-<section id="data-types">
-<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
-<section id="chardata">
-<h3><a name="type-chardata">chardata()</a><a class="headerlink" href="#chardata" title="Link to this heading"></a></h3>
-<pre><code>
-chardata() = <a href="#type-charlist">charlist()</a> | <a href="#type-unicode_binary">unicode_binary()</a>
-</code></pre>
-</section>
-<section id="charlist">
-<h3><a name="type-charlist">charlist()</a><a class="headerlink" href="#charlist" title="Link to this heading"></a></h3>
-<pre><code>
-charlist() = maybe_improper_list(char() | <a href="#type-unicode_binary">unicode_binary()</a> | <a href="#type-charlist">charlist()</a>, <a href="#type-unicode_binary">unicode_binary()</a> | [])
-</code></pre>
-</section>
-<section id="encoding">
-<h3><a name="type-encoding">encoding()</a><a class="headerlink" href="#encoding" title="Link to this heading"></a></h3>
-<pre><code>
-encoding() = utf8 | unicode | latin1
-</code></pre>
-</section>
-<section id="latin1-chardata">
-<h3><a name="type-latin1_chardata">latin1_chardata()</a><a class="headerlink" href="#latin1-chardata" title="Link to this heading"></a></h3>
-<pre><code>
-latin1_chardata() = iodata()
-</code></pre>
-</section>
-<section id="unicode-binary">
-<h3><a name="type-unicode_binary">unicode_binary()</a><a class="headerlink" href="#unicode-binary" title="Link to this heading"></a></h3>
-<pre><code>
-unicode_binary() = binary()
-</code></pre>
 <p><a name="index"></a></p>
-</section>
-</section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#characters_to_binary-1">characters_to_binary/1</a></td><td>Convert character data to an UTF8 binary.</td></tr><tr><td valign="top"><a href="#characters_to_binary-2">characters_to_binary/2</a></td><td>Convert character data in a given encoding to an UTF8 binary.</td></tr><tr><td valign="top"><a href="#characters_to_binary-3">characters_to_binary/3</a></td><td>Convert character data in a given encoding to a binary in a given encoding.</td></tr><tr><td valign="top"><a href="#characters_to_list-1">characters_to_list/1</a></td><td>Convert UTF-8 data to a list of Unicode characters.</td></tr><tr><td valign="top"><a href="#characters_to_list-2">characters_to_list/2</a></td><td>Convert UTF-8 or Latin1 data to a list of Unicode characters.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#native_name_encoding-0">native_name_encoding/0</a></td><td></td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
 <h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
-<p><a name="characters_to_binary-1"></a></p>
-<section id="characters-to-binary-1">
-<h3>characters_to_binary/1<a class="headerlink" href="#characters-to-binary-1" title="Link to this heading"></a></h3>
+<p><a name="native_name_encoding-0"></a></p>
+<section id="native-name-encoding-0">
+<h3>native_name_encoding/0<a class="headerlink" href="#native-name-encoding-0" title="Link to this heading"></a></h3>
 <pre><code>
-characters_to_binary(Data::<a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>) -&gt; <a href="#type-unicode_binary">unicode_binary()</a> | {error, list(), <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a> | list()} | {incomplete, <a href="#type-unicode_binary">unicode_binary()</a>, <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>}
+native_name_encoding() -&gt; latin1 | utf8
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: data to convert to UTF8<br /></p>
-<p>returns: an utf8 binary or a tuple if conversion failed.</p>
-<p>Equivalent to <a class="reference internal" href="#characters_to_binary-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">characters_to_binary(Data,</span> <span class="pre">utf8,</span> <span class="pre">utf8)</span></code></span></a>.</p>
-<p>Convert character data to an UTF8 binary</p>
-<p><a name="characters_to_binary-2"></a></p>
-</section>
-<section id="characters-to-binary-2">
-<h3>characters_to_binary/2<a class="headerlink" href="#characters-to-binary-2" title="Link to this heading"></a></h3>
-<pre><code>
-characters_to_binary(Data::<a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>, InEncoding::<a href="#type-encoding">encoding()</a>) -&gt; <a href="#type-unicode_binary">unicode_binary()</a> | {error, list(), <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a> | list()} | {incomplete, <a href="#type-unicode_binary">unicode_binary()</a>, <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>}
-</code></pre>
-<br />
-<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: data to convert to UTF8<br /><code class="docutils literal notranslate"><span class="pre">InEncoding</span></code>: encoding of data<br /></p>
-<p>returns: an utf8 binary or a tuple if conversion failed.</p>
-<p>Equivalent to <a class="reference internal" href="#characters_to_binary-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">characters_to_binary(Data,</span> <span class="pre">InEncoding,</span> <span class="pre">utf8)</span></code></span></a>.</p>
-<p>Convert character data in a given encoding to an UTF8 binary</p>
-<p><a name="characters_to_binary-3"></a></p>
-</section>
-<section id="characters-to-binary-3">
-<h3>characters_to_binary/3<a class="headerlink" href="#characters-to-binary-3" title="Link to this heading"></a></h3>
-<pre><code>
-characters_to_binary(Data::<a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>, InEncoding::<a href="#type-encoding">encoding()</a>, OutEncoding::<a href="#type-encoding">encoding()</a>) -&gt; <a href="#type-unicode_binary">unicode_binary()</a> | {error, list(), <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a> | list()} | {incomplete, <a href="#type-unicode_binary">unicode_binary()</a>, <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>}
-</code></pre>
-<br />
-<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: data to convert to UTF8<br /><code class="docutils literal notranslate"><span class="pre">InEncoding</span></code>: encoding of input data<br /><code class="docutils literal notranslate"><span class="pre">OutEncoding</span></code>: output encoding<br /></p>
-<p>returns: an encoded binary or a tuple if conversion failed.</p>
-<p>Convert character data in a given encoding to a binary in a given encoding.</p>
-<p>If conversion fails, the function returns a tuple with three elements:</p>
-<ul class="simple">
-<li><p>First element is <code class="docutils literal notranslate"><span class="pre">error</span></code> or <code class="docutils literal notranslate"><span class="pre">incomplete</span></code>. <code class="docutils literal notranslate"><span class="pre">incomplete</span></code> means the conversion failed because of an incomplete unicode transform at the very end of data.</p></li>
-<li><p>Second element is what has been converted so far.</p></li>
-<li><p>Third element is the remaining data to be converted, for debugging purposes. This remaining data can differ with what Erlang/OTP returns.</p></li>
-</ul>
-<p>Also, Erlang/OTP’s implementation may error with <code class="docutils literal notranslate"><span class="pre">badarg</span></code> for parameters
-for which this function merely returns an error tuple.</p>
-<p><a name="characters_to_list-1"></a></p>
-</section>
-<section id="characters-to-list-1">
-<h3>characters_to_list/1<a class="headerlink" href="#characters-to-list-1" title="Link to this heading"></a></h3>
-<pre><code>
-characters_to_list(Data::<a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>) -&gt; list() | {error, list(), <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a> | list()} | {incomplete, list(), <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>}
-</code></pre>
-<br />
-<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: data to convert to Unicode<br /></p>
-<p>returns: a list of characters or a tuple if conversion failed.</p>
-<p>Convert UTF-8 data to a list of Unicode characters.</p>
-<p>If conversion fails, the function returns a tuple with three elements:</p>
-<ul class="simple">
-<li><p>First element is <code class="docutils literal notranslate"><span class="pre">error</span></code> or <code class="docutils literal notranslate"><span class="pre">incomplete</span></code>. <code class="docutils literal notranslate"><span class="pre">incomplete</span></code> means the conversion failed because of an incomplete unicode transform at the very end of data.</p></li>
-<li><p>Second element is what has been converted so far.</p></li>
-<li><p>Third element is the remaining data to be converted, for debugging purposes. This remaining data can differ with what Erlang/OTP returns.</p></li>
-</ul>
-<p><a name="characters_to_list-2"></a></p>
-</section>
-<section id="characters-to-list-2">
-<h3>characters_to_list/2<a class="headerlink" href="#characters-to-list-2" title="Link to this heading"></a></h3>
-<pre><code>
-characters_to_list(Data::<a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>, Encoding::<a href="#type-encoding">encoding()</a>) -&gt; list() | {error, list(), <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a> | list()} | {incomplete, list(), <a href="#type-chardata">chardata()</a> | <a href="#type-latin1_chardata">latin1_chardata()</a>}
-</code></pre>
-<br />
-<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: data to convert<br /><code class="docutils literal notranslate"><span class="pre">Encoding</span></code>: encoding of data to convert<br /></p>
-<p>returns: a list of characters or a tuple if conversion failed.</p>
-<p>Convert UTF-8 or Latin1 data to a list of Unicode characters.
-Following Erlang/OTP, if input encoding is latin1, this function returns
-an error tuple if a character &gt; 255 is passed (in a list). Otherwise, it
-will accept any character within Unicode range (0-0x10FFFF).</p>
-<p><strong>See also:</strong> <a class="reference internal" href="#characters_to_list-1"><span class="xref myst">characters_to_list/1</span></a>.</p>
 </section>
 </section>
 </section>
@@ -285,8 +175,8 @@ will accept any character within Unicode range (0-0x10FFFF).</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="timer.html" class="btn btn-neutral float-left" title="Module timer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../eavmlib/README.html" class="btn btn-neutral float-right" title="The eavmlib library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ets.html" class="btn btn-neutral float-left" title="Module ets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gen_event.html" class="btn btn-neutral float-right" title="Module gen_event" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
