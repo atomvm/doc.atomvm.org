@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>module.h &mdash; AtomVM 0.7.0-dev+git.f4973f28 documentation</title>
+  <title>module.h &mdash; AtomVM 0.7.0-dev+git.4a7865e3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/module.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0ae1c3dd"></script>
+      <script src="../../../_static/documentation_options.js?v=b424d2af"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -103,6 +103,8 @@
 <li class="toctree-l4"><a class="reference internal" href="inet.h.html">inet.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interop.c.html">interop.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interop.h.html">interop.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit.c.html">jit.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit.h.html">jit.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="listeners.h.html">listeners.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mailbox.c.html">mailbox.c</a></li>
@@ -317,43 +319,52 @@
 </figure>
 <p>This graph shows which files directly or indirectly include module.h:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-b9770ff0f923d629476395f5f02b074817373ded.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-93d9f8d594466d11c0255aec78860c23052fb649.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
     edge [color=&quot;#1414CE&quot;]
-    &quot;5&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
-    &quot;10&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot;]
+    &quot;6&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
+    &quot;4&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.c&quot;]
+    &quot;12&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot;]
     &quot;3&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot;]
+    &quot;7&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot;]
     &quot;2&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.h&quot;]
-    &quot;9&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot;]
-    &quot;4&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot;]
+    &quot;11&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot;]
+    &quot;5&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot;]
     &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.h&quot; fillcolor=&quot;#BFBFBF&quot;]
-    &quot;13&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot;]
-    &quot;14&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot;]
-    &quot;11&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot;]
-    &quot;6&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot;]
-    &quot;12&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot;]
-    &quot;8&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot;]
-    &quot;7&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot;]
+    &quot;15&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot;]
+    &quot;16&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot;]
+    &quot;13&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot;]
+    &quot;8&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot;]
+    &quot;14&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot;]
+    &quot;10&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot;]
+    &quot;9&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot;]
+    &quot;7&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;7&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;7&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;9&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;9&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;9&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;9&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;9&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;9&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;11&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;1&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;1&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;6&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;7&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;8&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
 }</p></object></div>
 </div>
 </figure>
@@ -369,6 +380,14 @@
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.libAtomVM.module.h.SMP_MODULE_UNLOCK">
 <span class="target" id="libatomvmmodule_8h_1aba60d48ee9a01e9aac9007f4cdf9b75b"></span><span class="sig-name descname"><span class="n"><span class="pre">SMP_MODULE_UNLOCK</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">mod</span></span><span class="sig-paren">)</span> <a class="reference internal" href="smp.h.html#libatomvmsmp_8h_1a9f1fd5cd7608418fdd41bcbbc0634b05"><span class="std std-ref"><span class="pre">smp_mutex_unlock</span></span></a><span class="pre">(mod-&gt;mutex)</span><a class="headerlink" href="#c.libAtomVM.module.h.SMP_MODULE_UNLOCK" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.ModuleNativeEntryPoint">
+<span class="target" id="libatomvmmodule_8h_1ab1850ac81d60647f03977bb3ea02edc9"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">ModuleNativeEntryPoint</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">JITState</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">jit_state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">ModuleNativeInterface</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.libAtomVM.module.h.ModuleNativeEntryPoint" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -600,6 +619,24 @@
 <dd></dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.module_get_native_entry_point">
+<span class="target" id="libatomvmmodule_8h_1a7b442e083885d5eb44c3bc5a368017db"></span><a class="reference internal" href="#c.libAtomVM.module.h.ModuleNativeEntryPoint" title="ModuleNativeEntryPoint"><span class="n"><span class="pre">ModuleNativeEntryPoint</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_get_native_entry_point</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.module.h.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">module</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">exported_label</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.module.h.module_get_native_entry_point" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the entry point to native code for a given exported label. </p>
+<p>This function is used to call native code. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> – the module </p></li>
+<li><p><strong>exported_label</strong> – label to get the native entry point to </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the native entry point </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.module.h.module_insert_line_ref_offset">
 <span class="target" id="libatomvmmodule_8h_1aca1a29489a99f1197dd20d9509239671"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_insert_line_ref_offset</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.module.h.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ListHead</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">line_refs</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">line_ref</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.module.h.module_insert_line_ref_offset" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
@@ -624,6 +661,38 @@
 <span class="target" id="libatomvmmodule_8h_1ac5748b397f993f5ee26eb7280bc4d7c9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_cp_to_label_offset</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">cp</span></span>, <a class="reference internal" href="#c.libAtomVM.module.h.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cp_mod</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">label</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">l_off</span></span>, <span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod_offset</span></span>, <a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.module.h.module_cp_to_label_offset" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.module_label_code_offset">
+<span class="target" id="libatomvmmodule_8h_1a209b9e04777b6a6e0b74b53b1b3b4af1"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_label_code_offset</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.module.h.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">label</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.module.h.module_label_code_offset" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the offset of a given label from the beginning of the code, emulated or native. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mod</strong> – the module </p></li>
+<li><p><strong>label</strong> – the label to get the offset of </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the offset to the label code </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.module_set_native_code">
+<span class="target" id="libatomvmmodule_8h_1a0c6439c4d4b3230dc89699958f64fcb2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_set_native_code</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.module.h.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">labels_count</span></span>, <a class="reference internal" href="#c.libAtomVM.module.h.ModuleNativeEntryPoint" title="ModuleNativeEntryPoint"><span class="n"><span class="pre">ModuleNativeEntryPoint</span></span></a><span class="w"> </span><span class="n"><span class="pre">entry_point</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.module.h.module_set_native_code" title="Link to this definition"></a><br /></dt>
+<dd><p>set native code for given module, typically after it is jit-compiled </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mod</strong> – the module to set native code for </p></li>
+<li><p><strong>labels_count</strong> – number of labels </p></li>
+<li><p><strong>entry_point</strong> – the native entry point </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <dl class="c struct">
 <dt class="sig sig-object c" id="c.libAtomVM.module.h.__attribute__">
@@ -634,7 +703,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
 <dl class="c var">
 <dt class="sig sig-object c" id="c.libAtomVM.module.h.__attribute__.magic">
-<span class="target" id="libatomvmstruct____attribute_____1a70332140f11d7774f748e4902ae87937"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">magic</span></span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#c.libAtomVM.module.h.__attribute__.magic" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmstruct____attribute_____1ae0e6989f2dc0c532fd71fa780cdbcf0b"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">magic</span></span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#c.libAtomVM.module.h.__attribute__.magic" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c var">
@@ -670,6 +739,36 @@
 <dl class="c var">
 <dt class="sig sig-object c" id="c.libAtomVM.module.h.__attribute__.code">
 <span class="target" id="libatomvmstruct____attribute_____1a35b19de3ad8e606244e2831ee8cb443d"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">code</span></span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#c.libAtomVM.module.h.__attribute__.code" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.__attribute__.architecture">
+<span class="target" id="libatomvmstruct____attribute_____1a7fe417929049f3f9347e90854f15369f"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">architecture</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.__attribute__.architecture" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.__attribute__.variant">
+<span class="target" id="libatomvmstruct____attribute_____1a775dc0e7fbd4bee99be44d09c3627a5a"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">variant</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.__attribute__.variant" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.__attribute__.offset">
+<span class="target" id="libatomvmstruct____attribute_____1a9f9e12128c831f248b75b8fe39b8d5d6"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">offset</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.__attribute__.offset" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmstruct____attribute_____1a85ba9226240edabe1bc413bb822ff836"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">version</span></span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.__attribute__.architectures_count">
+<span class="target" id="libatomvmstruct____attribute_____1af5c7167a874c9885202d56ffb9ee9553"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">architectures_count</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.__attribute__.architectures_count" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.__attribute__.architectures">
+<span class="target" id="libatomvmstruct____attribute_____1a83489087bb20d3074badc9462e224e1f"></span><span class="n"><span class="pre">NativeCodeArch</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">architectures</span></span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#c.libAtomVM.module.h.__attribute__.architectures" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -722,21 +821,90 @@
 <em>#include &lt;module.h&gt;</em></div>
 <p>Collaboration diagram for Module:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-71acb1b50773ff089a47856effafead13ab92a1b.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-0ee1847dc612d8c2bf1615762f3c0cc2b4516ed7.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
     edge [color=&quot;#1414CE&quot;]
+    &quot;22&quot; [label=&quot;SpinLock&quot; tooltip=&quot;SpinLock&quot;]
+    &quot;11&quot; [label=&quot;ResourceType&quot; tooltip=&quot;ResourceType&quot;]
     &quot;1&quot; [label=&quot;Module&quot; tooltip=&quot;Module&quot; fillcolor=&quot;#BFBFBF&quot;]
-    &quot;3&quot; [label=&quot;LiteralEntry&quot; tooltip=&quot;LiteralEntry&quot;]
+    &quot;7&quot; [label=&quot;ListHead&quot; tooltip=&quot;ListHead&quot;]
+    &quot;9&quot; [label=&quot;HeapFragment&quot; tooltip=&quot;HeapFragment&quot;]
+    &quot;19&quot; [label=&quot;RefcBinaryQueueItem&quot; tooltip=&quot;RefcBinaryQueueItem&quot;]
+    &quot;10&quot; [label=&quot;GlobalContext&quot; tooltip=&quot;GlobalContext&quot;]
+    &quot;13&quot; [label=&quot;Ets&quot; tooltip=&quot;Ets&quot;]
+    &quot;18&quot; [label=&quot;HNodeGroup&quot; tooltip=&quot;HNodeGroup&quot;]
+    &quot;21&quot; [label=&quot;TimerList&quot; tooltip=&quot;TimerList&quot;]
+    &quot;23&quot; [label=&quot;LiteralEntry&quot; tooltip=&quot;LiteralEntry&quot;]
+    &quot;5&quot; [label=&quot;MailboxMessage&quot; tooltip=&quot;MailboxMessage&quot;]
+    &quot;8&quot; [label=&quot;Heap&quot; tooltip=&quot;Heap&quot;]
+    &quot;3&quot; [label=&quot;Context&quot; tooltip=&quot;Context&quot;]
+    &quot;16&quot; [label=&quot;MessageQueueItem&quot; tooltip=&quot;MessageQueueItem&quot;]
+    &quot;20&quot; [label=&quot;RefcBinary&quot; tooltip=&quot;RefcBinary&quot;]
+    &quot;14&quot; [label=&quot;ValuesHashTable&quot; tooltip=&quot;ValuesHashTable&quot;]
+    &quot;4&quot; [label=&quot;Mailbox&quot; tooltip=&quot;Mailbox&quot;]
+    &quot;17&quot; [label=&quot;AtomTable&quot; tooltip=&quot;AtomTable&quot;]
     &quot;2&quot; [label=&quot;ExportedFunction&quot; tooltip=&quot;ExportedFunction&quot;]
+    &quot;6&quot; [label=&quot;TimerListItem&quot; tooltip=&quot;TimerListItem&quot;]
+    &quot;12&quot; [label=&quot;SyncList&quot; tooltip=&quot;SyncList&quot;]
+    &quot;15&quot; [label=&quot;HNode&quot; tooltip=&quot;HNode&quot;]
+    &quot;11&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;11&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
     &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
     &quot;1&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;23&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;7&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;9&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;19&quot; -&gt; &quot;20&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;19&quot; -&gt; &quot;19&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;17&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;19&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;1&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;21&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;22&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;10&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;13&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;18&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;18&quot; -&gt; &quot;18&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;21&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;5&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;8&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;1&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;3&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;16&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;16&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;20&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;20&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;14&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;4&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;17&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;17&quot; -&gt; &quot;18&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;6&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;12&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;15&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;15&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;usage&quot;]
 }</p></object></div>
 </div>
 </figure>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.Module.module_index">
+<span class="target" id="libatomvmstruct_module_1a8cd453e547353ece3f1f8a30d20c22cd"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_index</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.Module.module_index" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
 <dl class="c var">
 <dt class="sig sig-object c" id="c.libAtomVM.module.h.Module.import_table">
 <span class="target" id="libatomvmstruct_module_1a824bcc902b13a06d73e26e55eb76e9ba"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">import_table</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.Module.import_table" title="Link to this definition"></a><br /></dt>
@@ -798,6 +966,11 @@
 <dd></dd></dl>
 
 <dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.module.h.Module.native_code">
+<span class="target" id="libatomvmstruct_module_1a3c1cfaeedd4c40c45b1823af9cd5a174"></span><a class="reference internal" href="#c.libAtomVM.module.h.ModuleNativeEntryPoint" title="ModuleNativeEntryPoint"><span class="n"><span class="pre">ModuleNativeEntryPoint</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">native_code</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.Module.native_code" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
 <dt class="sig sig-object c" id="c.libAtomVM.module.h.Module.line_refs_offsets">
 <span class="target" id="libatomvmstruct_module_1a0f83b99270eab1f29ebd64dc10b061f9"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">line_refs_offsets</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.Module.line_refs_offsets" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
@@ -835,11 +1008,6 @@
 <dl class="c var">
 <dt class="sig sig-object c" id="c.libAtomVM.module.h.Module.module_platform_data">
 <span class="target" id="libatomvmstruct_module_1a6cd4fe61c92aa82edcd4ec85871a7ec8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">module_platform_data</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.Module.module_platform_data" title="Link to this definition"></a><br /></dt>
-<dd></dd></dl>
-
-<dl class="c var">
-<dt class="sig sig-object c" id="c.libAtomVM.module.h.Module.module_index">
-<span class="target" id="libatomvmstruct_module_1a8cd453e547353ece3f1f8a30d20c22cd"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_index</span></span></span><a class="headerlink" href="#c.libAtomVM.module.h.Module.module_index" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c var">

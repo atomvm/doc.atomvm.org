@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bitstring.h &mdash; AtomVM 0.7.0-dev+git.f4973f28 documentation</title>
+  <title>bitstring.h &mdash; AtomVM 0.7.0-dev+git.4a7865e3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/bitstring.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0ae1c3dd"></script>
+      <script src="../../../_static/documentation_options.js?v=b424d2af"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -103,6 +103,8 @@
 <li class="toctree-l4"><a class="reference internal" href="inet.h.html">inet.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interop.c.html">interop.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interop.h.html">interop.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit.c.html">jit.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit.h.html">jit.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="listeners.h.html">listeners.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mailbox.c.html">mailbox.c</a></li>
@@ -280,22 +282,30 @@
 </figure>
 <p>This graph shows which files directly or indirectly include bitstring.h:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-d52197302eb8c047be8b78305f44a10ea4122c1c.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-9a77976443b946ffc823cfeb63f1a59e42677161.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
     edge [color=&quot;#1414CE&quot;]
     &quot;5&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.c&quot;]
-    &quot;6&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
+    &quot;9&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
+    &quot;6&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.c&quot;]
     &quot;2&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot;]
+    &quot;7&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot;]
+    &quot;8&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot;]
     &quot;4&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.c&quot;]
     &quot;3&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot;]
     &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;7&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;7&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;7&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
 }</p></object></div>
 </div>
 </figure>
