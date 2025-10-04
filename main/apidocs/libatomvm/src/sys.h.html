@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sys.h &mdash; AtomVM 0.7.0-dev+git.0b58a743 documentation</title>
+  <title>sys.h &mdash; AtomVM 0.7.0-dev+git.2c8006c6 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/sys.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=a3ad1279"></script>
+      <script src="../../../_static/documentation_options.js?v=cde1511d"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -710,6 +710,22 @@
 <span class="target" id="libatomvmsys_8h_1a0f279c47141788bebc349721bea68fdb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sys_free_platform</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.sys.h.sys_free_platform" title="Link to this definition"></a><br /></dt>
 <dd><p>Free the platform data structure. </p>
 <p>Cleanup the platform data structure. Called by global_context_destroy. </p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.sys.h.sys_map_native_code">
+<span class="target" id="libatomvmsys_8h_1ac3e10d3125fec77e46492283456f0e5c"></span><span class="n"><span class="pre">ModuleNativeEntryPoint</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sys_map_native_code</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">native_code</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.sys.h.sys_map_native_code" title="Link to this definition"></a><br /></dt>
+<dd><p>Map precompiled native code to a module entry point. </p>
+<p>If mmap module is executable, returns native_code + offset. Otherwise (Apple Silicon) copy it to an executable buffer. Only implemented on platforms with JIT. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>native_code</strong> – pointer to native code chunk </p></li>
+<li><p><strong>size</strong> – size of native code chunk </p></li>
+<li><p><strong>offset</strong> – offset to the module entry point </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
