@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module binary &mdash; AtomVM 0.7.0-dev+git.61a70d37 documentation</title>
+  <title>Module binary &mdash; AtomVM 0.7.0-dev+git.c9046e2c documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/binary.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a11b386"></script>
+      <script src="../../../_static/documentation_options.js?v=a48acbbd"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -158,7 +158,7 @@
 <p><a name="index"></a></p>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#at-2">at/2</a></td><td>    Get a byte from a binary by index.</td></tr><tr><td valign="top"><a href="#decode_hex-1">decode_hex/1</a></td><td>    Decodes a hex encoded binary into a binary.</td></tr><tr><td valign="top"><a href="#encode_hex-1">encode_hex/1</a></td><td>    Encodes a binary into a hex encoded binary using the specified case for the hexadecimal digits "a" to "f".</td></tr><tr><td valign="top"><a href="#encode_hex-2">encode_hex/2</a></td><td>    Encodes a binary into a hex encoded binary using the specified case for the hexadecimal digits "a" to "f".</td></tr><tr><td valign="top"><a href="#part-3">part/3</a></td><td>Get the part of a given binary.</td></tr><tr><td valign="top"><a href="#replace-3">replace/3</a></td><td>    Replaces first occurrence of Pattern in Binary with Replacement.</td></tr><tr><td valign="top"><a href="#replace-4">replace/4</a></td><td>    Replaces occurrences of Pattern in Binary with Replacement.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>Split a binary according to pattern.</td></tr><tr><td valign="top"><a href="#split-3">split/3</a></td><td>Split a binary according to pattern.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#at-2">at/2</a></td><td>    Get a byte from a binary by index.</td></tr><tr><td valign="top"><a href="#copy-1">copy/1</a></td><td>    Returns a copy of the binary.</td></tr><tr><td valign="top"><a href="#copy-2">copy/2</a></td><td>    Returns a binary containing N copies of the input binary.</td></tr><tr><td valign="top"><a href="#decode_hex-1">decode_hex/1</a></td><td>    Decodes a hex encoded binary into a binary.</td></tr><tr><td valign="top"><a href="#encode_hex-1">encode_hex/1</a></td><td>    Encodes a binary into a hex encoded binary using the specified case for the hexadecimal digits "a" to "f".</td></tr><tr><td valign="top"><a href="#encode_hex-2">encode_hex/2</a></td><td>    Encodes a binary into a hex encoded binary using the specified case for the hexadecimal digits "a" to "f".</td></tr><tr><td valign="top"><a href="#part-3">part/3</a></td><td>Get the part of a given binary.</td></tr><tr><td valign="top"><a href="#replace-3">replace/3</a></td><td>    Replaces first occurrence of Pattern in Binary with Replacement.</td></tr><tr><td valign="top"><a href="#replace-4">replace/4</a></td><td>    Replaces occurrences of Pattern in Binary with Replacement.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>Split a binary according to pattern.</td></tr><tr><td valign="top"><a href="#split-3">split/3</a></td><td>Split a binary according to pattern.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -173,6 +173,28 @@ at(Binary::binary(), Index::non_neg_integer()) -&gt; byte()
 <p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: binary to get a byte from<br /><code class="docutils literal notranslate"><span class="pre">Index</span></code>: 0-based index of the byte to return<br /></p>
 <p>returns: value of the byte from the binary</p>
 <p>Get a byte from a binary by index.</p>
+<p><a name="copy-1"></a></p>
+</section>
+<section id="copy-1">
+<h3>copy/1<a class="headerlink" href="#copy-1" title="Link to this heading"></a></h3>
+<pre><code>
+copy(Binary::binary()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: binary to copy<br /></p>
+<p>returns: a copy of the binary</p>
+<p>Returns a copy of the binary.</p>
+<p><a name="copy-2"></a></p>
+</section>
+<section id="copy-2">
+<h3>copy/2<a class="headerlink" href="#copy-2" title="Link to this heading"></a></h3>
+<pre><code>
+copy(Binary::binary(), N::non_neg_integer()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Binary</span></code>: binary to copy<br /><code class="docutils literal notranslate"><span class="pre">N</span></code>: number of times to copy the binary<br /></p>
+<p>returns: a binary containing N copies of the input binary</p>
+<p>Returns a binary containing N copies of the input binary.</p>
 <p><a name="decode_hex-1"></a></p>
 </section>
 <section id="decode-hex-1">
