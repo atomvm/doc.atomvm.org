@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module lists &mdash; AtomVM 0.7.0-dev+git.1ffaf68a documentation</title>
+  <title>Module lists &mdash; AtomVM 0.7.0-dev+git.25797922 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/lists.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=389de204"></script>
+      <script src="../../../_static/documentation_options.js?v=3c863a45"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -176,7 +176,7 @@ compares equal to <code>Key</code>.</td></tr><tr><td valign="top"><a href="#last
 order.</td></tr><tr><td valign="top"><a href="#merge-3">merge/3</a></td><td>    Returns a list formed by merging List1 and List2, following Fun
 order.</td></tr><tr><td valign="top"><a href="#nth-2">nth/2</a></td><td>    Get the value in a list at position N.</td></tr><tr><td valign="top"><a href="#nthtail-2">nthtail/2</a></td><td>    Get the sublist of list L starting after the element N.</td></tr><tr><td valign="top"><a href="#reverse-1">reverse/1</a></td><td>Erlang/OTP implementation of this function actually handles few simple
 cases and calls <code>lists:reverse/2</code> for the more generic case.</td></tr><tr><td valign="top"><a href="#reverse-2">reverse/2</a></td><td>    Reverse the elements of L, followed by T.</td></tr><tr><td valign="top"><a href="#search-2">search/2</a></td><td>    If there is a Value in List such that Pred(Value) returns true,
-returns {value, Value} for the first such Value, otherwise returns false.</td></tr><tr><td valign="top"><a href="#seq-2">seq/2</a></td><td>    Returns a sequence of integers in a specified range.</td></tr><tr><td valign="top"><a href="#seq-3">seq/3</a></td><td>    Returns a sequence of integers in a specified range incremented by a specified value.</td></tr><tr><td valign="top"><a href="#sort-1">sort/1</a></td><td>    Returns a sorted list, using <code><</code> operator to determine sort order.</td></tr><tr><td valign="top"><a href="#sort-2">sort/2</a></td><td>    Returns a sorted list, using Fun(A, B) to determine sort order.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>    Splits List1 into List2 and List3.</td></tr><tr><td valign="top"><a href="#sublist-2">sublist/2</a></td><td>    Return a sublist made of the first <code>Len</code> elements of <code>List</code>.</td></tr><tr><td valign="top"><a href="#usort-1">usort/1</a></td><td>    Returns a unique, sorted list, using <code><</code> operator to determine sort order.</td></tr><tr><td valign="top"><a href="#usort-2">usort/2</a></td><td>    Returns a unique, sorted list.</td></tr></table>
+returns {value, Value} for the first such Value, otherwise returns false.</td></tr><tr><td valign="top"><a href="#seq-2">seq/2</a></td><td>    Returns a sequence of integers in a specified range.</td></tr><tr><td valign="top"><a href="#seq-3">seq/3</a></td><td>    Returns a sequence of integers in a specified range incremented by a specified value.</td></tr><tr><td valign="top"><a href="#sort-1">sort/1</a></td><td>    Returns a sorted list, using <code><</code> operator to determine sort order.</td></tr><tr><td valign="top"><a href="#sort-2">sort/2</a></td><td>    Returns a sorted list, using Fun(A, B) to determine sort order.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>    Splits List1 into List2 and List3.</td></tr><tr><td valign="top"><a href="#sublist-2">sublist/2</a></td><td>    Return a sublist made of the first <code>Len</code> elements of <code>List</code>.</td></tr><tr><td valign="top"><a href="#ukeysort-2">ukeysort/2</a></td><td>    Sort a list of tuples by Nth element and remove duplicates.</td></tr><tr><td valign="top"><a href="#usort-1">usort/1</a></td><td>    Returns a unique, sorted list, using <code><</code> operator to determine sort order.</td></tr><tr><td valign="top"><a href="#usort-2">usort/2</a></td><td>    Returns a unique, sorted list.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -660,6 +660,18 @@ sublist(List::[Elem], Len::integer()) -&gt; [Elem]
 <p>returns: a list made of the first <code class="docutils literal notranslate"><span class="pre">Len</span></code> elements of <code class="docutils literal notranslate"><span class="pre">List</span></code></p>
 <p>Return a sublist made of the first <code class="docutils literal notranslate"><span class="pre">Len</span></code> elements of <code class="docutils literal notranslate"><span class="pre">List</span></code>.
 It is not an error for <code class="docutils literal notranslate"><span class="pre">Len</span></code> to be larger than the length of <code class="docutils literal notranslate"><span class="pre">List</span></code>.</p>
+<p><a name="ukeysort-2"></a></p>
+</section>
+<section id="ukeysort-2">
+<h3>ukeysort/2<a class="headerlink" href="#ukeysort-2" title="Link to this heading"></a></h3>
+<pre><code>
+ukeysort(N::pos_integer(), L::[tuple()]) -&gt; [tuple()]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">N</span></code>: the position in the tuple to compare (1..tuple_size)<br /><code class="docutils literal notranslate"><span class="pre">L</span></code>: the list to sort<br /></p>
+<p>returns: The list L sorted by Nth element with duplicates removed</p>
+<p>Sort a list of tuples by Nth element and remove duplicates.
+Two tuples compare equal if their Nth elements compare equal.</p>
 <p><a name="usort-1"></a></p>
 </section>
 <section id="usort-1">
