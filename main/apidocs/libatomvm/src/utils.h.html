@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>utils.h &mdash; AtomVM 0.7.0-dev+git.25797922 documentation</title>
+  <title>utils.h &mdash; AtomVM 0.7.0-dev+git.58768ab5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,14 +17,14 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/utils.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=3c863a45"></script>
+      <script src="../../../_static/documentation_options.js?v=44339055"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="valueshashtable.c" href="valueshashtable.c.html" />
-    <link rel="prev" title="unicode.h" href="unicode.h.html" /> 
+    <link rel="prev" title="utils.c" href="utils.c.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -104,6 +104,8 @@
 <li class="toctree-l4"><a class="reference internal" href="inet.h.html">inet.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interop.c.html">interop.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="interop.h.html">interop.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="intn.c.html">intn.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="intn.h.html">intn.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="jit.c.html">jit.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="jit.h.html">jit.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
@@ -152,6 +154,7 @@
 <li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.c.html">utils.c</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">utils.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="valueshashtable.h.html">valueshashtable.h</a></li>
@@ -197,24 +200,28 @@
 </div>
 <p>Include dependency graph for utils.h:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-2b9a821558ee199a26d7a60b7b09123ffb09f44b.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-a528c207ad5a4e8e463ebf1cda6a9bfe96ab9799.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
     edge [color=&quot;#1414CE&quot;]
     &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.h&quot; fillcolor=&quot;#BFBFBF&quot;]
-    &quot;2&quot; [label=&quot;stddef.h&quot; tooltip=&quot;stddef.h&quot;]
-    &quot;3&quot; [label=&quot;stdio.h&quot; tooltip=&quot;stdio.h&quot;]
-    &quot;4&quot; [label=&quot;stdlib.h&quot; tooltip=&quot;stdlib.h&quot;]
+    &quot;2&quot; [label=&quot;inttypes.h&quot; tooltip=&quot;inttypes.h&quot;]
+    &quot;3&quot; [label=&quot;stdbool.h&quot; tooltip=&quot;stdbool.h&quot;]
+    &quot;4&quot; [label=&quot;stddef.h&quot; tooltip=&quot;stddef.h&quot;]
+    &quot;5&quot; [label=&quot;stdio.h&quot; tooltip=&quot;stdio.h&quot;]
+    &quot;6&quot; [label=&quot;stdlib.h&quot; tooltip=&quot;stdlib.h&quot;]
     &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
 }</p></object></div>
 </div>
 </figure>
 <p>This graph shows which files directly or indirectly include utils.h:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-966bd27f2e6b25a6c1fb4e73d443c93b741393a6.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-6f3f535e59272ab6ed5ce099782db2339c4dfad4.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -226,25 +233,25 @@
     &quot;7&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.h&quot;]
     &quot;13&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot;]
     &quot;12&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.h&quot;]
-    &quot;63&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot;]
-    &quot;62&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot;]
+    &quot;61&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot;]
+    &quot;60&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot;]
     &quot;10&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot;]
     &quot;11&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.h&quot;]
     &quot;17&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.c&quot;]
     &quot;16&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.h&quot;]
     &quot;51&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot;]
     &quot;52&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.c&quot;]
-    &quot;65&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.h&quot;]
+    &quot;64&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.h&quot;]
     &quot;19&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dist_nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dist_nifs.c&quot;]
     &quot;53&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dist_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dist_nifs.h&quot;]
     &quot;20&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/erl_nif_priv.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/erl_nif_priv.h&quot;]
     &quot;26&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.c&quot;]
-    &quot;66&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.h&quot;]
+    &quot;65&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.h&quot;]
     &quot;55&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.c&quot;]
     &quot;54&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.h&quot;]
-    &quot;67&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot;]
+    &quot;66&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot;]
     &quot;27&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.c&quot;]
-    &quot;68&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.h&quot;]
+    &quot;67&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.h&quot;]
     &quot;5&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot;]
     &quot;6&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.h&quot;]
     &quot;57&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/iff.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/iff.c&quot;]
@@ -252,12 +259,14 @@
     &quot;29&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.h&quot;]
     &quot;32&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.c&quot;]
     &quot;28&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.h&quot;]
+    &quot;58&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.c&quot;]
+    &quot;59&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.h&quot;]
     &quot;14&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.c&quot;]
-    &quot;64&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot;]
+    &quot;62&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot;]
     &quot;50&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.c&quot;]
-    &quot;58&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.h&quot;]
+    &quot;69&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.h&quot;]
     &quot;18&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.c&quot;]
-    &quot;70&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.h&quot;]
+    &quot;72&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.h&quot;]
     &quot;15&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot;]
     &quot;35&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.h&quot;]
     &quot;9&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
@@ -270,7 +279,7 @@
     &quot;43&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.h&quot;]
     &quot;22&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.c&quot;]
     &quot;44&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.h&quot;]
-    &quot;69&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/overflow_helpers.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/overflow_helpers.h&quot;]
+    &quot;68&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/overflow_helpers.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/overflow_helpers.h&quot;]
     &quot;36&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot;]
     &quot;47&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.c&quot;]
     &quot;48&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.h&quot;]
@@ -279,18 +288,19 @@
     &quot;23&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.c&quot;]
     &quot;56&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.h&quot;]
     &quot;24&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.c&quot;]
-    &quot;60&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.h&quot;]
+    &quot;71&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.h&quot;]
     &quot;25&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot;]
-    &quot;59&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.h&quot;]
+    &quot;70&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.h&quot;]
     &quot;49&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/scheduler.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/scheduler.h&quot;]
     &quot;38&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot;]
     &quot;37&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot;]
     &quot;39&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot;]
     &quot;34&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot;]
-    &quot;61&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot;]
-    &quot;71&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/unicode.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/unicode.c&quot;]
+    &quot;63&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot;]
+    &quot;73&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/unicode.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/unicode.c&quot;]
+    &quot;74&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.c&quot;]
     &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.h&quot; fillcolor=&quot;#BFBFBF&quot;]
-    &quot;72&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/valueshashtable.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/valueshashtable.c&quot;]
+    &quot;75&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/valueshashtable.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/valueshashtable.c&quot;]
     &quot;4&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;4&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;4&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
@@ -306,13 +316,13 @@
     &quot;12&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;12&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;12&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;62&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;62&quot; -&gt; &quot;63&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;62&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;62&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;62&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;62&quot; -&gt; &quot;64&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;62&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;61&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;62&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;11&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;11&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;11&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
@@ -363,13 +373,13 @@
     &quot;51&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;51&quot; -&gt; &quot;38&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;51&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;65&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;65&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;65&quot; -&gt; &quot;52&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;65&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;65&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;65&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;65&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;64&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;64&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;64&quot; -&gt; &quot;52&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;64&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;64&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;64&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;64&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;53&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;53&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;53&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
@@ -384,22 +394,22 @@
     &quot;20&quot; -&gt; &quot;23&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;20&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;20&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;66&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;66&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;66&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;65&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;65&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;65&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;54&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;54&quot; -&gt; &quot;55&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;67&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;67&quot; -&gt; &quot;53&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;67&quot; -&gt; &quot;64&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;67&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;67&quot; -&gt; &quot;40&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;67&quot; -&gt; &quot;36&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;67&quot; -&gt; &quot;56&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;68&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;68&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;68&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;68&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;66&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;66&quot; -&gt; &quot;53&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;66&quot; -&gt; &quot;62&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;66&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;66&quot; -&gt; &quot;40&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;66&quot; -&gt; &quot;36&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;66&quot; -&gt; &quot;56&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;67&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;67&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;67&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;67&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;6&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;6&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;6&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
@@ -442,36 +452,42 @@
     &quot;28&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;28&quot; -&gt; &quot;23&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;28&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;64&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;64&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;64&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;64&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;64&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;58&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;58&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;58&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;58&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;58&quot; -&gt; &quot;50&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;58&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;58&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;58&quot; -&gt; &quot;47&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;58&quot; -&gt; &quot;59&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;50&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;48&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;59&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;38&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;70&quot; -&gt; &quot;61&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;59&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;59&quot; -&gt; &quot;60&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;59&quot; -&gt; &quot;58&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;59&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;59&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;59&quot; -&gt; &quot;63&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;69&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;69&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;69&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;69&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;69&quot; -&gt; &quot;50&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;69&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;69&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;69&quot; -&gt; &quot;47&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;69&quot; -&gt; &quot;70&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;50&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;48&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;70&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;38&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;72&quot; -&gt; &quot;63&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;35&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;35&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;35&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
@@ -500,8 +516,8 @@
     &quot;43&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;43&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;44&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;69&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;69&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;68&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;68&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;36&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;48&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;48&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
@@ -515,17 +531,17 @@
     &quot;56&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;56&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;56&quot; -&gt; &quot;23&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;60&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;60&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;60&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;60&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;60&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;60&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;60&quot; -&gt; &quot;61&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;59&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;59&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;59&quot; -&gt; &quot;60&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;59&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;71&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;71&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;71&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;71&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;71&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;71&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;71&quot; -&gt; &quot;63&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;70&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;70&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;70&quot; -&gt; &quot;71&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;70&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;49&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;49&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;49&quot; -&gt; &quot;50&quot; [dir=back tooltip=&quot;include&quot;]
@@ -539,41 +555,41 @@
     &quot;39&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;39&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;39&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;62&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;52&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;65&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;53&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;66&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;55&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;54&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;67&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;68&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;64&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;33&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;69&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;48&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;56&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;37&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;60&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;52&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;64&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;53&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;65&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;55&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;54&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;66&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;67&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;62&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;33&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;68&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;48&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;56&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;37&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
@@ -586,19 +602,22 @@
     &quot;1&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;57&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;1&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;58&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;59&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;69&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;1&quot; -&gt; &quot;70&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;72&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;1&quot; -&gt; &quot;61&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;1&quot; -&gt; &quot;71&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;1&quot; -&gt; &quot;72&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;63&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;73&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;74&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;75&quot; [dir=back tooltip=&quot;include&quot;]
 }</p></object></div>
 </div>
 </figure>
@@ -751,6 +770,11 @@
 <dd></dd></dl>
 
 <dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.ASSUME">
+<span class="target" id="libatomvmutils_8h_1ab8b1306a206bbc65e421fc463dd3d256"></span><span class="sig-name descname"><span class="n"><span class="pre">ASSUME</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.ASSUME" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
 <dt class="sig sig-object c" id="c.libAtomVM.utils.h.MAXI">
 <span class="target" id="libatomvmutils_8h_1a040fe65aeedbd4f0f0ecbbce10c3919f"></span><span class="sig-name descname"><span class="n"><span class="pre">MAXI</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">A</span></span>, <span class="n"><span class="pre">B</span></span><span class="sig-paren">)</span> <span class="pre">((A</span> <span class="pre">&gt;</span> <span class="pre">B)</span> <span class="pre">?</span> <span class="pre">(A)</span> <span class="pre">:</span> <span class="pre">(B))</span><a class="headerlink" href="#c.libAtomVM.utils.h.MAXI" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
@@ -759,6 +783,66 @@
 <dt class="sig sig-object c" id="c.libAtomVM.utils.h.MINI">
 <span class="target" id="libatomvmutils_8h_1aed7c3425e10ec83585103048cd41691b"></span><span class="sig-name descname"><span class="n"><span class="pre">MINI</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">A</span></span>, <span class="n"><span class="pre">B</span></span><span class="sig-paren">)</span> <span class="pre">((A</span> <span class="pre">&gt;</span> <span class="pre">B)</span> <span class="pre">?</span> <span class="pre">(B)</span> <span class="pre">:</span> <span class="pre">(A))</span><a class="headerlink" href="#c.libAtomVM.utils.h.MINI" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.INTPTR_WRITE_TO_ASCII_BUF_LEN">
+<span class="target" id="libatomvmutils_8h_1ab5624300da0ddacd76b14f326c2ff152"></span><span class="sig-name descname"><span class="n"><span class="pre">INTPTR_WRITE_TO_ASCII_BUF_LEN</span></span></span> <span class="pre">(32</span> <span class="pre">+</span> <span class="pre">1)</span><a class="headerlink" href="#c.libAtomVM.utils.h.INTPTR_WRITE_TO_ASCII_BUF_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Required buffer size for <code class="docutils literal notranslate"><span class="pre">intptr_t</span></code> to ASCII conversion. </p>
+<p>Defines the maximum buffer size needed to hold any <code class="docutils literal notranslate"><span class="pre">intptr_t</span></code> value converted to ASCII in any base (2-36), including sign character. This constant ensures safe buffer allocation for <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1acb1130c009830d646fc6a3400a8c655b"><span class="std std-ref"><span class="pre">intptr_write_to_ascii_buf()</span></span></a></code>.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1acb1130c009830d646fc6a3400a8c655b"><span class="std std-ref">intptr_write_to_ascii_buf()</span></a></p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Value depends on platform pointer size (33 bytes for 32-bit, 65 bytes for 64-bit) </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Always use this constant to allocate buffers for <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1acb1130c009830d646fc6a3400a8c655b"><span class="std std-ref"><span class="pre">intptr_write_to_ascii_buf()</span></span></a></code></p>
+</div>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.INT32_WRITE_TO_ASCII_BUF_LEN">
+<span class="target" id="libatomvmutils_8h_1adc01e5e5d764efd5e7f83de4a43c29c2"></span><span class="sig-name descname"><span class="n"><span class="pre">INT32_WRITE_TO_ASCII_BUF_LEN</span></span></span> <span class="pre">(32</span> <span class="pre">+</span> <span class="pre">1)</span><a class="headerlink" href="#c.libAtomVM.utils.h.INT32_WRITE_TO_ASCII_BUF_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Required buffer size for <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> to ASCII conversion. </p>
+<p>Defines the maximum buffer size needed to hold any <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> value converted to ASCII in any base (2-36), including sign character. This constant ensures safe buffer allocation for <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a2a7e160264a0d6404215f5d2acabbf7c"><span class="std std-ref"><span class="pre">int32_write_to_ascii_buf()</span></span></a></code>.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a2a7e160264a0d6404215f5d2acabbf7c"><span class="std std-ref">int32_write_to_ascii_buf()</span></a></p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Always 33 bytes (32 digits for base 2 plus sign) </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Always use this constant to allocate buffers for <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a2a7e160264a0d6404215f5d2acabbf7c"><span class="std std-ref"><span class="pre">int32_write_to_ascii_buf()</span></span></a></code></p>
+</div>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.INT64_WRITE_TO_ASCII_BUF_LEN">
+<span class="target" id="libatomvmutils_8h_1aa0a6c2584806eacfa2d9aa50f5ccb041"></span><span class="sig-name descname"><span class="n"><span class="pre">INT64_WRITE_TO_ASCII_BUF_LEN</span></span></span> <span class="pre">(64</span> <span class="pre">+</span> <span class="pre">1)</span><a class="headerlink" href="#c.libAtomVM.utils.h.INT64_WRITE_TO_ASCII_BUF_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Required buffer size for <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> to ASCII conversion. </p>
+<p>Defines the maximum buffer size needed to hold any <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> value converted to ASCII in any base (2-36), including sign character. This constant ensures safe buffer allocation for <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a6019f8bacbf0c6f0fc8aaddd0540670f"><span class="std std-ref"><span class="pre">int64_write_to_ascii_buf()</span></span></a></code>.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a6019f8bacbf0c6f0fc8aaddd0540670f"><span class="std std-ref">int64_write_to_ascii_buf()</span></a></p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Always 65 bytes (64 digits for base 2 plus sign) </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Always use this constant to allocate buffers for <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a6019f8bacbf0c6f0fc8aaddd0540670f"><span class="std std-ref"><span class="pre">int64_write_to_ascii_buf()</span></span></a></code></p>
+</div>
+</dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
@@ -769,13 +853,907 @@
 <dd></dd></dl>
 
 </div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.buf_to_int64_options_t">
+<span class="target" id="libatomvmutils_8h_1a6d640d75ce89b8118aa2f64621cb6479"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buf_to_int64_options_t</span></span></span><a class="headerlink" href="#c.libAtomVM.utils.h.buf_to_int64_options_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Options for integer parsing behavior. </p>
+<p>Controls how <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1ab5aa183bb1af162ed05d023c2060d01a"><span class="std std-ref"><span class="pre">int64_parse_ascii_buf()</span></span></a></code> handles signs and other parsing options. Options can be combined using bitwise OR. </p>
+<p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.buf_to_int64_options_t.BufToInt64NoOptions">
+<span class="target" id="libatomvmutils_8h_1a6d640d75ce89b8118aa2f64621cb6479a0324004324a4311ceeaf20c8e704442c"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BufToInt64NoOptions</span></span></span><a class="headerlink" href="#c.libAtomVM.utils.h.buf_to_int64_options_t.BufToInt64NoOptions" title="Link to this definition"></a><br /></dt>
+<dd><p>Default parsing behavior - accepts signs (+/-) </p>
+</dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.buf_to_int64_options_t.BufToInt64RejectSign">
+<span class="target" id="libatomvmutils_8h_1a6d640d75ce89b8118aa2f64621cb6479a0fadf02067d7689c3b57ffeca333cab5"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BufToInt64RejectSign</span></span></span><a class="headerlink" href="#c.libAtomVM.utils.h.buf_to_int64_options_t.BufToInt64RejectSign" title="Link to this definition"></a><br /></dt>
+<dd><p>Reject sign characters - parse unsigned magnitude only. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.size_align_up_pow2">
+<span class="target" id="libatomvmutils_8h_1a260a9eff4d838626882193b3eedfc1cb"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size_align_up_pow2</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">align</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.size_align_up_pow2" title="Link to this definition"></a><br /></dt>
+<dd><p>Align size up to power-of-2 boundary. </p>
+<p>Rounds up a size value to the next multiple of a power-of-2 alignment. This function uses bit manipulation for efficient alignment calculation and is faster than the general-purpose <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a294ce872104fc9dc95b54d11d7317441"><span class="std std-ref"><span class="pre">size_align_up()</span></span></a></code>.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>size_t aligned = size_align_up_pow2(17, 8);  // Returns 24
+size_t aligned = size_align_up_pow2(16, 8);  // Returns 16 (already aligned)
+</pre></div>
+</div>
+</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a294ce872104fc9dc95b54d11d7317441"><span class="std std-ref">size_align_up()</span></a> for arbitrary alignment values </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Result is always &gt;= n</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Undefined behavior if align is not a power of 2 </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Undefined behavior if align is 0</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Size value to align </p></li>
+<li><p><strong>align</strong> – Power-of-2 alignment boundary </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Size rounded up to next multiple of align</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>align must be a power of 2 (e.g., 2, 4, 8, 16, 32, …) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.size_align_up">
+<span class="target" id="libatomvmutils_8h_1a294ce872104fc9dc95b54d11d7317441"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size_align_up</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">align</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.size_align_up" title="Link to this definition"></a><br /></dt>
+<dd><p>Align size up to arbitrary boundary. </p>
+<p>Rounds up a size value to the next multiple of an alignment boundary. Works with any alignment value, not just powers of 2.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>size_t aligned = size_align_up(17, 10);  // Returns 20
+size_t aligned = size_align_up(20, 10);  // Returns 20 (already aligned)
+size_t aligned = size_align_up(17, 0);   // Returns 17 (no alignment)
+</pre></div>
+</div>
+</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a260a9eff4d838626882193b3eedfc1cb"><span class="std std-ref">size_align_up_pow2()</span></a> for optimized power-of-2 alignment </p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a2ff049e091231c080ef30ed5f977d265"><span class="std std-ref">size_align_down()</span></a> for rounding down instead of up </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Returns n unchanged if align is 0 (no alignment) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Result is always &gt;= n </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For power-of-2 alignments, <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a260a9eff4d838626882193b3eedfc1cb"><span class="std std-ref"><span class="pre">size_align_up_pow2()</span></span></a></code> is more efficient</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Size value to align </p></li>
+<li><p><strong>align</strong> – Alignment boundary (any positive value, or 0) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Size rounded up to next multiple of align, or n if align is 0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.size_align_down">
+<span class="target" id="libatomvmutils_8h_1a2ff049e091231c080ef30ed5f977d265"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size_align_down</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">align</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.size_align_down" title="Link to this definition"></a><br /></dt>
+<dd><p>Align size down to arbitrary boundary. </p>
+<p>Rounds down a size value to the previous multiple of an alignment boundary. Works with any alignment value, not just powers of 2.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>size_t aligned = size_align_down(17, 10);  // Returns 10
+size_t aligned = size_align_down(20, 10);  // Returns 20 (already aligned)
+size_t aligned = size_align_down(7, 10);   // Returns 0
+</pre></div>
+</div>
+</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a294ce872104fc9dc95b54d11d7317441"><span class="std std-ref">size_align_up()</span></a> for rounding up instead of down </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Returns n unchanged if align is 0 (no alignment) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Result is always &lt;= n </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Commonly used for finding aligned base addresses within buffers</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Size value to align </p></li>
+<li><p><strong>align</strong> – Alignment boundary (any positive value, or 0) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Size rounded down to previous multiple of align, or n if align is 0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int32_neg_unsigned">
+<span class="target" id="libatomvmutils_8h_1aac85a2bb631bc2078c3a6bd6890560e2"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int32_neg_unsigned</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">u32</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int32_neg_unsigned" title="Link to this definition"></a><br /></dt>
+<dd><p>Negate unsigned 32-bit value (<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>) to signed integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) </p>
+<p>Converts an unsigned 32-bit value to its negated signed representation. This function performs the negation operation while avoiding undefined behavior that would occur with direct cast and negation due to two’s complement asymmetry.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Handles <code class="docutils literal notranslate"><span class="pre">INT32_MIN</span></code> case correctly (u32 = 2147483648 returns -2147483648) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Useful for parsing negative integers from text where magnitude is parsed as unsigned to avoid overflow </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Values greater than 2147483648 have undefined results </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u32</strong> – Unsigned 32-bit value to negate </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Negated value as signed 32-bit integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int64_neg_unsigned">
+<span class="target" id="libatomvmutils_8h_1a465578e279bb7246243735f7055104ee"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int64_neg_unsigned</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">u64</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int64_neg_unsigned" title="Link to this definition"></a><br /></dt>
+<dd><p>Negate unsigned 64-bit value (<code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>) to signed integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) </p>
+<p>Converts an unsigned 64-bit value to its negated signed representation. This function performs the negation operation while avoiding undefined behavior that would occur with direct cast and negation due to two’s complement asymmetry.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Handles <code class="docutils literal notranslate"><span class="pre">INT64_MIN</span></code> case correctly (u64 = 9223372036854775808 returns <code class="docutils literal notranslate"><span class="pre">INT64_MIN</span></code>) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Useful for parsing negative integers from text where magnitude is parsed as unsigned to avoid overflow </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Values greater than 9223372036854775808 have undefined results </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u64</strong> – Unsigned 64-bit value to negate </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Negated value as signed 64-bit integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int32_cond_neg_unsigned">
+<span class="target" id="libatomvmutils_8h_1a0289cd71ff1f6b7dbe1dacca20e38412"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int32_cond_neg_unsigned</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">negative</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">u32</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int32_cond_neg_unsigned" title="Link to this definition"></a><br /></dt>
+<dd><p>Conditionally negate unsigned 32-bit value (<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>) to signed integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) </p>
+<p>Converts an unsigned 32-bit value to signed, optionally negating based on a flag. This function safely handles the negation while avoiding undefined behavior from two’s complement asymmetry. Commonly used when parsing integers where the sign is determined separately from the magnitude.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a25a978af3d262200a34f50c1b48671bc"><span class="std std-ref">uint32_does_overflow_int32()</span></a> to check for overflow before conversion </p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1aac85a2bb631bc2078c3a6bd6890560e2"><span class="std std-ref">int32_neg_unsigned()</span></a> for unconditional negation </p>
+</div>
+</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Caller must ensure the value fits in signed range using <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a25a978af3d262200a34f50c1b48671bc"><span class="std std-ref"><span class="pre">uint32_does_overflow_int32()</span></span></a></code> before calling this function</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>negative</strong> – If true, negate the value; if false, cast directly to signed </p></li>
+<li><p><strong>u32</strong> – Unsigned 32-bit magnitude </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Signed 32-bit integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>), negated if negative flag is true</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int64_cond_neg_unsigned">
+<span class="target" id="libatomvmutils_8h_1a02be028f4eac0a558c58ab1c39443bb6"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int64_cond_neg_unsigned</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">negative</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">u64</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int64_cond_neg_unsigned" title="Link to this definition"></a><br /></dt>
+<dd><p>Conditionally negate unsigned 64-bit value (<code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>) to signed integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) </p>
+<p>Converts an unsigned 64-bit value to signed, optionally negating based on a flag. This function safely handles the negation while avoiding undefined behavior from two’s complement asymmetry. Commonly used when parsing integers where the sign is determined separately from the magnitude.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a80bba6b29bf3a4e112f24fd5157818b5"><span class="std std-ref">uint64_does_overflow_int64()</span></a> to check for overflow before conversion </p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a465578e279bb7246243735f7055104ee"><span class="std std-ref">int64_neg_unsigned()</span></a> for unconditional negation </p>
+</div>
+</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Caller must ensure the value fits in signed range using <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a80bba6b29bf3a4e112f24fd5157818b5"><span class="std std-ref"><span class="pre">uint64_does_overflow_int64()</span></span></a></code> before calling this function</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>negative</strong> – If true, negate the value; if false, cast directly to signed </p></li>
+<li><p><strong>u64</strong> – Unsigned 64-bit magnitude </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Signed 64-bit integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>), negated if negative flag is true</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.uint32_does_overflow_int32">
+<span class="target" id="libatomvmutils_8h_1a25a978af3d262200a34f50c1b48671bc"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">uint32_does_overflow_int32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">u32</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">is_negative</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.uint32_does_overflow_int32" title="Link to this definition"></a><br /></dt>
+<dd><p>Check if unsigned 32-bit value (<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>) would overflow when converted to signed (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) </p>
+<p>Tests whether an unsigned 32-bit value can be represented as a signed 32-bit integer, accounting for whether it will be negated. Negative values can represent one more magnitude (<code class="docutils literal notranslate"><span class="pre">INT32_MIN</span></code> = -2147483648) than positive values (<code class="docutils literal notranslate"><span class="pre">INT32_MAX</span></code> = 2147483647).</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a0289cd71ff1f6b7dbe1dacca20e38412"><span class="std std-ref">int32_cond_neg_unsigned()</span></a> to perform the conversion after checking </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Maximum representable positive: 2147483647 (<code class="docutils literal notranslate"><span class="pre">INT32_MAX</span></code>) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Maximum representable negative magnitude: 2147483648 (|<code class="docutils literal notranslate"><span class="pre">INT32_MIN|</span></code>)</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u32</strong> – Unsigned magnitude to check </p></li>
+<li><p><strong>is_negative</strong> – Whether the value will be negated </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if conversion would overflow, false if safe to convert</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.uint64_does_overflow_int64">
+<span class="target" id="libatomvmutils_8h_1a80bba6b29bf3a4e112f24fd5157818b5"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">uint64_does_overflow_int64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">u64</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">is_negative</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.uint64_does_overflow_int64" title="Link to this definition"></a><br /></dt>
+<dd><p>Check if unsigned 64-bit value (<code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>) would overflow when converted to signed (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) </p>
+<p>Tests whether an unsigned 64-bit value can be represented as a signed 64-bit integer, accounting for whether it will be negated. Negative values can represent one more magnitude (<code class="docutils literal notranslate"><span class="pre">INT64_MIN</span></code>) than positive values (<code class="docutils literal notranslate"><span class="pre">INT64_MAX</span></code>).</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a02be028f4eac0a558c58ab1c39443bb6"><span class="std std-ref">int64_cond_neg_unsigned()</span></a> to perform the conversion after checking </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Maximum representable positive: 9223372036854775807 (<code class="docutils literal notranslate"><span class="pre">INT64_MAX</span></code>) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Maximum representable negative magnitude: 9223372036854775808 (|<code class="docutils literal notranslate"><span class="pre">INT64_MIN|</span></code>)</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u64</strong> – Unsigned magnitude to check </p></li>
+<li><p><strong>is_negative</strong> – Whether the value will be negated </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if conversion would overflow, false if safe to convert</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int32_safe_unsigned_abs">
+<span class="target" id="libatomvmutils_8h_1aa72002a4059604a05239109bbf70e8b9"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int32_safe_unsigned_abs</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">i32</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int32_safe_unsigned_abs" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute absolute value of signed 32-bit integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) as unsigned (<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>) </p>
+<p>Returns the absolute value of a signed 32-bit integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) as an unsigned 32-bit value (<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>). This function avoids undefined behavior that would occur when negating <code class="docutils literal notranslate"><span class="pre">INT32_MIN</span></code> in signed arithmetic.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Handles <code class="docutils literal notranslate"><span class="pre">INT32_MIN</span></code> correctly (returns 2147483648 as unsigned) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Caller can use result without concern for undefined behavior </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i32</strong> – Signed integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) to get absolute value of </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Absolute value as unsigned 32-bit integer (<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int64_safe_unsigned_abs">
+<span class="target" id="libatomvmutils_8h_1ac24759764f1524146d7f737a37dca4cf"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int64_safe_unsigned_abs</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">i64</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int64_safe_unsigned_abs" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute absolute value of signed 64-bit integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) as unsigned (<code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>) </p>
+<p>Returns the absolute value of a signed 64-bit integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) as an unsigned 64-bit value (<code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>). This function avoids undefined behavior that would occur when negating <code class="docutils literal notranslate"><span class="pre">INT64_MIN</span></code> in signed arithmetic.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Handles <code class="docutils literal notranslate"><span class="pre">INT64_MIN</span></code> correctly (returns 9223372036854775808 as unsigned) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Caller can use result without concern for undefined behavior </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i64</strong> – Signed integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) to get absolute value of </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Absolute value as unsigned 64-bit integer (<code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int32_bsr">
+<span class="target" id="libatomvmutils_8h_1a7cef0dd3a13b710e754cc64b09bc6d93"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int32_bsr</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">rshift</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int32_bsr" title="Link to this definition"></a><br /></dt>
+<dd><p>Perform arithmetic right shift on 32-bit signed integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) </p>
+<p>Performs a portable arithmetic right shift that preserves sign extension across different compilers and architectures. Unlike the C &gt;&gt; operator on signed integers (which has implementation-defined behavior for negative values), this function guarantees arithmetic shift semantics.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a6f1fc3212a1856f15e31755530a54417"><span class="std std-ref">int32_bsr_safe()</span></a> for safe version with large shift handling </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Negative values are sign-extended (arithmetic shift) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Positive values are zero-extended (logical shift) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Portable replacement for implementation-defined signed right shift</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For shift amounts &gt;= 32, behavior is undefined. Use <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a6f1fc3212a1856f15e31755530a54417"><span class="std std-ref"><span class="pre">int32_bsr_safe()</span></span></a></code> for defined behavior with large shift amounts</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Signed 32-bit integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) to shift </p></li>
+<li><p><strong>rshift</strong> – Number of bit positions to shift right </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Right-shifted value with sign extension preserved</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int64_bsr">
+<span class="target" id="libatomvmutils_8h_1a74c27ba96f2ec8fbe142ac1e21c6b48e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int64_bsr</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">rshift</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int64_bsr" title="Link to this definition"></a><br /></dt>
+<dd><p>Perform arithmetic right shift on 64-bit signed integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) </p>
+<p>Performs a portable arithmetic right shift that preserves sign extension across different compilers and architectures. Unlike the C &gt;&gt; operator on signed integers (which has implementation-defined behavior for negative values), this function guarantees arithmetic shift semantics.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a40382fdfd5fb3421c98c269251d12622"><span class="std std-ref">int64_bsr_safe()</span></a> for safe version with large shift handling </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Negative values are sign-extended (arithmetic shift) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Positive values are zero-extended (logical shift) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Portable replacement for implementation-defined signed right shift</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For shift amounts &gt;= 64, behavior is undefined. Use <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmutils_8h_1a40382fdfd5fb3421c98c269251d12622"><span class="std std-ref"><span class="pre">int64_bsr_safe()</span></span></a></code> for defined behavior with large shift amounts</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Signed 64-bit integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) to shift </p></li>
+<li><p><strong>rshift</strong> – Number of bit positions to shift right </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Right-shifted value with sign extension preserved</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int32_bsr_safe">
+<span class="target" id="libatomvmutils_8h_1a6f1fc3212a1856f15e31755530a54417"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int32_bsr_safe</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">rshift</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int32_bsr_safe" title="Link to this definition"></a><br /></dt>
+<dd><p>Safely perform arithmetic right shift on 32-bit signed integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) </p>
+<p>Performs a portable arithmetic right shift with defined behavior for shift amounts &gt;= 32 bits. This follows Erlang’s semantics where right shifts beyond the bit width converge to -1 for negative values and 0 for non-negative values.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a7cef0dd3a13b710e754cc64b09bc6d93"><span class="std std-ref">int32_bsr()</span></a> for version without large shift protection </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For rshift &gt;= 32: returns -1 if n &lt; 0, returns 0 if n &gt;= 0 </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For rshift &lt; 32: performs standard arithmetic right shift </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Erlang-inspired semantics for large shifts</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Signed 32-bit integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) to shift </p></li>
+<li><p><strong>rshift</strong> – Number of bit positions to shift right </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Right-shifted value, or -1 (negative) / 0 (non-negative) for shifts &gt;= 32</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int64_bsr_safe">
+<span class="target" id="libatomvmutils_8h_1a40382fdfd5fb3421c98c269251d12622"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int64_bsr_safe</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">rshift</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int64_bsr_safe" title="Link to this definition"></a><br /></dt>
+<dd><p>Safely perform arithmetic right shift on 64-bit signed integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) </p>
+<p>Performs a portable arithmetic right shift with defined behavior for shift amounts &gt;= 64 bits. This follows Erlang’s semantics where right shifts beyond the bit width converge to -1 for negative values and 0 for non-negative values.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a74c27ba96f2ec8fbe142ac1e21c6b48e"><span class="std std-ref">int64_bsr()</span></a> for version without large shift protection </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For rshift &gt;= 64: returns -1 if n &lt; 0, returns 0 if n &gt;= 0 </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For rshift &lt; 64: performs standard arithmetic right shift </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Erlang-inspired semantics for large shifts</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Signed 64-bit integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) to shift </p></li>
+<li><p><strong>rshift</strong> – Number of bit positions to shift right </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Right-shifted value, or -1 (negative) / 0 (non-negative) for shifts &gt;= 64</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int32_bsl_overflow">
+<span class="target" id="libatomvmutils_8h_1a4da6e07d929a6f947a275ff4e1fead98"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int32_bsl_overflow</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">lshift</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int32_bsl_overflow" title="Link to this definition"></a><br /></dt>
+<dd><p>Perform left shift on 32-bit signed integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) with overflow detection. </p>
+<p>Performs a left shift operation with overflow detection. The shift is always defined (even for shift amounts &gt;= 32), and the function reports whether the operation would lose information. This provides safe, portable bit shifting with predictable overflow semantics.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a7cef0dd3a13b710e754cc64b09bc6d93"><span class="std std-ref">int32_bsr()</span></a> used internally for overflow checking </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For lshift &gt;= 32: sets *out to 0, returns true if n != 0 </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For lshift &lt; 32: performs shift and checks if reversible</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Signed 32-bit integer (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) to shift </p></li>
+<li><p><strong>lshift</strong> – Number of bit positions to shift left </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result of the shift operation (0 for shifts &gt;= 32) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if overflow occurred (information lost), false if exact</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out != NULL</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int64_bsl_overflow">
+<span class="target" id="libatomvmutils_8h_1ab2ca5e1c6323dfd8a3736acc854b87eb"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int64_bsl_overflow</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">lshift</span></span>, <span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int64_bsl_overflow" title="Link to this definition"></a><br /></dt>
+<dd><p>Perform left shift on 64-bit signed integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) with overflow detection. </p>
+<p>Performs a left shift operation with overflow detection. The shift is always defined (even for shift amounts &gt;= 64), and the function reports whether the operation would lose information. This provides safe, portable bit shifting with predictable overflow semantics.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a74c27ba96f2ec8fbe142ac1e21c6b48e"><span class="std std-ref">int64_bsr()</span></a> used internally for overflow checking </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For lshift &gt;= 64: sets *out to 0, returns true if n != 0 </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For lshift &lt; 64: performs shift and checks if reversible </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Overflow detection works by shifting back and comparing with original</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Signed 64-bit integer (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) to shift </p></li>
+<li><p><strong>lshift</strong> – Number of bit positions to shift left </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result of the shift operation (0 for shifts &gt;= 64) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if overflow occurred (information lost), false if exact</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out != NULL</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.intptr_write_to_ascii_buf">
+<span class="target" id="libatomvmutils_8h_1acb1130c009830d646fc6a3400a8c655b"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intptr_write_to_ascii_buf</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">intptr_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">base</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_end</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.intptr_write_to_ascii_buf" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert <code class="docutils literal notranslate"><span class="pre">intptr_t</span></code> to ASCII representation in specified base. </p>
+<p>Writes the ASCII representation of a signed integer to a buffer, starting from the end and working backwards. The function returns the number of characters written. This design allows efficient conversion without requiring string reversal.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="nc">char</span><span class="w"> </span><span class="n">buffer</span><span class="o">[</span><span class="n">INTPTR_WRITE_TO_ASCII_BUF_LEN</span><span class="o">]</span><span class="p">;</span>
+<span class="n">size_t</span><span class="w"> </span><span class="nf">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">intptr_write_to_ascii_buf</span><span class="p">(</span><span class="o">-</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">INTPTR_WRITE_TO_ASCII_BUF_LEN</span><span class="p">);</span>
+<span class="o">//</span><span class="w"> </span><span class="n">Characters</span><span class="w"> </span><span class="n">written</span><span class="w"> </span><span class="k">at</span><span class="err">:</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">INTPTR_WRITE_TO_ASCII_BUF_LEN</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">len</span>
+<span class="o">//</span><span class="w"> </span><span class="k">Result</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;-42&quot;</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="n">characters</span><span class="p">)</span>
+</pre></div>
+</div>
+ </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Optimized implementations for base 10 and base 16 </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Negative numbers include leading ‘-’ character </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Digits &gt; 9 represented as uppercase letters (A-Z)</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Buffer must be at least <code class="docutils literal notranslate"><span class="pre">INTPTR_WRITE_TO_ASCII_BUF_LEN</span></code> bytes </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Insufficient buffer size causes undefined behavior (buffer overflow) </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Caller must add null terminator if using result as C string</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Integer value (<code class="docutils literal notranslate"><span class="pre">intptr_t</span></code>) to convert </p></li>
+<li><p><strong>base</strong> – Number base for conversion (2-36) </p></li>
+<li><p><strong>out_end</strong> – Pointer to one-past-last position of output buffer </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of characters written to buffer</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>base &gt;= 2 &amp;&amp; base &lt;= 36 </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>out_end points to valid buffer with at least <code class="docutils literal notranslate"><span class="pre">INTPTR_WRITE_TO_ASCII_BUF_LEN</span></code> bytes before it </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Characters written to [(out_end - return_value), out_end) </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>No null terminator is added</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int32_write_to_ascii_buf">
+<span class="target" id="libatomvmutils_8h_1a2a7e160264a0d6404215f5d2acabbf7c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int32_write_to_ascii_buf</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">base</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_end</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int32_write_to_ascii_buf" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> to ASCII representation in specified base. </p>
+<p>Writes the ASCII representation of a 32-bit signed integer to a buffer, starting from the end and working backwards. The function returns the number of characters written. This design allows efficient conversion without requiring string reversal.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="nc">char</span><span class="w"> </span><span class="n">buffer</span><span class="o">[</span><span class="n">INT32_WRITE_TO_ASCII_BUF_LEN</span><span class="o">]</span><span class="p">;</span>
+<span class="n">size_t</span><span class="w"> </span><span class="nf">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int32_write_to_ascii_buf</span><span class="p">(</span><span class="o">-</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">INT32_WRITE_TO_ASCII_BUF_LEN</span><span class="p">);</span>
+<span class="o">//</span><span class="w"> </span><span class="n">Characters</span><span class="w"> </span><span class="n">written</span><span class="w"> </span><span class="k">at</span><span class="err">:</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">INT32_WRITE_TO_ASCII_BUF_LEN</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">len</span>
+<span class="o">//</span><span class="w"> </span><span class="k">Result</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;-42&quot;</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="n">characters</span><span class="p">)</span>
+</pre></div>
+</div>
+ </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Optimized implementations for base 10 and base 16 </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Negative numbers include leading ‘-’ character </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Digits &gt; 9 represented as uppercase letters (A-Z)</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Buffer must be at least <code class="docutils literal notranslate"><span class="pre">INT32_WRITE_TO_ASCII_BUF_LEN</span></code> bytes </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Insufficient buffer size causes undefined behavior (buffer overflow) </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Caller must add null terminator if using result as C string</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Integer value (<code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) to convert </p></li>
+<li><p><strong>base</strong> – Number base for conversion (2-36) </p></li>
+<li><p><strong>out_end</strong> – Pointer to one-past-last position of output buffer </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of characters written to buffer</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>base &gt;= 2 &amp;&amp; base &lt;= 36 </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>out_end points to valid buffer with at least <code class="docutils literal notranslate"><span class="pre">INT32_WRITE_TO_ASCII_BUF_LEN</span></code> bytes before it </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Characters written to [(out_end - return_value), out_end) </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>No null terminator is added</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int64_write_to_ascii_buf">
+<span class="target" id="libatomvmutils_8h_1a6019f8bacbf0c6f0fc8aaddd0540670f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int64_write_to_ascii_buf</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">base</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_end</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int64_write_to_ascii_buf" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> to ASCII representation in specified base. </p>
+<p>Writes the ASCII representation of a 64-bit signed integer to a buffer, starting from the end and working backwards. The function returns the number of characters written. This design allows efficient conversion without requiring string reversal.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="nc">char</span><span class="w"> </span><span class="n">buffer</span><span class="o">[</span><span class="n">INT64_WRITE_TO_ASCII_BUF_LEN</span><span class="o">]</span><span class="p">;</span>
+<span class="n">size_t</span><span class="w"> </span><span class="nf">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int64_write_to_ascii_buf</span><span class="p">(</span><span class="n">INT64_MIN</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">INT64_WRITE_TO_ASCII_BUF_LEN</span><span class="p">);</span>
+<span class="o">//</span><span class="w"> </span><span class="n">Characters</span><span class="w"> </span><span class="n">written</span><span class="w"> </span><span class="k">at</span><span class="err">:</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">INT64_WRITE_TO_ASCII_BUF_LEN</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">len</span>
+<span class="o">//</span><span class="w"> </span><span class="k">Result</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;-9223372036854775808&quot;</span><span class="w"> </span><span class="p">(</span><span class="mi">20</span><span class="w"> </span><span class="n">characters</span><span class="p">)</span>
+</pre></div>
+</div>
+ </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Optimized implementations for base 10 and base 16 </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Negative numbers include leading ‘-’ character </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Digits &gt; 9 represented as uppercase letters (A-Z)</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Buffer must be at least <code class="docutils literal notranslate"><span class="pre">INT64_WRITE_TO_ASCII_BUF_LEN</span></code> bytes </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Insufficient buffer size causes undefined behavior (buffer overflow) </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Caller must add null terminator if using result as C string</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – Integer value (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) to convert </p></li>
+<li><p><strong>base</strong> – Number base for conversion (2-36) </p></li>
+<li><p><strong>out_end</strong> – Pointer to one-past-last position of output buffer </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of characters written to buffer</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>base &gt;= 2 &amp;&amp; base &lt;= 36 </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>out_end points to valid buffer with at least <code class="docutils literal notranslate"><span class="pre">INT64_WRITE_TO_ASCII_BUF_LEN</span></code> bytes before it </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Characters written to [(out_end - return_value), out_end) </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>No null terminator is added</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.utils.h.int64_parse_ascii_buf">
+<span class="target" id="libatomvmutils_8h_1ab5aa183bb1af162ed05d023c2060d01a"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">int64_parse_ascii_buf</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="n"><span class="pre">buf</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">buf_len</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">base</span></span>, <a class="reference internal" href="#c.libAtomVM.utils.h.buf_to_int64_options_t" title="buf_to_int64_options_t"><span class="n"><span class="pre">buf_to_int64_options_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">options</span></span>, <span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.utils.h.int64_parse_ascii_buf" title="Link to this definition"></a><br /></dt>
+<dd><p>Parse ASCII buffer to <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> in specified base. </p>
+<p>Parses an ASCII representation of an integer from a buffer (not necessarily null-terminated) into a 64-bit signed integer. Supports bases 2-36 with optimized paths for base 10 and 16. The function is designed to support parsing arbitrarily large integers by processing them in chunks - it returns the position where parsing stopped, allowing callers to continue parsing from that point.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span><span class="n">Simple</span><span class="w"> </span><span class="n">parsing</span>
+<span class="n">int64_t</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="n">const</span><span class="w"> </span><span class="nc">char</span><span class="w"> </span><span class="o">*</span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;12345&quot;</span><span class="p">;</span>
+<span class="nc">int</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int64_parse_ascii_buf</span><span class="p">(</span><span class="n">number</span><span class="p">,</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">number</span><span class="p">),</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">BufToInt64NoOptions</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="k">value</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pos</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">number</span><span class="p">))</span><span class="w"> </span><span class="err">{</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">Successfully</span><span class="w"> </span><span class="n">parsed</span><span class="w"> </span><span class="n">entire</span><span class="w"> </span><span class="nl">buffer</span><span class="p">:</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12345</span>
+<span class="err">}</span>
+
+<span class="o">//</span><span class="w"> </span><span class="n">Parsing</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">overflow</span><span class="w"> </span><span class="n">detection</span>
+<span class="n">const</span><span class="w"> </span><span class="nc">char</span><span class="w"> </span><span class="o">*</span><span class="n">big_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;99999999999999999999999&quot;</span><span class="p">;</span>
+<span class="nc">int</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int64_parse_ascii_buf</span><span class="p">(</span><span class="n">big_num</span><span class="p">,</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">big_num</span><span class="p">),</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">BufToInt64NoOptions</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="k">value</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">big_num</span><span class="p">))</span><span class="w"> </span><span class="err">{</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">Overflow</span><span class="w"> </span><span class="n">occurred</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="k">position</span><span class="w"> </span><span class="n">pos</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">contains</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">maximum</span><span class="w"> </span><span class="n">representable</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">before</span><span class="w"> </span><span class="n">overflow</span>
+<span class="err">}</span>
+
+<span class="o">//</span><span class="w"> </span><span class="n">Chunk</span><span class="w"> </span><span class="n">parsing</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">arbitrarily</span><span class="w"> </span><span class="k">large</span><span class="w"> </span><span class="n">integers</span>
+<span class="n">const</span><span class="w"> </span><span class="nc">char</span><span class="w"> </span><span class="o">*</span><span class="n">chunks</span><span class="err">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="ss">&quot;12345&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;67890&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;12345&quot;</span><span class="err">}</span><span class="p">;</span>
+<span class="n">int64_t</span><span class="w"> </span><span class="n">accumulated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="nc">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="err">{</span>
+<span class="w">    </span><span class="n">int64_t</span><span class="w"> </span><span class="n">chunk</span><span class="p">;</span>
+<span class="w">    </span><span class="nc">int</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int64_parse_ascii_buf</span><span class="p">(</span><span class="n">chunks</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">BufToInt64RejectSign</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">chunk</span><span class="p">);</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">Process</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="k">value</span><span class="p">...</span>
+<span class="err">}</span>
+</pre></div>
+</div>
+</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmutils_8h_1a6019f8bacbf0c6f0fc8aaddd0540670f"><span class="std std-ref">int64_write_to_ascii_buf()</span></a> for the inverse operation </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Leading zeros are skipped automatically </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Signs (+/-) accepted unless <code class="docutils literal notranslate"><span class="pre">BufToInt64RejectSign</span></code> is set </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Case-insensitive for letter digits (a-z, A-Z) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Optimized implementations for base 10 and base 16 </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Stops parsing at first invalid character or overflow</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Return value -1 indicates format error (invalid digit for base) </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Return value &lt; buf_len may indicate overflow or invalid character</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> – Buffer containing ASCII digits to parse </p></li>
+<li><p><strong>buf_len</strong> – Length of buffer in bytes </p></li>
+<li><p><strong>base</strong> – Number base for parsing (2-36) </p></li>
+<li><p><strong>options</strong> – Parsing options (e.g., reject sign characters) </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Parsed integer value (valid even on overflow) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Position after last successfully parsed character, or -1 on format error</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>base &gt;= 2 &amp;&amp; base &lt;= 36 </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>buf != NULL when buf_len &gt; 0 (NULL allowed only for zero-length buffer) </p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out != NULL </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>On success: *out contains parsed value up to position returned </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>On overflow: *out contains value parsed before overflow, returns position where overflow occurred </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>On format error: returns -1, *out is undefined</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="unicode.h.html" class="btn btn-neutral float-left" title="unicode.h" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.c.html" class="btn btn-neutral float-left" title="utils.c" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="valueshashtable.c.html" class="btn btn-neutral float-right" title="valueshashtable.c" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

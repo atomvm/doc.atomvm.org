@@ -1,0 +1,1969 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>intn.h &mdash; AtomVM 0.7.0-dev+git.58768ab5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/intn.h.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=44339055"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="jit.c" href="jit.c.html" />
+    <link rel="prev" title="intn.c" href="intn.c.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stubbed-functions.html">Stubbed Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html">libAtomVM</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#libatomvm-source-files">libAtomVM source files</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="atom.c.html">atom.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom.h.html">atom.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.c.html">atom_table.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.h.html">atom_table.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm_version.h.html">atomvm_version.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.c.html">avmpack.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.h.html">avmpack.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.c.html">bif.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.h.html">bif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.c.html">bitstring.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.h.html">bitstring.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.c.html">context.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.h.html">context.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.c.html">debug.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.h.html">debug.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="defaultatoms.h.html">defaultatoms.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.c.html">dictionary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.h.html">dictionary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dist_nifs.c.html">dist_nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dist_nifs.h.html">dist_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif.h.html">erl_nif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif_priv.h.html">erl_nif_priv.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets.c.html">ets.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets.h.html">ets.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets_hashtable.c.html">ets_hashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets_hashtable.h.html">ets_hashtable.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exportedfunction.h.html">exportedfunction.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.c.html">externalterm.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="externalterm.h.html">externalterm.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.c.html">globalcontext.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.h.html">globalcontext.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.c.html">iff.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.h.html">iff.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.c.html">inet.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.h.html">inet.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.c.html">interop.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.h.html">interop.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="intn.c.html">intn.c</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">intn.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit.c.html">jit.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit.h.html">jit.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="listeners.h.html">listeners.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.c.html">mailbox.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.h.html">mailbox.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.c.html">memory.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.h.html">memory.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.c.html">module.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.h.html">module.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.c.html">nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.h.html">nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="opcodes.h.html">opcodes.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.c.html">otp_crypto.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.h.html">otp_crypto.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.c.html">otp_net.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.h.html">otp_net.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.c.html">otp_socket.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.h.html">otp_socket.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.c.html">otp_ssl.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.h.html">otp_ssl.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="overflow_helpers.h.html">overflow_helpers.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="platform_nifs.h.html">platform_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.c.html">port.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.h.html">port.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="portnifloader.c.html">portnifloader.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="portnifloader.h.html">portnifloader.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.c.html">posix_nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.h.html">posix_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.c.html">refc_binary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.h.html">refc_binary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.c.html">resources.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.h.html">resources.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scheduler.h.html">scheduler.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smp.h.html">smp.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.c.html">stacktrace.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.h.html">stacktrace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="synclist.h.html">synclist.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys.h.html">sys.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys_mbedtls.h.html">sys_mbedtls.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.c.html">term.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.h.html">term.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term_typedef.h.html">term_typedef.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.c.html">timer_list.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.h.html">timer_list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.c.html">utils.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.h.html">utils.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.h.html">valueshashtable.h</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../C_CODING_STYLE.html">AtomVM C Coding Style Guide (AVMCCS Guide)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">libAtomVM</a></li>
+      <li class="breadcrumb-item active">intn.h</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="intn-h">
+<h1>intn.h<a class="headerlink" href="#intn-h" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>Include dependency graph for intn.h:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-608d232b592fe42ddb7a88e8ad7cb5438bad4085.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.h&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;4&quot; [label=&quot;utils.h&quot; tooltip=&quot;utils.h&quot;]
+    &quot;5&quot; [label=&quot;inttypes.h&quot; tooltip=&quot;inttypes.h&quot;]
+    &quot;2&quot; [label=&quot;stdbool.h&quot; tooltip=&quot;stdbool.h&quot;]
+    &quot;6&quot; [label=&quot;stddef.h&quot; tooltip=&quot;stddef.h&quot;]
+    &quot;7&quot; [label=&quot;stdio.h&quot; tooltip=&quot;stdio.h&quot;]
+    &quot;8&quot; [label=&quot;stdlib.h&quot; tooltip=&quot;stdlib.h&quot;]
+    &quot;3&quot; [label=&quot;string.h&quot; tooltip=&quot;string.h&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;4&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;4&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;4&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;4&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;4&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+}</p></object></div>
+</div>
+</figure>
+<p>This graph shows which files directly or indirectly include intn.h:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-9d2ed5cb06b264dcf478f953b573aa7b77a625e8.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;56&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.c&quot;]
+    &quot;55&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/avmpack.h&quot;]
+    &quot;2&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.c&quot;]
+    &quot;10&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bif.h&quot;]
+    &quot;4&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.c&quot;]
+    &quot;3&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/bitstring.h&quot;]
+    &quot;13&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot;]
+    &quot;9&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.h&quot;]
+    &quot;15&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.c&quot;]
+    &quot;14&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/debug.h&quot;]
+    &quot;57&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/defaultatoms.h&quot;]
+    &quot;50&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.c&quot;]
+    &quot;51&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dictionary.h&quot;]
+    &quot;17&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dist_nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dist_nifs.c&quot;]
+    &quot;52&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dist_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/dist_nifs.h&quot;]
+    &quot;18&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/erl_nif_priv.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/erl_nif_priv.h&quot;]
+    &quot;25&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.c&quot;]
+    &quot;53&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.h&quot;]
+    &quot;59&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.c&quot;]
+    &quot;58&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.h&quot;]
+    &quot;61&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot;]
+    &quot;5&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.c&quot;]
+    &quot;62&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/externalterm.h&quot;]
+    &quot;19&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot;]
+    &quot;54&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.h&quot;]
+    &quot;28&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.c&quot;]
+    &quot;27&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/inet.h&quot;]
+    &quot;6&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.c&quot;]
+    &quot;26&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/interop.h&quot;]
+    &quot;48&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.c&quot;]
+    &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/intn.h&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;7&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.c&quot;]
+    &quot;8&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit.h&quot;]
+    &quot;47&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/mailbox.c&quot;]
+    &quot;16&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/memory.c&quot;]
+    &quot;11&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot;]
+    &quot;32&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.h&quot;]
+    &quot;12&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
+    &quot;37&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.h&quot;]
+    &quot;30&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_crypto.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_crypto.c&quot;]
+    &quot;38&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_crypto.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_crypto.h&quot;]
+    &quot;29&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_net.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_net.c&quot;]
+    &quot;39&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_net.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_net.h&quot;]
+    &quot;20&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot;]
+    &quot;40&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.h&quot;]
+    &quot;21&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.c&quot;]
+    &quot;41&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_ssl.h&quot;]
+    &quot;63&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/overflow_helpers.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/overflow_helpers.h&quot;]
+    &quot;33&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/platform_nifs.h&quot;]
+    &quot;44&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.c&quot;]
+    &quot;45&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/port.h&quot;]
+    &quot;43&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/portnifloader.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/portnifloader.c&quot;]
+    &quot;42&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/portnifloader.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/portnifloader.h&quot;]
+    &quot;22&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.c&quot;]
+    &quot;60&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/posix_nifs.h&quot;]
+    &quot;23&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/refc_binary.c&quot;]
+    &quot;24&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot;]
+    &quot;46&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/scheduler.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/scheduler.h&quot;]
+    &quot;35&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.c&quot;]
+    &quot;34&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/stacktrace.h&quot;]
+    &quot;36&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot;]
+    &quot;31&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot;]
+    &quot;49&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot;]
+    &quot;55&quot; -&gt; &quot;56&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;55&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;55&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;10&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;10&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;10&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;10&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;4&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;3&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;14&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;18&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;37&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;44&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;45&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;42&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;23&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;46&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;9&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;15&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;50&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;44&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;45&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;50&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;51&quot; -&gt; &quot;23&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;52&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;52&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;52&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;52&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;23&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;18&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;54&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;53&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;58&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;58&quot; -&gt; &quot;59&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;61&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;61&quot; -&gt; &quot;52&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;61&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;61&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;61&quot; -&gt; &quot;37&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;61&quot; -&gt; &quot;33&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;61&quot; -&gt; &quot;60&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;55&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;57&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;52&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;58&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;39&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;40&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;41&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;44&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;45&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;42&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;60&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;46&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;54&quot; -&gt; &quot;36&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;27&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;27&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;27&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;27&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;27&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;26&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;48&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;49&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;8&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;8&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;8&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;8&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;8&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;32&quot; -&gt; &quot;10&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;32&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;32&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;32&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;32&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;32&quot; -&gt; &quot;33&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;32&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;32&quot; -&gt; &quot;36&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;32&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;38&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;39&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;40&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;41&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;42&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;37&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;38&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;39&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;40&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;40&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;41&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;63&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;33&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;45&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;45&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;45&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;45&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;45&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;45&quot; -&gt; &quot;44&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;42&quot; -&gt; &quot;43&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;60&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;47&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;46&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;34&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;34&quot; -&gt; &quot;35&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;36&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;36&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;36&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;36&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;36&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;36&quot; -&gt; &quot;24&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;13&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;9&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;50&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;51&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;52&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;25&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;53&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;59&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;58&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;61&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;62&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;19&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;54&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;28&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;26&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;30&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;29&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;20&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;63&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;45&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;60&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;49&quot; -&gt; &quot;31&quot; [dir=back tooltip=&quot;include&quot;]
+}</p></object></div>
+</div>
+</figure>
+<p>Multi-precision integer arithmetic for up to 256-bit integers (IntN) </p>
+<p>The module name “intn” stands for “Integer N-bits” where N can be up to 256 in the current implementation. While these are often called “big integers” (bigints) in higher-level contexts, we use the term “multi-precision integer” in this header to emphasize the implementation using arrays of fixed-precision digits.</p>
+<p>This module provides multi-precision integer arithmetic operations on arrays of digits (also called limbs in other libraries). Integers are represented in sign-magnitude form (not two’s complement) with the sign stored separately. The magnitude is the absolute value of the integer, stored as an array of unsigned digits.</p>
+<p><em>Integer Representation</em></p>
+<p>Multi-precision integers are stored as arrays of <code class="docutils literal notranslate"><span class="pre">intn_digit_t</span></code> digits in little-endian digit order (least significant digit first):<ul class="simple">
+<li><p>digit[0] contains the least significant bits</p></li>
+<li><p>digit[n-1] contains the most significant bits</p></li>
+</ul>
+</p>
+<p>Example representations: <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="c1">// 0xCAFEFACEDEADBEEF parsed from hex string:</span>
+<span class="c1">// bigint[0] = 0xDEADBEEF, bigint[1] = 0xCAFEFACE, sign = IntNPositiveInteger</span>
+
+<span class="c1">// -0xCAFEFACEDEADBEEF1234:</span>
+<span class="c1">// {0xBEEF1234, 0xFACEDEAD, 0xCAFE}, sign = IntNNegativeInteger</span>
+
+<span class="c1">// 2^127 (0x80000000000000000000000000000000):</span>
+<span class="c1">// {0x0, 0x0, 0x0, 0x80000000}, sign = IntNPositiveInteger</span>
+</pre></div>
+</div>
+</p>
+<p><em>Normalized (Canonical) Form</em></p>
+<p>An integer is in normalized form when it has no leading zero digits. Leading zeros are zero-valued digits at the end of the array (highest indices).</p>
+<p>Examples: <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="c1">// Normalized form (no leading zeros):</span>
+<span class="c1">// {0xDEADBEEF, 0xCAFEFACE} - 2 digits, both non-zero</span>
+
+<span class="c1">// Not normalized (has leading zero):</span>
+<span class="c1">// {0xDEADBEEF, 0xCAFEFACE, 0x0} - digit[2] is a leading zero</span>
+
+<span class="c1">// Function example:</span>
+<span class="n">intn_count_digits</span><span class="p">({</span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x80000000</span><span class="p">},</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="n">normalized</span><span class="p">)</span>
+<span class="n">intn_count_digits</span><span class="p">({</span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x80000000</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">},</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="n">not</span><span class="w"> </span><span class="n">normalized</span><span class="p">)</span>
+</pre></div>
+</div>
+</p>
+<p><em>Functions Requiring Normalized Input</em></p>
+<p>The following functions MUST receive normalized input for correct operation:<ul class="simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a75266282cd36e34b4504821c5707513a"><span class="std std-ref"><span class="pre">intn_to_int64()</span></span></a></code> - for correct conversion</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a6cf9d4cc40d2adb4c520cafa821e3ad4"><span class="std std-ref"><span class="pre">intn_fits_int64()</span></span></a></code> - for accurate check</p></li>
+</ul>
+</p>
+<p>All other functions accept both normalized and non-normalized inputs.</p>
+<p><em>Output Buffer Sizing</em></p>
+<p>Functions require pre-allocated output buffers. Use the provided macros (e.g., <code class="docutils literal notranslate"><span class="pre">INTN_MUL_OUT_LEN</span></code>) to ensure sufficient space. No output length parameter is passed - callers must ensure buffers are large enough.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On little-endian systems, the memory layout matches native <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> for 2-digit values. On big-endian systems, digit order remains the same but byte order within each digit follows system endianness. </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Multi-precision integers cannot be compared using <code class="docutils literal notranslate"><span class="pre">memcmp</span></code></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Algorithms for multiplication and division are based on Hacker’s Delight </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We use the term “digit” instead of “limb” in this module </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_INT64_LEN">
+<span class="target" id="libatomvmintn_8h_1aed4477e8c59998dc7914f1eefa3b144b"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_INT64_LEN</span></span></span> <span class="pre">2</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_INT64_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Number of <code class="docutils literal notranslate"><span class="pre">intn_digit_t</span></code> digits needed to represent any <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> value. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_UINT64_LEN">
+<span class="target" id="libatomvmintn_8h_1a3e7efb4179e12f0fe358516bbbe97b12"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_UINT64_LEN</span></span></span> <span class="pre">2</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_UINT64_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Number of <code class="docutils literal notranslate"><span class="pre">intn_digit_t</span></code> digits needed to represent any <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> value. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_MAX_IN_LEN">
+<span class="target" id="libatomvmintn_8h_1ab5585acd30359abe8c2fbdec11c92a8b"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_MAX_IN_LEN</span></span></span> <span class="pre">8</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_MAX_IN_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Maximum input length in digits (256 bits / 32 bits = 8 digits) </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_MAX_RES_LEN">
+<span class="target" id="libatomvmintn_8h_1af3d78d74aab7b8aee454f60efc842645"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_MAX_RES_LEN</span></span></span> <span class="pre">(</span><a class="reference internal" href="#libatomvmintn_8h_1ab5585acd30359abe8c2fbdec11c92a8b"><span class="std std-ref"><span class="pre">INTN_MAX_IN_LEN</span></span></a> <span class="pre">+</span> <a class="reference internal" href="#libatomvmintn_8h_1aed4477e8c59998dc7914f1eefa3b144b"><span class="std std-ref"><span class="pre">INTN_INT64_LEN</span></span></a> <span class="pre">+</span> <span class="pre">1)</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_MAX_RES_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Maximum result length in digits, provides extra room for intermediate overflow. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Larger than <code class="docutils literal notranslate"><span class="pre">INTN_MAX_IN_LEN</span></code> to accommodate temporary overflow before normalization </p>
+</div>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_BSL_MAX_RES_LEN">
+<span class="target" id="libatomvmintn_8h_1a6809764146e60f3e28ff0c3d13c1b83f"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_BSL_MAX_RES_LEN</span></span></span> <span class="pre">8</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_BSL_MAX_RES_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Maximum result length for bit shift left operations. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.MAX_LEN">
+<span class="target" id="libatomvmintn_8h_1a15d21f7924635df0ad8019c24f37d6c6"></span><span class="sig-name descname"><span class="n"><span class="pre">MAX_LEN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">m</span></span>, <span class="n"><span class="pre">n</span></span><span class="sig-paren">)</span> <span class="pre">(((m)</span> <span class="pre">&gt;</span> <span class="pre">(n))</span> <span class="pre">?</span> <span class="pre">(m)</span> <span class="pre">:</span> <span class="pre">(n))</span><a class="headerlink" href="#c.libAtomVM.intn.h.MAX_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Return the maximum of two values. </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_ADD_OUT_LEN">
+<span class="target" id="libatomvmintn_8h_1a4c9fc86917bb5e28406d005a44c0755c"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_ADD_OUT_LEN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">m</span></span>, <span class="n"><span class="pre">n</span></span><span class="sig-paren">)</span> <span class="pre">((</span><a class="reference internal" href="#libatomvmintn_8h_1a15d21f7924635df0ad8019c24f37d6c6"><span class="std std-ref"><span class="pre">MAX_LEN</span></span></a><span class="pre">(m,</span> <span class="pre">n))</span> <span class="pre">+</span> <span class="pre">1)</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_ADD_OUT_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculate output buffer size needed for addition. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – Length of first operand in digits </p></li>
+<li><p><strong>n</strong> – Length of second operand in digits </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Maximum possible output length in digits </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_SUB_OUT_LEN">
+<span class="target" id="libatomvmintn_8h_1a49b3439b3c907e3f2aa26c4bbac3c4f0"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_SUB_OUT_LEN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">m</span></span>, <span class="n"><span class="pre">n</span></span><span class="sig-paren">)</span> <span class="pre">((</span><a class="reference internal" href="#libatomvmintn_8h_1a15d21f7924635df0ad8019c24f37d6c6"><span class="std std-ref"><span class="pre">MAX_LEN</span></span></a><span class="pre">(m,</span> <span class="pre">n))</span> <span class="pre">+</span> <span class="pre">1)</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_SUB_OUT_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculate output buffer size needed for subtraction. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – Length of minuend in digits </p></li>
+<li><p><strong>n</strong> – Length of subtrahend in digits </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Maximum possible output length in digits </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_MUL_OUT_LEN">
+<span class="target" id="libatomvmintn_8h_1a3e9143b412413795b6c62ece2f522d17"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_MUL_OUT_LEN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">m</span></span>, <span class="n"><span class="pre">n</span></span><span class="sig-paren">)</span> <span class="pre">((m)</span> <span class="pre">+</span> <span class="pre">(n))</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_MUL_OUT_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculate output buffer size needed for multiplication. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Result always has exactly m + n digits (some may be zero) </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – Length of first operand in digits </p></li>
+<li><p><strong>n</strong> – Length of second operand in digits </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Maximum possible output length in digits</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_REM_OUT_LEN">
+<span class="target" id="libatomvmintn_8h_1af2dfc759aa4e56cebf32ae07fb196e16"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_REM_OUT_LEN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">m</span></span>, <span class="n"><span class="pre">n</span></span><span class="sig-paren">)</span> <span class="pre">(n)</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_REM_OUT_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculate output buffer size needed for remainder. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – Length of dividend in digits </p></li>
+<li><p><strong>n</strong> – Length of divisor in digits </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Maximum possible remainder length in digits </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_DIV_OUT_LEN">
+<span class="target" id="libatomvmintn_8h_1ae93f194d7db2ec5553e35e23ea8616ea"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_DIV_OUT_LEN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">m</span></span>, <span class="n"><span class="pre">n</span></span><span class="sig-paren">)</span> <span class="pre">((m)</span> <span class="pre">-</span> <span class="pre">(n)</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">1)</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_DIV_OUT_LEN" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculate output buffer size needed for division quotient. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – Length of dividend in digits </p></li>
+<li><p><strong>n</strong> – Length of divisor in digits </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Maximum possible quotient length in digits </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_DIGIT_BITS">
+<span class="target" id="libatomvmintn_8h_1ac229e54f567ce18554a50cdd3694ee0e"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_DIGIT_BITS</span></span></span> <span class="pre">32</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_DIGIT_BITS" title="Link to this definition"></a><br /></dt>
+<dd><p>Number of bits in each digit (32 bits in current implementation) </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_MAX_UNSIGNED_BYTES_SIZE">
+<span class="target" id="libatomvmintn_8h_1ad093f3658d81c652dcd8b8f97fe65606"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_MAX_UNSIGNED_BYTES_SIZE</span></span></span> <span class="pre">32</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_MAX_UNSIGNED_BYTES_SIZE" title="Link to this definition"></a><br /></dt>
+<dd><p>Maximum size in bytes for unsigned integer representation (256 bits / 8) </p>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.INTN_MAX_UNSIGNED_BITS_SIZE">
+<span class="target" id="libatomvmintn_8h_1ae6f62c211e59aaf94ed03c6f8101c066"></span><span class="sig-name descname"><span class="n"><span class="pre">INTN_MAX_UNSIGNED_BITS_SIZE</span></span></span> <span class="pre">256</span><a class="headerlink" href="#c.libAtomVM.intn.h.INTN_MAX_UNSIGNED_BITS_SIZE" title="Link to this definition"></a><br /></dt>
+<dd><p>Maximum size in bits for unsigned integer representation. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_digit_t">
+<span class="target" id="libatomvmintn_8h_1a3ce97852344b91546b869b80c8387802"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_digit_t</span></span></span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_digit_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Single digit of a multi-precision integer. </p>
+<p>Currently 32 bits, but this is an implementation detail that may change. Always use <code class="docutils literal notranslate"><span class="pre">intn_digit_t</span></code> type and related macros rather than assuming size. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_integer_sign_t">
+<span class="target" id="libatomvmintn_8h_1ae4eb1a83da572b398787e544940a5bbf"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_integer_sign_t</span></span></span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Sign of a multi-precision integer. </p>
+<p>Integers are stored in sign-magnitude form with sign separate from digits </p>
+<p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_integer_sign_t.IntNPositiveInteger">
+<span class="target" id="libatomvmintn_8h_1ae4eb1a83da572b398787e544940a5bbfa5c2f7ca14c1d6ff3be43428b77cac663"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IntNPositiveInteger</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_integer_sign_t.IntNPositiveInteger" title="Link to this definition"></a><br /></dt>
+<dd><p>Positive integer (including zero) </p>
+</dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_integer_sign_t.IntNNegativeInteger">
+<span class="target" id="libatomvmintn_8h_1ae4eb1a83da572b398787e544940a5bbfaf1253db6c5c7da6bad0d7f59ea2cc438"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IntNNegativeInteger</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">4</span></span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_integer_sign_t.IntNNegativeInteger" title="Link to this definition"></a><br /></dt>
+<dd><p>Negative integer. </p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_from_integer_options_t">
+<span class="target" id="libatomvmintn_8h_1a37bf04d77574c98c21b4fa60c544eb98"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_from_integer_options_t</span></span></span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_from_integer_options_t" title="Link to this definition"></a><br /></dt>
+<dd><p>Options for integer byte conversion. </p>
+<p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_from_integer_options_t.IntnUnsignedBigEndian">
+<span class="target" id="libatomvmintn_8h_1a37bf04d77574c98c21b4fa60c544eb98a03fe6b72a114d5bd7c120bbf3e6343f1"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IntnUnsignedBigEndian</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_from_integer_options_t.IntnUnsignedBigEndian" title="Link to this definition"></a><br /></dt>
+<dd><p>Unsigned big-endian format. </p>
+</dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_from_integer_options_t.IntnSigned">
+<span class="target" id="libatomvmintn_8h_1a37bf04d77574c98c21b4fa60c544eb98a7596d790ddafd90ddb1640ee43f7be12"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IntnSigned</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_from_integer_options_t.IntnSigned" title="Link to this definition"></a><br /></dt>
+<dd><p>Signed two’s complement format. </p>
+</dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_from_integer_options_t.IntnLittleEndian">
+<span class="target" id="libatomvmintn_8h_1a37bf04d77574c98c21b4fa60c544eb98a1911aa2b6b0bdd2a2d5260afd45b2c9e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IntnLittleEndian</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_from_integer_options_t.IntnLittleEndian" title="Link to this definition"></a><br /></dt>
+<dd><p>Little-endian format. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_cmp">
+<span class="target" id="libatomvmintn_8h_1aff5a6c298eefc0f1f101bf4756e8f97e"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_cmp</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">a_len</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">b_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_cmp" title="Link to this definition"></a><br /></dt>
+<dd><p>Compare two unsigned multi-precision integers. </p>
+<p>Compares the magnitude of two multi-precision integers, ignoring sign. Accepts both normalized and non-normalized inputs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Leading zeros are ignored in comparison </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – First integer array </p></li>
+<li><p><strong>a_len</strong> – Length of first integer in digits </p></li>
+<li><p><strong>b</strong> – Second integer array </p></li>
+<li><p><strong>b_len</strong> – Length of second integer in digits </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-1 if a &lt; b, 0 if a == b, 1 if a &gt; b</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_addu">
+<span class="target" id="libatomvmintn_8h_1a0f0b2d7974c13e1dbe7e056b651ed35b"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_addu</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">a_len</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">b_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_addu" title="Link to this definition"></a><br /></dt>
+<dd><p>Add two unsigned multi-precision integers. </p>
+<p>Performs addition of magnitudes only, without considering signs (similar to unsigned addition).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – First addend </p></li>
+<li><p><strong>a_len</strong> – Length of first addend in digits </p></li>
+<li><p><strong>b</strong> – Second addend </p></li>
+<li><p><strong>b_len</strong> – Length of second addend in digits </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a4c9fc86917bb5e28406d005a44c0755c"><span class="std std-ref"><span class="pre">INTN_ADD_OUT_LEN(a_len,</span> <span class="pre">b_len)</span></span></a></code> digits) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Actual length of result in digits (may be less than buffer size)</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a4c9fc86917bb5e28406d005a44c0755c"><span class="std std-ref"><span class="pre">INTN_ADD_OUT_LEN(a_len,</span> <span class="pre">b_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_add">
+<span class="target" id="libatomvmintn_8h_1a0b847e2d4fac24a1e1b65eec5276f7ca"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_add</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m_sign</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_add" title="Link to this definition"></a><br /></dt>
+<dd><p>Add two signed multi-precision integers. </p>
+<p>Performs signed addition of two multi-precision integers with separate signs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – First addend magnitude </p></li>
+<li><p><strong>m_len</strong> – Length of first addend in digits </p></li>
+<li><p><strong>m_sign</strong> – Sign of first addend </p></li>
+<li><p><strong>n</strong> – Second addend magnitude </p></li>
+<li><p><strong>n_len</strong> – Length of second addend in digits </p></li>
+<li><p><strong>n_sign</strong> – Sign of second addend </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a4c9fc86917bb5e28406d005a44c0755c"><span class="std std-ref"><span class="pre">INTN_ADD_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Actual length of result in digits (may be less than buffer size)</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a4c9fc86917bb5e28406d005a44c0755c"><span class="std std-ref"><span class="pre">INTN_ADD_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_add_int64">
+<span class="target" id="libatomvmintn_8h_1ab46dfe17b0d8c73d89c14566c4d8491b"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_add_int64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">num1</span></span>, <span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">num2</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_add_int64" title="Link to this definition"></a><br /></dt>
+<dd><p>Add two 64-bit signed integers (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) producing multi-precision result. </p>
+<p>Specialized addition for <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> values that may overflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num1</strong> – First 64-bit addend </p></li>
+<li><p><strong>num2</strong> – Second 64-bit addend </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a4c9fc86917bb5e28406d005a44c0755c"><span class="std std-ref"><span class="pre">INTN_ADD_OUT_LEN(INTN_INT64_LEN,INTN_INT64_LEN)</span></span></a></code> digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Actual length of result in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a4c9fc86917bb5e28406d005a44c0755c"><span class="std std-ref"><span class="pre">INTN_ADD_OUT_LEN(INTN_INT64_LEN,</span> <span class="pre">INTN_INT64_LEN)</span></span></a></code> digits </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_subu">
+<span class="target" id="libatomvmintn_8h_1a01de3bfd008c6cac80a678996acfcdc9"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_subu</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">a_len</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">b_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_subu" title="Link to this definition"></a><br /></dt>
+<dd><p>Subtract two unsigned multi-precision integers. </p>
+<p>Performs subtraction of magnitudes only (a - b) where a must be &gt;= b.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – Minuend (must be &gt;= b) </p></li>
+<li><p><strong>a_len</strong> – Length of minuend in digits </p></li>
+<li><p><strong>b</strong> – Subtrahend </p></li>
+<li><p><strong>b_len</strong> – Length of subtrahend in digits </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a49b3439b3c907e3f2aa26c4bbac3c4f0"><span class="std std-ref"><span class="pre">INTN_SUB_OUT_LEN(a_len,</span> <span class="pre">b_len)</span></span></a></code> digits) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Actual length of result in digits (may be less than buffer size)</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a &gt;= b (use <code class="docutils literal notranslate"><span class="pre">intn_cmp</span></code> to verify if needed) </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a49b3439b3c907e3f2aa26c4bbac3c4f0"><span class="std std-ref"><span class="pre">INTN_SUB_OUT_LEN(a_len,</span> <span class="pre">b_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_sub">
+<span class="target" id="libatomvmintn_8h_1a0cbd669ba5844e7dca03b42c72107e84"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_sub</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m_sign</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_sub" title="Link to this definition"></a><br /></dt>
+<dd><p>Subtract two signed multi-precision integers. </p>
+<p>Performs signed subtraction (m - n) with separate signs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – Minuend magnitude </p></li>
+<li><p><strong>m_len</strong> – Length of minuend in digits </p></li>
+<li><p><strong>m_sign</strong> – Sign of minuend </p></li>
+<li><p><strong>n</strong> – Subtrahend magnitude </p></li>
+<li><p><strong>n_len</strong> – Length of subtrahend in digits </p></li>
+<li><p><strong>n_sign</strong> – Sign of subtrahend </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a49b3439b3c907e3f2aa26c4bbac3c4f0"><span class="std std-ref"><span class="pre">INTN_SUB_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Actual length of result in digits (may be less than buffer size)</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a49b3439b3c907e3f2aa26c4bbac3c4f0"><span class="std std-ref"><span class="pre">INTN_SUB_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_sub_int64">
+<span class="target" id="libatomvmintn_8h_1a934203b71f16c7f3ced772410cd6fc9f"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_sub_int64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">num1</span></span>, <span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">num2</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_sub_int64" title="Link to this definition"></a><br /></dt>
+<dd><p>Subtract two 64-bit signed integers (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) producing multi-precision result. </p>
+<p>Specialized subtraction for <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> values that may overflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num1</strong> – Minuend </p></li>
+<li><p><strong>num2</strong> – Subtrahend </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a49b3439b3c907e3f2aa26c4bbac3c4f0"><span class="std std-ref"><span class="pre">INTN_SUB_OUT_LEN(INTN_INT64_LEN,INTN_INT64_LEN)</span></span></a></code> digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Actual length of result in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a49b3439b3c907e3f2aa26c4bbac3c4f0"><span class="std std-ref"><span class="pre">INTN_SUB_OUT_LEN(INTN_INT64_LEN,</span> <span class="pre">INTN_INT64_LEN)</span></span></a></code> digits </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_muldiv_sign">
+<span class="target" id="libatomvmintn_8h_1a43ab8996063918b85291ed3d1c5fac9a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_muldiv_sign</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">s1</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">s2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_muldiv_sign" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute sign of multiplication or division result. </p>
+<p>Applies standard sign rules: same signs give positive, different signs give negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s1</strong> – Sign of first operand </p></li>
+<li><p><strong>s2</strong> – Sign of second operand </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sign of the result </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_mulu">
+<span class="target" id="libatomvmintn_8h_1a356245eeca3780681a295553728ccd96"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_mulu</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_mulu" title="Link to this definition"></a><br /></dt>
+<dd><p>Multiply two unsigned multi-precision integers. </p>
+<p>Performs multiplication of magnitudes only, without considering signs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Based on algorithms from Hacker’s Delight </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – First multiplicand </p></li>
+<li><p><strong>m_len</strong> – Length of first multiplicand in digits </p></li>
+<li><p><strong>n</strong> – Second multiplicand </p></li>
+<li><p><strong>n_len</strong> – Length of second multiplicand in digits </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a3e9143b412413795b6c62ece2f522d17"><span class="std std-ref"><span class="pre">INTN_MUL_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a3e9143b412413795b6c62ece2f522d17"><span class="std std-ref"><span class="pre">INTN_MUL_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Exactly m_len + n_len digits are written (some may be zero) </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_mul">
+<span class="target" id="libatomvmintn_8h_1a13dbb36457fee734a22ec690f0ab3081"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_mul</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m_sign</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_mul" title="Link to this definition"></a><br /></dt>
+<dd><p>Multiply two signed multi-precision integers. </p>
+<p>Performs signed multiplication with separate signs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – First multiplicand magnitude </p></li>
+<li><p><strong>m_len</strong> – Length of first multiplicand in digits </p></li>
+<li><p><strong>m_sign</strong> – Sign of first multiplicand </p></li>
+<li><p><strong>n</strong> – Second multiplicand magnitude </p></li>
+<li><p><strong>n_len</strong> – Length of second multiplicand in digits </p></li>
+<li><p><strong>n_sign</strong> – Sign of second multiplicand </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a3e9143b412413795b6c62ece2f522d17"><span class="std std-ref"><span class="pre">INTN_MUL_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result</p></li>
+</ul>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a3e9143b412413795b6c62ece2f522d17"><span class="std std-ref"><span class="pre">INTN_MUL_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Exactly m_len + n_len digits are written (some may be zero) </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_mul_int64">
+<span class="target" id="libatomvmintn_8h_1a9eb07707fe3f5fe6c3ea892a34783c29"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_mul_int64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">num1</span></span>, <span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">num2</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_mul_int64" title="Link to this definition"></a><br /></dt>
+<dd><p>Multiply two 64-bit signed integers (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>) producing multi-precision result. </p>
+<p>Specialized multiplication for <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> values that may overflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num1</strong> – First multiplicand </p></li>
+<li><p><strong>num2</strong> – Second multiplicand </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a3e9143b412413795b6c62ece2f522d17"><span class="std std-ref"><span class="pre">INTN_MUL_OUT_LEN(INTN_INT64_LEN,INTN_INT64_LEN)</span></span></a></code> digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result</p></li>
+</ul>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a3e9143b412413795b6c62ece2f522d17"><span class="std std-ref"><span class="pre">INTN_MUL_OUT_LEN(INTN_INT64_LEN,</span> <span class="pre">INTN_INT64_LEN)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Exactly INTN_INT64_LEN + INTN_INT64_LEN digits are written </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_divu">
+<span class="target" id="libatomvmintn_8h_1a3badb6fefbdcaf462e099e2ba7b6359a"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_divu</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">q_out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">r_out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">r_out_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_divu" title="Link to this definition"></a><br /></dt>
+<dd><p>Divide two unsigned multi-precision integers with optional remainder. </p>
+<p>Performs division of magnitudes m / n, computing quotient and optionally remainder.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Based on algorithms from Hacker’s Delight </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – Dividend </p></li>
+<li><p><strong>m_len</strong> – Length of dividend in digits </p></li>
+<li><p><strong>n</strong> – Divisor (must not be zero) </p></li>
+<li><p><strong>n_len</strong> – Length of divisor in digits </p></li>
+<li><p><strong>q_out</strong> – <strong>[out]</strong> Quotient buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1ae93f194d7db2ec5553e35e23ea8616ea"><span class="std std-ref"><span class="pre">INTN_DIV_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits) </p></li>
+<li><p><strong>r_out</strong> – <strong>[out]</strong> Remainder buffer (may be NULL, else must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1af2dfc759aa4e56cebf32ae07fb196e16"><span class="std std-ref"><span class="pre">INTN_REM_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits) </p></li>
+<li><p><strong>r_out_len</strong> – <strong>[out]</strong> Length of remainder (may be NULL if r_out is NULL) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Length of quotient in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>n must not be zero </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>q_out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1ae93f194d7db2ec5553e35e23ea8616ea"><span class="std std-ref"><span class="pre">INTN_DIV_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>r_out buffer (if not NULL) must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1af2dfc759aa4e56cebf32ae07fb196e16"><span class="std std-ref"><span class="pre">INTN_REM_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Quotient and remainder may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_div">
+<span class="target" id="libatomvmintn_8h_1a494c4fe585f1c18a5aa08ba10bb6f002"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_div</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m_sign</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">q_out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">qout_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">r_out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">r_out_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_div" title="Link to this definition"></a><br /></dt>
+<dd><p>Divide two signed multi-precision integers with optional remainder. </p>
+<p>Performs signed division m / n with separate signs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – Dividend magnitude </p></li>
+<li><p><strong>m_len</strong> – Length of dividend in digits </p></li>
+<li><p><strong>m_sign</strong> – Sign of dividend </p></li>
+<li><p><strong>n</strong> – Divisor magnitude (must not be zero) </p></li>
+<li><p><strong>n_len</strong> – Length of divisor in digits </p></li>
+<li><p><strong>n_sign</strong> – Sign of divisor </p></li>
+<li><p><strong>q_out</strong> – <strong>[out]</strong> Quotient buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1ae93f194d7db2ec5553e35e23ea8616ea"><span class="std std-ref"><span class="pre">INTN_DIV_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits) </p></li>
+<li><p><strong>qout_sign</strong> – <strong>[out]</strong> Sign of quotient </p></li>
+<li><p><strong>r_out</strong> – <strong>[out]</strong> Remainder buffer (may be NULL, else must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1af2dfc759aa4e56cebf32ae07fb196e16"><span class="std std-ref"><span class="pre">INTN_REM_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits) </p></li>
+<li><p><strong>r_out_len</strong> – <strong>[out]</strong> Length of remainder (may be NULL if r_out is NULL) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Length of quotient in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>n must not be zero </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>q_out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1ae93f194d7db2ec5553e35e23ea8616ea"><span class="std std-ref"><span class="pre">INTN_DIV_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>r_out buffer (if not NULL) must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1af2dfc759aa4e56cebf32ae07fb196e16"><span class="std std-ref"><span class="pre">INTN_REM_OUT_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Remainder has same sign as dividend (Euclidean division) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_bor">
+<span class="target" id="libatomvmintn_8h_1acbc04fc5aea38467a7b937960a5bc79b"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_bor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m_sign</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_bor" title="Link to this definition"></a><br /></dt>
+<dd><p>Bitwise OR of two signed multi-precision integers. </p>
+<p>Performs bitwise OR by internally converting to two’s complement, applying the operation, then converting back to sign-magnitude form.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="c1">// Example: 0xFFFFFFFF00000000000012345678 | -1</span>
+<span class="c1">// Input: {0x12345678, 0x0, 0xFFFF0000, 0xFFFF} | {0x1} with negative sign</span>
+<span class="c1">// Internal two&#39;s complement: {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}</span>
+<span class="c1">// Result: {0x1, 0x0, 0x0, 0x0} with negative sign (equals -1)</span>
+</pre></div>
+</div>
+ </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Input and output are in sign-magnitude form, not two’s complement </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – First operand magnitude </p></li>
+<li><p><strong>m_len</strong> – Length of first operand in digits </p></li>
+<li><p><strong>m_sign</strong> – Sign of first operand </p></li>
+<li><p><strong>n</strong> – Second operand magnitude </p></li>
+<li><p><strong>n_len</strong> – Length of second operand in digits </p></li>
+<li><p><strong>n_sign</strong> – Sign of second operand </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a15d21f7924635df0ad8019c24f37d6c6"><span class="std std-ref"><span class="pre">MAX_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> + 1 digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Length of result in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a15d21f7924635df0ad8019c24f37d6c6"><span class="std std-ref"><span class="pre">MAX_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> + 1 digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_band">
+<span class="target" id="libatomvmintn_8h_1ac76e4825215d2a432ece13ee77d70b33"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_band</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m_sign</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_band" title="Link to this definition"></a><br /></dt>
+<dd><p>Bitwise AND of two signed multi-precision integers. </p>
+<p>Performs bitwise AND by internally converting to two’s complement, applying the operation, then converting back to sign-magnitude form.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="c1">// Example: 0xFFFFFFFFF123456789ABFFFFFFFF &amp; -0xFFFFFFFF000000000000FFFFFFFF</span>
+<span class="c1">// Input: {0xFFFFFFFF, 0x456789AB, 0xFFFFF123, 0xFFFF} &amp;</span>
+<span class="c1">//        {0xFFFFFFFF, 0x0, 0xFFFF0000, 0xFFFF} with negative sign</span>
+<span class="c1">// Result: {0x1, 0x456789AB, 0xF123} (equals 0xF123456789AB00000001)</span>
+</pre></div>
+</div>
+ </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Input and output are in sign-magnitude form, not two’s complement </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – First operand magnitude </p></li>
+<li><p><strong>m_len</strong> – Length of first operand in digits </p></li>
+<li><p><strong>m_sign</strong> – Sign of first operand </p></li>
+<li><p><strong>n</strong> – Second operand magnitude </p></li>
+<li><p><strong>n_len</strong> – Length of second operand in digits </p></li>
+<li><p><strong>n_sign</strong> – Sign of second operand </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a15d21f7924635df0ad8019c24f37d6c6"><span class="std std-ref"><span class="pre">MAX_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> + 1 digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Length of result in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a15d21f7924635df0ad8019c24f37d6c6"><span class="std std-ref"><span class="pre">MAX_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> + 1 digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_bxor">
+<span class="target" id="libatomvmintn_8h_1a5a3e105a14dffc8d5a4859391ef52013"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_bxor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m_sign</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">n_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_bxor" title="Link to this definition"></a><br /></dt>
+<dd><p>Bitwise XOR of two signed multi-precision integers. </p>
+<p>Performs bitwise XOR by internally converting to two’s complement, applying the operation, then converting back to sign-magnitude form.</p>
+<p><div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="c1">// Example: 0xFFFFFFFF00000000000012345678 ^ -1</span>
+<span class="c1">// Input: {0x12345678, 0x0, 0xFFFF0000, 0xFFFF} ^ {0x1} with negative sign</span>
+<span class="c1">// Result: {0x12345679, 0x0, 0xFFFF0000, 0xFFFF} with negative sign</span>
+</pre></div>
+</div>
+ </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Input and output are in sign-magnitude form, not two’s complement </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – First operand magnitude </p></li>
+<li><p><strong>m_len</strong> – Length of first operand in digits </p></li>
+<li><p><strong>m_sign</strong> – Sign of first operand </p></li>
+<li><p><strong>n</strong> – Second operand magnitude </p></li>
+<li><p><strong>n_len</strong> – Length of second operand in digits </p></li>
+<li><p><strong>n_sign</strong> – Sign of second operand </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a15d21f7924635df0ad8019c24f37d6c6"><span class="std std-ref"><span class="pre">MAX_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> + 1 digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Length of result in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmintn_8h_1a15d21f7924635df0ad8019c24f37d6c6"><span class="std std-ref"><span class="pre">MAX_LEN(m_len,</span> <span class="pre">n_len)</span></span></a></code> + 1 digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_bnot">
+<span class="target" id="libatomvmintn_8h_1ae459f09f12308414f466873ba30dabb5"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_bnot</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">m_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">m_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_bnot" title="Link to this definition"></a><br /></dt>
+<dd><p>Bitwise NOT of a signed multi-precision integer. </p>
+<p>Performs bitwise NOT operation (one’s complement).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> – Operand magnitude </p></li>
+<li><p><strong>m_len</strong> – Length of operand in digits </p></li>
+<li><p><strong>m_sign</strong> – Sign of operand </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least m_len + 1 digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Length of result in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least m_len + 1 digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_bsl">
+<span class="target" id="libatomvmintn_8h_1aaa67d7d9b40ece708b0984b26564118a"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_bsl</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_bsl" title="Link to this definition"></a><br /></dt>
+<dd><p>Bit shift left of multi-precision integer. </p>
+<p>Shifts integer left by n bit positions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If return value &gt; <code class="docutils literal notranslate"><span class="pre">INTN_BSL_MAX_RES_LEN</span></code>, result overflowed and out buffer was not written. Caller must check return value before using result. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – Integer to shift </p></li>
+<li><p><strong>len</strong> – Length of integer in digits </p></li>
+<li><p><strong>n</strong> – Number of bit positions to shift </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have sufficient space, see warning) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Length of result in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><span class="pre">INTN_BSL_MAX_RES_LEN</span></code> digits when shift is reasonable </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_bsr">
+<span class="target" id="libatomvmintn_8h_1ae3f20f864e050d5ee9a2d60feae009e1"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_bsr</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">num_sign</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_bsr" title="Link to this definition"></a><br /></dt>
+<dd><p>Bit shift right of signed multi-precision integer. </p>
+<p>Performs arithmetic right shift (sign-extending) by n bit positions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Follows Erlang semantics: large shifts converge to -1 (negative) or 0 (non-negative) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – Integer magnitude to shift </p></li>
+<li><p><strong>len</strong> – Length of integer in digits </p></li>
+<li><p><strong>num_sign</strong> – Sign of integer </p></li>
+<li><p><strong>n</strong> – Number of bit positions to shift </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least len digits) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Length of result in digits</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least len digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_count_digits">
+<span class="target" id="libatomvmintn_8h_1ae0fdee3446ed0e87c08b40d3941c521a"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_count_digits</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">num</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">num_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_count_digits" title="Link to this definition"></a><br /></dt>
+<dd><p>Count non-zero digits in multi-precision integer. </p>
+<p>Returns the number of significant (non-zero) digits, effectively normalizing the length. This is used to determine the actual size of a result after an operation that may produce leading zeros.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Essential for normalization after operations <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="c1">// Examples:</span>
+<span class="n">intn_count_digits</span><span class="p">({</span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x80000000</span><span class="p">},</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="n">no</span><span class="w"> </span><span class="n">leading</span><span class="w"> </span><span class="nb">zeros</span><span class="p">)</span>
+<span class="n">intn_count_digits</span><span class="p">({</span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x80000000</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">x0</span><span class="p">},</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="n">one</span><span class="w"> </span><span class="n">leading</span><span class="w"> </span><span class="n">zero</span><span class="p">)</span>
+</pre></div>
+</div>
+</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – Integer array to count </p></li>
+<li><p><strong>num_len</strong> – Length of array in digits </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of non-zero digits (0 if integer is zero)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_to_string">
+<span class="target" id="libatomvmintn_8h_1afb35a2c030ed1b1aaca5718db7ab5a36"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">intn_to_string</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">num</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">num_sign</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">base</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">string_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_to_string" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert multi-precision integer to string. </p>
+<p>Converts integer to ASCII string representation in specified base. Output uses uppercase letters for digits &gt; 9, with no base prefix (e.g., no “0x”).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Output format: uppercase letters, no base prefix </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – Integer magnitude (must be normalized) </p></li>
+<li><p><strong>len</strong> – Length of integer in digits </p></li>
+<li><p><strong>num_sign</strong> – Sign of integer </p></li>
+<li><p><strong>base</strong> – Number base for conversion (2-36) </p></li>
+<li><p><strong>string_len</strong> – <strong>[out]</strong> Length of resulting string (not including null terminator) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Newly allocated null-terminated string (caller must free)</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>base &gt;= 2 &amp;&amp; base &lt;= 36 </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returned string must be freed by caller </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_parse">
+<span class="target" id="libatomvmintn_8h_1a36a3637c27c05e9d7f9a1cc44dce5b47"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_parse</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="n"><span class="pre">buf</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">buf_len</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">base</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_parse" title="Link to this definition"></a><br /></dt>
+<dd><p>Parse ASCII string to multi-precision integer. </p>
+<p>Parses integer from ASCII representation in specified base. Supports chunk parsing for arbitrarily large integers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No base prefixes (like “0x”) are supported </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Leading zeros in input are skipped automatically </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Signs (+/-) accepted unless rejected by caller options </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Case-insensitive for letter digits (a-z, A-Z) </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> – Buffer containing ASCII digits </p></li>
+<li><p><strong>buf_len</strong> – Length of buffer in bytes </p></li>
+<li><p><strong>base</strong> – Number base for parsing (2-36) </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><span class="pre">INTN_MAX_RES_LEN</span></code> digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of parsed integer </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of digits in result, or negative on parse error</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>base &gt;= 2 &amp;&amp; base &lt;= 36 </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>buf != NULL when buf_len &gt; 0 (NULL allowed only for zero-length buffer) </p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must be at least <code class="docutils literal notranslate"><span class="pre">INTN_MAX_RES_LEN</span></code> digits </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_to_double">
+<span class="target" id="libatomvmintn_8h_1a5d13f01b02190b93218a9e29fe6b20b8"></span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_to_double</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">num</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_to_double" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert multi-precision integer to double. </p>
+<p>Converts integer to floating-point representation. May lose precision for large integers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Precision loss expected for integers &gt; 53 bits </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>With current 256-bit limit, result always fits in double range </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Accepts both normalized and non-normalized inputs </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – Integer magnitude (must be normalized) </p></li>
+<li><p><strong>len</strong> – Length of integer in digits </p></li>
+<li><p><strong>sign</strong> – Sign of integer </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Double representation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_from_double">
+<span class="target" id="libatomvmintn_8h_1a22040dbf19df30df6ae43c097622a8c8"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_from_double</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">dnum</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_from_double" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert double to multi-precision integer. </p>
+<p>Converts floating-point value to integer, truncating fractional part.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dnum</strong> – Double value to convert </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have sufficient space) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of digits in result, or negative on error</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dnum must be finite (not NaN or infinity) </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_from_integer_bytes">
+<span class="target" id="libatomvmintn_8h_1a76653945e0435204c244bd76eef1e4a7"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_from_integer_bytes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">in</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">in_size</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_from_integer_options_t" title="intn_from_integer_options_t"><span class="n"><span class="pre">intn_from_integer_options_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">opts</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_from_integer_bytes" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert byte array to multi-precision integer. </p>
+<p>Converts integer from byte representation with specified endianness and signedness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in</strong> – Input byte array </p></li>
+<li><p><strong>in_size</strong> – Size of input in bytes </p></li>
+<li><p><strong>opts</strong> – Conversion options (endianness, signedness) </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Result buffer (must have at least <code class="docutils literal notranslate"><span class="pre">intn_required_digits_for_unsigned_integer(in_size)</span></code> digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of digits in result, or negative on error</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>out buffer must have sufficient space based on in_size </p>
+</dd>
+<dt class="field-even">Post<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result may have leading zeros (not normalized) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_to_integer_bytes">
+<span class="target" id="libatomvmintn_8h_1a4b38742c297bbdfc0f1c4fdbb4c36845"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_to_integer_bytes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">in</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">in_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">in_sign</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_from_integer_options_t" title="intn_from_integer_options_t"><span class="n"><span class="pre">intn_from_integer_options_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">opts</span></span>, <span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">out_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_to_integer_bytes" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert multi-precision integer to byte array. </p>
+<p>Converts integer to byte representation with specified endianness and signedness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in</strong> – Integer magnitude (must be normalized) </p></li>
+<li><p><strong>in_len</strong> – Length of integer in digits </p></li>
+<li><p><strong>in_sign</strong> – Sign of integer </p></li>
+<li><p><strong>opts</strong> – Conversion options (endianness, signedness) </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Output byte buffer </p></li>
+<li><p><strong>out_len</strong> – Size of output buffer in bytes </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of bytes written, or negative on error (buffer too small)</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input must be normalized for correct size calculation </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_required_unsigned_integer_bytes">
+<span class="target" id="libatomvmintn_8h_1ad255e6ff2ac8fc8253d15ba66873c6cd"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_required_unsigned_integer_bytes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">in</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">in_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_required_unsigned_integer_bytes" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculate bytes needed for unsigned integer representation. </p>
+<p>Returns minimum number of bytes needed to represent the integer as an unsigned value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in</strong> – Integer magnitude (must be normalized) </p></li>
+<li><p><strong>in_len</strong> – Length of integer in digits </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of bytes required</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input must be normalized for accurate result </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_required_digits_for_unsigned_integer">
+<span class="target" id="libatomvmintn_8h_1afcb21e847fe525f2f2e06b6723e66cdb"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_required_digits_for_unsigned_integer</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size_in_bytes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_required_digits_for_unsigned_integer" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculate digits needed for byte array. </p>
+<p>Returns number of <code class="docutils literal notranslate"><span class="pre">intn_digit_t</span></code> digits needed to store an integer of given byte size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size_in_bytes</strong> – Size of integer in bytes </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of digits required </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_negate_sign">
+<span class="target" id="libatomvmintn_8h_1ab666542d60c103be256013e2033c96fc"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_negate_sign</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_negate_sign" title="Link to this definition"></a><br /></dt>
+<dd><p>Negate sign of integer. </p>
+<p>Flips the sign from positive to negative or vice versa.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sign</strong> – Original sign </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Negated sign </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_copy">
+<span class="target" id="libatomvmintn_8h_1af5296f13377283f31e861a224523eb4a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_copy</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">num</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">num_len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">extend_to</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_copy" title="Link to this definition"></a><br /></dt>
+<dd><p>Copy and optionally zero-extend multi-precision integer. </p>
+<p>Copies integer to output buffer, padding with zeros if output buffer is larger than input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – Source integer </p></li>
+<li><p><strong>num_len</strong> – Length of source in digits </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Destination buffer </p></li>
+<li><p><strong>extend_to</strong> – Size of destination buffer in digits</p></li>
+</ul>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>extend_to &gt;= num_len </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Digits from num_len to extend_to are zeroed </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_from_uint64">
+<span class="target" id="libatomvmintn_8h_1aeb05420b316a3112b3c561a196d644cb"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_from_uint64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">absu64</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_from_uint64" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> to multi-precision integer. </p>
+<p>Converts unsigned 64-bit value to 2-digit representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>absu64</strong> – Unsigned 64-bit value </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Output buffer (must have at least <code class="docutils literal notranslate"><span class="pre">INTN_UINT64_LEN</span></code> digits)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>out buffer must have at least <code class="docutils literal notranslate"><span class="pre">INTN_UINT64_LEN</span></code> digits </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Exactly <code class="docutils literal notranslate"><span class="pre">INTN_UINT64_LEN</span></code> digits are written </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_from_int64">
+<span class="target" id="libatomvmintn_8h_1a7f58989d20d610fd9f7e8ff5a40dccc5"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_from_int64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n"><span class="pre">i64</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_from_int64" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> to multi-precision integer. </p>
+<p>Converts signed 64-bit value to magnitude-sign representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i64</strong> – Signed 64-bit value </p></li>
+<li><p><strong>out</strong> – <strong>[out]</strong> Output buffer (must have at least <code class="docutils literal notranslate"><span class="pre">INTN_INT64_LEN</span></code> digits) </p></li>
+<li><p><strong>out_sign</strong> – <strong>[out]</strong> Sign of result</p></li>
+</ul>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>out buffer must have at least <code class="docutils literal notranslate"><span class="pre">INTN_INT64_LEN</span></code> digits </p>
+</dd>
+<dt class="field-odd">Post<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Exactly <code class="docutils literal notranslate"><span class="pre">INTN_INT64_LEN</span></code> digits are written </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_to_uint64">
+<span class="target" id="libatomvmintn_8h_1a35c50f831e6d51d88c877288822bc625"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_to_uint64</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_to_uint64" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert 2-digit multi-precision integer to <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>. </p>
+<p>Extracts unsigned 64-bit value from 2-digit representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – Integer array (must have exactly 2 digits) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Unsigned 64-bit value</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>num must have exactly 2 digits </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_to_int64">
+<span class="target" id="libatomvmintn_8h_1a75266282cd36e34b4504821c5707513a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_to_int64</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_to_int64" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert multi-precision integer to <code class="docutils literal notranslate"><span class="pre">int64_t</span></code>. </p>
+<p>Converts magnitude-sign representation to signed 64-bit value.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Undefined behavior if value doesn’t fit in <code class="docutils literal notranslate"><span class="pre">int64_t</span></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – Integer magnitude (must be normalized) </p></li>
+<li><p><strong>len</strong> – Length of integer in digits </p></li>
+<li><p><strong>sign</strong> – Sign of integer </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Signed 64-bit value</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Integer must fit in <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> range (use <code class="docutils literal notranslate"><span class="pre">intn_fits_int64</span></code> to verify) </p>
+</dd>
+<dt class="field-even">Pre<span class="colon">:</span></dt>
+<dd class="field-even"><p>Input must be normalized </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.intn.h.intn_fits_int64">
+<span class="target" id="libatomvmintn_8h_1a6cf9d4cc40d2adb4c520cafa821e3ad4"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intn_fits_int64</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.intn.h.intn_digit_t" title="intn_digit_t"><span class="n"><span class="pre">intn_digit_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span>, <a class="reference internal" href="#c.libAtomVM.intn.h.intn_integer_sign_t" title="intn_integer_sign_t"><span class="n"><span class="pre">intn_integer_sign_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">sign</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.intn.h.intn_fits_int64" title="Link to this definition"></a><br /></dt>
+<dd><p>Check if multi-precision integer fits in <code class="docutils literal notranslate"><span class="pre">int64_t</span></code>. </p>
+<p>Tests whether integer can be represented as signed 64-bit value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> – Integer magnitude (must be normalized) </p></li>
+<li><p><strong>len</strong> – Length of integer in digits </p></li>
+<li><p><strong>sign</strong> – Sign of integer </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if fits in <code class="docutils literal notranslate"><span class="pre">int64_t</span></code>, false otherwise</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input must be normalized (no leading zeros) </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intn.c.html" class="btn btn-neutral float-left" title="intn.c" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jit.c.html" class="btn btn-neutral float-right" title="jit.c" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.6/">v0.6.6</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

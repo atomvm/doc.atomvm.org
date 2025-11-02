@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; AtomVM 0.7.0-dev+git.25797922 documentation</title>
+  <title>Functions &mdash; AtomVM 0.7.0-dev+git.58768ab5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/functions.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=3c863a45"></script>
+      <script src="../../_static/documentation_options.js?v=44339055"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -4227,16 +4227,27 @@ This function must be implemented in otp_socket_platform.c. Platforms using lwIP
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.term_is_integer">
 <span class="target" id="libatomvmterm_8h_1a75fcf3ba1079808a5400453e2cef3c1c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_is_integer</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.term_is_integer" title="Link to this definition"></a><br /></dt>
-<dd><p>Checks if a term is an integer value. </p>
-<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if a term is an integer value, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>. </p>
+<dd><p>Check if term is an integer within platform-specific <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> range. </p>
+<p><dl>
+<dt class="sig sig-object cpp">
+<em><span class="pre">Deprecated:</span></em></dt>
+<dd><p>Use <code class="docutils literal notranslate"><a class="reference internal" href="src/term.h.html#libatomvmterm_8h_1af2e905198c11113fdead7f9d568eaf6e"><span class="std std-ref"><span class="pre">term_is_int()</span></span></a></code> instead. This function will raise a warning in the future and will eventually be removed.</p>
+</dd></dl>
+
+</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="src/term.h.html#libatomvmterm_8h_1af2e905198c11113fdead7f9d568eaf6e"><span class="std std-ref">term_is_int()</span></a> for the replacement function </p>
+</div>
+</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> – the term that will be checked. </p></li>
+<li><p><strong>t</strong> – Term to check </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> if check succeeds, <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise. </p>
+<dd class="field-even"><p>true if term is an unboxed integer, false otherwise</p>
 </dd>
 </dl>
 </dd></dl>

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Memory Management &mdash; AtomVM 0.7.0-dev+git.25797922 documentation</title>
+  <title>Memory Management &mdash; AtomVM 0.7.0-dev+git.58768ab5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/memory-management.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3c863a45"></script>
+      <script src="_static/documentation_options.js?v=44339055"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -73,13 +73,21 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#simple-terms">Simple Terms</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#atoms">Atoms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#integers">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integers">Integers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#immediate-integers">Immediate Integers</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#nil">nil</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pids">Pids</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#boxed-terms">Boxed terms</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#boxed-term-pointers">Boxed term pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boxed-integers">Boxed Integers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#native-boxed-integers">Native Boxed Integers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#big-integers">Big Integers</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tuples">Tuples</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#maps">Maps</a></li>
@@ -305,7 +313,14 @@ loaded) a fixed size table.  Management of the global atom table is outside of t
 </section>
 <section id="integers">
 <h3>Integers<a class="headerlink" href="#integers" title="Link to this heading"></a></h3>
-<p>An integer is represented as a single word, with the low-order 4 bits having the value <code class="docutils literal notranslate"><span class="pre">0xF</span></code> (<code class="docutils literal notranslate"><span class="pre">1111b</span></code>).  The high order word-size-6 bits are used to represent the integer value:</p>
+<p>AtomVM supports integers up to 256 bits with an additional sign bit stored outside the numeric
+payload. The representation strategy depends on the integer’s size and uses canonicalization to
+ensure each value has exactly one representation.</p>
+<section id="immediate-integers">
+<h4>Immediate Integers<a class="headerlink" href="#immediate-integers" title="Link to this heading"></a></h4>
+<p>Small integers are represented as a single word, with the low-order 4 bits having the value <code class="docutils literal notranslate"><span class="pre">0xF</span></code>
+(<code class="docutils literal notranslate"><span class="pre">1111b</span></code>).  The high order word-size-4 bits are used to represent the integer value using two’s
+complement:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                            |&lt; 4&gt;|
 +===========================+====+
 |       integer value       |1111| &lt;- 0xF
@@ -314,11 +329,13 @@ loaded) a fixed size table.  Management of the global atom table is outside of t
 |&lt;---------- word-size ---------&gt;|
 </pre></div>
 </div>
-<p>The magnitude of an integer is therefore limited to <code class="docutils literal notranslate"><span class="pre">2^{word-size</span> <span class="pre">-</span> <span class="pre">4}</span></code> in an AtomVM program (e.g., on a 32-bit platform, <code class="docutils literal notranslate"><span class="pre">+-</span> <span class="pre">134,217,728</span></code>).</p>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>Arbitrarily large integers (bignums) are not currently supported in AtomVM.</p>
-</div>
+<p>On 32-bit systems, immediate integers can represent signed values in the range <code class="docutils literal notranslate"><span class="pre">[-2^27,</span> <span class="pre">2^27-1]</span></code> (28
+bits + 4-bit tag = 32 bits).
+On 64-bit systems, immediate integers can represent signed values in the range <code class="docutils literal notranslate"><span class="pre">[-2^59,</span> <span class="pre">2^59-1]</span></code> (60
+bits + 4-bit tag = 64 bits).</p>
+<p>For integers outside these ranges, AtomVM uses boxed representations (see Boxed Integers section
+below).</p>
+</section>
 </section>
 <section id="nil">
 <h3>nil<a class="headerlink" href="#nil" title="Link to this heading"></a></h3>
@@ -367,6 +384,98 @@ the high order <code class="docutils literal notranslate"><span class="pre">word
 </div>
 <p>Because terms (and hence the heap) are always aligned on boundaries that are divisible by the word size, the low-order 2 bits of a term address are always 0.  Consequently, the high-order word-size - 2 (<code class="docutils literal notranslate"><span class="pre">1,073,741,824</span></code>, on a 32-bit platform) are sufficient to address any term address in the AtomVM address space, for 32-bit and greater machine architectures.</p>
 </section>
+<section id="boxed-integers">
+<h3>Boxed Integers<a class="headerlink" href="#boxed-integers" title="Link to this heading"></a></h3>
+<p>AtomVM uses boxed integers for values that exceed the immediate integer range. There are two types
+of boxed integer representations: native integers (using int32_t or int64_t) and big integers (using
+arrays of uint32_t digits).</p>
+<section id="native-boxed-integers">
+<h4>Native Boxed Integers<a class="headerlink" href="#native-boxed-integers" title="Link to this heading"></a></h4>
+<p>For integers that don’t fit in immediate representation but can be stored in native C integer
+types, AtomVM uses boxed integers with two’s complement encoding and a redundant sign bit in the
+header.</p>
+<p><strong>On 32-bit systems:</strong></p>
+<ul class="simple">
+<li><p>Integers in range <code class="docutils literal notranslate"><span class="pre">[-2^31,</span> <span class="pre">-2^27-1]</span> <span class="pre">∪</span> <span class="pre">[2^27,</span> <span class="pre">2^31-1]</span></code> are stored as boxed int32_t (single word
+payload)</p></li>
+<li><p>Integers in range <code class="docutils literal notranslate"><span class="pre">[-2^63,</span> <span class="pre">-2^31-1]</span> <span class="pre">∪</span> <span class="pre">[2^31,</span> <span class="pre">2^63-1]</span></code> are stored as boxed int64_t (two word
+payload)</p></li>
+</ul>
+<p><strong>On 64-bit systems:</strong></p>
+<ul class="simple">
+<li><p>Integers in range <code class="docutils literal notranslate"><span class="pre">[-2^63,</span> <span class="pre">-2^59-1]</span> <span class="pre">∪</span> <span class="pre">[2^59,</span> <span class="pre">2^63-1]</span></code> are stored as boxed int64_t (single word
+payload)</p></li>
+</ul>
+<p>The boxed header uses:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x8</span></code> (<code class="docutils literal notranslate"><span class="pre">001000b</span></code>) for positive integers (TERM_BOXED_POSITIVE_INTEGER)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0xC</span></code> (<code class="docutils literal notranslate"><span class="pre">001100b</span></code>) for negative integers (TERM_BOXED_NEGATIVE_INTEGER)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                        |&lt; 6  &gt;|
+</pre></div>
+</div>
+<p>+=========================+======+
+|    boxed-size (1 or 2)  |001X00| boxed[0] (X=0 for positive, X=1 for negative)
++————————-+——+
+|     native integer value       | boxed[1] (int32_t or int64_t low word)
++——————————–+
+|     high word (if int64_t on   | boxed[2] (32-bit systems only)
+|         32-bit system)         |
++================================+
+|                                |
+|&lt;———- word-size ———&gt;|</p>
+</li>
+</ul>
+</section>
+<section id="big-integers">
+<h4>Big Integers<a class="headerlink" href="#big-integers" title="Link to this heading"></a></h4>
+<p>For integers beyond the native int64_t range (up to ±(2^256 - 1)), AtomVM uses an array of uint32_t
+digits representing the magnitude, with the sign stored as a flag in the boxed header. These big
+integers do NOT use two’s complement encoding.</p>
+<p>The digits array:</p>
+<ul>
+<li><p>Stores the absolute value of the integer</p></li>
+<li><p>Uses little-endian ordering (digit[0] is least significant)</p></li>
+<li><p>Omits leading zero digits to save space</p></li>
+<li><p>Includes a dummy zero digit when necessary to avoid ambiguity with native boxed integers</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                        |&lt; 6  &gt;|
+</pre></div>
+</div>
+<p>+=========================+======+
+|    boxed-size (n)       |001X00| boxed[0] (X=0 for positive, X=1 for negative)
++————————-+——+
+|         digit[0] (lsb)         | boxed[1] (uint32_t)
++——————————–+
+|         digit[1]               | boxed[2] (uint32_t)
++——————————–+
+|               …              | …
++——————————–+
+|         digit[k-1] (msb)       | boxed[k] (uint32_t)
++——————————–+
+|     0 (dummy digit if needed)  | boxed[n] (uint32_t)
++================================+
+|                                |
+|&lt;———- word-size ———&gt;|</p>
+</li>
+</ul>
+<p><strong>Canonicalization Rules:</strong></p>
+<ul class="simple">
+<li><p>AtomVM ensures that integers are always stored in the most compact representation</p></li>
+<li><p>Operations that produce results fitting in a smaller representation automatically convert to that
+representation</p></li>
+<li><p>A dummy digit mechanism ensures that the smallest big integer always has more words than the
+largest native boxed integer. This is required when storing values such as <code class="docutils literal notranslate"><span class="pre">UINT64_MAX</span></code>
+(<code class="docutils literal notranslate"><span class="pre">0xFFFFFFFFFFFFFFFF</span></code>), that would require only 2 digits, but boxed-size field must allow to
+distinguish it from native boxed integers (such as <code class="docutils literal notranslate"><span class="pre">int64_t</span></code>)</p></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p>The value 3 is always stored as an immediate integer (never as a boxed integer)</p></li>
+<li><p>On a 64-bit system, 2^60 would be stored as a boxed int64_t, not as a big integer</p></li>
+<li><p>The value 2^100 would be stored as a big integer with 4 uint32_t digits (plus potentially a dummy
+digit)</p></li>
+</ul>
+</section>
+</section>
 <section id="references">
 <h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
 <p>A reference (e.g., created via <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#make-ref-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:make_ref/0</span></code></span></a>) stores a 64-bit incrementing counter value (a “ref tick”).  On 64 bit machines, a Reference takes up two words – the boxed header and the 64-bit value, which of course can fit in a single word.  On 32-bit platforms, the high-order 28 bits are stored in <code class="docutils literal notranslate"><span class="pre">boxed[1]</span></code>, and the low-order 32 bits are stored in <code class="docutils literal notranslate"><span class="pre">boxed[2]</span></code>:</p>
@@ -405,7 +514,7 @@ the high order <code class="docutils literal notranslate"><span class="pre">word
 </section>
 <section id="maps">
 <h3>Maps<a class="headerlink" href="#maps" title="Link to this heading"></a></h3>
-<p>Maps are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x3C</span></code> (<code class="docutils literal notranslate"><span class="pre">111100b</span></code>), followed by:</p>
+<p>Maps are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x2C</span></code> (<code class="docutils literal notranslate"><span class="pre">101100b</span></code>), followed by:</p>
 <ul class="simple">
 <li><p>a term pointer to a tuple of arity <code class="docutils literal notranslate"><span class="pre">n</span></code> containing the keys in the map;</p></li>
 <li><p>a sequence of <code class="docutils literal notranslate"><span class="pre">n</span></code>-many words, containing the values of the map corresponding (in order) to the keys in the reference tuple.</p></li>
@@ -426,7 +535,7 @@ the high order <code class="docutils literal notranslate"><span class="pre">word
 |                       ...
 |       |                         |&lt; 6  &gt;|
 |       +=========================+======+
-|       |    boxed-size (n)       |111100| boxed[0]
+|       |    boxed-size (n)       |101100| boxed[0]
 |       +-------------------------+------+
 +-----------------&lt;   keys               | boxed[1]
         +--------------------------------+
@@ -564,7 +673,7 @@ to <code class="docutils literal notranslate"><span class="pre">nil</span></code
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>some
 binary                            |&lt; 6  &gt;|
 ^       +=========================+======+
-|       |    boxed-size (5)       |100100| boxed[0]
+|       |    boxed-size (5)       |000100| boxed[0]
 |       +-------------------------+------+
 |       |      match-or-binary-ref       | boxed[1]
 |       +--------------------------------+
@@ -583,13 +692,13 @@ binary                            |&lt; 6  &gt;|
 </section>
 <section id="sub-binaries">
 <h4>Sub-Binaries<a class="headerlink" href="#sub-binaries" title="Link to this heading"></a></h4>
-<p>Sub-binaries are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x28</span></code> (<code class="docutils literal notranslate"><span class="pre">001000b</span></code>)</p>
+<p>Sub-binaries are represented as boxed terms containing a boxed header (<code class="docutils literal notranslate"><span class="pre">boxed[0]</span></code>), a type tag of <code class="docutils literal notranslate"><span class="pre">0x28</span></code> (<code class="docutils literal notranslate"><span class="pre">101000b</span></code>)</p>
 <p>A sub-binary is a boxed term that points to a reference-counted binary, recording the offset into the binary and the length (in bytes) of the sub-binary.  An invariant for this term is that the <code class="docutils literal notranslate"><span class="pre">offset</span> <span class="pre">+</span> <span class="pre">length</span></code> is always less than or equal to the length of the referenced binary.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    some
     refc
     binary                            |&lt; 6  &gt;|
     ^       +=========================+======+
-    |       |    boxed-size (3)       |001000| boxed[0]
+    |       |    boxed-size (3)       |101000| boxed[0]
     |       +-------------------------+------+
     |       |              len               | boxed[1]
     |       +--------------------------------+
@@ -749,6 +858,7 @@ process dictionary
 </pre></div>
 </div>
 <p>Terms stored in the stack, registers, and process dictionary are either single-word terms (like atoms or pids) or term references, i.e., single-word terms that point to boxed terms or list cells in the heap.  These terms constitute the “roots” of the memory graph of all “reachable” terms in the process.</p>
+<p>Boxed integers, including both native boxed integers and big integers, are simple blob structures that are copied as-is during garbage collection. They do not contain any pointers or addresses that need to be updated during the garbage collection process.</p>
 <section id="when-does-garbage-collection-happen">
 <h3>When does garbage collection happen?<a class="headerlink" href="#when-does-garbage-collection-happen" title="Link to this heading"></a></h3>
 <p>Garbage collection typically occurs as the result of a request for an allocation of a multi-word term in the heap (e.g., a tuple, list, or binary, among other types), and when there is currently insufficient space in the free space between the current heap and the current stack to accommodate the allocation.</p>

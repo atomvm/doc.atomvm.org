@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-dev+git.25797922 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-dev+git.58768ab5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3c863a45"></script>
+      <script src="_static/documentation_options.js?v=44339055"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -247,6 +247,8 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <li><p>Reimplemented <code class="docutils literal notranslate"><span class="pre">lists:keyfind</span></code>, <code class="docutils literal notranslate"><span class="pre">lists:keymember</span></code> and <code class="docutils literal notranslate"><span class="pre">lists:member</span></code> as NIFs</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">AVM_PRINT_PROCESS_CRASH_DUMPS</span></code> option</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">lists:ukeysort/2</span></code></p></li>
+<li><p>Added support for big integers up to 256-bit (sign + 256-bit magnitude)</p></li>
+<li><p>Added support for big integers in <code class="docutils literal notranslate"><span class="pre">binary_to_term/1</span></code> and <code class="docutils literal notranslate"><span class="pre">term_to_binary/1,2</span></code></p></li>
 </ul>
 </section>
 <section id="changed">
@@ -259,6 +261,13 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <li><p>Entry point now is <code class="docutils literal notranslate"><span class="pre">init:boot/1</span></code> if it exists. It starts the kernel application and calls <code class="docutils literal notranslate"><span class="pre">start/0</span></code> from the
 identified startup module. Users who started kernel application (typically for distribution) must no longer
 do it. Startint <code class="docutils literal notranslate"><span class="pre">net_kernel</span></code> is still required.</p></li>
+<li><p>All arithmetic operations (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">div</span></code>, <code class="docutils literal notranslate"><span class="pre">rem</span></code>, <code class="docutils literal notranslate"><span class="pre">abs</span></code>, etc.) now support integers up to 256-bit</p></li>
+<li><p>All bitwise operations (<code class="docutils literal notranslate"><span class="pre">band</span></code>, <code class="docutils literal notranslate"><span class="pre">bor</span></code>, <code class="docutils literal notranslate"><span class="pre">bxor</span></code>, <code class="docutils literal notranslate"><span class="pre">bnot</span></code>, <code class="docutils literal notranslate"><span class="pre">bsl</span></code>, <code class="docutils literal notranslate"><span class="pre">bsr</span></code>) now support integers up to 256-bit</p></li>
+<li><p>Float conversion functions now support converting to/from big integers</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bsl</span></code> now properly checks for overflow</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary_to_integer/1</span></code> no longer accepts binaries such as <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;0xFF&quot;&gt;&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;</span>&#160; <span class="pre">123&quot;&gt;&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary_to_integer</span></code> and <code class="docutils literal notranslate"><span class="pre">list_to_integer</span></code> do not raise anymore <code class="docutils literal notranslate"><span class="pre">overflow</span></code> error, they raise
+instead <code class="docutils literal notranslate"><span class="pre">badarg</span></code>.</p></li>
 </ul>
 </section>
 <section id="fixed">
@@ -271,6 +280,7 @@ do it. Startint <code class="docutils literal notranslate"><span class="pre">net
 <li><p>packbeam: fix memory leak preventing building with address sanitizer</p></li>
 <li><p>Fixed a bug where empty atom could not be created on some platforms, thus breaking receiving a message for a registered process from an OTP node.</p></li>
 <li><p>Fix a memory leak in distribution when a BEAM node would monitor a process by name.</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">list_to_integer</span></code>, it was likely buggy with integers close to INT64_MAX</p></li>
 </ul>
 </section>
 </section>

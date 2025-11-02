@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.25797922 documentation</title>
+  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.58768ab5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/programmers-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3c863a45"></script>
+      <script src="_static/documentation_options.js?v=44339055"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -219,7 +219,7 @@
 <ul class="simple">
 <li><p>All the major Erlang types, including</p>
 <ul>
-<li><p>integers (with size limits)</p></li>
+<li><p>integers (integers with 256-bit magnitude plus separate sign)</p></li>
 <li><p>floats</p></li>
 <li><p>tuples</p></li>
 <li><p><a class="reference internal" href="apidocs/erlang/estdlib/lists.html"><span class="std std-doc">lists</span></a></p></li>
@@ -959,7 +959,7 @@ permission to set the system time.</p>
 <p>Erlang/OTP uses the Christian epoch to count time units from year 0 in the Gregorian calendar.  The, for example, the value 0 in Gregorian seconds represents the date Jan 1, year 0, and midnight (UTC), or in Erlang terms, <code class="docutils literal notranslate"><span class="pre">{{0,</span> <span class="pre">1,</span> <span class="pre">1},</span> <span class="pre">{0,</span> <span class="pre">0,</span> <span class="pre">0}}</span></code>.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
-<p>AtomVM is currently limited to representing integers in at most 64 bits, with one bit representing the sign bit.
+<p>AtomVM is currently limited to representing time in at most 64 bits, with one bit representing the sign bit.
 However, even with this limitation, AtomVM is able to resolve microsecond values in the Gregorian calendar for over
 292,000 years, likely well past the likely lifetime of an AtomVM application (unless perhaps launched on a deep
 space probe).</p>

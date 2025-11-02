@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Differences between AtomVM and BEAM &mdash; AtomVM 0.7.0-dev+git.25797922 documentation</title>
+  <title>Differences between AtomVM and BEAM &mdash; AtomVM 0.7.0-dev+git.58768ab5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/differences-with-beam.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3c863a45"></script>
+      <script src="_static/documentation_options.js?v=44339055"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -60,7 +60,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#principles">Principles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#determining-if-code-is-run-by-atomvm-or-beam">Determining if code is run by AtomVM or BEAM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#known-limitations-of-the-vm">Known limitations of the VM</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#wide-precision-integers">Wide precision integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integer-precision-and-overflow">Integer precision and overflow</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#integer-limits">Integer limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#overflow-errors">Overflow errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bitwise-operations-edge-cases">Bitwise operations edge cases</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#bit-syntax">Bit syntax</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#code-reloading">Code reloading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#distribution">Distribution</a></li>
@@ -148,11 +153,100 @@ these tests with a wide range of BEAM versions.</p>
 <p>AtomVM does not implement some key features of the BEAM. Some of these limitations are being
 worked on and this list might be outdated. Do not hesitate to check GitHub issues or contact us
 when in doubt.</p>
-<section id="wide-precision-integers">
-<h3>Wide precision integers<a class="headerlink" href="#wide-precision-integers" title="Link to this heading"></a></h3>
-<p>AtomVM currently only supports 64 bits integers. This is being worked on. However, please note
-that AtomVM is unlikely to support arbitrary precision integers as libraries for such support
-usually are quite large.</p>
+<section id="integer-precision-and-overflow">
+<h3>Integer precision and overflow<a class="headerlink" href="#integer-precision-and-overflow" title="Link to this heading"></a></h3>
+<p>AtomVM supports integers up to 256-bit with an additional sign flag, while BEAM supports unlimited
+precision integers. This fundamental difference has several implications:</p>
+<section id="integer-limits">
+<h4>Integer limits<a class="headerlink" href="#integer-limits" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Maximum value</strong>: <code class="docutils literal notranslate"><span class="pre">16#FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span></code> (256
+ones, which equals <code class="docutils literal notranslate"><span class="pre">2^256</span> <span class="pre">-</span> <span class="pre">1</span></code>)</p></li>
+<li><p><strong>Minimum value</strong>: <code class="docutils literal notranslate"><span class="pre">-16#FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span></code> (which
+equals <code class="docutils literal notranslate"><span class="pre">-(2^256</span> <span class="pre">-</span> <span class="pre">1)</span></code>)</p></li>
+</ul>
+<p>Note that AtomVM does not use two’s complement for big integers. The sign is stored as a separate
+flag, which means <code class="docutils literal notranslate"><span class="pre">INTEGER_MAX</span> <span class="pre">=</span> <span class="pre">-INTEGER_MIN</span></code>.</p>
+</section>
+<section id="overflow-errors">
+<h4>Overflow errors<a class="headerlink" href="#overflow-errors" title="Link to this heading"></a></h4>
+<p>Unlike BEAM, AtomVM raises <code class="docutils literal notranslate"><span class="pre">overflow</span></code> errors when integer operations exceed 256-bit capacity:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">IntMax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16#FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span><span class="p">,</span>
+<span class="c">% The following will raise an overflow error on AtomVM, but succeeds on BEAM:</span>
+<span class="nv">Result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">IntMax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="c">% overflow error</span>
+
+<span class="c">% Also applies to subtraction and multiplication:</span>
+<span class="p">-</span><span class="err">I</span><span class="ni">ntMax</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="c">% overflow error</span>
+<span class="nv">IntMax</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w">   </span><span class="c">% overflow error</span>
+</pre></div>
+</div>
+<p>Handling overflows:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nf">safe_calc</span><span class="p">(</span><span class="nv">MaybeOvfFun</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="nv">MaybeOvfFun</span><span class="p">()</span><span class="w"> </span><span class="k">of</span>
+<span class="w">        </span><span class="nv">I</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="nb">is_integer</span><span class="p">(</span><span class="nv">I</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="nv">I</span><span class="p">}</span>
+<span class="w">    </span><span class="k">catch</span>
+<span class="w">        </span><span class="nn">error</span><span class="p">:</span><span class="n">overflow</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">overflow</span><span class="p">}</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
+
+<span class="c">% Returns `{ok, Result}`, Result is a 255 bit integer</span>
+<span class="nf">safe_calc</span><span class="p">(</span><span class="k">fun</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="mi">57</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="p">).</span>
+
+<span class="c">% Returns `{error, overflow}`, since 261 bit integers are not allowed</span>
+<span class="nf">safe_calc</span><span class="p">(</span><span class="k">fun</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="mi">58</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="p">).</span>
+</pre></div>
+</div>
+<p>Overflow can also occur with:</p>
+<ul class="simple">
+<li><p>Bit shift left operations: <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">bsl</span> <span class="pre">257</span></code> raises overflow (shifting beyond the 256-bit boundary).
+When shifting values with multiple set bits, mask first to prevent overflow: <code class="docutils literal notranslate"><span class="pre">16#FFFF</span> <span class="pre">bsl</span> <span class="pre">252</span></code>
+would overflow, but <code class="docutils literal notranslate"><span class="pre">(16#FFFF</span> <span class="pre">band</span> <span class="pre">0xF)</span> <span class="pre">bsl</span> <span class="pre">252</span></code> succeeds</p></li>
+<li><p>Float to integer conversions: <code class="docutils literal notranslate"><span class="pre">ceil/1</span></code>, <code class="docutils literal notranslate"><span class="pre">round/1</span></code>, etc. when the result exceeds 256-bit</p></li>
+</ul>
+<p>Note: While BEAM raises <code class="docutils literal notranslate"><span class="pre">system_limit</span></code> error for operations like
+<code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">bsl</span> <span class="pre">2000000000000000000000000000000000</span></code>, AtomVM consistently uses <code class="docutils literal notranslate"><span class="pre">overflow</span></code> error for all
+integer capacity violations.</p>
+<p>Note: Integer literals larger than 256 bits in source code will compile successfully with
+Erlang/Elixir compilers, but the resulting BEAM files will fail to load on AtomVM. This also
+applies to compile-time constant expressions that evaluate to integers exceeding 256 bits, such as
+<code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">bsl</span> <span class="pre">300</span></code>. These expressions are evaluated by the compiler and stored as constants in the BEAM
+file, causing the same load-time failure. Always ensure that integer constants in your code are
+within AtomVM’s supported range.</p>
+<p>Note: The <code class="docutils literal notranslate"><span class="pre">erlang:binary_to_term/1,2</span></code> function raises a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error when attempting to
+deserialize binary data containing an integer larger than 256 bits. This differs from BEAM, which
+can deserialize integers of any size. Applications that exchange serialized terms with BEAM nodes
+should be aware of this limitation.</p>
+<p>Note: String and binary conversion functions such as <code class="docutils literal notranslate"><span class="pre">erlang:binary_to_integer/1,2</span></code>,
+<code class="docutils literal notranslate"><span class="pre">erlang:list_to_integer/1,2</span></code>, and Elixir’s <code class="docutils literal notranslate"><span class="pre">String.to_integer/1,2</span></code> raise a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error when the
+input represents an integer exceeding 256 bits. For example,
+<code class="docutils literal notranslate"><span class="pre">erlang:binary_to_integer(&lt;&lt;&quot;10000000000000000000000000000000000000000000000000000000000000000&quot;&gt;&gt;,</span> <span class="pre">16)</span></code>
+will fail with <code class="docutils literal notranslate"><span class="pre">badarg</span></code> on AtomVM, while it succeeds on BEAM. Applications parsing user input or
+external data should validate that numeric values fall within AtomVM’s supported range.</p>
+</section>
+<section id="bitwise-operations-edge-cases">
+<h4>Bitwise operations edge cases<a class="headerlink" href="#bitwise-operations-edge-cases" title="Link to this heading"></a></h4>
+<p>The 256-bit limitation creates specific edge cases with bitwise operations that would require 257
+bits:</p>
+<p>On BEAM (unlimited precision), returns <code class="docutils literal notranslate"><span class="pre">-IntMax</span> <span class="pre">-</span> <span class="pre">1</span></code> (requires 257 bits):</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">IntMax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16#FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span><span class="p">.</span>
+<span class="mi">115792089237316195423570985008687907853269984665640564039457584007913129639935</span>
+<span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">integer_to_binary</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="ow">bxor</span><span class="w"> </span><span class="nv">IntMax</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">).</span>
+<span class="o">&lt;&lt;</span><span class="s">&quot;-10000000000000000000000000000000000000000000000000000000000000000&quot;</span><span class="o">&gt;&gt;</span>
+<span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">integer_to_binary</span><span class="p">(</span><span class="ow">bnot</span><span class="w"> </span><span class="nv">IntMax</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">).</span>
+<span class="o">&lt;&lt;</span><span class="s">&quot;-10000000000000000000000000000000000000000000000000000000000000000&quot;</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<p>On AtomVM (256-bit limited), returns 0 (cannot represent 257th bit):</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">IntMax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16#FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span><span class="p">.</span>
+<span class="mi">115792089237316195423570985008687907853269984665640564039457584007913129639935</span>
+<span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="ow">bxor</span><span class="w"> </span><span class="nv">IntMax</span><span class="p">.</span>
+<span class="mi">0</span>
+<span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="ow">bnot</span><span class="w"> </span><span class="nv">IntMax</span><span class="p">.</span>
+<span class="mi">0</span>
+</pre></div>
+</div>
+<p>This occurs because AtomVM cannot create an integer with the 257th bit set to 1 with negative sign.
+Since <code class="docutils literal notranslate"><span class="pre">-0</span></code> is not allowed, the result is normalized to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+</section>
 </section>
 <section id="bit-syntax">
 <h3>Bit syntax<a class="headerlink" href="#bit-syntax" title="Link to this heading"></a></h3>
