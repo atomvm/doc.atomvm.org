@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sys.h &mdash; AtomVM 0.7.0-dev+git.1fca53f4 documentation</title>
+  <title>sys.h &mdash; AtomVM 0.7.0-dev+git.593b3ee4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/sys.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=f56e3fda"></script>
+      <script src="../../../_static/documentation_options.js?v=02db1a49"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -108,6 +108,8 @@
 <li class="toctree-l4"><a class="reference internal" href="intn.h.html">intn.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="jit.c.html">jit.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="jit.h.html">jit.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit_stream_flash.c.html">jit_stream_flash.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit_stream_flash.h.html">jit_stream_flash.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="listeners.h.html">listeners.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mailbox.c.html">mailbox.c</a></li>
@@ -354,17 +356,18 @@
 </figure>
 <p>This graph shows which files directly or indirectly include sys.h:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-f0c2443311ad611d3321f941ebee177cf499fda9.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-7269580fed29e880c654eb3e4c3dbc7bc76000db.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
     edge [color=&quot;#1414CE&quot;]
     &quot;2&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/context.c&quot;]
     &quot;3&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/globalcontext.c&quot;]
-    &quot;4&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot;]
-    &quot;5&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
-    &quot;6&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot;]
-    &quot;7&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot;]
+    &quot;4&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit_stream_flash.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/jit_stream_flash.c&quot;]
+    &quot;5&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/module.c&quot;]
+    &quot;6&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/nifs.c&quot;]
+    &quot;7&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/otp_socket.c&quot;]
+    &quot;8&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/resources.c&quot;]
     &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/sys.h&quot; fillcolor=&quot;#BFBFBF&quot;]
     &quot;1&quot; -&gt; &quot;2&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
@@ -372,6 +375,7 @@
     &quot;1&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
 }</p></object></div>
 </div>
 </figure>
@@ -735,6 +739,44 @@
 <li><p><strong>native_code</strong> – pointer to native code chunk </p></li>
 <li><p><strong>size</strong> – size of native code chunk </p></li>
 <li><p><strong>offset</strong> – offset to the module entry point </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.sys.h.sys_get_cache_native_code">
+<span class="target" id="libatomvmsys_8h_1aa4b9372b989586833574fdd2861c78c0"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sys_get_cache_native_code</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span>, <a class="reference internal" href="../../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span>, <span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">version</span></span>, <span class="n"><span class="pre">ModuleNativeEntryPoint</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">entry_point</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">labels</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.sys.h.sys_get_cache_native_code" title="Link to this definition"></a><br /></dt>
+<dd><p>Get the cache (typically on flash) of native code for a given module. </p>
+<p>If module is found in cache, return a pointer to the entry point. Only implemented on platforms with JIT. Implementations on flash typically check if the jit cache is valid (for lib or for app) and use the pointer to code as a key. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>global</strong> – the global context </p></li>
+<li><p><strong>mod</strong> – module to return the cache native code for </p></li>
+<li><p><strong>version</strong> – version of the cache entry (for compatibility with the VM) </p></li>
+<li><p><strong>entry_point</strong> – entry point to the module, if found </p></li>
+<li><p><strong>labels</strong> – number of labels </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> if the cache entry was found </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.sys.h.sys_set_cache_native_code">
+<span class="target" id="libatomvmsys_8h_1af48f8620bfb6363c252880db524439eb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sys_set_cache_native_code</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">global</span></span>, <a class="reference internal" href="../../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span>, <span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n"><span class="pre">version</span></span>, <span class="n"><span class="pre">ModuleNativeEntryPoint</span></span><span class="w"> </span><span class="n"><span class="pre">entry_point</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">labels</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.sys.h.sys_set_cache_native_code" title="Link to this definition"></a><br /></dt>
+<dd><p>Add native code to cache for a given module. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>global</strong> – the global context </p></li>
+<li><p><strong>mod</strong> – module to add the native code for </p></li>
+<li><p><strong>version</strong> – version of the native code </p></li>
+<li><p><strong>entry_point</strong> – entry point to the module </p></li>
+<li><p><strong>labels</strong> – number of labels </p></li>
 </ul>
 </dd>
 </dl>
