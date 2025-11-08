@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module gen_server &mdash; AtomVM 0.7.0-dev+git.9aa60f14 documentation</title>
+  <title>Module gen_server &mdash; AtomVM 0.7.0-dev+git.0f4a0605 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/gen_server.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=42abe3eb"></script>
+      <script src="../../../_static/documentation_options.js?v=f9ea4af4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -98,6 +98,7 @@
 <li class="toctree-l4"><a class="reference internal" href="net_kernel.html">Module net_kernel</a></li>
 <li class="toctree-l4"><a class="reference internal" href="net_kernel_sup.html">Module net_kernel_sup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="os.html">Module os</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proc_lib.html">Module proc_lib</a></li>
 <li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
 <li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
@@ -195,6 +196,18 @@ options() = [{atom(), term()}]
 <pre><code>
 server_ref() = atom() | pid()
 </code></pre>
+</section>
+<section id="start-mon-ret">
+<h3><a name="type-start_mon_ret">start_mon_ret()</a><a class="headerlink" href="#start-mon-ret" title="Link to this heading"></a></h3>
+<pre><code>
+start_mon_ret() = {ok, {Pid::pid(), MonRef::reference()}} | {error, Reason::term()}
+</code></pre>
+</section>
+<section id="start-ret">
+<h3><a name="type-start_ret">start_ret()</a><a class="headerlink" href="#start-ret" title="Link to this heading"></a></h3>
+<pre><code>
+start_ret() = {ok, pid()} | {error, Reason::term()}
+</code></pre>
 <p><a name="index"></a></p>
 </section>
 </section>
@@ -270,7 +283,7 @@ function can be safely ignored.</p>
 <section id="start-3">
 <h3>start/3<a class="headerlink" href="#start-3" title="Link to this heading"></a></h3>
 <pre><code>
-start(Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+start(Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; <a href="#type-start_ret">start_ret()</a>
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_server callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_server<br /></p>
@@ -283,7 +296,7 @@ start(Module::module(), Args::term(), Options::<a href="#type-options">options()
 <section id="start-4">
 <h3>start/4<a class="headerlink" href="#start-4" title="Link to this heading"></a></h3>
 <pre><code>
-start(ServerName::{local, Name::atom()}, Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+start(ServerName::{local, Name::atom()}, Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; <a href="#type-start_ret">start_ret()</a>
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">ServerName</span></code>: the name with which to register the gen_server<br /><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_server callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_server<br /></p>
@@ -298,7 +311,7 @@ may use the gen_server name, in lieu of the process id.</p>
 <section id="start-link-3">
 <h3>start_link/3<a class="headerlink" href="#start-link-3" title="Link to this heading"></a></h3>
 <pre><code>
-start_link(Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+start_link(Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; <a href="#type-start_ret">start_ret()</a>
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_server callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_server<br /></p>
@@ -311,7 +324,7 @@ start_link(Module::module(), Args::term(), Options::<a href="#type-options">opti
 <section id="start-link-4">
 <h3>start_link/4<a class="headerlink" href="#start-link-4" title="Link to this heading"></a></h3>
 <pre><code>
-start_link(ServerName::{local, Name::atom()}, Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, pid()} | {error, Reason::term()}
+start_link(ServerName::{local, Name::atom()}, Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; <a href="#type-start_ret">start_ret()</a>
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">ServerName</span></code>: the name with which to register the gen_server<br /><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_server callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_server<br /></p>
@@ -326,7 +339,7 @@ may use the gen_server name, in lieu of the process id.</p>
 <section id="start-monitor-3">
 <h3>start_monitor/3<a class="headerlink" href="#start-monitor-3" title="Link to this heading"></a></h3>
 <pre><code>
-start_monitor(Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, {Pid::pid(), MonRef::reference()}} | {error, Reason::term()}
+start_monitor(Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; <a href="#type-start_mon_ret">start_mon_ret()</a>
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_server callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_server<br /></p>
@@ -340,7 +353,7 @@ start_monitor(Module::module(), Args::term(), Options::<a href="#type-options">o
 <section id="start-monitor-4">
 <h3>start_monitor/4<a class="headerlink" href="#start-monitor-4" title="Link to this heading"></a></h3>
 <pre><code>
-start_monitor(ServerName::{local, Name::atom()}, Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; {ok, {Pid::pid(), MonRef::reference()}} | {error, Reason::term()}
+start_monitor(ServerName::{local, Name::atom()}, Module::module(), Args::term(), Options::<a href="#type-options">options()</a>) -&gt; <a href="#type-start_mon_ret">start_mon_ret()</a>
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">ServerName</span></code>: the name with which to register the gen_server<br /><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the gen_server callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: the arguments to pass to the module’s init callback<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the gen_server<br /></p>

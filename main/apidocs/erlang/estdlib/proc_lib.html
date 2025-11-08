@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module kernel &mdash; AtomVM 0.7.0-dev+git.0f4a0605 documentation</title>
+  <title>Module proc_lib &mdash; AtomVM 0.7.0-dev+git.0f4a0605 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -14,7 +14,7 @@
 
   
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
-    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/kernel.html" />
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/proc_lib.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../../_static/documentation_options.js?v=f9ea4af4"></script>
@@ -23,8 +23,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Module lists" href="lists.html" />
-    <link rel="prev" title="Module io_lib" href="io_lib.html" /> 
+    <link rel="next" title="Module proplists" href="proplists.html" />
+    <link rel="prev" title="Module os" href="os.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -89,7 +89,7 @@
 <li class="toctree-l4"><a class="reference internal" href="init.html">Module init</a></li>
 <li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
 <li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Module kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html">Module kernel</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
 <li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
 <li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
@@ -98,7 +98,7 @@
 <li class="toctree-l4"><a class="reference internal" href="net_kernel.html">Module net_kernel</a></li>
 <li class="toctree-l4"><a class="reference internal" href="net_kernel_sup.html">Module net_kernel_sup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="os.html">Module os</a></li>
-<li class="toctree-l4"><a class="reference internal" href="proc_lib.html">Module proc_lib</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module proc_lib</a></li>
 <li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
 <li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
@@ -140,7 +140,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
-      <li class="breadcrumb-item active">Module kernel</li>
+      <li class="breadcrumb-item active">Module proc_lib</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -149,31 +149,145 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-kernel">
-<h1>Module kernel<a class="headerlink" href="#module-kernel" title="Link to this heading"></a></h1>
+  <section id="module-proc-lib">
+<h1>Module proc_lib<a class="headerlink" href="#module-proc-lib" title="Link to this heading"></a></h1>
 <ul class="simple">
-<li><p><a class="reference internal" href="#description"><span class="xref myst">Description</span></a></p></li>
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
 <li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
 <li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
 </ul>
-<p>Root supervisor for the kernel application.</p>
-<p><strong>Behaviours:</strong> <a class="reference internal" href="application.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">application</span></code></span></a>, <a class="reference internal" href="supervisor.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">supervisor</span></code></span></a>.</p>
+<p>An implementation of the Erlang/OTP gen_server interface.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+</section>
+<section id="this-module-implements-a-strict-subset-of-the-erlang-otp-proc-lib-interface">
+<h2>This module implements a strict subset of the Erlang/OTP proc_lib
+interface.<a class="headerlink" href="#this-module-implements-a-strict-subset-of-the-erlang-otp-proc-lib-interface" title="Link to this heading"></a></h2>
+<p><a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="start-spawn-option">
+<h3><a name="type-start_spawn_option">start_spawn_option()</a><a class="headerlink" href="#start-spawn-option" title="Link to this heading"></a></h3>
+<pre><code>
+start_spawn_option() = {min_heap_size, pos_integer()} | {max_heap_size, pos_integer()} | {atomvm_heap_growth, <a href="/__w/AtomVM/AtomVM/build/doc/edoc/erts/doc/erlang.md#type-atomvm_heap_growth_strategy">erlang:atomvm_heap_growth_strategy()</a>} | link
+</code></pre>
 <p><a name="index"></a></p>
+</section>
+</section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#start-2">start/2</a></td><td>Start kernel application.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#init_ack-1">init_ack/1</a></td><td>    Callback to signal that initialization succeeded.</td></tr><tr><td valign="top"><a href="#init_ack-2">init_ack/2</a></td><td>    Callback to signal that initialization succeeded.</td></tr><tr><td valign="top"><a href="#initial_call-1">initial_call/1</a></td><td>    Get the initial call for a given process or <code>false</code>
+if it's not available.</td></tr><tr><td valign="top"><a href="#start-3">start/3</a></td><td>Restricted set of spawn options.</td></tr><tr><td valign="top"><a href="#start-4">start/4</a></td><td>Equivalent to <a href="#start-5"><tt>start(Module, Function, Args, Timeout, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#start-5">start/5</a></td><td>    Start a new process synchronously.</td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td>Equivalent to <a href="#start_link-4"><tt>start_link(Module, Function, Args, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#start_link-4">start_link/4</a></td><td>Equivalent to <a href="#start_link-5"><tt>start_link(Module, Function, Args, Timeout, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#start_link-5">start_link/5</a></td><td>    Start a new process synchronously and atomically link it.</td></tr><tr><td valign="top"><a href="#translate_initial_call-1">translate_initial_call/1</a></td><td>    Get the initial call for a given process or <code>{proc_lib, init_p, 5}</code>
+if it's not available.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
 <h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
-<p><a name="start-2"></a></p>
-<section id="start-2">
-<h3>start/2<a class="headerlink" href="#start-2" title="Link to this heading"></a></h3>
+<p><a name="init_ack-1"></a></p>
+<section id="init-ack-1">
+<h3>init_ack/1<a class="headerlink" href="#init-ack-1" title="Link to this heading"></a></h3>
 <pre><code>
-start(StartType::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/kernel/doc/application.md#type-start_type">application:start_type()</a>, StartArgs::any()) -&gt; {ok, pid()} | {error, any()}
+init_ack(Result::any()) -&gt; ok
 </code></pre>
 <br />
-<p>Start kernel application</p>
+<p><code class="docutils literal notranslate"><span class="pre">Result</span></code>: result sent back to parent<br /></p>
+<p>Callback to signal that initialization succeeded.</p>
+<p><a name="init_ack-2"></a></p>
+</section>
+<section id="init-ack-2">
+<h3>init_ack/2<a class="headerlink" href="#init-ack-2" title="Link to this heading"></a></h3>
+<pre><code>
+init_ack(Parent::pid(), Result::any()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Parent</span></code>: parent process<br /><code class="docutils literal notranslate"><span class="pre">Result</span></code>: result sent back to parent<br /></p>
+<p>Callback to signal that initialization succeeded.</p>
+<p><a name="initial_call-1"></a></p>
+</section>
+<section id="initial-call-1">
+<h3>initial_call/1<a class="headerlink" href="#initial-call-1" title="Link to this heading"></a></h3>
+<pre><code>
+initial_call(Process::pid()) -&gt; {module(), atom(), [atom()]} | false
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Process</span></code>: process to get the initial call for<br /></p>
+<p>returns:  <code class="docutils literal notranslate"><span class="pre">false</span></code> until we support <code class="docutils literal notranslate"><span class="pre">process_info(Pid,</span> <span class="pre">dictionary)</span></code></p>
+<p>Get the initial call for a given process or <code class="docutils literal notranslate"><span class="pre">false</span></code>
+if it’s not available. Arguments are replaced with atoms.</p>
+<p><a name="start-3"></a></p>
+</section>
+<section id="start-3">
+<h3>start/3<a class="headerlink" href="#start-3" title="Link to this heading"></a></h3>
+<pre><code>
+start(Module::module(), Function::atom(), Args::[any()]) -&gt; any()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#start_link-4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">start_link(Module,</span> <span class="pre">Function,</span> <span class="pre">Args,</span> <span class="pre">infinity)</span></code></span></a>.</p>
+<p>Restricted set of spawn options. <code class="docutils literal notranslate"><span class="pre">monitor</span></code> is not supported.</p>
+<p><a name="start-4"></a></p>
+</section>
+<section id="start-4">
+<h3>start/4<a class="headerlink" href="#start-4" title="Link to this heading"></a></h3>
+<pre><code>
+start(Module::module(), Function::atom(), Args::[any()], Timeout::timeout()) -&gt; any()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#start-5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">start(Module,</span> <span class="pre">Function,</span> <span class="pre">Args,</span> <span class="pre">Timeout,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="start-5"></a></p>
+</section>
+<section id="start-5">
+<h3>start/5<a class="headerlink" href="#start-5" title="Link to this heading"></a></h3>
+<pre><code>
+start(Module::module(), Function::atom(), Args::[any()], Timeout::timeout(), SpawnOpts::[<a href="#type-start_spawn_option">start_spawn_option()</a>]) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Function</span></code>: to call for initialization<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: arguments to pass to the function<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for the initialization to be done<br /><code class="docutils literal notranslate"><span class="pre">SpawnOpts</span></code>: options passed to spawn. <code class="docutils literal notranslate"><span class="pre">monitor</span></code> is not allowed.<br /></p>
+<p>Start a new process synchronously. Wait for the process to call
+<code class="docutils literal notranslate"><span class="pre">init_ack/1,2</span></code> or <code class="docutils literal notranslate"><span class="pre">init_fail/2,3</span></code>.</p>
+<p><a name="start_link-3"></a></p>
+</section>
+<section id="start-link-3">
+<h3>start_link/3<a class="headerlink" href="#start-link-3" title="Link to this heading"></a></h3>
+<pre><code>
+start_link(Module::module(), Function::atom(), Args::[any()]) -&gt; any()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#start_link-4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">start_link(Module,</span> <span class="pre">Function,</span> <span class="pre">Args,</span> <span class="pre">infinity)</span></code></span></a>.</p>
+<p><a name="start_link-4"></a></p>
+</section>
+<section id="start-link-4">
+<h3>start_link/4<a class="headerlink" href="#start-link-4" title="Link to this heading"></a></h3>
+<pre><code>
+start_link(Module::module(), Function::atom(), Args::[any()], Timeout::timeout()) -&gt; any()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#start_link-5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">start_link(Module,</span> <span class="pre">Function,</span> <span class="pre">Args,</span> <span class="pre">Timeout,</span> <span class="pre">[])</span></code></span></a>.</p>
+<p><a name="start_link-5"></a></p>
+</section>
+<section id="start-link-5">
+<h3>start_link/5<a class="headerlink" href="#start-link-5" title="Link to this heading"></a></h3>
+<pre><code>
+start_link(Module::module(), Function::atom(), Args::[any()], Timeout::timeout(), SpawnOpts::[<a href="#type-start_spawn_option">start_spawn_option()</a>]) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: the module in which the callbacks are defined<br /><code class="docutils literal notranslate"><span class="pre">Function</span></code>: to call for initialization<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: arguments to pass to the function<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for the initialization to be done<br /><code class="docutils literal notranslate"><span class="pre">SpawnOpts</span></code>: options passed to spawn_link. <code class="docutils literal notranslate"><span class="pre">monitor</span></code> is not allowed.<br /></p>
+<p>Start a new process synchronously and atomically link it.
+Wait for the process to call <code class="docutils literal notranslate"><span class="pre">init_ack/1,2</span></code> or <code class="docutils literal notranslate"><span class="pre">init_fail/2,3</span></code>.</p>
+<p><a name="translate_initial_call-1"></a></p>
+</section>
+<section id="translate-initial-call-1">
+<h3>translate_initial_call/1<a class="headerlink" href="#translate-initial-call-1" title="Link to this heading"></a></h3>
+<pre><code>
+translate_initial_call(Process::pid()) -&gt; {module(), atom(), non_neg_integer()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Process</span></code>: process to get the initial call for<br /></p>
+<p>returns:  <code class="docutils literal notranslate"><span class="pre">{proc_lib,</span> <span class="pre">init_p,</span> <span class="pre">5}</span></code> until we support <code class="docutils literal notranslate"><span class="pre">process_info(Pid,</span> <span class="pre">dictionary)</span></code></p>
+<p>Get the initial call for a given process or <code class="docutils literal notranslate"><span class="pre">{proc_lib,</span> <span class="pre">init_p,</span> <span class="pre">5}</span></code>
+if it’s not available.</p>
 </section>
 </section>
 </section>
@@ -182,8 +296,8 @@ start(StartType::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/kernel/doc/applicati
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="io_lib.html" class="btn btn-neutral float-left" title="Module io_lib" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lists.html" class="btn btn-neutral float-right" title="Module lists" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="os.html" class="btn btn-neutral float-left" title="Module os" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="proplists.html" class="btn btn-neutral float-right" title="Module proplists" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
