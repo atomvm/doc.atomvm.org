@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module proc_lib &mdash; AtomVM 0.7.0-dev+git.21ad6df4 documentation</title>
+  <title>Module proc_lib &mdash; AtomVM 0.7.0-dev+git.869e4f74 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/proc_lib.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=050b7c7b"></script>
+      <script src="../../../_static/documentation_options.js?v=1b99eb93"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -157,14 +157,19 @@
 <li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
 <li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
 </ul>
-<p>An implementation of the Erlang/OTP gen_server interface.</p>
+<p>An implementation of the Erlang/OTP proc_lib interface.</p>
 <p><a name="description"></a></p>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module implements a strict subset of the Erlang/OTP proc_lib
+interface.</p>
 </section>
-<section id="this-module-implements-a-strict-subset-of-the-erlang-otp-proc-lib-interface">
-<h2>This module implements a strict subset of the Erlang/OTP proc_lib
-interface.<a class="headerlink" href="#this-module-implements-a-strict-subset-of-the-erlang-otp-proc-lib-interface" title="Link to this heading"></a></h2>
+<section id="when-spawning-a-single-function-calling-spawn-1-or-spawn-link-1-erlang-otp-proc-lib-sets-initial-call-to-a-tuple-with-a-unique-atom-determining-where-the-function-was-created-for-example-some-module-work-3-fun-0-0-atomvm-literaly-calls-erlang-apply-2-and-therefore-in-these-cases-initial-call-is-erlang-apply-2">
+<h2>When spawning a single function, calling <code class="docutils literal notranslate"><span class="pre">spawn/1</span></code> or <code class="docutils literal notranslate"><span class="pre">spawn_link/1</span></code>,
+Erlang/OTP proc_lib sets <code class="docutils literal notranslate"><span class="pre">initial_call</span></code> to a tuple with a unique
+atom determining where the function was created, for example
+<code class="docutils literal notranslate"><span class="pre">{some_module,</span> <span class="pre">'-work/3-fun-0-',</span> <span class="pre">0}</span></code>. AtomVM literaly calls <code class="docutils literal notranslate"><span class="pre">erlang:apply/2</span></code>
+and therefore in these cases, <code class="docutils literal notranslate"><span class="pre">initial_call</span></code> is <code class="docutils literal notranslate"><span class="pre">{erlang,</span> <span class="pre">apply,</span> <span class="pre">2}</span></code>.<a class="headerlink" href="#when-spawning-a-single-function-calling-spawn-1-or-spawn-link-1-erlang-otp-proc-lib-sets-initial-call-to-a-tuple-with-a-unique-atom-determining-where-the-function-was-created-for-example-some-module-work-3-fun-0-0-atomvm-literaly-calls-erlang-apply-2-and-therefore-in-these-cases-initial-call-is-erlang-apply-2" title="Link to this heading"></a></h2>
 <p><a name="types"></a></p>
 </section>
 <section id="data-types">
@@ -180,7 +185,7 @@ start_spawn_option() = {min_heap_size, pos_integer()} | {max_heap_size, pos_inte
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#init_ack-1">init_ack/1</a></td><td>    Callback to signal that initialization succeeded.</td></tr><tr><td valign="top"><a href="#init_ack-2">init_ack/2</a></td><td>    Callback to signal that initialization succeeded.</td></tr><tr><td valign="top"><a href="#initial_call-1">initial_call/1</a></td><td>    Get the initial call for a given process or <code>false</code>
-if it's not available.</td></tr><tr><td valign="top"><a href="#start-3">start/3</a></td><td>Restricted set of spawn options.</td></tr><tr><td valign="top"><a href="#start-4">start/4</a></td><td>Equivalent to <a href="#start-5"><tt>start(Module, Function, Args, Timeout, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#start-5">start/5</a></td><td>    Start a new process synchronously.</td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td>Equivalent to <a href="#start_link-4"><tt>start_link(Module, Function, Args, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#start_link-4">start_link/4</a></td><td>Equivalent to <a href="#start_link-5"><tt>start_link(Module, Function, Args, Timeout, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#start_link-5">start_link/5</a></td><td>    Start a new process synchronously and atomically link it.</td></tr><tr><td valign="top"><a href="#translate_initial_call-1">translate_initial_call/1</a></td><td>    Get the initial call for a given process or <code>{proc_lib, init_p, 5}</code>
+if it's not available.</td></tr><tr><td valign="top"><a href="#spawn-1">spawn/1</a></td><td>Restricted set of spawn options.</td></tr><tr><td valign="top"><a href="#spawn-3">spawn/3</a></td><td>    Spawn a new process and initialize it.</td></tr><tr><td valign="top"><a href="#spawn_link-1">spawn_link/1</a></td><td>Equivalent to <a href="#spawn_link-3"><tt>spawn_link(erlang, apply, [Fun, []])</tt></a>.</td></tr><tr><td valign="top"><a href="#spawn_link-3">spawn_link/3</a></td><td>    Spawn and atomically link a new process and initialize it.</td></tr><tr><td valign="top"><a href="#start-3">start/3</a></td><td>Equivalent to <a href="#start-4"><tt>start(Module, Function, Args, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#start-4">start/4</a></td><td>Equivalent to <a href="#start-5"><tt>start(Module, Function, Args, Timeout, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#start-5">start/5</a></td><td>    Start a new process synchronously.</td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td>Equivalent to <a href="#start_link-4"><tt>start_link(Module, Function, Args, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#start_link-4">start_link/4</a></td><td>Equivalent to <a href="#start_link-5"><tt>start_link(Module, Function, Args, Timeout, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#start_link-5">start_link/5</a></td><td>    Start a new process synchronously and atomically link it.</td></tr><tr><td valign="top"><a href="#translate_initial_call-1">translate_initial_call/1</a></td><td>    Get the initial call for a given process or <code>{proc_lib, init_p, 5}</code>
 if it's not available.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
@@ -217,6 +222,45 @@ initial_call(Process::pid()) -&gt; {module(), atom(), [atom()]} | false
 <p>returns:  <code class="docutils literal notranslate"><span class="pre">false</span></code> until we support <code class="docutils literal notranslate"><span class="pre">process_info(Pid,</span> <span class="pre">dictionary)</span></code></p>
 <p>Get the initial call for a given process or <code class="docutils literal notranslate"><span class="pre">false</span></code>
 if it’s not available. Arguments are replaced with atoms.</p>
+<p><a name="spawn-1"></a></p>
+</section>
+<section id="spawn-1">
+<h3>spawn/1<a class="headerlink" href="#spawn-1" title="Link to this heading"></a></h3>
+<pre><code>
+spawn(Fun::fun(() -&gt; any())) -&gt; pid()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#spawn-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">spawn(erlang,</span> <span class="pre">apply,</span> <span class="pre">[Fun,</span> <span class="pre">[]])</span></code></span></a>.</p>
+<p>Restricted set of spawn options. <code class="docutils literal notranslate"><span class="pre">monitor</span></code> is not supported.</p>
+<p><a name="spawn-3"></a></p>
+</section>
+<section id="spawn-3">
+<h3>spawn/3<a class="headerlink" href="#spawn-3" title="Link to this heading"></a></h3>
+<pre><code>
+spawn(Module::module(), Function::atom(), Args::[any()]) -&gt; pid()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: of the function to call<br /><code class="docutils literal notranslate"><span class="pre">Function</span></code>: to call<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: arguments to pass to the function<br /></p>
+<p>Spawn a new process and initialize it.</p>
+<p><a name="spawn_link-1"></a></p>
+</section>
+<section id="spawn-link-1">
+<h3>spawn_link/1<a class="headerlink" href="#spawn-link-1" title="Link to this heading"></a></h3>
+<pre><code>
+spawn_link(Fun::fun(() -&gt; any())) -&gt; pid()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#spawn_link-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">spawn_link(erlang,</span> <span class="pre">apply,</span> <span class="pre">[Fun,</span> <span class="pre">[]])</span></code></span></a>.</p>
+<p><a name="spawn_link-3"></a></p>
+</section>
+<section id="spawn-link-3">
+<h3>spawn_link/3<a class="headerlink" href="#spawn-link-3" title="Link to this heading"></a></h3>
+<pre><code>
+spawn_link(Module::module(), Function::atom(), Args::[any()]) -&gt; pid()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: of the function to call<br /><code class="docutils literal notranslate"><span class="pre">Function</span></code>: to call<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: arguments to pass to the function<br /></p>
+<p>Spawn and atomically link a new process and initialize it.</p>
 <p><a name="start-3"></a></p>
 </section>
 <section id="start-3">
@@ -225,8 +269,7 @@ if it’s not available. Arguments are replaced with atoms.</p>
 start(Module::module(), Function::atom(), Args::[any()]) -&gt; any()
 </code></pre>
 <br />
-<p>Equivalent to <a class="reference internal" href="#start_link-4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">start_link(Module,</span> <span class="pre">Function,</span> <span class="pre">Args,</span> <span class="pre">infinity)</span></code></span></a>.</p>
-<p>Restricted set of spawn options. <code class="docutils literal notranslate"><span class="pre">monitor</span></code> is not supported.</p>
+<p>Equivalent to <a class="reference internal" href="#start-4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">start(Module,</span> <span class="pre">Function,</span> <span class="pre">Args,</span> <span class="pre">infinity)</span></code></span></a>.</p>
 <p><a name="start-4"></a></p>
 </section>
 <section id="start-4">
