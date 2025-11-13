@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module sys &mdash; AtomVM 0.7.0-dev+git.d4877b91 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/sys.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=b60c8090"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Module timer" href="timer.html" />
+    <link rel="prev" title="Module supervisor" href="supervisor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stubbed-functions.html">Stubbed Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../api-reference-documentation.html#estdlib">estdlib</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="README.html">The estdlib library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="application.html">Module application</a></li>
+<li class="toctree-l4"><a class="reference internal" href="base64.html">Module base64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binary.html">Module binary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="calendar.html">Module calendar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code.html">Module code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_server.html">Module code_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="crypto.html">Module crypto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dist_util.html">Module dist_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_epmd.html">Module erl_epmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erpc.html">Module erpc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets.html">Module ets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file.html">Module file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen.html">Module gen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_statem.html">Module gen_statem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_tcp.html">Module gen_tcp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen_udp.html">Module gen_udp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="init.html">Module init</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html">Module kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maps.html">Module maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="math.html">Module math</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net.html">Module net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net_kernel.html">Module net_kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="net_kernel_sup.html">Module net_kernel_sup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="os.html">Module os</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proc_lib.html">Module proc_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket_dist.html">Module socket_dist</a></li>
+<li class="toctree-l4"><a class="reference internal" href="socket_dist_controller.html">Module socket_dist_controller</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module sys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../C_CODING_STYLE.html">AtomVM C Coding Style Guide (AVMCCS Guide)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+      <li class="breadcrumb-item active">Module sys</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sys">
+<h1>Module sys<a class="headerlink" href="#module-sys" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p>An implementation of the Erlang/OTP sys interface.</p>
+<p><strong>This module defines the <code class="docutils literal notranslate"><span class="pre">sys</span></code> behaviour.</strong><br /> Required callback functions: <code class="docutils literal notranslate"><span class="pre">system_code_change/4</span></code>, <code class="docutils literal notranslate"><span class="pre">system_continue/3</span></code>, <code class="docutils literal notranslate"><span class="pre">system_get_state/1</span></code>, <code class="docutils literal notranslate"><span class="pre">system_replace_state/2</span></code>, <code class="docutils literal notranslate"><span class="pre">system_terminate/4</span></code>.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+</section>
+<section id="this-module-implements-a-strict-subset-of-the-erlang-otp-sys-interface">
+<h2>This module implements a strict subset of the Erlang/OTP sys
+interface.<a class="headerlink" href="#this-module-implements-a-strict-subset-of-the-erlang-otp-sys-interface" title="Link to this heading"></a></h2>
+<p><a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="dbg-opt">
+<h3><a name="type-dbg_opt">dbg_opt()</a><a class="headerlink" href="#dbg-opt" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">dbg_opt()</span></code></p>
+</section>
+<section id="debug-option">
+<h3><a name="type-debug_option">debug_option()</a><a class="headerlink" href="#debug-option" title="Link to this heading"></a></h3>
+<pre><code>
+debug_option() = trace
+</code></pre>
+</section>
+<section id="format-fun">
+<h3><a name="type-format_fun">format_fun()</a><a class="headerlink" href="#format-fun" title="Link to this heading"></a></h3>
+<pre><code>
+format_fun() = fun((standard_io, Event::any(), Extra::<a href="#type-system_event">system_event()</a>) -&gt; any())
+</code></pre>
+</section>
+<section id="name">
+<h3><a name="type-name">name()</a><a class="headerlink" href="#name" title="Link to this heading"></a></h3>
+<pre><code>
+name() = pid() | atom() | {global, term()} | {via, module(), term()}
+</code></pre>
+</section>
+<section id="system-event">
+<h3><a name="type-system_event">system_event()</a><a class="headerlink" href="#system-event" title="Link to this heading"></a></h3>
+<pre><code>
+system_event() = any()
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#change_code-4">change_code/4</a></td><td>Equivalent to <a href="#change_code-5"><tt>change_code(Name, Module, OldVsn, Extra, 5000)</tt></a>.</td></tr><tr><td valign="top"><a href="#change_code-5">change_code/5</a></td><td>Tells the process to change code.</td></tr><tr><td valign="top"><a href="#debug_options-1">debug_options/1</a></td><td>Initiates debug structure with a list of options.</td></tr><tr><td valign="top"><a href="#get_state-1">get_state/1</a></td><td>Equivalent to <a href="#get_state-2"><tt>get_state(Name, 5000)</tt></a>.</td></tr><tr><td valign="top"><a href="#get_state-2">get_state/2</a></td><td>Gets the state of the process.</td></tr><tr><td valign="top"><a href="#get_status-1">get_status/1</a></td><td>Equivalent to <a href="#get_state-2"><tt>get_state(Name, 5000)</tt></a>.</td></tr><tr><td valign="top"><a href="#get_status-2">get_status/2</a></td><td>Gets the status of the process.</td></tr><tr><td valign="top"><a href="#handle_debug-4">handle_debug/4</a></td><td>Call FormatFunc if tracing is enabled.</td></tr><tr><td valign="top"><a href="#handle_system_msg-6">handle_system_msg/6</a></td><td>This function is used by a process module to take care of system
+messages.</td></tr><tr><td valign="top"><a href="#replace_state-2">replace_state/2</a></td><td>Equivalent to <a href="#replace_state-3"><tt>replace_state(Name, StateFun, 5000)</tt></a>.</td></tr><tr><td valign="top"><a href="#replace_state-3">replace_state/3</a></td><td>Replaces the state of the process, and returns the new state.</td></tr><tr><td valign="top"><a href="#resume-1">resume/1</a></td><td>Equivalent to <a href="#resume-2"><tt>resume(Name, 5000)</tt></a>.</td></tr><tr><td valign="top"><a href="#resume-2">resume/2</a></td><td>Resume a suspended process.</td></tr><tr><td valign="top"><a href="#suspend-1">suspend/1</a></td><td>Equivalent to <a href="#suspend-2"><tt>suspend(Name, 5000)</tt></a>.</td></tr><tr><td valign="top"><a href="#suspend-2">suspend/2</a></td><td>Suspend the process.</td></tr><tr><td valign="top"><a href="#terminate-2">terminate/2</a></td><td>Equivalent to <a href="#terminate-3"><tt>terminate(Name, Reason, 5000)</tt></a>.</td></tr><tr><td valign="top"><a href="#terminate-3">terminate/3</a></td><td>Terminate a process.</td></tr><tr><td valign="top"><a href="#trace-2">trace/2</a></td><td>Equivalent to <a href="#trace-3"><tt>trace(Name, Flag, 5000)</tt></a>.</td></tr><tr><td valign="top"><a href="#trace-3">trace/3</a></td><td>Enable or disable trace on a process.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="change_code-4"></a></p>
+<section id="change-code-4">
+<h3>change_code/4<a class="headerlink" href="#change-code-4" title="Link to this heading"></a></h3>
+<pre><code>
+change_code(Name::<a href="#type-name">name()</a>, Module::module(), OldVsn::undefined | any(), Extra::any()) -&gt; ok | {error, any()}
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#change_code-5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">change_code(Name,</span> <span class="pre">Module,</span> <span class="pre">OldVsn,</span> <span class="pre">Extra,</span> <span class="pre">5000)</span></code></span></a>.</p>
+<p><a name="change_code-5"></a></p>
+</section>
+<section id="change-code-5">
+<h3>change_code/5<a class="headerlink" href="#change-code-5" title="Link to this heading"></a></h3>
+<pre><code>
+change_code(Name::<a href="#type-name">name()</a>, Module::module(), OldVsn::undefined | any(), Extra::any(), Timeout::timeout()) -&gt; ok | {error, any()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: process to tell to change code.<br /><code class="docutils literal notranslate"><span class="pre">Module</span></code>: callback module that should implement <code class="docutils literal notranslate"><span class="pre">system_code_change/4</span></code>.<br /><code class="docutils literal notranslate"><span class="pre">OldVsn</span></code>: old version<br /><code class="docutils literal notranslate"><span class="pre">Extra</span></code>: any extra term passed from the update script<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for the code change<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or an error tuple</p>
+<p>Tells the process to change code.</p>
+<p><a name="debug_options-1"></a></p>
+</section>
+<section id="debug-options-1">
+<h3>debug_options/1<a class="headerlink" href="#debug-options-1" title="Link to this heading"></a></h3>
+<pre><code>
+debug_options(X1::[Opt::<a href="#type-debug_option">debug_option()</a>]) -&gt; [<a href="#type-dbg_opt">dbg_opt()</a>]
+</code></pre>
+<br />
+<p>returns: opaque debug options to be passed to handlers.</p>
+<p>Initiates debug structure with a list of options. The only supported
+option is <code class="docutils literal notranslate"><span class="pre">trace</span></code>.</p>
+<p><a name="get_state-1"></a></p>
+</section>
+<section id="get-state-1">
+<h3>get_state/1<a class="headerlink" href="#get-state-1" title="Link to this heading"></a></h3>
+<pre><code>
+get_state(Name::<a href="#type-name">name()</a>) -&gt; any()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#get_state-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">get_state(Name,</span> <span class="pre">5000)</span></code></span></a>.</p>
+<p><a name="get_state-2"></a></p>
+</section>
+<section id="get-state-2">
+<h3>get_state/2<a class="headerlink" href="#get-state-2" title="Link to this heading"></a></h3>
+<pre><code>
+get_state(Name::<a href="#type-name">name()</a>, Timeout::timeout()) -&gt; any()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: process to get the state of.<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for getting the state<br /></p>
+<p>returns: the state or raises an error if an error occurred.</p>
+<p>Gets the state of the process. This function is only meant for
+debugging.</p>
+<p><a name="get_status-1"></a></p>
+</section>
+<section id="get-status-1">
+<h3>get_status/1<a class="headerlink" href="#get-status-1" title="Link to this heading"></a></h3>
+<pre><code>
+get_status(Name::<a href="#type-name">name()</a>) -&gt; any()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#get_state-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">get_state(Name,</span> <span class="pre">5000)</span></code></span></a>.</p>
+<p><a name="get_status-2"></a></p>
+</section>
+<section id="get-status-2">
+<h3>get_status/2<a class="headerlink" href="#get-status-2" title="Link to this heading"></a></h3>
+<pre><code>
+get_status(Name::<a href="#type-name">name()</a>, Timeout::timeout()) -&gt; {status, pid(), {module, module()}, [SItem::any()]}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: process to get the status of.<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for getting the status<br /></p>
+<p>returns: the status or raises an error if an error occurred.</p>
+<p>Gets the status of the process. This function is only meant for
+debugging and returns raw state.</p>
+<p><a name="handle_debug-4"></a></p>
+</section>
+<section id="handle-debug-4">
+<h3>handle_debug/4<a class="headerlink" href="#handle-debug-4" title="Link to this heading"></a></h3>
+<pre><code>
+handle_debug(Debug::[<a href="#type-dbg_opt">dbg_opt()</a>], FormFunc::<a href="#type-format_fun">format_fun()</a>, Extra::any(), Event::<a href="#type-system_event">system_event()</a>) -&gt; [<a href="#type-dbg_opt">dbg_opt()</a>]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Debug</span></code>: debug options.<br /><code class="docutils literal notranslate"><span class="pre">FormFunc</span></code>: formatting function.<br /><code class="docutils literal notranslate"><span class="pre">Extra</span></code>: extra parameter passed to formatting function.<br /><code class="docutils literal notranslate"><span class="pre">Event</span></code>: current system event<br /></p>
+<p>returns: new debug optinons</p>
+<p>Call FormatFunc if tracing is enabled</p>
+<p><a name="handle_system_msg-6"></a></p>
+</section>
+<section id="handle-system-msg-6">
+<h3>handle_system_msg/6<a class="headerlink" href="#handle-system-msg-6" title="Link to this heading"></a></h3>
+<pre><code>
+handle_system_msg(Msg::any(), From::{pid(), any()}, Parent::pid(), Module::module(), Debug::[<a href="#type-dbg_opt">dbg_opt()</a>], Misc::any()) -&gt; no_return()
+</code></pre>
+<br />
+<p>returns: opaque debug options to be passed to handlers.</p>
+<p>This function is used by a process module to take care of system
+messages. The process receives a <code class="docutils literal notranslate"><span class="pre">{system,</span> <span class="pre">From,</span> <span class="pre">Msg}</span></code> message and passes
+<code class="docutils literal notranslate"><span class="pre">Msg</span></code> and <code class="docutils literal notranslate"><span class="pre">From</span></code> to this function.
+This function is meant to be tail-called and will call either:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Module:system_continue/3</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Module:system_terminate/4</span></code></p></li>
+</ul>
+<p><a name="replace_state-2"></a></p>
+</section>
+<section id="replace-state-2">
+<h3>replace_state/2<a class="headerlink" href="#replace-state-2" title="Link to this heading"></a></h3>
+<pre><code>
+replace_state(Name::<a href="#type-name">name()</a>, StateFun::fun((any()) -&gt; any())) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#replace_state-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">replace_state(Name,</span> <span class="pre">StateFun,</span> <span class="pre">5000)</span></code></span></a>.</p>
+<p><a name="replace_state-3"></a></p>
+</section>
+<section id="replace-state-3">
+<h3>replace_state/3<a class="headerlink" href="#replace-state-3" title="Link to this heading"></a></h3>
+<pre><code>
+replace_state(Name::<a href="#type-name">name()</a>, StateFun::fun((any()) -&gt; any()), Timeout::timeout()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: process to replace the state of.<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for replacing the state.<br /></p>
+<p>returns: the new state or raises an error if an error occurred.</p>
+<p>Replaces the state of the process, and returns the new state. This
+function is only meant for debugging.</p>
+<p><a name="resume-1"></a></p>
+</section>
+<section id="resume-1">
+<h3>resume/1<a class="headerlink" href="#resume-1" title="Link to this heading"></a></h3>
+<pre><code>
+resume(Name::<a href="#type-name">name()</a>) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#resume-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">resume(Name,</span> <span class="pre">5000)</span></code></span></a>.</p>
+<p><a name="resume-2"></a></p>
+</section>
+<section id="resume-2">
+<h3>resume/2<a class="headerlink" href="#resume-2" title="Link to this heading"></a></h3>
+<pre><code>
+resume(Name::<a href="#type-name">name()</a>, Timeout::timeout()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: process to resume.<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for resuming the process.<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or raises an exception if an error occurred.</p>
+<p>Resume a suspended process.</p>
+<p><a name="suspend-1"></a></p>
+</section>
+<section id="suspend-1">
+<h3>suspend/1<a class="headerlink" href="#suspend-1" title="Link to this heading"></a></h3>
+<pre><code>
+suspend(Name::<a href="#type-name">name()</a>) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#suspend-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">suspend(Name,</span> <span class="pre">5000)</span></code></span></a>.</p>
+<p><a name="suspend-2"></a></p>
+</section>
+<section id="suspend-2">
+<h3>suspend/2<a class="headerlink" href="#suspend-2" title="Link to this heading"></a></h3>
+<pre><code>
+suspend(Name::<a href="#type-name">name()</a>, Timeout::timeout()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: process to suspend.<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for suspending the process.<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or raises an exception if an error occurred.</p>
+<p>Suspend the process. When a process is suspended, it only responds
+to other system messages, but not to any other message.</p>
+<p><a name="terminate-2"></a></p>
+</section>
+<section id="terminate-2">
+<h3>terminate/2<a class="headerlink" href="#terminate-2" title="Link to this heading"></a></h3>
+<pre><code>
+terminate(Name::<a href="#type-name">name()</a>, Reason::any()) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#terminate-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">terminate(Name,</span> <span class="pre">Reason,</span> <span class="pre">5000)</span></code></span></a>.</p>
+<p><a name="terminate-3"></a></p>
+</section>
+<section id="terminate-3">
+<h3>terminate/3<a class="headerlink" href="#terminate-3" title="Link to this heading"></a></h3>
+<pre><code>
+terminate(Name::<a href="#type-name">name()</a>, Reason::any(), Timeout::timeout()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: process to terminate<br /><code class="docutils literal notranslate"><span class="pre">Reason</span></code>: reason for termination<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for terminating<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or raises an exception if an error occurred.</p>
+<p>Terminate a process</p>
+<p><a name="trace-2"></a></p>
+</section>
+<section id="trace-2">
+<h3>trace/2<a class="headerlink" href="#trace-2" title="Link to this heading"></a></h3>
+<pre><code>
+trace(Name::<a href="#type-name">name()</a>, Flag::boolean()) -&gt; ok
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#trace-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">trace(Name,</span> <span class="pre">Flag,</span> <span class="pre">5000)</span></code></span></a>.</p>
+<p><a name="trace-3"></a></p>
+</section>
+<section id="trace-3">
+<h3>trace/3<a class="headerlink" href="#trace-3" title="Link to this heading"></a></h3>
+<pre><code>
+trace(Name::<a href="#type-name">name()</a>, Flag::boolean(), Timeout::timeout()) -&gt; ok
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: process to change trace of.<br /><code class="docutils literal notranslate"><span class="pre">Flag</span></code>: whether to enable tracing or to disable it.<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for changing trace state.<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code> or raises an exception if an error occurred.</p>
+<p>Enable or disable trace on a process.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="supervisor.html" class="btn btn-neutral float-left" title="Module supervisor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timer.html" class="btn btn-neutral float-right" title="Module timer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.6/">v0.6.6</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

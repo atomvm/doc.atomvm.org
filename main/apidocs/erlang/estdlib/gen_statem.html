@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module gen_statem &mdash; AtomVM 0.7.0-dev+git.0090e23a documentation</title>
+  <title>Module gen_statem &mdash; AtomVM 0.7.0-dev+git.d4877b91 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/gen_statem.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=082eb8a3"></script>
+      <script src="../../../_static/documentation_options.js?v=b60c8090"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -80,6 +80,7 @@
 <li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ets.html">Module ets</a></li>
 <li class="toctree-l4"><a class="reference internal" href="file.html">Module file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gen.html">Module gen</a></li>
 <li class="toctree-l4"><a class="reference internal" href="gen_event.html">Module gen_event</a></li>
 <li class="toctree-l4"><a class="reference internal" href="gen_server.html">Module gen_server</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Module gen_statem</a></li>
@@ -108,6 +109,7 @@
 <li class="toctree-l4"><a class="reference internal" href="ssl.html">Module ssl</a></li>
 <li class="toctree-l4"><a class="reference internal" href="string.html">Module string</a></li>
 <li class="toctree-l4"><a class="reference internal" href="supervisor.html">Module supervisor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys.html">Module sys</a></li>
 <li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
 </ul>
@@ -181,6 +183,12 @@ below.</p>
 </section>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="from">
+<h3><a name="type-from">from()</a><a class="headerlink" href="#from" title="Link to this heading"></a></h3>
+<pre><code>
+from() = {pid(), reference()}
+</code></pre>
+</section>
 <section id="options">
 <h3><a name="type-options">options()</a><a class="headerlink" href="#options" title="Link to this heading"></a></h3>
 <pre><code>
@@ -243,15 +251,14 @@ gen_statem instance, but will not wait for a reply.</p>
 <section id="reply-2">
 <h3>reply/2<a class="headerlink" href="#reply-2" title="Link to this heading"></a></h3>
 <pre><code>
-reply(Client::pid(), Reply::term()) -&gt; term()
+reply(From::<a href="#type-from">from()</a>, Reply::term()) -&gt; ok
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Client</span></code>: the client to whom to send the reply<br /><code class="docutils literal notranslate"><span class="pre">Reply</span></code>: the reply to send to the client<br /></p>
-<p>returns: an arbitrary term, that should be ignored</p>
+<p><code class="docutils literal notranslate"><span class="pre">Reply</span></code>: the reply to send to the client<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code></p>
 <p>Send a reply to a calling client.</p>
 <p>This function will send the specified reply back to the specified
-gen_statem client (e.g, via call/3).  The return value of this
-function can be safely ignored.</p>
+gen_statem client (e.g, via call/3).</p>
 <p><a name="start-3"></a></p>
 </section>
 <section id="start-3">
