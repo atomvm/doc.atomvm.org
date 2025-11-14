@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module gen &mdash; AtomVM 0.7.0-dev+git.d4877b91 documentation</title>
+  <title>Module gen &mdash; AtomVM 0.7.0-dev+git.f18c3ccf documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/gen.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=b60c8090"></script>
+      <script src="../../../_static/documentation_options.js?v=3b5c9751"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -153,6 +153,44 @@
              
   <section id="module-gen">
 <h1>Module gen<a class="headerlink" href="#module-gen" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
+<li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
+<li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
+</ul>
+<p><a name="types"></a></p>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="server-ref">
+<h3><a name="type-server_ref">server_ref()</a><a class="headerlink" href="#server-ref" title="Link to this heading"></a></h3>
+<pre><code>
+server_ref() = atom() | pid()
+</code></pre>
+<p><a name="index"></a></p>
+</section>
+</section>
+<section id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#call-4">call/4</a></td><td>    Perform a call on a gen server.</td></tr></table>
+<p><a name="functions"></a></p>
+</section>
+<section id="function-details">
+<h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="call-4"></a></p>
+<section id="call-4">
+<h3>call/4<a class="headerlink" href="#call-4" title="Link to this heading"></a></h3>
+<pre><code>
+call(ServerRef::<a href="#type-server_ref">server_ref()</a>, Label::atom(), Request::term(), Timeout::timeout()) -&gt; {ok, Reply::term()} | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">ServerRef</span></code>: the server to call<br /><code class="docutils literal notranslate"><span class="pre">Label</span></code>: the label for the message, typically <code class="docutils literal notranslate"><span class="pre">system</span></code> or <code class="docutils literal notranslate"><span class="pre">$gen_call</span></code><br /><code class="docutils literal notranslate"><span class="pre">Request</span></code>: the message to send<br /><code class="docutils literal notranslate"><span class="pre">Timeout</span></code>: timeout for sending the message<br /></p>
+</section>
+</section>
+<section id="returns-ok-result-or-raises-an-exit-exception">
+<h2>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Result}</span></code> or raises an exit exception<a class="headerlink" href="#returns-ok-result-or-raises-an-exit-exception" title="Link to this heading"></a></h2>
+<p>Perform a call on a gen server. This API not documented by OTP,
+yet Elixir uses it, so this function matches the current OTP-28 behavior.</p>
+</section>
 </section>
 
 
