@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>nifs.c &mdash; AtomVM 0.7.0-dev+git.21671de0 documentation</title>
+  <title>nifs.c &mdash; AtomVM 0.7.0-dev+git.a6d56b93 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/nifs.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=ce5f00af"></script>
+      <script src="../../../_static/documentation_options.js?v=1b1ef0ec"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -202,7 +202,7 @@
 </div>
 <p>Include dependency graph for nifs.c:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-76e6cdb53c8486f1cc794071cd88cae5deb83078.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-d1c82d4b79d51c0a312ec24256a6522f53d1df9a.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -254,7 +254,7 @@
     &quot;11&quot; [label=&quot;inttypes.h&quot; tooltip=&quot;inttypes.h&quot;]
     &quot;17&quot; [label=&quot;limits.h&quot; tooltip=&quot;limits.h&quot;]
     &quot;38&quot; [label=&quot;math.h&quot; tooltip=&quot;math.h&quot;]
-    &quot;56&quot; [label=&quot;nifs_hash.h&quot; tooltip=&quot;nifs_hash.h&quot;]
+    &quot;57&quot; [label=&quot;nifs_hash.h&quot; tooltip=&quot;nifs_hash.h&quot;]
     &quot;9&quot; [label=&quot;stdbool.h&quot; tooltip=&quot;stdbool.h&quot;]
     &quot;12&quot; [label=&quot;stddef.h&quot; tooltip=&quot;stddef.h&quot;]
     &quot;4&quot; [label=&quot;stdint.h&quot; tooltip=&quot;stdint.h&quot;]
@@ -262,6 +262,7 @@
     &quot;5&quot; [label=&quot;stdlib.h&quot; tooltip=&quot;stdlib.h&quot;]
     &quot;24&quot; [label=&quot;string.h&quot; tooltip=&quot;string.h&quot;]
     &quot;23&quot; [label=&quot;sys/types.h&quot; tooltip=&quot;sys/types.h&quot;]
+    &quot;56&quot; [label=&quot;tempstack.h&quot; tooltip=&quot;tempstack.h&quot;]
     &quot;39&quot; [label=&quot;time.h&quot; tooltip=&quot;time.h&quot;]
     &quot;3&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;3&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
@@ -381,11 +382,12 @@
     &quot;1&quot; -&gt; &quot;21&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;20&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;55&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;56&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;22&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;34&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
-    &quot;1&quot; -&gt; &quot;56&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;57&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;35&quot; [dir=forward tooltip=&quot;include&quot;]
@@ -1197,6 +1199,11 @@
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.nifs.c.nif_lists_reverse">
 <span class="target" id="libatomvmnifs_8c_1ab09188212125501366141f48bd366d11"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nif_lists_reverse</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">argc</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">argv</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.nifs.c.nif_lists_reverse" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.nifs.c.nif_lists_flatten">
+<span class="target" id="libatomvmnifs_8c_1a302eef0f29ae2b2b5d432c9ef69ae964"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nif_lists_flatten</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">argc</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">argv</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.nifs.c.nif_lists_flatten" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c function">
@@ -2290,6 +2297,11 @@
 <dl class="c var">
 <dt class="sig sig-object c" id="c.libAtomVM.nifs.c.erlang_lists_subtract_nif">
 <span class="target" id="libatomvmnifs_8c_1a27cce35138b768691e96ddd5fd9e6cbf"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">Nif</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">erlang_lists_subtract_nif</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">type</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">NIFFunctionType</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">nif_ptr</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.nifs.c.nif_erlang_lists_subtract" title="nif_erlang_lists_subtract"><span class="n"><span class="pre">nif_erlang_lists_subtract</span></span></a><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#c.libAtomVM.nifs.c.erlang_lists_subtract_nif" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.nifs.c.lists_flatten_nif">
+<span class="target" id="libatomvmnifs_8c_1a40e6284fe51b1b6c1c044ab67e965ebf"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">Nif</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">lists_flatten_nif</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">type</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">NIFFunctionType</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">nif_ptr</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.nifs.c.nif_lists_flatten" title="nif_lists_flatten"><span class="n"><span class="pre">nif_lists_flatten</span></span></a><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#c.libAtomVM.nifs.c.lists_flatten_nif" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c var">
