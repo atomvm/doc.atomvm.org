@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module supervisor &mdash; AtomVM 0.7.0-dev+git.127ba9e3 documentation</title>
+  <title>Module supervisor &mdash; AtomVM 0.7.0-dev+git.46906bfb documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/supervisor.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=026f5737"></script>
+      <script src="../../../_static/documentation_options.js?v=21c30dbb"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -161,16 +161,22 @@
 <p><a name="types"></a></p>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="child">
+<h3><a name="type-child">child()</a><a class="headerlink" href="#child" title="Link to this heading"></a></h3>
+<pre><code>
+child() = undefined | pid()
+</code></pre>
+</section>
+<section id="child-id">
+<h3><a name="type-child_id">child_id()</a><a class="headerlink" href="#child-id" title="Link to this heading"></a></h3>
+<pre><code>
+child_id() = term()
+</code></pre>
+</section>
 <section id="child-spec">
 <h3><a name="type-child_spec">child_spec()</a><a class="headerlink" href="#child-spec" title="Link to this heading"></a></h3>
 <pre><code>
-child_spec() = #{id =&gt; any(), start =&gt; {module(), atom(), [any()]}, restart =&gt; <a href="#type-restart">restart()</a>, shutdown =&gt; <a href="#type-shutdown">shutdown()</a>, type =&gt; <a href="#type-child_type">child_type()</a>, modules =&gt; [module()] | dynamic} | {Id::any(), StartFunc::{module(), atom(), [any()]}, Restart::<a href="#type-restart">restart()</a>, Shutdown::<a href="#type-shutdown">shutdown()</a>, Type::<a href="#type-child_type">child_type()</a>, Modules::[module()] | dynamic}
-</code></pre>
-</section>
-<section id="child-type">
-<h3><a name="type-child_type">child_type()</a><a class="headerlink" href="#child-type" title="Link to this heading"></a></h3>
-<pre><code>
-child_type() = worker | supervisor
+child_spec() = #{id =&gt; any(), start =&gt; {module(), atom(), [any()]}, restart =&gt; <a href="#type-restart">restart()</a>, shutdown =&gt; <a href="#type-shutdown">shutdown()</a>, type =&gt; <a href="#type-worker">worker()</a>, modules =&gt; [module()] | dynamic} | {Id::any(), StartFunc::{module(), atom(), [any()]}, Restart::<a href="#type-restart">restart()</a>, Shutdown::<a href="#type-shutdown">shutdown()</a>, Type::<a href="#type-worker">worker()</a>, Modules::[module()] | dynamic}
 </code></pre>
 </section>
 <section id="restart">
@@ -185,6 +191,30 @@ restart() = permanent | transient | temporary | {terminating, permanent | transi
 shutdown() = brutal_kill | timeout()
 </code></pre>
 </section>
+<section id="startchild-err">
+<h3><a name="type-startchild_err">startchild_err()</a><a class="headerlink" href="#startchild-err" title="Link to this heading"></a></h3>
+<pre><code>
+startchild_err() = already_present | {already_started, Child::<a href="#type-child">child()</a>} | term()
+</code></pre>
+</section>
+<section id="startchild-ret">
+<h3><a name="type-startchild_ret">startchild_ret()</a><a class="headerlink" href="#startchild-ret" title="Link to this heading"></a></h3>
+<pre><code>
+startchild_ret() = {ok, Child::<a href="#type-child">child()</a>} | {ok, Child::<a href="#type-child">child()</a>, Info::term()} | {error, <a href="#type-startchild_err">startchild_err()</a>}
+</code></pre>
+</section>
+<section id="startlink-err">
+<h3><a name="type-startlink_err">startlink_err()</a><a class="headerlink" href="#startlink-err" title="Link to this heading"></a></h3>
+<pre><code>
+startlink_err() = {already_started, pid()} | {shutdown, term()} | term()
+</code></pre>
+</section>
+<section id="startlink-ret">
+<h3><a name="type-startlink_ret">startlink_ret()</a><a class="headerlink" href="#startlink-ret" title="Link to this heading"></a></h3>
+<pre><code>
+startlink_ret() = {ok, pid()} | ignore | {error, <a href="#type-startlink_err">startlink_err()</a>}
+</code></pre>
+</section>
 <section id="strategy">
 <h3><a name="type-strategy">strategy()</a><a class="headerlink" href="#strategy" title="Link to this heading"></a></h3>
 <pre><code>
@@ -196,12 +226,30 @@ strategy() = one_for_all | one_for_one
 <pre><code>
 sup_flags() = #{strategy =&gt; <a href="#type-strategy">strategy()</a>, intensity =&gt; non_neg_integer(), period =&gt; pos_integer()} | {RestartStrategy::<a href="#type-strategy">strategy()</a>, Intensity::non_neg_integer(), Period::pos_integer()}
 </code></pre>
+</section>
+<section id="sup-name">
+<h3><a name="type-sup_name">sup_name()</a><a class="headerlink" href="#sup-name" title="Link to this heading"></a></h3>
+<pre><code>
+sup_name() = {local, Name::atom()}
+</code></pre>
+</section>
+<section id="sup-ref">
+<h3><a name="type-sup_ref">sup_ref()</a><a class="headerlink" href="#sup-ref" title="Link to this heading"></a></h3>
+<pre><code>
+sup_ref() = (Name::atom()) | {Name::atom(), Node::node()} | pid()
+</code></pre>
+</section>
+<section id="worker">
+<h3><a name="type-worker">worker()</a><a class="headerlink" href="#worker" title="Link to this heading"></a></h3>
+<pre><code>
+worker() = worker | supervisor
+</code></pre>
 <p><a name="index"></a></p>
 </section>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#count_children-1">count_children/1</a></td><td></td></tr><tr><td valign="top"><a href="#delete_child-2">delete_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#handle_call-3">handle_call/3</a></td><td></td></tr><tr><td valign="top"><a href="#handle_cast-2">handle_cast/2</a></td><td></td></tr><tr><td valign="top"><a href="#handle_info-2">handle_info/2</a></td><td></td></tr><tr><td valign="top"><a href="#init-1">init/1</a></td><td></td></tr><tr><td valign="top"><a href="#restart_child-2">restart_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_child-2">start_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-2">start_link/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td></td></tr><tr><td valign="top"><a href="#terminate_child-2">terminate_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#which_children-1">which_children/1</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#count_children-1">count_children/1</a></td><td></td></tr><tr><td valign="top"><a href="#delete_child-2">delete_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#restart_child-2">restart_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_child-2">start_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-2">start_link/2</a></td><td>An implementation of the Erlang/OTP supervisor interface.</td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td></td></tr><tr><td valign="top"><a href="#terminate_child-2">terminate_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#which_children-1">which_children/1</a></td><td></td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -209,62 +257,79 @@ sup_flags() = #{strategy =&gt; <a href="#type-strategy">strategy()</a>, intensit
 <p><a name="count_children-1"></a></p>
 <section id="count-children-1">
 <h3>count_children/1<a class="headerlink" href="#count-children-1" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">count_children(Supervisor)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<pre><code>
+count_children(Supervisor::<a href="#type-sup_ref">sup_ref()</a>) -&gt; [{specs, ChildSpecCount::non_neg_integer()} | {active, ActiveProcessCount::non_neg_integer()} | {supervisors, ChildSupervisorCount::non_neg_integer()} | {workers, ChildWorkerCount::non_neg_integer()}]
+</code></pre>
+<br />
 <p><a name="delete_child-2"></a></p>
 </section>
 <section id="delete-child-2">
 <h3>delete_child/2<a class="headerlink" href="#delete-child-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">delete_child(Supervisor,</span> <span class="pre">ChildId)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="handle_call-3"></a></p>
-</section>
-<section id="handle-call-3">
-<h3>handle_call/3<a class="headerlink" href="#handle-call-3" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">handle_call(X1,</span> <span class="pre">From,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="handle_cast-2"></a></p>
-</section>
-<section id="handle-cast-2">
-<h3>handle_cast/2<a class="headerlink" href="#handle-cast-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">handle_cast(Msg,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="handle_info-2"></a></p>
-</section>
-<section id="handle-info-2">
-<h3>handle_info/2<a class="headerlink" href="#handle-info-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">handle_info(Msg,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="init-1"></a></p>
-</section>
-<section id="init-1">
-<h3>init/1<a class="headerlink" href="#init-1" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">init(X1)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<pre><code>
+delete_child(Supervisor::<a href="#type-sup_ref">sup_ref()</a>, ChildId::any()) -&gt; ok | {error, Reason::running | restarting | not_found}
+</code></pre>
+<br />
 <p><a name="restart_child-2"></a></p>
 </section>
 <section id="restart-child-2">
 <h3>restart_child/2<a class="headerlink" href="#restart-child-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">restart_child(Supervisor,</span> <span class="pre">ChildId)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<pre><code>
+restart_child(Supervisor::<a href="#type-sup_ref">sup_ref()</a>, ChildId::any()) -&gt; {ok, Child::<a href="#type-child">child()</a>} | {ok, Child::<a href="#type-child">child()</a>, Info::term()} | {error, Reason::running | restarting | not_found | term()}
+</code></pre>
+<br />
 <p><a name="start_child-2"></a></p>
 </section>
 <section id="start-child-2">
 <h3>start_child/2<a class="headerlink" href="#start-child-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">start_child(Supervisor,</span> <span class="pre">ChildSpec)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<pre><code>
+start_child(Supervisor::<a href="#type-sup_ref">sup_ref()</a>, ChildSpec::<a href="#type-child_spec">child_spec()</a>) -&gt; <a href="#type-startchild_ret">startchild_ret()</a>
+</code></pre>
+<br />
 <p><a name="start_link-2"></a></p>
 </section>
 <section id="start-link-2">
 <h3>start_link/2<a class="headerlink" href="#start-link-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">start_link(Module,</span> <span class="pre">Args)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<pre><code>
+start_link(Module::module(), Args::[any()]) -&gt; <a href="#type-startlink_ret">startlink_ret()</a>
+</code></pre>
+<br />
+<p>An implementation of the Erlang/OTP supervisor interface.</p>
+<p>This module implements a strict subset of the Erlang/OTP supervisor
+interface, supporting operations for local creation and management of
+supervisor instances.</p>
+<p>This module is designed to be API-compatible with supervisor, with exceptions
+noted below.</p>
+<p>Caveats:</p>
+<ul class="simple">
+<li><p>Support only for locally named procs</p></li>
+<li><p>No support for simple_one_for_one or one_for_rest strategies</p></li>
+<li><p>No support for hibernate</p></li>
+<li><p>No support for automatic shutdown</p></li>
+</ul>
 <p><a name="start_link-3"></a></p>
 </section>
 <section id="start-link-3">
 <h3>start_link/3<a class="headerlink" href="#start-link-3" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">start_link(SupName,</span> <span class="pre">Module,</span> <span class="pre">Args)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<pre><code>
+start_link(SupName::<a href="#type-sup_name">sup_name()</a>, Module::module(), Args::[any()]) -&gt; <a href="#type-startlink_ret">startlink_ret()</a>
+</code></pre>
+<br />
 <p><a name="terminate_child-2"></a></p>
 </section>
 <section id="terminate-child-2">
 <h3>terminate_child/2<a class="headerlink" href="#terminate-child-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">terminate_child(Supervisor,</span> <span class="pre">ChildId)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<pre><code>
+terminate_child(Supervisor::<a href="#type-sup_ref">sup_ref()</a>, ChildId::any()) -&gt; ok | {error, not_found}
+</code></pre>
+<br />
 <p><a name="which_children-1"></a></p>
 </section>
 <section id="which-children-1">
 <h3>which_children/1<a class="headerlink" href="#which-children-1" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">which_children(Supervisor)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<pre><code>
+which_children(Supervisor::<a href="#type-sup_ref">sup_ref()</a>) -&gt; [{Id::<a href="#type-child_id">child_id()</a> | undefined, Child::<a href="#type-child">child()</a> | restarting, Type::<a href="#type-worker">worker()</a>, Modules::[module()]}]
+</code></pre>
+<br />
 </section>
 </section>
 </section>
