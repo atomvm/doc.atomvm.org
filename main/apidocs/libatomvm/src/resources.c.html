@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>resources.c &mdash; AtomVM 0.7.0-dev+git.46906bfb documentation</title>
+  <title>resources.c &mdash; AtomVM 0.7.0-dev+git.41489911 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/resources.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=21c30dbb"></script>
+      <script src="../../../_static/documentation_options.js?v=b4fb65af"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -634,7 +634,7 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.resources.c.resource_type_fire_monitor">
-<span class="target" id="libatomvmresources_8c_1a9613c9858f516b31f5e1211c86053848"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resource_type_fire_monitor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ResourceType</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">resource_type</span></span>, <span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">env</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">resource</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">process_id</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.resources.c.resource_type_fire_monitor" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmresources_8c_1a32ab2f56ab61d749532eb6d7ae41eca2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resource_type_fire_monitor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ResourceType</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">resource_type</span></span>, <span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">env</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">process_id</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.resources.c.resource_type_fire_monitor" title="Link to this definition"></a><br /></dt>
 <dd><p>Call down handler for a given resource and remove monitor from list. </p>
 <p>handler is called while holding lock on the list of monitors and if monitor is still in the list of resource monitors, thus ensuring that the resource still exists. </p>
 <dl class="field-list simple">
@@ -642,7 +642,6 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>resource_type</strong> – type holding the list of monitors </p></li>
 <li><p><strong>env</strong> – environment for calling the down handler </p></li>
-<li><p><strong>resource</strong> – resource that monitored the process </p></li>
 <li><p><strong>process_id</strong> – id of the process monitored </p></li>
 <li><p><strong>ref_ticks</strong> – reference of the monitor </p></li>
 </ul>
@@ -651,15 +650,20 @@
 </dd></dl>
 
 <dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.resources.c.resource_type_demonitor">
-<span class="target" id="libatomvmresources_8c_1a460b312716ecaca7e210b4aa01cf3ba6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resource_type_demonitor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ResourceType</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">resource_type</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.resources.c.resource_type_demonitor" title="Link to this definition"></a><br /></dt>
-<dd><p>Remove monitor from list of monitors. </p>
+<dt class="sig sig-object c" id="c.libAtomVM.resources.c.resource_monitor_to_resource">
+<span class="target" id="libatomvmresources_8c_1a6c8266895e1ccb761b59169741ba93f8"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resource_monitor_to_resource</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">ResourceType</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">resource_type</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.resources.c.resource_monitor_to_resource" title="Link to this definition"></a><br /></dt>
+<dd><p>Get a resource from a resource monitor. </p>
+<p>verifies using resource monitors that the resource still exists and increases the refcount by creating a term for it in the provided heap </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>resource_type</strong> – type holding the list of monitors </p></li>
 <li><p><strong>ref_ticks</strong> – reference of the monitor </p></li>
+<li><p><strong>heap</strong> – heap to create the resource term into </p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a resource term or invalid if the resource is gone </p>
 </dd>
 </dl>
 </dd></dl>
