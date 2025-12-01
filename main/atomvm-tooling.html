@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AtomVM Tooling &mdash; AtomVM 0.7.0-dev+git.cf8c7a4b documentation</title>
+  <title>AtomVM Tooling &mdash; AtomVM 0.7.0-dev+git.ff568e90 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/atomvm-tooling.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=4412d3d8"></script>
+      <script src="_static/documentation_options.js?v=b0e5b564"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -57,7 +57,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#prerequisites-for-atomvm-rebar3-plugin">Prerequisites for <code class="docutils literal notranslate"><span class="pre">atomvm_rebar3_plugin</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#erlang-example-program">Erlang Example Program</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creating-an-atomvm-avm-file-with-rebar3">Creating an AtomVM AVM file with <code class="docutils literal notranslate"><span class="pre">rebar3</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#running-applications-on-generic-unix">Running applications on <code class="docutils literal notranslate"><span class="pre">generic_unix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-applications-on-generic-unix">Running applications on <code class="docutils literal notranslate"><span class="pre">generic_unix</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#building-standalone-binaries-macos-and-linux">Building standalone binaries (macOS and Linux)</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#flashing-your-application-with-rebar3">Flashing your application with <code class="docutils literal notranslate"><span class="pre">rebar3</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#esp32">ESP32</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#stm32">STM32</a></li>
@@ -194,6 +197,29 @@ Return<span class="w"> </span>value:<span class="w"> </span>ok
 </pre></div>
 </div>
 <p>For instructions about how to install AtomVM on the <code class="docutils literal notranslate"><span class="pre">generic_unix</span></code> platform, see the <a class="reference internal" href="getting-started-guide.html#getting-started-on-the-generic-unix-platform"><span class="std std-ref">Getting Started Guide</span></a></p>
+<section id="building-standalone-binaries-macos-and-linux">
+<h4>Building standalone binaries (macOS and Linux)<a class="headerlink" href="#building-standalone-binaries-macos-and-linux" title="Link to this heading"></a></h4>
+<p>Using <a class="reference external" href="https://atomvm.github.io/atomvm_rebar3_plugin"><code class="docutils literal notranslate"><span class="pre">atomvm_rebar3_plugin</span></code></a>, it is possible to generate a standalone binary where your application is bundled with AtomVM virtual machine. The binary can be copied to another host and would work without any specific installation. Please note that AtomVM on generic unix currently depends on zlib and mbedtls as shared libraries.</p>
+<p>To proceed, you need to define the main module that should export a <code class="docutils literal notranslate"><span class="pre">main/1</span></code> function. This function is called with parameters like regular Erlang <code class="docutils literal notranslate"><span class="pre">escript</span></code> applications. This is done by adding these two lines to your <code class="docutils literal notranslate"><span class="pre">rebar.config</span></code> file:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="err">{</span><span class="n">plugins</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">atomvm_rebar3_plugin</span><span class="o">]</span><span class="err">}</span><span class="p">.</span>
+<span class="err">{</span><span class="n">atomvm_rebar3_plugin</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">{packbeam, [{start, main_module}</span><span class="o">]</span><span class="err">}]}</span><span class="p">.</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">main_module</span></code> is the name of the module that exports <code class="docutils literal notranslate"><span class="pre">main/1</span></code>. Alternatively, <code class="docutils literal notranslate"><span class="pre">main_module</span></code> can be defined with <code class="docutils literal notranslate"><span class="pre">escript_name</span></code> or <code class="docutils literal notranslate"><span class="pre">escript_main_app</span></code> options.</p>
+<p>Then you can run:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>rebar3<span class="w"> </span>atomvm<span class="w"> </span>escriptize
+...
+<span class="o">===</span>&gt;<span class="w"> </span>Created<span class="w"> </span>packed<span class="w"> </span>AVM:<span class="w"> </span>...<span class="w"> </span>main_module_packed.avm<span class="w"> </span>with<span class="w"> </span>start<span class="w"> </span>module<span class="w"> </span><span class="nv">main_module</span>
+<span class="o">===</span>&gt;<span class="w"> </span>Created<span class="w"> </span>standalone<span class="w"> </span>executable:<span class="w"> </span>...<span class="w"> </span>main_module/_build/default/bin/main_module
+</pre></div>
+</div>
+<p>It is possible to build this standalone binary with a specific build of AtomVM, for example including a particular <code class="docutils literal notranslate"><span class="pre">nif</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the <a class="reference external" href="https://atomvm.github.io/atomvm_rebar3_plugin"><code class="docutils literal notranslate"><span class="pre">atomvm_rebar3_plugin</span></code></a> page for more detailed instructions
+about how to use the <code class="docutils literal notranslate"><span class="pre">escriptize</span></code> target.</p>
+</div>
+</section>
 </section>
 <section id="flashing-your-application-with-rebar3">
 <h3>Flashing your application with <code class="docutils literal notranslate"><span class="pre">rebar3</span></code><a class="headerlink" href="#flashing-your-application-with-rebar3" title="Link to this heading"></a></h3>
