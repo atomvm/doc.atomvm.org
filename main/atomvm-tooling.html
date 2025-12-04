@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AtomVM Tooling &mdash; AtomVM 0.7.0-dev+git.507f6a77 documentation</title>
+  <title>AtomVM Tooling &mdash; AtomVM 0.7.0-dev+git.27b5381e documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/atomvm-tooling.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=ad0ec1e0"></script>
+      <script src="_static/documentation_options.js?v=33a0ae92"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -390,6 +390,41 @@ $
 </pre></div>
 </div>
 <p>This will again give you 20 seconds to establish a serial monitor connection.  For information about changing this timeout, or locking down the device so that software resets no longer work (requiring that the device be power cycled and the <code class="docutils literal notranslate"><span class="pre">BOOTSEL</span></code> button help when powering on to flash) consult the <a class="reference internal" href="build-instructions.html#building-for-raspberry-pi-rp2"><span class="std std-ref">rp2040 section</span></a> of the <a class="reference internal" href="build-instructions.html"><span class="std std-doc">Build Instructions</span></a>.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>When upgrading to OTP-28 you may encounter an error that begins like the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>===&gt; An error occurred in the packbeam task.  Class=error Error=data_error Stacktrace=[{zlib,
+                                                                                        inflate_nif,
+...
+</pre></div>
+</div>
+<p>This is due to using cached compiled beams from a previous release, which are incompatible with a
+chang in the beam file format that the OTP team made in OTP-28 to accommodate AtomVM. ;-) We need
+uncompressed literals in our beam files, so they can run on microcontrollers without the need for
+heavy deflation libraries and extra cpu cycles.</p>
+<p>This could potentially happen with any OTP major version update, if the OTP team makes changes to
+the beam file format. The beam file format has no formal documentation and should be expected to
+change again in the future.</p>
+<p>You have two choices about how to work around this error. The simplest, especially if you plan on
+migrating all of your work to OTP-28 is to simply delete the rebar3 cache:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ rm -rf ~/.cache/rebar3
+</pre></div>
+</div>
+<p>The second option, which may be preferable if you use asdf or mise to switch between OTP releases,
+is to use the <code class="docutils literal notranslate"><span class="pre">REBAR_CACHE_DIR</span></code> environment variable to use a different cache directory:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mkdir ~/.cache/rebar3_otp-28
+$ REBAR_CACHE_DIR=&quot;~/.cache/rebar3_otp-28&quot; rebar3 compile
+</pre></div>
+</div>
+<p>It may be convenient to export this variable for a session so it doesn’t need to be typed for each use of rebar3:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export REBAR_CACHE_DIR=&quot;~/.cache/rebar3_otp-28&quot;
+</pre></div>
+</div>
+<p>… or create an alias for the duration of your terminal session:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ alias rebar3=&quot;REBAR_CACHE_DIR=&quot;~/.cache/rebar3_otp-28&quot; rebar3&quot;
+</pre></div>
+</div>
+</div>
 </section>
 </section>
 </section>
