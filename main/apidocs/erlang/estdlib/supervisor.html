@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module supervisor &mdash; AtomVM 0.7.0-dev+git.27b5381e documentation</title>
+  <title>Module supervisor &mdash; AtomVM 0.7.0-dev+git.b34c9433 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/supervisor.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=33a0ae92"></script>
+      <script src="../../../_static/documentation_options.js?v=89f1f671"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -154,11 +154,29 @@
   <section id="module-supervisor">
 <h1>Module supervisor<a class="headerlink" href="#module-supervisor" title="Link to this heading"></a></h1>
 <ul class="simple">
+<li><p><a class="reference internal" href="#description">Description</a></p></li>
 <li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
 <li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
 <li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
 </ul>
+<p>An implementation of the Erlang/OTP supervisor interface.</p>
+<p><a name="description"></a></p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This module implements a strict subset of the Erlang/OTP supervisor
+interface, supporting operations for local creation and management of
+supervisor instances.</p>
+<p>This module is designed to be API-compatible with supervisor, with exceptions
+noted below.</p>
+<p>Caveats:</p>
+<ul class="simple">
+<li><p>Support only for locally named procs</p></li>
+<li><p>No support for simple_one_for_one or one_for_rest strategies</p></li>
+<li><p>No support for hibernate</p></li>
+<li><p>No support for automatic shutdown</p></li>
+</ul>
 <p><a name="types"></a></p>
+</section>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
 <section id="child">
@@ -249,7 +267,7 @@ worker() = worker | supervisor
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#count_children-1">count_children/1</a></td><td></td></tr><tr><td valign="top"><a href="#delete_child-2">delete_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#restart_child-2">restart_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_child-2">start_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-2">start_link/2</a></td><td>An implementation of the Erlang/OTP supervisor interface.</td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td></td></tr><tr><td valign="top"><a href="#terminate_child-2">terminate_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#which_children-1">which_children/1</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#count_children-1">count_children/1</a></td><td></td></tr><tr><td valign="top"><a href="#delete_child-2">delete_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#restart_child-2">restart_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_child-2">start_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-2">start_link/2</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td></td></tr><tr><td valign="top"><a href="#terminate_child-2">terminate_child/2</a></td><td></td></tr><tr><td valign="top"><a href="#which_children-1">which_children/1</a></td><td></td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -293,19 +311,6 @@ start_child(Supervisor::<a href="#type-sup_ref">sup_ref()</a>, ChildSpec::<a hre
 start_link(Module::module(), Args::[any()]) -&gt; <a href="#type-startlink_ret">startlink_ret()</a>
 </code></pre>
 <br />
-<p>An implementation of the Erlang/OTP supervisor interface.</p>
-<p>This module implements a strict subset of the Erlang/OTP supervisor
-interface, supporting operations for local creation and management of
-supervisor instances.</p>
-<p>This module is designed to be API-compatible with supervisor, with exceptions
-noted below.</p>
-<p>Caveats:</p>
-<ul class="simple">
-<li><p>Support only for locally named procs</p></li>
-<li><p>No support for simple_one_for_one or one_for_rest strategies</p></li>
-<li><p>No support for hibernate</p></li>
-<li><p>No support for automatic shutdown</p></li>
-</ul>
 <p><a name="start_link-3"></a></p>
 </section>
 <section id="start-link-3">
