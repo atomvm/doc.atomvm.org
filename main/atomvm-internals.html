@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AtomVM Internals &mdash; AtomVM 0.7.0-dev+git.f509d841 documentation</title>
+  <title>AtomVM Internals &mdash; AtomVM 0.7.0-dev+git.6e486127 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/atomvm-internals.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=ffed7260"></script>
+      <script src="_static/documentation_options.js?v=b2f09dc4"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -811,7 +811,7 @@ size of a struct, therefore, is determined simply by the size of the component f
 <li><p>Native: the VM only runs native code and all code must be precompiled on the desktop using the JIT compiler (which effectively is a AOT or Ahead-of-Time compiler). In this mode, it is not necessary to bundle the jit compiler on the embedded target.</p></li>
 <li><p>Hybrid: the VM can run native code as well as emulated BEAM code and some code is precompiled on the desktop.</p></li>
 </ul>
-<p>JIT is available on some platforms (currently only x86_64, aarch64 and armv6m) and compiles Erlang bytecode at runtime. Erlang bytecode is never interpreted. EMU is available on all platforms and Erlang bytecode is interpreted.</p>
+<p>JIT is available on some platforms (currently x86_64, aarch64, armv6m and riscv32) and compiles Erlang bytecode at runtime. Erlang bytecode is never interpreted. EMU is available on all platforms and Erlang bytecode is interpreted.</p>
 <p>Modules can include precompiled code in a dedicated beam chunk with name ‘avmN’. The chunk can contain native code for several architectures, however it may only contain native code for a given version of the native interface. Current version is 1. This native code is executed by the jit-flavor of the emulator as well as the emu flavor if execution of precompiled is enabled.</p>
 <p>JIT is an experimental feature and is currently disabled by default. Enabling JIT disables the interpreter.
 JIT can enabled with <code class="docutils literal notranslate"><span class="pre">-DAVM_DISABLE_JIT=Off</span></code></p>
@@ -822,8 +822,19 @@ JIT can enabled with <code class="docutils literal notranslate"><span class="pre
 <h3>How JIT works internally<a class="headerlink" href="#how-jit-works-internally" title="Link to this heading"></a></h3>
 <p>The JIT compiler is written in Erlang and is therefore precompiled. When a process calls a function in a module with no precompiled code, the process is trapped and a message is sent to the <code class="docutils literal notranslate"><span class="pre">code_server</span></code>. The code server then compiles the bytecode to native code and then resumes the trapped process.</p>
 <p>JIT compiler is composed of two main interfaces : backend and stream.</p>
-<p>A backend implementation is required for each architecture. The backend is called by jit module as it translates bytecodes to machine code. The current implementations are <code class="docutils literal notranslate"><span class="pre">jit_x86_64</span></code> and <code class="docutils literal notranslate"><span class="pre">jit_aarch64</span></code> which are suitable for systems with System V X86 64 ABI or AArch64 ABI.</p>
-<p>A stream implementation is responsible for streaming the machine code, especially in the context of low memory. Two implementations currently exist: <code class="docutils literal notranslate"><span class="pre">jit_stream_binary</span></code> that streams assembly code to an Erlang binary, suitable for tests and precompilation on the desktop, and <code class="docutils literal notranslate"><span class="pre">jit_stream_mmap</span></code> that streams assembly code in an <code class="docutils literal notranslate"><span class="pre">mmap(2)</span></code> allocated page, suitable for JIT compilation on Unix.</p>
+<p>A backend implementation is required for each architecture. The backend is called by jit module as it translates bytecodes to machine code. The current implementations are :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_x86_64</span></code> for System V X86 64 ABI</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_aarch64</span></code> for AArch64 ABI</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_armv6m</span></code> for AArch32 ABI</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_riscv32</span></code> for rv32imc ilp32 ABI.</p></li>
+</ul>
+<p>A stream implementation is responsible for streaming the machine code, especially in the context of low memory. Three implementations currently exist:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_stream_binary</span></code> that streams assembly code to an Erlang binary, suitable for tests and precompilation on the desktop</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_stream_mmap</span></code> that streams assembly code in an <code class="docutils literal notranslate"><span class="pre">mmap(2)</span></code> allocated page, suitable for JIT compilation on Unix</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_stream_flash</span></code> available on Pico that allows for embedded JIT.</p></li>
+</ul>
 </section>
 <section id="embedded-jit-and-native">
 <h3>Embedded JIT and Native<a class="headerlink" href="#embedded-jit-and-native" title="Link to this heading"></a></h3>
