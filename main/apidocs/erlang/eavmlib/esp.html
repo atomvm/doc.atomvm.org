@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module esp &mdash; AtomVM 0.7.0-dev+git.6e486127 documentation</title>
+  <title>Module esp &mdash; AtomVM 0.7.0-dev+git.86b2963d documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/eavmlib/esp.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=b2f09dc4"></script>
+      <script src="../../../_static/documentation_options.js?v=5a9968b6"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -230,7 +230,8 @@ given offset.</td></tr><tr><td valign="top"><a href="#partition_list-0">partitio
 offset, size, props}.</td></tr><tr><td valign="top"><a href="#partition_read-3">partition_read/3</a></td><td>    Read binary data from a specific partition at the given offset.</td></tr><tr><td valign="top"><a href="#partition_write-3">partition_write/3</a></td><td>    Writes binary data to a specific partition at the given offset.</td></tr><tr><td valign="top"><a href="#reset_reason-0">reset_reason/0</a></td><td>    Returns the reason for the restart.</td></tr><tr><td valign="top"><a href="#restart-0">restart/0</a></td><td>    Restarts the ESP device.</td></tr><tr><td valign="top"><a href="#rtc_slow_get_binary-0">rtc_slow_get_binary/0</a></td><td>    Get the binary currently stored in RTC slow memory.</td></tr><tr><td valign="top"><a href="#rtc_slow_set_binary-1">rtc_slow_set_binary/1</a></td><td>    Store a binary to RTC slow memory.</td></tr><tr><td valign="top"><a href="#sleep_disable_ext1_wakeup_io-1">sleep_disable_ext1_wakeup_io/1</a></td><td>Unconfigure one or more gpio pins for wakeup from deep sleep.</td></tr><tr><td valign="top"><a href="#sleep_enable_ext0_wakeup-2">sleep_enable_ext0_wakeup/2</a></td><td>Configure gpio wakeup from deep sleep.</td></tr><tr><td valign="top"><a href="#sleep_enable_ext1_wakeup-2">sleep_enable_ext1_wakeup/2</a></td><td>(<em>Deprecated</em>.) Configure multiple gpio pins for wakeup from deep sleep.</td></tr><tr><td valign="top"><a href="#sleep_enable_ext1_wakeup_io-2">sleep_enable_ext1_wakeup_io/2</a></td><td>Configure multiple gpio pins for wakeup from deep sleep.</td></tr><tr><td valign="top"><a href="#sleep_enable_ulp_wakeup-0">sleep_enable_ulp_wakeup/0</a></td><td></td></tr><tr><td valign="top"><a href="#sleep_get_wakeup_cause-0">sleep_get_wakeup_cause/0</a></td><td>    Returns the cause for the wakeup.</td></tr><tr><td valign="top"><a href="#task_wdt_add_user-1">task_wdt_add_user/1</a></td><td>    Register a user of the task watchdog timer.</td></tr><tr><td valign="top"><a href="#task_wdt_deinit-0">task_wdt_deinit/0</a></td><td>    Deinitialize the task watchdog timer
 Available with ESP-IDF 5.0 or higher.</td></tr><tr><td valign="top"><a href="#task_wdt_delete_user-1">task_wdt_delete_user/1</a></td><td>    Unsubscribe a given user from the task watchdog timer.</td></tr><tr><td valign="top"><a href="#task_wdt_init-1">task_wdt_init/1</a></td><td>    Initialize the task watchdog timer with a configuration
 Available with ESP-IDF 5.0 or higher.</td></tr><tr><td valign="top"><a href="#task_wdt_reconfigure-1">task_wdt_reconfigure/1</a></td><td>    Update the configuration of the task watchdog timer
-Available with ESP-IDF 5.0 or higher.</td></tr><tr><td valign="top"><a href="#task_wdt_reset_user-1">task_wdt_reset_user/1</a></td><td>    Reset the timer a previously registered user.</td></tr><tr><td valign="top"><a href="#umount-1">umount/1</a></td><td>    Unmounts filesystem located at given path.</td></tr></table>
+Available with ESP-IDF 5.0 or higher.</td></tr><tr><td valign="top"><a href="#task_wdt_reset_user-1">task_wdt_reset_user/1</a></td><td>    Reset the timer a previously registered user.</td></tr><tr><td valign="top"><a href="#timer_get_time-0">timer_get_time/0</a></td><td>    Get time in microseconds since boot or wakeup from deep sleep
+Available with ESP-IDF 5.0 or higher.</td></tr><tr><td valign="top"><a href="#umount-1">umount/1</a></td><td>    Unmounts filesystem located at given path.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -725,6 +726,17 @@ task_wdt_reset_user(UserHandle::<a href="#type-task_wdt_user_handle">task_wdt_us
 <p><code class="docutils literal notranslate"><span class="pre">UserHandle</span></code>: handle for the user, obtained from <code class="docutils literal notranslate"><span class="pre">task_wdt_add_user/1</span></code><br /></p>
 <p>returns: ok or an error tuple</p>
 <p>Reset the timer a previously registered user.
+Available with ESP-IDF 5.0 or higher.</p>
+<p><a name="timer_get_time-0"></a></p>
+</section>
+<section id="timer-get-time-0">
+<h3>timer_get_time/0<a class="headerlink" href="#timer-get-time-0" title="Link to this heading"></a></h3>
+<pre><code>
+timer_get_time() -&gt; integer()
+</code></pre>
+<br />
+<p>returns: integer</p>
+<p>Get time in microseconds since boot or wakeup from deep sleep
 Available with ESP-IDF 5.0 or higher.</p>
 <p><a name="umount-1"></a></p>
 </section>
