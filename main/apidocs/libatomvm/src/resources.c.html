@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>resources.c &mdash; AtomVM 0.7.0-dev+git.092f4c5c documentation</title>
+  <title>resources.c &mdash; AtomVM 0.7.0-dev+git.949bf851 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/resources.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=89805cdc"></script>
+      <script src="../../../_static/documentation_options.js?v=400304dc"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -202,7 +202,7 @@
 </div>
 <p>Include dependency graph for resources.c:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-b5e7736eac55bd2e15355c062f89a0bdd10d077b.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-6e71f864cb1a13b1d7acd92e146a3221d15fcb5f.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -355,6 +355,7 @@
     &quot;22&quot; -&gt; &quot;24&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;22&quot; -&gt; &quot;25&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;22&quot; -&gt; &quot;26&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;22&quot; -&gt; &quot;27&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;22&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;22&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;15&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;include&quot;]
@@ -775,6 +776,42 @@
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.resources.c.resource_binary_dtor">
+<span class="target" id="libatomvmresources_8c_1a3896fe7e97e90da1e9f791082c815336"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resource_binary_dtor</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">caller_env</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">obj</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.resources.c.resource_binary_dtor" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.resources.c.enif_make_resource_binary">
+<span class="target" id="libatomvmresources_8c_1a9593be807af4c19dd31eafbbcd0151e7"></span><span class="n"><span class="pre">ERL_NIF_TERM</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">enif_make_resource_binary</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">env</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">obj</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.resources.c.enif_make_resource_binary" title="Link to this definition"></a><br /></dt>
+<dd><p>create a binary term memory managed by a resource. </p>
+<p>the resource <code class="docutils literal notranslate"><span class="pre">obj</span></code> should have been allocated by <code class="docutils literal notranslate"><span class="pre">enif_alloc_resource</span></code>.</p>
+<p>The binary data should be readable and unchanged until the resource is destroyed and its destructor is called.</p>
+<p>Several binaries can be created with a shared <code class="docutils literal notranslate"><span class="pre">obj</span></code> resource. The resource destructor will only be called when all binaries are garbage collected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> – current environment </p></li>
+<li><p><strong>obj</strong> – resource </p></li>
+<li><p><strong>data</strong> – binary data to encapsulate </p></li>
+<li><p><strong>size</strong> – size of the data </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a new binary term </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-variables">Variables</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.resources.c.resource_binary_resource_type_init">
+<span class="target" id="libatomvmresources_8c_1ab1729487cd7653ae154111d2c0571cc6"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">ErlNifResourceTypeInit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resource_binary_resource_type_init</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">members</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">dtor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.resources.c.resource_binary_dtor" title="resource_binary_dtor"><span class="n"><span class="pre">resource_binary_dtor</span></span></a><span class="p"><span class="pre">,</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#c.libAtomVM.resources.c.resource_binary_resource_type_init" title="Link to this definition"></a><br /></dt>
+<dd><p>Resource type for resource binaries. </p>
 </dd></dl>
 
 </div>
