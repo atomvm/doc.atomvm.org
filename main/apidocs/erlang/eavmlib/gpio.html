@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module gpio &mdash; AtomVM 0.7.0-dev+git.2bd12ffc documentation</title>
+  <title>Module gpio &mdash; AtomVM 0.7.0-dev+git.8e8bb7c8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/eavmlib/gpio.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=a0c8c337"></script>
+      <script src="../../../_static/documentation_options.js?v=d269b099"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -162,7 +162,7 @@ On the STM32 platform pull mode and output_speed must be set at the same time as
 <pre><code>
 gpio() = port()
 </code></pre>
-<p>This is the pid returned by <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code>.</p>
+<p>This is the port returned by <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code>.</p>
 </section>
 <section id="gpio-bank">
 <h3><a name="type-gpio_bank">gpio_bank()</a><a class="headerlink" href="#gpio-bank" title="Link to this heading"></a></h3>
@@ -267,7 +267,7 @@ a race condition when start() is called internally by this function.</p>
 close(GPIO::<a href="#type-gpio">gpio()</a>) -&gt; ok | {error, Reason::atom()} | error
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from gpio:start/0<br /></p>
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: port that was returned from gpio:start/0<br /></p>
 <p>returns: ok | error | {error, Reason}</p>
 <p>Stop the GPIO interrupt port</p>
 <p>This function disables any interrupts that are set, stops
@@ -440,13 +440,13 @@ This is required on RP2040 and for some pins on ESP32.</p>
 open() -&gt; <a href="#type-gpio">gpio()</a> | {error, Reason::atom()} | error
 </code></pre>
 <br />
-<p>returns: Pid | error | {error, Reason}</p>
+<p>returns: Port | error | {error, Reason}</p>
 <p>Start the GPIO driver port</p>
 <p>The GPIO port driver will be stared and registered as <code class="docutils literal notranslate"><span class="pre">gpio</span></code>. If the
 port has already been started through the <code class="docutils literal notranslate"><span class="pre">gpio:open/0</span></code> or
 <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code> the command will fail. The use of <code class="docutils literal notranslate"><span class="pre">gpio:open/0</span></code> or
 <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code> is required before using any functions that require a
-GPIO pid as a parameter.</p>
+GPIO port as a parameter.</p>
 <p>Not currently available on rp2040 (Pico) port, use nif functions.</p>
 <p><a name="read-2"></a></p>
 </section>
@@ -456,7 +456,7 @@ GPIO pid as a parameter.</p>
 read(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>) -&gt; high | low | {error, Reason::atom()} | error
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from gpio:start/0<br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to read<br /></p>
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: port that was returned from gpio:start/0<br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to read<br /></p>
 <p>returns: high | low | error | {error, Reason}</p>
 <p>Read the digital state of a GPIO pin</p>
 <p>Read if an input pin state is <code class="docutils literal notranslate"><span class="pre">high</span></code> or <code class="docutils literal notranslate"><span class="pre">low</span></code>.
@@ -471,7 +471,7 @@ Warning: if the pin was not previously configured as an input using
 remove_int(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>) -&gt; ok | {error, Reason::atom()} | error
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to remove the interrupt<br /></p>
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: port that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to remove the interrupt<br /></p>
 <p>returns: ok | error | {error, Reason}</p>
 <p>Remove a GPIO interrupt</p>
 <p>Removes an interrupt from the specified pin.</p>
@@ -484,7 +484,7 @@ remove_int(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()
 set_direction(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>, Direction::<a href="#type-direction">direction()</a>) -&gt; ok | {error, Reason::atom()} | error
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to configure<br /><code class="docutils literal notranslate"><span class="pre">Direction</span></code>: is <code class="docutils literal notranslate"><span class="pre">input</span></code>, <code class="docutils literal notranslate"><span class="pre">output</span></code>, or <code class="docutils literal notranslate"><span class="pre">output_od</span></code><br /></p>
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: port that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to configure<br /><code class="docutils literal notranslate"><span class="pre">Direction</span></code>: is <code class="docutils literal notranslate"><span class="pre">input</span></code>, <code class="docutils literal notranslate"><span class="pre">output</span></code>, or <code class="docutils literal notranslate"><span class="pre">output_od</span></code><br /></p>
 <p>returns: ok | error | {error, Reason}</p>
 <p>Set the operational mode of a pin</p>
 <p>Pins can be used for input, output, or output with open drain.</p>
@@ -507,7 +507,7 @@ at the same time by giving a list of pin numbers in the pin tuple.</p>
 set_int(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>, Trigger::<a href="#type-trigger">trigger()</a>) -&gt; ok | {error, Reason::atom()} | error
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to set the interrupt on<br /><code class="docutils literal notranslate"><span class="pre">Trigger</span></code>: is the state that will trigger an interrupt<br /></p>
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: port that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to set the interrupt on<br /><code class="docutils literal notranslate"><span class="pre">Trigger</span></code>: is the state that will trigger an interrupt<br /></p>
 <p>returns: ok | error | {error, Reason}</p>
 <p>Set a GPIO interrupt</p>
 <p>Available triggers are <code class="docutils literal notranslate"><span class="pre">none</span></code> (which is the same as disabling an
@@ -525,7 +525,7 @@ will be the number of the pin that triggered the interrupt.</p>
 set_int(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>, Trigger::<a href="#type-trigger">trigger()</a>, Pid::pid()) -&gt; ok | {error, Reason::atom()} | error
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to set the interrupt on<br /><code class="docutils literal notranslate"><span class="pre">Trigger</span></code>: is the state that will trigger an interrupt<br /><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: is the process that will receive the interrupt message<br /></p>
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: port that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to set the interrupt on<br /><code class="docutils literal notranslate"><span class="pre">Trigger</span></code>: is the state that will trigger an interrupt<br /><code class="docutils literal notranslate"><span class="pre">Pid</span></code>: is the process that will receive the interrupt message<br /></p>
 <p>returns: ok | error | {error, Reason}</p>
 <p>Set a GPIO interrupt</p>
 <p>Available triggers are <code class="docutils literal notranslate"><span class="pre">none</span></code> (which is the same as disabling an
@@ -544,7 +544,7 @@ of the pin that triggered the interrupt.</p>
 set_level(GPIO::<a href="#type-gpio">gpio()</a>, Pin::<a href="#type-pin">pin()</a>, Level::<a href="#type-level">level()</a>) -&gt; ok | {error, Reason::atom()} | error
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: pid that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to write<br /><code class="docutils literal notranslate"><span class="pre">Level</span></code>: the desired output level to set<br /></p>
+<p><code class="docutils literal notranslate"><span class="pre">GPIO</span></code>: port that was returned from <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code><br /><code class="docutils literal notranslate"><span class="pre">Pin</span></code>: number of the pin to write<br /><code class="docutils literal notranslate"><span class="pre">Level</span></code>: the desired output level to set<br /></p>
 <p>returns: ok | error | {error, Reason}</p>
 <p>Set GPIO digital output level</p>
 <p>Set a pin to <code class="docutils literal notranslate"><span class="pre">high</span></code> (1) or <code class="docutils literal notranslate"><span class="pre">low</span></code> (0).</p>
@@ -608,12 +608,12 @@ or <code class="docutils literal notranslate"><span class="pre">set_pin_mode/2</
 start() -&gt; <a href="#type-gpio">gpio()</a> | {error, Reason::atom()} | error
 </code></pre>
 <br />
-<p>returns: Pid | error | {error, Reason}</p>
+<p>returns: Port | error | {error, Reason}</p>
 <p>Start the GPIO driver port</p>
-<p>Returns the pid of the active GPIO port driver, otherwise the GPIO
+<p>Returns the port of the active GPIO port driver, otherwise the GPIO
 port driver will be stared and registered as <code class="docutils literal notranslate"><span class="pre">gpio</span></code>. The use of
 <code class="docutils literal notranslate"><span class="pre">gpio:open/0</span></code> or <code class="docutils literal notranslate"><span class="pre">gpio:start/0</span></code> is required before using any functions
-that require a GPIO pid as a parameter.</p>
+that require a GPIO port as a parameter.</p>
 <p>Not currently available on rp2040 (Pico) port, use nif functions.</p>
 <p><a name="stop-0"></a></p>
 </section>
