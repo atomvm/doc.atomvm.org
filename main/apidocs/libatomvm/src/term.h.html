@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>term.h &mdash; AtomVM 0.7.0-dev+git.2568f0b1 documentation</title>
+  <title>term.h &mdash; AtomVM 0.7.0-dev+git.b743490c documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/term.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=300681db"></script>
+      <script src="../../../_static/documentation_options.js?v=f13e1063"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -1661,6 +1661,44 @@
 <dd></dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_is_int32">
+<span class="target" id="libatomvmterm_8h_1adcdfd1d732bbdf1b3a2868ef3d4f7bdc"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_is_int32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_is_int32" title="Link to this definition"></a><br /></dt>
+<dd><p>Check if term can be safely converted to <code class="docutils literal notranslate"><span class="pre">int32_t</span></code>. </p>
+<p>Tests whether a term represents an integer value that fits within the <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> range ([INT32_MIN, INT32_MAX]) without overflow or truncation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Handles both immediate integers and boxed integers </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – Term to check </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if term is an integer within <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> range, false otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_is_int64">
+<span class="target" id="libatomvmterm_8h_1a6f457de843f8ed6b6dc431a97a174a64"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_is_int64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_is_int64" title="Link to this definition"></a><br /></dt>
+<dd><p>Check if term can be safely converted to int64_t. </p>
+<p>Tests whether a term represents an integer value that fits within the int64_t range. This excludes integers outside [INT64_MIN, INT64_MAX].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – Term to check </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if term is an integer within int64_t range, false otherwise </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_is_catch_label">
 <span class="target" id="libatomvmterm_8h_1a296384b34c06e1cad72d408f5849423e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_is_catch_label</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_is_catch_label" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
@@ -2019,23 +2057,6 @@
 </dd></dl>
 
 <dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_to_int32">
-<span class="target" id="libatomvmterm_8h_1a8ae871bc4acb7e313ef49a65dee5509b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_int32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_to_int32" title="Link to this definition"></a><br /></dt>
-<dd><p>Term to int32. </p>
-<p>Returns an int32 for a given term. No overflow check is executed. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> – the term that will be converted to int32, term type is checked. </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a int32 value. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_to_int">
 <span class="target" id="libatomvmterm_8h_1a3b3e1276735fee3c782bf2a2c570de2b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">avm_int_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_int</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_to_int" title="Link to this definition"></a><br /></dt>
 <dd><p>Extract <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> value from unboxed integer term. </p>
@@ -2300,6 +2321,54 @@
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_maybe_unbox_int64">
 <span class="target" id="libatomvmterm_8h_1a67a344ac0ec869207d027831b240c171"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">avm_int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_maybe_unbox_int64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">maybe_boxed_int</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_maybe_unbox_int64" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_to_int32">
+<span class="target" id="libatomvmterm_8h_1a8ae871bc4acb7e313ef49a65dee5509b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_int32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_to_int32" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert term to <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> value. </p>
+<p>Extracts the integer value from a term that has been validated to fit within <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> range.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>No overflow checking performed - caller must validate with <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmterm_8h_1adcdfd1d732bbdf1b3a2868ef3d4f7bdc"><span class="std std-ref"><span class="pre">term_is_int32()</span></span></a></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – Term containing integer value </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> value</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">term_is_int32(t)</span></code> must be true </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_to_int64">
+<span class="target" id="libatomvmterm_8h_1ac19c0c1f065b415ea01be78017768299"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_int64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_to_int64" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert term to <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> value. </p>
+<p>Extracts the integer value from a term that has been validated to fit within <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> range.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>No overflow checking performed - caller must validate with <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmterm_8h_1a6f457de843f8ed6b6dc431a97a174a64"><span class="std std-ref"><span class="pre">term_is_int64()</span></span></a></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – Term containing integer value </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The <code class="docutils literal notranslate"><span class="pre">int64_t</span></code> value</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">term_is_int64(t)</span></code> must be true </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_integer_sign_from_int">
@@ -2597,6 +2666,100 @@
 </dd>
 <dt class="field-odd">Pre<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bigint_sign != NULL</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_is_uint32">
+<span class="target" id="libatomvmterm_8h_1ae41f55e76e0669ed1ef9a76c1c0e8b4f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_is_uint32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_is_uint32" title="Link to this definition"></a><br /></dt>
+<dd><p>Check if term can be safely converted to <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>. </p>
+<p>Tests whether a term represents a non-negative integer value that fits within the <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> range [0, UINT32_MAX] without overflow or truncation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Handles immediate integers, boxed integers, and checks range for larger values </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – Term to check </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if term is a non-negative integer within <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> range, false otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_to_uint32">
+<span class="target" id="libatomvmterm_8h_1a6b0df9510c3082bb3cc3c508600848cf"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_uint32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_to_uint32" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert term to <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> value. </p>
+<p>Extracts the unsigned integer value from a term that has been validated to fit within <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> range.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>No overflow checking performed - caller must validate with <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmterm_8h_1ae41f55e76e0669ed1ef9a76c1c0e8b4f"><span class="std std-ref"><span class="pre">term_is_uint32()</span></span></a></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – Term containing non-negative integer value </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> value</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">term_is_uint32(t)</span></code> must be true </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_is_uint64">
+<span class="target" id="libatomvmterm_8h_1ae6b33b3f65f6de23642c2b26cf0d5d07"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_is_uint64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_is_uint64" title="Link to this definition"></a><br /></dt>
+<dd><p>Check if term can be safely converted to <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>. </p>
+<p>Tests whether a term represents a non-negative integer value that fits within the <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> range [0, UINT64_MAX] without overflow or truncation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Handles immediate integers, boxed integers, and big integers up to 64 bits </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – Term to check </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if term is a non-negative integer within <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> range, false otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_to_uint64">
+<span class="target" id="libatomvmterm_8h_1a42a96166c04e26a4afbed09f68fce38e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_uint64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_to_uint64" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert term to <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> value. </p>
+<p>Extracts the unsigned integer value from a term that has been validated to fit within <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> range.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Can extract from big integers that fit within 64 bits </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>No overflow checking performed - caller must validate with <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmterm_8h_1ae6b33b3f65f6de23642c2b26cf0d5d07"><span class="std std-ref"><span class="pre">term_is_uint64()</span></span></a></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – Term containing non-negative integer value </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> value</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">term_is_uint64(t)</span></code> must be true </p>
 </dd>
 </dl>
 </dd></dl>

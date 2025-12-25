@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; AtomVM 0.7.0-dev+git.2568f0b1 documentation</title>
+  <title>Functions &mdash; AtomVM 0.7.0-dev+git.b743490c documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/functions.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=300681db"></script>
+      <script src="../../_static/documentation_options.js?v=f13e1063"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -4615,16 +4615,23 @@ This function must be implemented in otp_socket_platform.c. Platforms using lwIP
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.term_to_int32">
 <span class="target" id="libatomvmterm_8h_1a8ae871bc4acb7e313ef49a65dee5509b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_int32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.term_to_int32" title="Link to this definition"></a><br /></dt>
-<dd><p>Term to int32. </p>
-<p>Returns an int32 for a given term. No overflow check is executed. </p>
+<dd><p>Convert term to <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> value. </p>
+<p>Extracts the integer value from a term that has been validated to fit within <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> range.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>No overflow checking performed - caller must validate with <code class="docutils literal notranslate"><a class="reference internal" href="src/term.h.html#libatomvmterm_8h_1adcdfd1d732bbdf1b3a2868ef3d4f7bdc"><span class="std std-ref"><span class="pre">term_is_int32()</span></span></a></code></p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> – the term that will be converted to int32, term type is checked. </p></li>
+<li><p><strong>t</strong> – Term containing integer value </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a int32 value. </p>
+<dd class="field-even"><p>The <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> value</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">term_is_int32(t)</span></code> must be true </p>
 </dd>
 </dl>
 </dd></dl>
