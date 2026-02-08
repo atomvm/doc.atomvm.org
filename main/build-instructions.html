@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Instructions &mdash; AtomVM 0.7.0-dev+git.06ef2e18 documentation</title>
+  <title>Build Instructions &mdash; AtomVM 0.7.0-dev+git.aa7ac0f8 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/build-instructions.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=98c5fad4"></script>
+      <script src="_static/documentation_options.js?v=81d83b8b"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -83,8 +83,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#cpu-frequency">CPU frequency</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#flash-mode-and-speed">Flash mode and speed</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#psram-speed">PSRAM speed</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#sleep-mode-deep-sleep">Sleep mode - Deep sleep</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#sleep-mode-light-sleep">Sleep mode - Light sleep</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#other-build-settings">Other Build settings</a></li>
 </ul>
 </li>
@@ -483,18 +481,6 @@ You can increase or decrease the clock speed of the PSRAM.</p>
 <p>You may have to increase “Flash SPI speed” (see above) before you can increase PSRAM speed.</p>
 </div>
 <p>The higher the speed, the faster the PSRAM will be, at the cost of higher power usage, but not all PSRAM chips support higher speeds.</p>
-</section>
-<section id="sleep-mode-deep-sleep">
-<h4>Sleep mode - Deep sleep<a class="headerlink" href="#sleep-mode-deep-sleep" title="Link to this heading"></a></h4>
-<p>For low power applications, you should use the <a class="reference internal" href="programmers-guide.html#restart-and-deep-sleep"><span class="std std-ref">deep sleep functionality</span></a> of the ESP32.</p>
-<p>This will put the ESP32 into a very low power state, and it will consume very little power.
-You can wake the ESP32 from deep sleep using a timer, or an interrupt etc.</p>
-<p>Make sure your board is suitable for low power deep sleep, some boards have voltage regulators and/or LEDs constantly draining power, also make sure sensors are powered down or in low power mode when the ESP32 is in deep sleep.</p>
-<p>For persisting small amounts of data during deep sleep, you can use the <a class="reference internal" href="programmers-guide.html#rtc-memory"><span class="std std-ref">RTC memory</span></a> of the ESP32, which is preserved during deep sleep.</p>
-</section>
-<section id="sleep-mode-light-sleep">
-<h4>Sleep mode - Light sleep<a class="headerlink" href="#sleep-mode-light-sleep" title="Link to this heading"></a></h4>
-<p>Usage of light sleep is untested, and no support for controlling light sleep is currently implemented. Reach out if you do any experiments and measurements.</p>
 </section>
 <section id="other-build-settings">
 <h4>Other Build settings<a class="headerlink" href="#other-build-settings" title="Link to this heading"></a></h4>

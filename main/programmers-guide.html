@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.06ef2e18 documentation</title>
+  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.aa7ac0f8 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/programmers-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=98c5fad4"></script>
+      <script src="_static/documentation_options.js?v=81d83b8b"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -110,8 +110,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#unmounting-storage">Unmounting Storage</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#restart-and-deep-sleep">Restart and Deep Sleep</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#restart-and-sleep">Restart and Sleep</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sleep-mode-deep-sleep-and-light-sleep">Sleep Mode - Deep Sleep and Light Sleep</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deep-sleep">Deep Sleep</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#rtc-memory">RTC Memory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#light-sleep">Light Sleep</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#miscellaneous-esp32-apis">Miscellaneous ESP32 APIs</a></li>
@@ -251,7 +254,7 @@
 <li><p><a class="reference internal" href="#led-control">LEDC</a> (PWM)</p></li>
 <li><p><a class="reference internal" href="#non-volatile-storage">non-volatile storage</a> (NVS)</p></li>
 <li><p><a class="reference internal" href="#rtc-memory">RTC</a> storage</p></li>
-<li><p><a class="reference internal" href="#restart-and-deep-sleep">deep sleep</a></p></li>
+<li><p><a class="reference internal" href="#restart-and-sleep">restart and sleep</a></p></li>
 </ul>
 </li>
 </ul>
@@ -1434,8 +1437,8 @@ sensitive security information, such as account passwords, are stored in NVS sto
 </div>
 </section>
 </section>
-<section id="restart-and-deep-sleep">
-<h3>Restart and Deep Sleep<a class="headerlink" href="#restart-and-deep-sleep" title="Link to this heading"></a></h3>
+<section id="restart-and-sleep">
+<h3>Restart and Sleep<a class="headerlink" href="#restart-and-sleep" title="Link to this heading"></a></h3>
 <p>You can use the <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#restart-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:restart/0</span></code></span></a> function to immediately restart the ESP32 device.  This function does not return a value.</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nn">esp</span><span class="p">:</span><span class="nf">restart</span><span class="p">().</span>
 </pre></div>
@@ -1454,6 +1457,17 @@ sensitive security information, such as account passwords, are stored in NVS sto
 <li><p><code class="docutils literal notranslate"><span class="pre">esp_rst_brownout</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">esp_rst_sdio</span></code></p></li>
 </ul>
+<section id="sleep-mode-deep-sleep-and-light-sleep">
+<h4>Sleep Mode - Deep Sleep and Light Sleep<a class="headerlink" href="#sleep-mode-deep-sleep-and-light-sleep" title="Link to this heading"></a></h4>
+<p>For low power applications, you should use the deep sleep functionality of the ESP32.</p>
+<p>This will put the ESP32 into a very low power state, and it will consume very little power.
+You can wake the ESP32 from deep sleep using a timer, or an interrupt etc.</p>
+<p>Make sure your board is suitable for low power deep sleep, some boards have voltage regulators and/or LEDs constantly draining power, also make sure sensors are powered down or in low power mode when the ESP32 is in deep sleep.</p>
+<p>For persisting small amounts of data during deep sleep, you can use the RTC memory of the ESP32, which is preserved during deep sleep.</p>
+<p>Light sleep is supported as well and can be enabled on ESP32 using the related functions. When using light sleep memory is retained, and execution is resumed as soon as wakeup is triggered from a wakeup source.</p>
+</section>
+<section id="deep-sleep">
+<h4>Deep Sleep<a class="headerlink" href="#deep-sleep" title="Link to this heading"></a></h4>
 <p>Use the <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#deep-sleep-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:deep_sleep/1</span></code></span></a> function to put the ESP device into deep sleep for a specified number of milliseconds.  Be sure to safely stop any critical processes running before this function is called, as it will cause an immediate shutdown of the device.</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nn">esp</span><span class="p">:</span><span class="nf">deep_sleep</span><span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">1000</span><span class="p">).</span>
 </pre></div>
@@ -1474,7 +1488,7 @@ sensitive security information, such as account passwords, are stored in NVS sto
 <li><p><code class="docutils literal notranslate"><span class="pre">undefined</span></code> (no sleep wakeup)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">error</span></code> (unknown other reason)</p></li>
 </ul>
-<p>The values matches the semantics of <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/release-v4.4/esp32/api-reference/system/sleep_modes.html#_CPPv426esp_sleep_get_wakeup_causev"><code class="docutils literal notranslate"><span class="pre">esp_sleep_get_wakeup_cause</span></code></a>.</p>
+<p>The values match the semantics of <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/release-v4.4/esp32/api-reference/system/sleep_modes.html#_CPPv426esp_sleep_get_wakeup_causev"><code class="docutils literal notranslate"><span class="pre">esp_sleep_get_wakeup_cause</span></code></a>.</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">sleep_get_wakeup_cause</span><span class="p">()</span><span class="w"> </span><span class="k">of</span>
 <span class="w">    </span><span class="n">sleep_wakeup_timer</span><span class="w"> </span><span class="o">-&gt;</span>
 <span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Woke up from a timer</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">);</span>
@@ -1496,6 +1510,7 @@ sensitive security information, such as account passwords, are stored in NVS sto
 <span class="w">    </span><span class="nn">esp</span><span class="p">:</span><span class="nf">deep_sleep</span><span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">1000</span><span class="p">).</span>
 </pre></div>
 </div>
+</section>
 <section id="rtc-memory">
 <h4>RTC Memory<a class="headerlink" href="#rtc-memory" title="Link to this heading"></a></h4>
 <p>On ESP32 systems, you can use (slow) “real-time clock” memory to store data between deep sleeps.  This storage can be useful, for example, to store interim state data in your application.</p>
@@ -1516,6 +1531,16 @@ sensitive security information, such as account passwords, are stored in NVS sto
 <p>Calling <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#rtc-slow-get-binary-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:rtc_slow_get_binary/0</span></code></span></a> without having stored a binary first using <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#rtc-slow-set-binary-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">esp:rtc_slow_set_binary/1</span></code></span></a>, will raise with badarg. So make sure to wrap such a call with a try/catch or similar.</p>
 </div>
 <p>By default, RTC slow memory in AtomVM is limited to 4098 (4k) bytes.  This value can be modified at build time using an IDF SDK <code class="docutils literal notranslate"><span class="pre">KConfig</span></code> setting.  For  instructions about how to build AtomVM, see the AtomVM <a class="reference internal" href="build-instructions.html#building-for-esp32"><span class="std std-ref">Build Instructions</span></a>.</p>
+</section>
+<section id="light-sleep">
+<h4>Light Sleep<a class="headerlink" href="#light-sleep" title="Link to this heading"></a></h4>
+<p>Use the <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#light-sleep-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">light_sleep/0</span></code></span></a> function to put the ESP device into light sleep. In order to wake up, it is required to configure a wake-up source first, using either <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#sleep-enable-gpio-wakeup-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">sleep_enable_gpio_wakeup/0</span></code></span></a> or <a class="reference internal" href="apidocs/erlang/eavmlib/esp.html#sleep-enable-timer-wakeup-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">sleep_enable_timer_wakeup/1</span></code></span></a>.
+<code class="docutils literal notranslate"><span class="pre">sleep_enable_gpio_wakeup/0</span></code> also requires configuring each individual GPIO pin that will be used as a wake-up trigger using <a class="reference internal" href="apidocs/erlang/eavmlib/gpio.html#wakeup_enable/2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">wakeup_enable/2</span></code></span></a>.</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="nn">gpio</span><span class="p">:</span><span class="nf">wakeup_enable</span><span class="p">(</span><span class="nv">GPIONum</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="p">),</span>
+<span class="w">    </span><span class="nn">esp</span><span class="p">:</span><span class="nf">sleep_enable_gpio_wakeup</span><span class="p">(),</span>
+<span class="w">    </span><span class="nn">esp</span><span class="p">:</span><span class="nf">light_sleep</span><span class="p">().</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="miscellaneous-esp32-apis">
