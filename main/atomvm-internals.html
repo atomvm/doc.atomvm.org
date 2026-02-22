@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AtomVM Internals &mdash; AtomVM 0.7.0-dev+git.b57b94f9 documentation</title>
+  <title>AtomVM Internals &mdash; AtomVM 0.7.0-dev+git.e9f3fe2e documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/atomvm-internals.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=aaf7d109"></script>
+      <script src="_static/documentation_options.js?v=d139d737"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -696,8 +696,8 @@ size of a struct, therefore, is determined simply by the size of the component f
 <dd></dd></dl>
 
 <dl class="c var">
-<dt class="sig sig-object c" id="c.Context.&#64;1">
-<span class="target" id="libatomvmstruct_context_1a752fee9cbce893873477fbc6f4874081"></span><span class="k"><span class="pre">union</span></span><span class="w"> </span><a class="reference internal" href="#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">[anonymous]</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">[anonymous]</span></span></span><a class="headerlink" href="#c.Context.@1" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object c" id="c.Context.&#64;2">
+<span class="target" id="libatomvmstruct_context_1a26141d8f4945e6e1276f9d92c369124a"></span><span class="k"><span class="pre">union</span></span><span class="w"> </span><a class="reference internal" href="#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="p"><span class="pre">.</span></span><span class="n"><span class="pre">[anonymous]</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">[anonymous]</span></span></span><a class="headerlink" href="#c.Context.@2" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c var">
@@ -788,6 +788,21 @@ size of a struct, therefore, is determined simply by the size of the component f
 <dl class="c var">
 <dt class="sig sig-object c" id="c.Context.exit_reason">
 <span class="target" id="libatomvmstruct_context_1a20c7ffe57c7f6f73e03d3eb865bf130b"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">exit_reason</span></span></span><a class="headerlink" href="#c.Context.exit_reason" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.exception_class">
+<span class="target" id="libatomvmstruct_context_1a3215f1032cb657d19f6b822c18890bc3"></span><span class="n"><span class="pre">uintptr_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">exception_class</span></span></span><a class="headerlink" href="#c.Context.exception_class" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.exception_reason">
+<span class="target" id="libatomvmstruct_context_1ab23902628b4d051cddfca34fc6854843"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">exception_reason</span></span></span><a class="headerlink" href="#c.Context.exception_reason" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Context.exception_stacktrace">
+<span class="target" id="libatomvmstruct_context_1a90869693e5ea79fb6c78f5b03441d688"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">exception_stacktrace</span></span></span><a class="headerlink" href="#c.Context.exception_stacktrace" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -1216,13 +1231,13 @@ instead on logging or other mechanisms for diagnosing problems in the field.</p>
 <dd></dd></dl>
 
 <dl class="c var">
-<dt class="sig sig-object c" id="c.Module.import_table">
-<span class="target" id="libatomvmstruct_module_1a824bcc902b13a06d73e26e55eb76e9ba"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">import_table</span></span></span><a class="headerlink" href="#c.Module.import_table" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object c" id="c.Module.code">
+<span class="target" id="libatomvmstruct_module_1a7800255a49fb908d7b27ffaacfbbdcb9"></span><span class="n"><span class="pre">CodeChunk</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">code</span></span></span><a class="headerlink" href="#c.Module.code" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c var">
-<dt class="sig sig-object c" id="c.Module.code">
-<span class="target" id="libatomvmstruct_module_1a7800255a49fb908d7b27ffaacfbbdcb9"></span><span class="n"><span class="pre">CodeChunk</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">code</span></span></span><a class="headerlink" href="#c.Module.code" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object c" id="c.Module.import_table">
+<span class="target" id="libatomvmstruct_module_1a824bcc902b13a06d73e26e55eb76e9ba"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">import_table</span></span></span><a class="headerlink" href="#c.Module.import_table" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c var">
