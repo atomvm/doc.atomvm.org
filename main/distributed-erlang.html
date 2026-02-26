@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Distributed Erlang &mdash; AtomVM 0.7.0-dev+git.edd56e54 documentation</title>
+  <title>Distributed Erlang &mdash; AtomVM 0.7.0-dev+git.1a2d54eb documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/distributed-erlang.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=399c658c"></script>
+      <script src="_static/documentation_options.js?v=18dac289"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -56,7 +56,13 @@
 <li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Distributed Erlang</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#starting-and-stopping-distribution">Starting and stopping distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-and-stopping-distribution">Starting and stopping distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#distribution-options">Distribution options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#socket-dist-options">socket_dist options</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#epmd"><code class="docutils literal notranslate"><span class="pre">epmd</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#erlang-otp-compatibility">Erlang/OTP compatibility</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#security">Security</a></li>
@@ -127,6 +133,26 @@
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">net_kernel:stop/0</span></code> can be used to stop distribution.</p>
+<section id="distribution-options">
+<h3>Distribution options<a class="headerlink" href="#distribution-options" title="Link to this heading"></a></h3>
+<p>The options map passed to <code class="docutils literal notranslate"><span class="pre">net_kernel:start/2</span></code> supports an <code class="docutils literal notranslate"><span class="pre">avm_dist_opts</span></code> key containing a map of options that are forwarded to the distribution module’s <code class="docutils literal notranslate"><span class="pre">listen/2</span></code> function.</p>
+<section id="socket-dist-options">
+<h4>socket_dist options<a class="headerlink" href="#socket-dist-options" title="Link to this heading"></a></h4>
+<p>The built-in <code class="docutils literal notranslate"><span class="pre">socket_dist</span></code> module supports the following <code class="docutils literal notranslate"><span class="pre">avm_dist_opts</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">listen_port_min</span></code> — minimum port number to listen on</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">listen_port_max</span></code> — maximum port number to listen on</p></li>
+</ul>
+<p>Both must be specified together. <code class="docutils literal notranslate"><span class="pre">socket_dist</span></code> will try each port in the range until one is available. This is useful on systems where only a specific range of ports is open (e.g. firewall rules on embedded devices).</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">NetKernelPid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">mynode</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">shortnames</span><span class="p">,</span>
+<span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span><span class="n">listen_port_min</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">9100</span><span class="p">,</span><span class="w"> </span><span class="n">listen_port_max</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">9110</span><span class="p">}</span>
+<span class="p">}).</span>
+</pre></div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">avm_dist_opts</span></code> is omitted or the port keys are not set, the OS assigns an ephemeral port (the default behaviour).</p>
+</section>
+</section>
 </section>
 <section id="epmd">
 <h2><code class="docutils literal notranslate"><span class="pre">epmd</span></code><a class="headerlink" href="#epmd" title="Link to this heading"></a></h2>
