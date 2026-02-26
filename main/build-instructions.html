@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Instructions &mdash; AtomVM 0.7.0-dev+git.fde1fb3d documentation</title>
+  <title>Build Instructions &mdash; AtomVM 0.7.0-dev+git.0c8adca0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/build-instructions.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=a6684b89"></script>
+      <script src="_static/documentation_options.js?v=e31bd987"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -105,12 +105,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#building-for-stm32">Building for STM32</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#stm32-prerequisites">STM32 Prerequisites</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setup-libopencm3">Setup libopencm3</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#build-atomvm-with-cmake-toolchain-file">Build AtomVM with cmake toolchain file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#changing-the-target-device">Changing the target device</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configuring-the-console">Configuring the Console</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-hse-frequency">Configuring the HSE frequency</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configure-stm32-logging-with-cmake">Configure STM32 logging with <code class="docutils literal notranslate"><span class="pre">cmake</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#console-printing-on-stm32">Console Printing on STM32</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-local-source-checkouts-for-stm32-dependencies">Using local source checkouts for STM32 dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configuring-deployment-builds-for-stm32">Configuring deployment builds for STM32</a></li>
 </ul>
 </li>
@@ -847,39 +847,21 @@ Example:</p></li>
 </section>
 <section id="building-for-stm32">
 <h2>Building for STM32<a class="headerlink" href="#building-for-stm32" title="Link to this heading"></a></h2>
+<p>This section describes building AtomVM using the official ST HAL/LL SDK, which is downloaded automatically via CMake FetchContent. This platform supports STM32F2, STM32F4, STM32F7, STM32G0, STM32G4, STM32H5, STM32H7, STM32L4, STM32L5, STM32U3, STM32U5, and STM32WB families.</p>
 <section id="stm32-prerequisites">
 <h3>STM32 Prerequisites<a class="headerlink" href="#stm32-prerequisites" title="Link to this heading"></a></h3>
 <p>The following software is required to build AtomVM for the STM32 platform:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://developer.arm.com/-/media/Files/downloads/gnu/11.3.rel1/binrel/arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-eabi.tar.xz">11.3 ARM toolchain</a> (or compatible with your system)</p></li>
-<li><p><a class="reference external" href="https://github.com/libopencm3/libopencm3.git">libopencm3</a> version 0.8.0</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cmake</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">make</span></code></p></li>
+<li><p>ARM toolchain (<code class="docutils literal notranslate"><span class="pre">arm-none-eabi-gcc</span></code>, e.g. 11.3 or later)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmake</span></code> (3.13 or later)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">meson</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ninja</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">git</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">python</span></code></p></li>
 <li><p>Erlang/OTP <code class="docutils literal notranslate"><span class="pre">escript</span></code></p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>AtomVM tests this build on the latest Ubuntu github runner.</p>
-</div>
-</section>
-<section id="setup-libopencm3">
-<h3>Setup libopencm3<a class="headerlink" href="#setup-libopencm3" title="Link to this heading"></a></h3>
-<p>Before building for the first time you need to have a compiled clone of the libopencm3 libraries, from inside the AtomVM/src/platforms/stm32 directory:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>v0.8.0<span class="w"> </span>https://github.com/libopencm3/libopencm3.git
-$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>libopencm3<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>-j4<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
-</pre></div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>You can put libopencm3 wherever you want on your PC as long as you update LIBOPENCM3_DIR to point to it. This
-example assumes it has been cloned into /opt/libopencm3 and built. From inside the AtomVM/src/platforms/stm32
-directory:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/arm-toolchain.cmake \
--DLIBOPENCM3_DIR=/opt/libopencm3 ..
-</pre></div>
-</div>
+<p>No external SDK download is required. The STM32 HAL/LL drivers and CMSIS headers are fetched automatically by CMake during the build. AtomVM is built with <code class="docutils literal notranslate"><span class="pre">picolibc</span></code> which is also downloaded as part of the build and requires <code class="docutils literal notranslate"><span class="pre">meson</span></code> and <code class="docutils literal notranslate"><span class="pre">ninja</span></code>.</p>
 </div>
 </section>
 <section id="build-atomvm-with-cmake-toolchain-file">
@@ -888,15 +870,79 @@ directory:</p>
 $<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>src/platforms/stm32
 $<span class="w"> </span>mkdir<span class="w"> </span>build
 $<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
-$<span class="w"> </span>cmake<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>../cmake/arm-toolchain.cmake<span class="w"> </span>..
-$<span class="w"> </span>make
+$<span class="w"> </span>cmake<span class="w"> </span>-G<span class="w"> </span>Ninja<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>../cmake/arm-toolchain.cmake<span class="w"> </span>-DDEVICE<span class="o">=</span>stm32f407vgt6<span class="w"> </span>..
+$<span class="w"> </span>ninja
 </pre></div>
 </div>
 </section>
 <section id="changing-the-target-device">
 <h3>Changing the target device<a class="headerlink" href="#changing-the-target-device" title="Link to this heading"></a></h3>
-<p>The default build is based on the STM32F4Discovery board chip (<code class="docutils literal notranslate"><span class="pre">stm32f407vgt6</span></code>). If you want to target a different
-chip, pass the <code class="docutils literal notranslate"><span class="pre">-DDEVICE</span></code> flag when invoking cmake. For example, to use the BlackPill V2.0, pass <code class="docutils literal notranslate"><span class="pre">-DDEVICE=stm32f411ceu6</span></code>. At this time any <code class="docutils literal notranslate"><span class="pre">STM32F4</span></code> or <code class="docutils literal notranslate"><span class="pre">STM32F7</span></code> device with 512KB or more of on package flash should work with AtomVM. If an unsupported device is passed with the <code class="docutils literal notranslate"><span class="pre">DEVICE</span></code> parameter the configuration will fail. For devices with either 512KB or 768KB of flash the available application flash space will be limited to 128KB. Devices with only 512KB of flash may also suffer from slightly reduced performance because the compiler must optimize for size rather than performance.</p>
+<p>The default build targets the STM32F407 Discovery (<code class="docutils literal notranslate"><span class="pre">stm32f407vgt6</span></code>). Pass the <code class="docutils literal notranslate"><span class="pre">-DDEVICE</span></code> flag to select a different device. Supported families and example devices:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Family</p></th>
+<th class="head"><p>Example Devices</p></th>
+<th class="head"><p>Max Clock</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>STM32F2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32f205rgt6</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32f207zgt6</span></code></p></td>
+<td><p>120 MHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32F4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32f407vgt6</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32f429zit6</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32f411ceu6</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32f401ceu6</span></code></p></td>
+<td><p>84-180 MHz</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32F7</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32f746zgt6</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32f767zit6</span></code></p></td>
+<td><p>216 MHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32G0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32g0b1ret6</span></code></p></td>
+<td><p>64 MHz</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32G4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32g474ret6</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32g491ret6</span></code></p></td>
+<td><p>170 MHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32H5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32h562rgt6</span></code></p></td>
+<td><p>250 MHz</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32H7</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32h743vit6</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32h743zit6</span></code></p></td>
+<td><p>480 MHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32L4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32l476rgt6</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32l4r5zit6</span></code></p></td>
+<td><p>80-120 MHz</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32L5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32l552ret6</span></code></p></td>
+<td><p>110 MHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32U3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32u375rgt6</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32u385rgt6</span></code></p></td>
+<td><p>96 MHz</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32U5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32u585ait6q</span></code></p></td>
+<td><p>160 MHz</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32WB</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stm32wb55rg</span></code></p></td>
+<td><p>64 MHz</p></td>
+</tr>
+</tbody>
+</table>
+<p>If an unsupported device is passed with the <code class="docutils literal notranslate"><span class="pre">DEVICE</span></code> parameter the configuration will fail.</p>
+<p>Example to build for a BlackPill (F411) board, which uses a 25 MHz HSE crystal:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>-G<span class="w"> </span>Ninja<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>../cmake/arm-toolchain.cmake<span class="w"> </span>-DDEVICE<span class="o">=</span>stm32f411ceu6<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-DAVM_HSE_VALUE<span class="o">=</span><span class="m">25000000</span><span class="w"> </span>..
+</pre></div>
+</div>
+<p>For devices with 512KB or less of flash, application flash space will be limited and the compiler optimizes for size rather than performance.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>For devices with only 512KB of flash the application address is different and must be adjusted when flashing your
@@ -906,7 +952,8 @@ devices is <code class="docutils literal notranslate"><span class="pre">0x806000
 </section>
 <section id="configuring-the-console">
 <h3>Configuring the Console<a class="headerlink" href="#configuring-the-console" title="Link to this heading"></a></h3>
-<p>The default build for any <code class="docutils literal notranslate"><span class="pre">DEVICE</span></code> will use <code class="docutils literal notranslate"><span class="pre">USART2</span></code> and output will be on <code class="docutils literal notranslate"><span class="pre">PA2</span></code>. This default will work well for most <code class="docutils literal notranslate"><span class="pre">Discovery</span></code> and generic boards that do not have an on-board TTL to USB-COM support (including the <code class="docutils literal notranslate"><span class="pre">stm32f411ceu6</span></code> A.K.A. <code class="docutils literal notranslate"><span class="pre">BlackPill</span> <span class="pre">V2.0</span></code>). For <code class="docutils literal notranslate"><span class="pre">Nucleo</span></code> boards that do have on board UART to USB-COM support you may pass the <code class="docutils literal notranslate"><span class="pre">cmake</span></code> parameter <code class="docutils literal notranslate"><span class="pre">-DBOARD=nucleo</span></code> to have the correct USART and TX pins configured automatically. The <code class="docutils literal notranslate"><span class="pre">Nucleo-144</span></code> series use <code class="docutils literal notranslate"><span class="pre">USART3</span></code> and <code class="docutils literal notranslate"><span class="pre">PD8</span></code>, while the supported <code class="docutils literal notranslate"><span class="pre">Nucleo-64</span></code> boards use <code class="docutils literal notranslate"><span class="pre">USART2</span></code>, but passing the <code class="docutils literal notranslate"><span class="pre">BOARD</span></code> parameter along with <code class="docutils literal notranslate"><span class="pre">DEVICE</span></code> will configure the correct <code class="docutils literal notranslate"><span class="pre">USART</span></code> for your model. If any other boards are discovered to have on board USB UART support pull requests, or opening issues with the details, are more than welcome.</p>
+<p>By default, stdout and stderr are printed on the configured console USART. Baudrate is 115200 and serial transmission is 8N1 with no flow control.</p>
+<p>The default console is <code class="docutils literal notranslate"><span class="pre">USART1</span></code> on <code class="docutils literal notranslate"><span class="pre">PA9</span></code>. For <code class="docutils literal notranslate"><span class="pre">Nucleo</span></code> boards, pass <code class="docutils literal notranslate"><span class="pre">-DBOARD=nucleo</span></code> to automatically select the correct USART for your board.</p>
 <p>Example to configure a <code class="docutils literal notranslate"><span class="pre">NUCLEO-F429ZI</span></code>:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>../cmake/arm-toolchain.cmake<span class="w"> </span>-DDEVICE<span class="o">=</span>stm32f429zit6<span class="w"> </span><span class="se">\</span>
 -DBOARD<span class="o">=</span>nucleo
@@ -918,7 +965,7 @@ devices is <code class="docutils literal notranslate"><span class="pre">0x806000
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
 <th class="head"><p>USART</p></th>
 <th class="head"><p>TX Pin</p></th>
-<th class="head"><p>AtomVM Default</p></th>
+<th class="head"><p>Default</p></th>
 <th class="head"><p>Nucleo-144</p></th>
 <th class="head"><p>Nucleo-64</p></th>
 </tr>
@@ -927,14 +974,14 @@ devices is <code class="docutils literal notranslate"><span class="pre">0x806000
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CONSOLE_1</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">USART1</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">PA9</span></code></p></td>
-<td><p></p></td>
+<td><p>✅</p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CONSOLE_2</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">USART2</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">PA2</span></code></p></td>
-<td><p>✅</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p>✅</p></td>
 </tr>
@@ -966,22 +1013,79 @@ devices is <code class="docutils literal notranslate"><span class="pre">0x806000
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CONSOLE_7</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">UART7</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">PF7</span></code></p></td>
-<td><p></p></td>
-<td><p></p></td>
+</tbody>
+</table>
+</section>
+<section id="configuring-the-hse-frequency">
+<h3>Configuring the HSE frequency<a class="headerlink" href="#configuring-the-hse-frequency" title="Link to this heading"></a></h3>
+<p>The external oscillator (HSE) frequency varies between boards. Set it at build time with <code class="docutils literal notranslate"><span class="pre">-DAVM_HSE_VALUE=&lt;freq_hz&gt;</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>../cmake/arm-toolchain.cmake<span class="w"> </span>-DDEVICE<span class="o">=</span>stm32f411ceu6<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-DAVM_HSE_VALUE<span class="o">=</span><span class="m">25000000</span><span class="w"> </span>..
+</pre></div>
+</div>
+<p>Default HSE values per family (set in the family HAL configuration header):</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Family</p></th>
+<th class="head"><p>Default HSE</p></th>
+<th class="head"><p>Typical Boards</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>STM32F2</p></td>
+<td><p>8 MHz</p></td>
+<td><p>Nucleo boards</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32F4</p></td>
+<td><p>8 MHz</p></td>
+<td><p>Discovery/Nucleo boards (BlackPill boards use 25 MHz)</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32F7</p></td>
+<td><p>8 MHz</p></td>
+<td><p>Nucleo boards (ST-Link MCO bypass)</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32G0</p></td>
+<td><p>8 MHz</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CONSOLE_8</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">UART8</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">PJ8</span></code></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p>STM32G4</p></td>
+<td><p>8 MHz</p></td>
+<td><p>Nucleo boards</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32H5</p></td>
+<td><p>8 MHz</p></td>
+<td><p>Nucleo boards (ST-Link MCO bypass), WeAct Studio H562</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32H7</p></td>
+<td><p>8 MHz</p></td>
+<td><p>Nucleo boards (ST-Link MCO bypass), WeAct Studio H743 (25 MHz)</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32L4</p></td>
+<td><p>8 MHz</p></td>
+<td><p>Nucleo boards</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32L5</p></td>
+<td><p>N/A (uses MSI)</p></td>
+<td><p>Nucleo boards</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32U3</p></td>
+<td><p>16 MHz</p></td>
+<td><p>Nucleo boards</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32U5</p></td>
+<td><p>16 MHz</p></td>
+<td><p>Nucleo-U585AI-Q, WeAct Studio U585 (25 MHz)</p></td>
+</tr>
+<tr class="row-odd"><td><p>STM32WB</p></td>
+<td><p>32 MHz</p></td>
+<td><p>Nucleo-WB55, WeAct Studio WB55 (required for BLE radio)</p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all STM32 families have been tested on hardware. The F4, H5, H7, U5, and WB families have been tested on actual boards. The F2, F7, G0, G4, L4, L5, and U3 families are supported in the build system but have not yet been validated on hardware. If you encounter issues with an untested family, please open an <a class="reference external" href="https://github.com/atomvm/AtomVM/issues">issue on GitHub</a>.</p>
+</div>
 </section>
 <section id="configure-stm32-logging-with-cmake">
 <h3>Configure STM32 logging with <code class="docutils literal notranslate"><span class="pre">cmake</span></code><a class="headerlink" href="#configure-stm32-logging-with-cmake" title="Link to this heading"></a></h3>
@@ -1010,16 +1114,46 @@ devices is <code class="docutils literal notranslate"><span class="pre">0x806000
 </table>
 <p>By default only <code class="docutils literal notranslate"><span class="pre">ERROR</span></code> messages contain file and line number information. This can be included with all log entries by passing <code class="docutils literal notranslate"><span class="pre">-DAVM_ENABLE_LOG_LINES=on</span></code> to cmake, but it does incur a significant performance penalty and is only suggested for debugging during development.</p>
 </section>
-<section id="console-printing-on-stm32">
-<h3>Console Printing on STM32<a class="headerlink" href="#console-printing-on-stm32" title="Link to this heading"></a></h3>
-<p>AtomVM is built with standard <code class="docutils literal notranslate"><span class="pre">newlib</span></code> to support <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">long</span></code> integers (<code class="docutils literal notranslate"><span class="pre">signed</span></code> and <code class="docutils literal notranslate"><span class="pre">unsigned</span></code>). If you are building for a device with extremely limited flash space the <code class="docutils literal notranslate"><span class="pre">nano</span></code> version of <code class="docutils literal notranslate"><span class="pre">newlib</span></code> can be used instead. This may be done by passing <code class="docutils literal notranslate"><span class="pre">-DAVM_NEWLIB_NANO=on</span></code>. If the <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">newlib</span></code> is used logs will be automatically disabled, this is because many of the VM low level log messages will include <code class="docutils literal notranslate"><span class="pre">%ull</span></code> formatting and will cause buffer overflows and crash the VM if logging is not disabled for <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">newlib</span></code> builds. The total flash savings of using <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">newlib</span></code> and disabling logs is just under 40kB.</p>
-<p>By default, stdout and stderr are printed on USART2. On the STM32F4Discovery board, you can see them
-using a TTL-USB with the TX pin connected to board’s pin PA2 (USART2 RX). Baudrate is 115200 and serial transmission
-is 8N1 with no flow control.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>If building for a different target USART may be configure as explained above in
-<a class="reference internal" href="#configuring-the-console">Configuring the Console</a>.</p>
+<section id="using-local-source-checkouts-for-stm32-dependencies">
+<h3>Using local source checkouts for STM32 dependencies<a class="headerlink" href="#using-local-source-checkouts-for-stm32-dependencies" title="Link to this heading"></a></h3>
+<p>By default, the STM32 build downloads picolibc and the STM32 SDK components (CMSIS headers and HAL/LL drivers) automatically. You can override this to use local checkouts by setting the following environment variables or CMake variables:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PICOLIBC_PATH</span></code></p></td>
+<td><p>Path to a local <a class="reference external" href="https://github.com/picolibc/picolibc">picolibc</a> source tree</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">STM32_CMSIS_CORE_PATH</span></code></p></td>
+<td><p>Path to a local <a class="reference external" href="https://github.com/STMicroelectronics/cmsis_core">CMSIS Core</a> checkout</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">STM32_CMSIS_DEVICE_&lt;FAMILY&gt;_PATH</span></code></p></td>
+<td><p>Path to a local CMSIS Device checkout for the target family (e.g. <code class="docutils literal notranslate"><span class="pre">STM32_CMSIS_DEVICE_F4_PATH</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">STM32_HAL_DRIVER_&lt;FAMILY&gt;_PATH</span></code></p></td>
+<td><p>Path to a local HAL/LL driver checkout for the target family (e.g. <code class="docutils literal notranslate"><span class="pre">STM32_HAL_DRIVER_F4_PATH</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;FAMILY&gt;</span></code> placeholder is the uppercase short family code: <code class="docutils literal notranslate"><span class="pre">F2</span></code>, <code class="docutils literal notranslate"><span class="pre">F4</span></code>, <code class="docutils literal notranslate"><span class="pre">F7</span></code>, <code class="docutils literal notranslate"><span class="pre">G0</span></code>, <code class="docutils literal notranslate"><span class="pre">G4</span></code>, <code class="docutils literal notranslate"><span class="pre">H5</span></code>, <code class="docutils literal notranslate"><span class="pre">H7</span></code>, <code class="docutils literal notranslate"><span class="pre">L4</span></code>, <code class="docutils literal notranslate"><span class="pre">L5</span></code>, <code class="docutils literal notranslate"><span class="pre">U3</span></code>, <code class="docutils literal notranslate"><span class="pre">U5</span></code>, or <code class="docutils literal notranslate"><span class="pre">WB</span></code>.</p>
+<p>Example using environment variables:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">PICOLIBC_PATH</span><span class="o">=</span>/home/user/src/picolibc
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">STM32_CMSIS_CORE_PATH</span><span class="o">=</span>/home/user/src/cmsis_core
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">STM32_CMSIS_DEVICE_F4_PATH</span><span class="o">=</span>/home/user/src/cmsis_device_f4
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">STM32_HAL_DRIVER_F4_PATH</span><span class="o">=</span>/home/user/src/stm32f4xx_hal_driver
+$<span class="w"> </span>cmake<span class="w"> </span>-G<span class="w"> </span>Ninja<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>../cmake/arm-toolchain.cmake<span class="w"> </span>-DDEVICE<span class="o">=</span>stm32f407vgt6<span class="w"> </span>..
+</pre></div>
+</div>
+<p>Alternatively, pass them as CMake variables with <code class="docutils literal notranslate"><span class="pre">-D</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>-G<span class="w"> </span>Ninja<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>../cmake/arm-toolchain.cmake<span class="w"> </span>-DDEVICE<span class="o">=</span>stm32f407vgt6<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-DPICOLIBC_PATH<span class="o">=</span>/home/user/src/picolibc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-DFETCHCONTENT_SOURCE_DIR_CMSIS_CORE<span class="o">=</span>/home/user/src/cmsis_core<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-DFETCHCONTENT_SOURCE_DIR_CMSIS_DEVICE<span class="o">=</span>/home/user/src/cmsis_device_f4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-DFETCHCONTENT_SOURCE_DIR_HAL_DRIVER<span class="o">=</span>/home/user/src/stm32f4xx_hal_driver<span class="w"> </span>..
+</pre></div>
 </div>
 </section>
 <section id="configuring-deployment-builds-for-stm32">

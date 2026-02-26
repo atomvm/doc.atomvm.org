@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting Started Guide &mdash; AtomVM 0.7.0-dev+git.fde1fb3d documentation</title>
+  <title>Getting Started Guide &mdash; AtomVM 0.7.0-dev+git.0c8adca0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/getting-started-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=a6684b89"></script>
+      <script src="_static/documentation_options.js?v=e31bd987"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -354,13 +354,19 @@ crystal) may need to use a slower baud rate such as 115200.</p>
 </section>
 <section id="getting-started-on-the-stm32-platform">
 <h2>Getting Started on the STM32 platform<a class="headerlink" href="#getting-started-on-the-stm32-platform" title="Link to this heading"></a></h2>
-<p>AtomVM can run on a wide variety of STM32 chip-sets available from <a class="reference external" href="https://www.st.com">STMicroelectronics</a>. The support is not nearly as mature as for the ESP32 platform, but work is ongoing, and pull requests are always welcome. At this time AtomVM will work on any board with a minimum of around 128KB ram and 512KB (1M recommended) flash. Simple applications and tests have been successfully run on a stm32f411ceu6 (A.K.A. Black Pill V2). These minimum requirements may need to be raised as platform support matures.</p>
+<p>AtomVM can run on a wide variety of STM32 chip-sets available from <a class="reference external" href="https://www.st.com">STMicroelectronics</a>. The STM32 platform uses the official ST HAL/LL SDK and supports STM32F2, F4, F7, G0, G4, H5, H7, L4, L5, U3, U5, and WB families. The SDK is downloaded automatically during the build.</p>
+<p>The firmware reports <code class="docutils literal notranslate"><span class="pre">stm32</span></code> from <code class="docutils literal notranslate"><span class="pre">atomvm:platform/0</span></code> and uses the GPIO pin tuple format <code class="docutils literal notranslate"><span class="pre">{Bank</span> <span class="pre">::</span> <span class="pre">atom(),</span> <span class="pre">Pin</span> <span class="pre">::</span> <span class="pre">non_neg_integer()}</span></code>.</p>
+<p>At this time AtomVM will work on any board with a minimum of around 128KB RAM and 512KB (1M recommended) flash. Typical boards include ST Nucleo and Discovery boards, as well as WeAct Studio boards (H562, U585, WB55) and BlackPill (F411) boards.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all STM32 families have been tested on hardware. The F4, H5, H7, U5, and WB families have been tested on actual boards. The F2, F7, G0, G4, L4, L5, and U3 families are supported in the build system but have not yet been validated on hardware. If you encounter issues with an untested family, please open an <a class="reference external" href="https://github.com/atomvm/AtomVM/issues">issue on GitHub</a>.</p>
+</div>
 <section id="stm32-requirements">
 <h3>STM32 Requirements<a class="headerlink" href="#stm32-requirements" title="Link to this heading"></a></h3>
 <p>Deployment of AtomVM on the STM32 platform requires the following components:</p>
 <ul class="simple">
 <li><p>A computer running MacOS or Linux (Windows is not currently supported);</p></li>
-<li><p>An stm32 board and a USB/UART connector (these are built into some boards such as the Nucleo product line) and a minimum of 512k (1M recommended) of flash and a recommended minimum of 100k RAM;</p></li>
+<li><p>An STM32 board with a minimum of 512KB (1M recommended) of flash and a recommended minimum of 128K RAM;</p></li>
 <li><p>A USB cable capable of connecting the STM32 module or board to your development machine (laptop or PC);</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">st-flash</span></code> via <a class="reference external" href="https://github.com/stlink-org/stlink">stlink</a>, to flash both AtomVM and your packed AVM applications. Make sure to follow its <a class="reference external" href="https://github.com/stlink-org/stlink#installation">installation procedure</a> before proceeding further.</p></li>
 <li><p>A <a class="reference external" href="https://www.st.com/en/development-tools/st-link-v2.html">st-link v2</a> or <a class="reference external" href="https://www.st.com/en/development-tools/stlink-v3set.html">st-link v3</a> device (typically already included on Nucleo and Discovery boards), is needed for flashing and optional jtag debugging.</p></li>
@@ -398,7 +404,7 @@ of flash the application address is 0x8060000, leaving 128KB of application flas
 </section>
 <section id="console-printing">
 <h4>Console Printing<a class="headerlink" href="#console-printing" title="Link to this heading"></a></h4>
-<p>By default, stdout and stderr are printed on USART2. On the STM32F4Discovery board, you can see them using a TTL-USB with the TX pin connected to board’s pin PA2 (USART2 RX). Baudrate is 115200 and serial transmission is 8N1 with no flow control.</p>
+<p>By default, stdout and stderr are printed on the configured console USART. Baudrate is 115200 and serial transmission is 8N1 with no flow control.</p>
 <p>For Nucleo boards the on board USB-COM to USART may be used by configuring your build with a BOARD parameter, see the <a class="reference internal" href="build-instructions.html#building-for-stm32"><span class="std std-ref">STM32 Build Instructions</span></a> for <a class="reference internal" href="build-instructions.html#configuring-the-console"><span class="std std-ref">Configuring the Console</span></a>.</p>
 </section>
 </section>
