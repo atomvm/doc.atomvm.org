@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module network &mdash; AtomVM 0.7.0-dev+git.16e77f09 documentation</title>
+  <title>Module network &mdash; AtomVM 0.7.0-dev+git.ac69559b documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/eavmlib/network.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=767fc2e7"></script>
+      <script src="../../../_static/documentation_options.js?v=ff1032c2"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -192,6 +192,21 @@ ap_sta_ip_assigned_config() = {sta_ip_assigned, fun((<a href="/__w/AtomVM/AtomVM
 ap_started_config() = {ap_started, fun(() -&gt; term())}
 </code></pre>
 </section>
+<section id="app-managed-config">
+<h3><a name="type-app_managed_config">app_managed_config()</a><a class="headerlink" href="#app-managed-config" title="Link to this heading"></a></h3>
+<pre><code>
+app_managed_config() = managed | {managed, boolean()}
+</code></pre>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">{managed,</span> <span class="pre">true}</span></code> or including the atom <code class="docutils literal notranslate"><span class="pre">managed</span></code> in the <code class="docutils literal notranslate"><span class="pre">sta_config()</span></code> will signal to
+the driver that sta mode connections are managed in the user application, allowing to start the
+driver in STA (or AP+STA) mode, configuring <code class="docutils literal notranslate"><span class="pre">ssid</span></code> and <code class="docutils literal notranslate"><span class="pre">psk</span></code> if provided, but not immediately
+connecting to the access point. If <code class="docutils literal notranslate"><span class="pre">ssid</span></code> and <code class="docutils literal notranslate"><span class="pre">psk</span></code> are provided in <code class="docutils literal notranslate"><span class="pre">managed</span></code> mode, this
+configuration will be used when starting a connection using <code class="docutils literal notranslate"><span class="pre">sta_connect/0</span></code>. When using this
+mode of operation applications will likely need to provide an <code class="docutils literal notranslate"><span class="pre">sta_disconnected_config()</span></code> to
+replace the default callback (which attempts to reconnect to the last network) and instead scan
+for available networks, or use some other means of determining when, and which network to
+connect to.</p>
+</section>
 <section id="db">
 <h3><a name="type-db">db()</a><a class="headerlink" href="#db" title="Link to this heading"></a></h3>
 <pre><code>
@@ -338,7 +353,7 @@ sta_config() = {sta, [<a href="#type-sta_config_property">sta_config_property()<
 <section id="sta-config-property">
 <h3><a name="type-sta_config_property">sta_config_property()</a><a class="headerlink" href="#sta-config-property" title="Link to this heading"></a></h3>
 <pre><code>
-sta_config_property() = <a href="#type-ssid_config">ssid_config()</a> | <a href="#type-psk_config">psk_config()</a> | <a href="#type-dhcp_hostname_config">dhcp_hostname_config()</a> | <a href="#type-sta_connected_config">sta_connected_config()</a> | <a href="#type-sta_beacon_timeout_config">sta_beacon_timeout_config()</a> | <a href="#type-sta_disconnected_config">sta_disconnected_config()</a> | <a href="#type-sta_got_ip_config">sta_got_ip_config()</a>
+sta_config_property() = <a href="#type-app_managed_config">app_managed_config()</a> | <a href="#type-ssid_config">ssid_config()</a> | <a href="#type-psk_config">psk_config()</a> | <a href="#type-dhcp_hostname_config">dhcp_hostname_config()</a> | <a href="#type-sta_connected_config">sta_connected_config()</a> | <a href="#type-sta_beacon_timeout_config">sta_beacon_timeout_config()</a> | <a href="#type-sta_disconnected_config">sta_disconnected_config()</a> | <a href="#type-sta_got_ip_config">sta_got_ip_config()</a>
 </code></pre>
 </section>
 <section id="sta-connected-config">
@@ -352,11 +367,22 @@ sta_connected_config() = {connected, fun(() -&gt; term())}
 <pre><code>
 sta_disconnected_config() = {disconnected, fun(() -&gt; term())}
 </code></pre>
+<p>If no callback is configured the default behavior when the connection to an access point is
+lost is to attempt to reconnect. If a callback is provided these automatic re-connections will
+no longer occur, and the application must use <code class="docutils literal notranslate"><span class="pre">network:sta_connect/0</span></code> to reconnect to the last
+access point, or use <code class="docutils literal notranslate"><span class="pre">network:sta_connect/1</span></code> to connect to a new access point in a manner
+determined by the application.</p>
 </section>
 <section id="sta-got-ip-config">
 <h3><a name="type-sta_got_ip_config">sta_got_ip_config()</a><a class="headerlink" href="#sta-got-ip-config" title="Link to this heading"></a></h3>
 <pre><code>
 sta_got_ip_config() = {got_ip, fun((<a href="#type-ip_info">ip_info()</a>) -&gt; term())}
+</code></pre>
+</section>
+<section id="sta-status">
+<h3><a name="type-sta_status">sta_status()</a><a class="headerlink" href="#sta-status" title="Link to this heading"></a></h3>
+<pre><code>
+sta_status() = associated | connected | connecting | degraded | disconnected | disconnecting | inactive
 </code></pre>
 </section>
 <section id="wifi-channel">
@@ -369,16 +395,53 @@ wifi_channel() = <a href="#type-ghz24_channel">ghz24_channel()</a> | <a href="#t
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#handle_continue-2">handle_continue/2</a></td><td></td></tr><tr><td valign="top"><a href="#sta_rssi-0">sta_rssi/0</a></td><td>    Get the rssi information of AP to which the device is associated with.</td></tr><tr><td valign="top"><a href="#start-1">start/1</a></td><td>    Start a network interface.</td></tr><tr><td valign="top"><a href="#start_link-1">start_link/1</a></td><td></td></tr><tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>    Stop a network interface.</td></tr><tr><td valign="top"><a href="#wait_for_ap-0">wait_for_ap/0</a></td><td>    Equivalent to wait_for_ap(15000).</td></tr><tr><td valign="top"><a href="#wait_for_ap-1">wait_for_ap/1</a></td><td>    Equivalent to wait_for_ap([], Timeout) or wait_for_ap(StaConfig, 15000).</td></tr><tr><td valign="top"><a href="#wait_for_ap-2">wait_for_ap/2</a></td><td>    Start a network interface in access point mode and wait the AP to be
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#sta_connect-0">sta_connect/0</a></td><td>    Connect to an access point after a network disconnection.</td></tr><tr><td valign="top"><a href="#sta_connect-1">sta_connect/1</a></td><td>    Connect to a new access point after the network driver has been started.</td></tr><tr><td valign="top"><a href="#sta_disconnect-0">sta_disconnect/0</a></td><td>    Disconnect from access point.</td></tr><tr><td valign="top"><a href="#sta_rssi-0">sta_rssi/0</a></td><td>    Get the rssi information of AP to which the device is associated with.</td></tr><tr><td valign="top"><a href="#sta_status-0">sta_status/0</a></td><td>Get the connection status of the sta interface.</td></tr><tr><td valign="top"><a href="#start-1">start/1</a></td><td>    Start a network interface.</td></tr><tr><td valign="top"><a href="#start_link-1">start_link/1</a></td><td></td></tr><tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>    Stop a network interface.</td></tr><tr><td valign="top"><a href="#wait_for_ap-0">wait_for_ap/0</a></td><td>    Equivalent to wait_for_ap(15000).</td></tr><tr><td valign="top"><a href="#wait_for_ap-1">wait_for_ap/1</a></td><td>    Equivalent to wait_for_ap([], Timeout) or wait_for_ap(StaConfig, 15000).</td></tr><tr><td valign="top"><a href="#wait_for_ap-2">wait_for_ap/2</a></td><td>    Start a network interface in access point mode and wait the AP to be
 up and running.</td></tr><tr><td valign="top"><a href="#wait_for_sta-0">wait_for_sta/0</a></td><td>    Equivalent to wait_for_sta(15000).</td></tr><tr><td valign="top"><a href="#wait_for_sta-1">wait_for_sta/1</a></td><td>    Equivalent to wait_for_sta([], Timeout) or wait_for_sta(StaConfig, 15000).</td></tr><tr><td valign="top"><a href="#wait_for_sta-2">wait_for_sta/2</a></td><td>    Start a network interface in station mode and wait for a connection to be established.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
 <h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
-<p><a name="handle_continue-2"></a></p>
-<section id="handle-continue-2">
-<h3>handle_continue/2<a class="headerlink" href="#handle-continue-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">handle_continue(X1,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<p><a name="sta_connect-0"></a></p>
+<section id="sta-connect-0">
+<h3>sta_connect/0<a class="headerlink" href="#sta-connect-0" title="Link to this heading"></a></h3>
+<pre><code>
+sta_connect() -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p>returns: ok, if the network interface was started, or {error, Reason} if
+a failure occurred (e.g., due to malformed network configuration).</p>
+<p>Connect to an access point after a network disconnection.</p>
+<p>This function will attempt to connect, in the background, to the
+last AP endpoint that was configured.</p>
+<p><a name="sta_connect-1"></a></p>
+</section>
+<section id="sta-connect-1">
+<h3>sta_connect/1<a class="headerlink" href="#sta-connect-1" title="Link to this heading"></a></h3>
+<pre><code>
+sta_connect(Config::<a href="#type-network_config">network_config()</a> | [<a href="#type-sta_config_property">sta_config_property()</a>]) -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Config</span></code>: The new station mode network configuration<br /></p>
+<p>returns: ok, if the network interface was started, or {error, Reason} if
+a failure occurred (e.g., due to malformed network configuration).</p>
+<p>Connect to a new access point after the network driver has been started.</p>
+<p>This function will attempt to connect to a new AP endpoint in the
+background.</p>
+<p><a name="sta_disconnect-0"></a></p>
+</section>
+<section id="sta-disconnect-0">
+<h3>sta_disconnect/0<a class="headerlink" href="#sta-disconnect-0" title="Link to this heading"></a></h3>
+<pre><code>
+sta_disconnect() -&gt; ok | {error, Reason::term()}
+</code></pre>
+<br />
+<p>returns: <code class="docutils literal notranslate"><span class="pre">ok</span></code>, if the network disconnects from the access point, or
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code> if a failure occurred.</p>
+<p>Disconnect from access point.</p>
+<p>This will terminate a connection to an access point.</p>
+<p>Note: Using this function without providing an <code class="docutils literal notranslate"><span class="pre">sta_disconnected_config()</span></code>
+in the <code class="docutils literal notranslate"><span class="pre">sta_config()</span></code> will result in the driver immediately attempting to
+reconnect to the same access point again.</p>
 <p><a name="sta_rssi-0"></a></p>
 </section>
 <section id="sta-rssi-0">
@@ -389,6 +452,23 @@ sta_rssi() -&gt; {ok, Rssi::<a href="#type-db">db()</a>} | {error, Reason::term(
 <br />
 <p>returns: {ok, Rssi} in decibels, or {error, Reason}.</p>
 <p>Get the rssi information of AP to which the device is associated with.</p>
+<p><a name="sta_status-0"></a></p>
+</section>
+<section id="sta-status-0">
+<h3>sta_status/0<a class="headerlink" href="#sta-status-0" title="Link to this heading"></a></h3>
+<pre><code>
+sta_status() -&gt; Status::<a href="#type-sta_status">sta_status()</a>
+</code></pre>
+<br />
+<p>returns: ConnectionState :: sta_status().</p>
+<p>Get the connection status of the sta interface.</p>
+<p>Results will be one of: <code class="docutils literal notranslate"><span class="pre">associated</span></code>, <code class="docutils literal notranslate"><span class="pre">connected</span></code>, <code class="docutils literal notranslate"><span class="pre">connecting</span></code>, <code class="docutils literal notranslate"><span class="pre">degraded</span></code>,
+<code class="docutils literal notranslate"><span class="pre">disconnected</span></code>, <code class="docutils literal notranslate"><span class="pre">disconnecting</span></code>, or <code class="docutils literal notranslate"><span class="pre">inactive</span></code>. The state <code class="docutils literal notranslate"><span class="pre">associated</span></code> indicates
+that the station is connected to an access point, but does not yet have an IP address.
+A status of <code class="docutils literal notranslate"><span class="pre">degraded</span></code> indicates that the connection has experienced at least one
+beacon timeout event during the current connection session. This does not necessarily
+mean the connection is still in a poor state, but it might be helpful diagnosing
+problems with networked applications.</p>
 <p><a name="start-1"></a></p>
 </section>
 <section id="start-1">
@@ -402,10 +482,15 @@ start(Config::<a href="#type-network_config">network_config()</a>) -&gt; {ok, pi
 a failure occurred (e.g., due to malformed network configuration).</p>
 <p>Start a network interface.</p>
 <p>This function will start a network interface, which will attempt to
-connect to an AP endpoint in the background.  Specify callback
-functions to receive definitive
-information that the connection succeeded.  See the AtomVM Network
-FSM Programming Manual for more information.</p>
+connect to an AP endpoint in the background. If the <code class="docutils literal notranslate"><span class="pre">managed</span></code>
+option us used the driver will be started, but the connection will
+be delayed until <code class="docutils literal notranslate"><span class="pre">network:sta_connect/0,1</span></code> is used to start the
+connection. Specify callback functions to receive definitive
+information that the connection succeeded; specify a
+<code class="docutils literal notranslate"><span class="pre">sta_disconnected_config()</span></code> in the <code class="docutils literal notranslate"><span class="pre">sta_config()</span></code> to manage
+re-connections in the application, rather than the default
+automatic attempt to reconnect until a connection is reestablished.</p>
+<p>See the AtomVM Network Programming Manual for more information.</p>
 <p><a name="start_link-1"></a></p>
 </section>
 <section id="start-link-1">

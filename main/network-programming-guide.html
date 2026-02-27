@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Network Programming Guide &mdash; AtomVM 0.7.0-dev+git.16e77f09 documentation</title>
+  <title>Network Programming Guide &mdash; AtomVM 0.7.0-dev+git.ac69559b documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/network-programming-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=767fc2e7"></script>
+      <script src="_static/documentation_options.js?v=ff1032c2"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -56,7 +56,16 @@
 <li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Network Programming Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#station-sta-mode">Station (STA) mode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#managed-mode">Managed mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#station-mode-callbacks">Station mode callbacks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#station-mode-example-configuration">Station mode example configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sta-mode-convenience-functions">STA Mode Convenience Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sta-or-ap-sta-mode-functions">STA (or AP+STA) mode functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sta-status"><code class="docutils literal notranslate"><span class="pre">sta_status</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sta-disconnect"><code class="docutils literal notranslate"><span class="pre">sta_disconnect</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sta-connect"><code class="docutils literal notranslate"><span class="pre">sta_connect</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ap-mode">AP mode</a><ul>
@@ -120,18 +129,57 @@
 <section id="station-sta-mode">
 <h2>Station (STA) mode<a class="headerlink" href="#station-sta-mode" title="Link to this heading"></a></h2>
 <p>In STA mode, the ESP32 or the Pico W/Pico 2 W connect to an existing WiFi network.</p>
-<p>In this case, the input configuration should be a properties list containing a tuple of the form <code class="docutils literal notranslate"><span class="pre">{sta,</span> <span class="pre">&lt;sta-properties&gt;}</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;sta-properties&gt;</span></code> is a property list containing configuration properties for the device in station mode.</p>
+<p>In this case, the input configuration should be a properties list containing a tuple of the form
+<code class="docutils literal notranslate"><span class="pre">{sta,</span> <span class="pre">&lt;sta-properties&gt;}</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;sta-properties&gt;</span></code> is a property list containing configuration
+properties for the device in station mode.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;sta-properties&gt;</span></code> property list should contain the following entries:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">{ssid,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code>  The SSID to which the device should connect.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{psk,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code> The password required to authenticate to the network, if required.</p></li>
 </ul>
-<p>The <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#start-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:start/1</span></code></span></a> will immediately return <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Pid}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Pid</span></code> is the process ID of the network server instance, if the network was properly initialized, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if there was an error in configuration.  However, the application may want to wait for the device to connect to the target network and obtain an IP address, for example, before starting clients or services that require network access.</p>
-<p>Applications can specify callback functions, which get triggered as events emerge from the network layer, including connection to and disconnection from the target network, as well as IP address acquisition.</p>
+<p>In addition, the following optional parameters can be specified to configure the network:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{dhcp_hostname,</span> <span class="pre">string()|binary()}</span></code> The DHCP hostname as which the device should register
+(default: <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;atomvm-&lt;hexmac&gt;&quot;&gt;&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;hexmac&gt;</span></code> is the hexadecimal representation of the
+factory-assigned MAC address of the device).</p></li>
+</ul>
+<p>The following options are only supported on ESP32 platform:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{beacon_timeout,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device
+does not receive a beacon frame from the connected access point during the “inactive time” (6
+second default, currently not configurable).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">managed</span></code> or <code class="docutils literal notranslate"><span class="pre">{managed,</span> <span class="pre">boolean()}</span></code> Used to activate application-managed mode,
+<a class="reference internal" href="#managed-mode">see below</a>.</p></li>
+</ul>
+<p>The <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#start-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:start/1</span></code></span></a> will immediately return
+<code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Pid}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Pid</span></code> is the process ID of the network server instance, if the network was
+properly initialized, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if there was an error in configuration.  However, the
+application may want to wait for the device to connect to the target network and obtain an IP
+address, for example, before starting clients or services that require network access.</p>
+<section id="managed-mode">
+<h3>Managed mode<a class="headerlink" href="#managed-mode" title="Link to this heading"></a></h3>
+<p>For fine-grained control over network connections in station mode, the <code class="docutils literal notranslate"><span class="pre">managed</span></code> boolean may be
+used, to start the driver and enable station mode, without starting a connection to an access
+point. In this mode, providing the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> and <code class="docutils literal notranslate"><span class="pre">psk</span></code> tuples is optional. If a configuration is
+provided, this will be used by the
+<a class="reference internal" href="apidocs/erlang/eavmlib/network.html#sta-connect-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">sta_connect/0</span></code></span></a> function to initiate a
+connection to the access point. If <code class="docutils literal notranslate"><span class="pre">ssid</span></code> and <code class="docutils literal notranslate"><span class="pre">psk</span></code> are omitted from the configuration they must be
+supplied to <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#sta-connect-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">sta_connect/1</span></code></span></a> to initiate a
+connection to an access point. Any new configuration values passed to <code class="docutils literal notranslate"><span class="pre">sta_connect/1</span></code> will replace
+any previous values, but leave the rest unchanged. Callback configuration as well as <code class="docutils literal notranslate"><span class="pre">mdns</span></code> and
+<code class="docutils literal notranslate"><span class="pre">sntp</span></code> configurations may also be updated in the configuration passed to <code class="docutils literal notranslate"><span class="pre">sta_connect/1</span></code>.</p>
+<p>When using managed mode applications should include a <code class="docutils literal notranslate"><span class="pre">disconnected</span></code> callback to also inhibit the
+automatic reconnection behavior.</p>
+</section>
+<section id="station-mode-callbacks">
+<h3>Station mode callbacks<a class="headerlink" href="#station-mode-callbacks" title="Link to this heading"></a></h3>
+<p>Applications can specify callback functions, which get triggered as events emerge from the network
+layer, including connection to and disconnection from the target network, as well as IP address
+acquisition.</p>
 <p>Callback functions can be specified by the following configuration parameters:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">{connected,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device connects to the target network.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{disconnected,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device disconnects from the target network.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{disconnected,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device disconnects from the target network. If no callback function is provided the default behavior is to attempt to reconnect immediately. By providing a callback function the application can decide whether to reconnect, or connect to a new access point.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{got_ip,</span> <span class="pre">fun((ip_info())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device obtains an IP address.  In this case, the IPv4 IP address, net mask, and gateway are provided as a parameter to the callback function.</p></li>
 </ul>
 <div class="admonition warning">
@@ -139,11 +187,9 @@
 <p>IPv6 addresses are not yet supported in AtomVM.</p>
 </div>
 <p>Callback functions are optional, but are highly recommended for building robust WiFi applications.  The return value from callback functions is ignored, and AtomVM provides no guarantees about the execution context (i.e., BEAM process) in which these functions are invoked.</p>
-<p>In addition, the following optional parameters can be specified to configure the AP network (ESP32 only):</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">{dhcp_hostname,</span> <span class="pre">string()|binary()}</span></code> The DHCP hostname as which the device should register (<code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;atomvm-&lt;hexmac&gt;&quot;&gt;&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;hexmac&gt;</span></code> is the hexadecimal representation of the factory-assigned MAC address of the device).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{beacon_timeout,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device does not receive a beacon frame from the connected access point during the “inactive time” (6 second default, currently not configurable).</p></li>
-</ul>
+</section>
+<section id="station-mode-example-configuration">
+<h3>Station mode example configuration<a class="headerlink" href="#station-mode-example-configuration" title="Link to this heading"></a></h3>
 <p>The following example illustrates initialization of the WiFi network in STA mode.  The example program will configure the network to connect to a specified network.  Events that occur during the lifecycle of the network will trigger invocations of the specified callback functions.</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span><span class="n">sta</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
@@ -167,10 +213,12 @@
 <span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Got IP: </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">IpInfo</span><span class="p">]).</span>
 
 <span class="nf">disconnected</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Disconnected from AP.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">).</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Disconnected from AP, attempting to reconnect</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="nn">network</span><span class="p">:</span><span class="nf">sta_connect</span><span class="p">().</span>
 </pre></div>
 </div>
 <p>In a typical application, the network should be configured and an IP address should be acquired first, before starting clients or services that have a dependency on the network.</p>
+</section>
 <section id="sta-mode-convenience-functions">
 <h3>STA Mode Convenience Functions<a class="headerlink" href="#sta-mode-convenience-functions" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module supports the <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#wait-for-sta-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:wait_for_sta/1,2</span></code></span></a> convenience functions for applications that do not need robust connection management.  These functions are synchronous and will wait until the device is connected to the specified AP.  Supply the properties list specified in the <code class="docutils literal notranslate"><span class="pre">{sta,</span> <span class="pre">[...]}</span></code> component of the above configuration, in addition to an optional timeout (in milliseconds).</p>
@@ -189,6 +237,42 @@
 </pre></div>
 </div>
 <p>To obtain the signal strength (in decibels) of the connection to the associated access point use <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#sta-rssi-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:sta_rssi/0</span></code></span></a>.</p>
+</section>
+<section id="sta-or-ap-sta-mode-functions">
+<h3>STA (or AP+STA) mode functions<a class="headerlink" href="#sta-or-ap-sta-mode-functions" title="Link to this heading"></a></h3>
+<section id="sta-status">
+<h4><code class="docutils literal notranslate"><span class="pre">sta_status</span></code><a class="headerlink" href="#sta-status" title="Link to this heading"></a></h4>
+<p>The function <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#sta-status-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:sta_status/0</span></code></span></a> may be used
+any time after the driver has been started to get the current connection state of the sta
+interface. When a connection is initiated, either at start up or when <code class="docutils literal notranslate"><span class="pre">network:sta_connect/1</span></code> is used
+in application <code class="docutils literal notranslate"><span class="pre">managed</span></code> mode (which will start with a <code class="docutils literal notranslate"><span class="pre">disconnected</span></code> state) the interface will be
+marked as <code class="docutils literal notranslate"><span class="pre">connecting</span></code> followed by <code class="docutils literal notranslate"><span class="pre">associated</span></code> after a connection is established with an access
+point. After receiving an IP address the connection will be fully <code class="docutils literal notranslate"><span class="pre">connected</span></code>. If a beacon timeout
+event is received (this indicates poor signal strength or a heavily congested network) the status
+will change to <code class="docutils literal notranslate"><span class="pre">degraded</span></code> for the remainder of the connection session. This does not always mean
+that the connection is still poor, but it can be a helpful diagnostic when experiencing network
+problems, and often does result in a dropped connection. When stopping the interface with
+<code class="docutils literal notranslate"><span class="pre">network:sta_disconnect/0</span></code> the state will change to <code class="docutils literal notranslate"><span class="pre">disconnecting</span></code> until the interface is completely
+stopped and set to <code class="docutils literal notranslate"><span class="pre">disconnected</span></code>.</p>
+</section>
+<section id="sta-disconnect">
+<h4><code class="docutils literal notranslate"><span class="pre">sta_disconnect</span></code><a class="headerlink" href="#sta-disconnect" title="Link to this heading"></a></h4>
+<p>The function <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#sta-disconnect-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:sta_disconnect/0</span></code></span></a> will
+disconnect a station from the associated access point. Note that using this function without
+providing a custom <code class="docutils literal notranslate"><span class="pre">disconnected</span></code> event callback function will result in the driver immediately
+attempting to reconnect to the last associated access point.</p>
+<p>This function is currently only supported on the ESP32 platform.</p>
+</section>
+<section id="sta-connect">
+<h4><code class="docutils literal notranslate"><span class="pre">sta_connect</span></code><a class="headerlink" href="#sta-connect" title="Link to this heading"></a></h4>
+<p>Using the function <a class="reference internal" href="apidocs/erlang/eavmlib/network.html#sta-connect-0"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:sta_connect/0</span></code></span></a> will
+start a connection to the last configured access point. To connect to a new access point use
+<a class="reference internal" href="apidocs/erlang/eavmlib/network.html#sta-connect-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">network:sta_connect/1</span></code></span></a> with either a proplist
+consisting of <code class="docutils literal notranslate"><span class="pre">[{ssid,</span> <span class="pre">NetworkName},</span> <span class="pre">{psk,</span> <span class="pre">Password},</span> <span class="pre">{dhcp_hostname,</span> <span class="pre">Hostname}]</span></code> (setting the
+hostname is optional, and <code class="docutils literal notranslate"><span class="pre">psk</span></code> is not required for unsecure networks), or a complete
+<code class="docutils literal notranslate"><span class="pre">network_config()</span></code> consisting of <code class="docutils literal notranslate"><span class="pre">[sta_config(),</span> <span class="pre">sntp_config(),</span> <span class="pre">mdns_config()]</span></code>.</p>
+<p>This function is currently only supported on the ESP32 platform.</p>
+</section>
 </section>
 </section>
 <section id="ap-mode">
