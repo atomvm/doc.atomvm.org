@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Instructions &mdash; AtomVM 0.7.0-dev+git.179144b0 documentation</title>
+  <title>Build Instructions &mdash; AtomVM 0.7.0-dev+git.dc2e5f1b documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/build-instructions.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3325ffd0"></script>
+      <script src="_static/documentation_options.js?v=de7004ef"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -62,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#downloading-atomvm">Downloading AtomVM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#source-code-organization">Source code organization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#external-dependencies">External dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#packbeam"><code class="docutils literal notranslate"><span class="pre">packbeam</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#uf2tool"><code class="docutils literal notranslate"><span class="pre">uf2tool</span></code></a></li>
 </ul>
 </li>
@@ -225,7 +226,7 @@ it is optional.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">src</span></code>  Contains the core AtomVM virtual machine source code;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">lib</span></code>  Contains the Erlang and Elixir core library source code;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tools</span></code> Contains AtomVM tooling, including the <code class="docutils literal notranslate"><span class="pre">PackBEAM</span></code> executable, as well as build support tooling;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tools</span></code> Contains build support tooling;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">examples</span></code> Contains sample programs for demonstration purposes;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tests</span></code> Contains test code run as part of test qualification;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">doc</span></code> Contains documentation source code and content.</p></li>
@@ -234,10 +235,15 @@ it is optional.</p>
 </section>
 <section id="external-dependencies">
 <h2>External dependencies<a class="headerlink" href="#external-dependencies" title="Link to this heading"></a></h2>
+<section id="packbeam">
+<h3><code class="docutils literal notranslate"><span class="pre">packbeam</span></code><a class="headerlink" href="#packbeam" title="Link to this heading"></a></h3>
+<p>AtomVM depends on <code class="docutils literal notranslate"><span class="pre">packbeam</span></code>. It is used to pack beams as well as assets into AtomVM pack format, <code class="docutils literal notranslate"><span class="pre">.avm</span></code>. <code class="docutils literal notranslate"><span class="pre">packbeam</span></code> source code is downloaded automatically by <code class="docutils literal notranslate"><span class="pre">rebar3</span></code> from <code class="docutils literal notranslate"><span class="pre">hex</span></code> mirrors, and it is then escriptized.</p>
+<p>It is possible to use a local copy of <code class="docutils literal notranslate"><span class="pre">packbeam</span></code> source code by setting <code class="docutils literal notranslate"><span class="pre">PACKBEAM_PATH</span></code> variable to a path to a source checkout of <a class="reference external" href="https://github.com/atomvm/atomvm_packbeam"><code class="docutils literal notranslate"><span class="pre">atomvm_packbeam</span></code></a> when invoking CMake.</p>
+</section>
 <section id="uf2tool">
 <h3><code class="docutils literal notranslate"><span class="pre">uf2tool</span></code><a class="headerlink" href="#uf2tool" title="Link to this heading"></a></h3>
-<p>AtomVM depends on <code class="docutils literal notranslate"><span class="pre">uf2tool</span></code>. It is used to pack both native and Erlang/Elixir/Gleam code for RP2. uf2tool is downloaded automatically by <code class="docutils literal notranslate"><span class="pre">rebar3</span></code> from <code class="docutils literal notranslate"><span class="pre">hex</span></code> mirrors.</p>
-<p>It is possible to use a local copy of uf2tool by setting <code class="docutils literal notranslate"><span class="pre">UF2TOOL_PATH</span></code> variable to a path to a source checkout of <a class="reference external" href="https://github.com/pguyot/uf2tool"><code class="docutils literal notranslate"><span class="pre">uf2tool</span></code></a> when invoking CMake.</p>
+<p>AtomVM depends on <code class="docutils literal notranslate"><span class="pre">uf2tool</span></code>. It is used to pack both native and Erlang/Elixir/Gleam code for RP2. <code class="docutils literal notranslate"><span class="pre">uf2tool</span></code> source code is downloaded automatically by <code class="docutils literal notranslate"><span class="pre">rebar3</span></code> from <code class="docutils literal notranslate"><span class="pre">hex</span></code> mirrors.</p>
+<p>It is possible to use a local copy of <code class="docutils literal notranslate"><span class="pre">uf2tool</span></code> source code by setting <code class="docutils literal notranslate"><span class="pre">UF2TOOL_PATH</span></code> variable to a path to a source checkout of <a class="reference external" href="https://github.com/pguyot/uf2tool"><code class="docutils literal notranslate"><span class="pre">uf2tool</span></code></a> when invoking CMake.</p>
 </section>
 </section>
 <section id="platform-specific-build-instructions">
