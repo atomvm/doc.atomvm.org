@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module code_server &mdash; AtomVM 0.7.0-dev+git.ac69559b documentation</title>
+  <title>Module code_server &mdash; AtomVM 0.7.0-dev+git.179144b0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/code_server.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=ff1032c2"></script>
+      <script src="../../../_static/documentation_options.js?v=3325ffd0"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -167,7 +167,7 @@
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#atom_resolver-2">atom_resolver/2</a></td><td>Get the atom from the atom module index.</td></tr><tr><td valign="top"><a href="#code_chunk-1">code_chunk/1</a></td><td>Get the bytecode of a given module.</td></tr><tr><td valign="top"><a href="#is_loaded-1">is_loaded/1</a></td><td>Determine if a given module is loaded.</td></tr><tr><td valign="top"><a href="#literal_resolver-2">literal_resolver/2</a></td><td>Get a module literal from its index.</td></tr><tr><td valign="top"><a href="#resume-2">resume/2</a></td><td>Resume a process that was trapped waiting for module to be loaded.</td></tr><tr><td valign="top"><a href="#set_native_code-3">set_native_code/3</a></td><td>Associate a native code stream with a module.</td></tr><tr><td valign="top"><a href="#start_link-0">start_link/0</a></td><td>Start code server.</td></tr><tr><td valign="top"><a href="#type_resolver-2">type_resolver/2</a></td><td>Get a type from its index.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#atom_resolver-2">atom_resolver/2</a></td><td>Get the atom from the atom module index.</td></tr><tr><td valign="top"><a href="#code_chunk-1">code_chunk/1</a></td><td>Get the bytecode of a given module.</td></tr><tr><td valign="top"><a href="#import_resolver-2">import_resolver/2</a></td><td>Get an imported function triplet from its index.</td></tr><tr><td valign="top"><a href="#is_loaded-1">is_loaded/1</a></td><td>Determine if a given module is loaded.</td></tr><tr><td valign="top"><a href="#literal_resolver-2">literal_resolver/2</a></td><td>Get a module literal from its index.</td></tr><tr><td valign="top"><a href="#resume-2">resume/2</a></td><td>Resume a process that was trapped waiting for module to be loaded.</td></tr><tr><td valign="top"><a href="#set_native_code-3">set_native_code/3</a></td><td>Associate a native code stream with a module.</td></tr><tr><td valign="top"><a href="#start_link-0">start_link/0</a></td><td>Start code server.</td></tr><tr><td valign="top"><a href="#type_resolver-2">type_resolver/2</a></td><td>Get a type from its index.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -193,6 +193,17 @@ code_chunk(Module::module()) -&gt; binary()
 <p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: module to get the bytecode of<br /></p>
 <p>returns: Bytecode of the module, as a binary</p>
 <p>Get the bytecode of a given module</p>
+<p><a name="import_resolver-2"></a></p>
+</section>
+<section id="import-resolver-2">
+<h3>import_resolver/2<a class="headerlink" href="#import-resolver-2" title="Link to this heading"></a></h3>
+<pre><code>
+import_resolver(Module::module(), Index::non_neg_integer()) -&gt; {atom(), atom(), non_neg_integer()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: module to get the imported function from<br /><code class="docutils literal notranslate"><span class="pre">Index</span></code>: imported function index in the module<br /></p>
+<p>returns: The imported function as {Module, Function, Arity}</p>
+<p>Get an imported function triplet from its index</p>
 <p><a name="is_loaded-1"></a></p>
 </section>
 <section id="is-loaded-1">
