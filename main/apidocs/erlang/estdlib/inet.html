@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module inet &mdash; AtomVM 0.7.0-dev+git.209835dc documentation</title>
+  <title>Module inet &mdash; AtomVM 0.7.0-dev+git.5555dee1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/inet.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=dd9f451e"></script>
+      <script src="../../../_static/documentation_options.js?v=6c9e9c78"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -213,7 +213,7 @@ socket_impl() = any()
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#close-1">close/1</a></td><td>    Close the socket.</td></tr><tr><td valign="top"><a href="#getaddr-2">getaddr/2</a></td><td>    Get the IP address associated with a given name.</td></tr><tr><td valign="top"><a href="#peername-1">peername/1</a></td><td>    The address and port representing the "remote" end of a connection.</td></tr><tr><td valign="top"><a href="#port-1">port/1</a></td><td>    Retrieve the actual port number to which the socket is bound.</td></tr><tr><td valign="top"><a href="#sockname-1">sockname/1</a></td><td>    The address and port representing the "local" end of a connection.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#close-1">close/1</a></td><td>    Close the socket.</td></tr><tr><td valign="top"><a href="#getaddr-2">getaddr/2</a></td><td>    Get the IP address associated with a given name.</td></tr><tr><td valign="top"><a href="#ntoa-1">ntoa/1</a></td><td>    Convert an IPv4 address to a string.</td></tr><tr><td valign="top"><a href="#parse_address-1">parse_address/1</a></td><td>    Parse an IP address string to an <code>ip4_address()</code>.</td></tr><tr><td valign="top"><a href="#parse_ipv4_address-1">parse_ipv4_address/1</a></td><td>    Parse an IPv4 address string to an <code>ip4_address()</code>.</td></tr><tr><td valign="top"><a href="#parse_ipv4strict_address-1">parse_ipv4strict_address/1</a></td><td>    Parse a strict IPv4 address string to an <code>ip4_address()</code>.</td></tr><tr><td valign="top"><a href="#peername-1">peername/1</a></td><td>    The address and port representing the "remote" end of a connection.</td></tr><tr><td valign="top"><a href="#port-1">port/1</a></td><td>    Retrieve the actual port number to which the socket is bound.</td></tr><tr><td valign="top"><a href="#sockname-1">sockname/1</a></td><td>    The address and port representing the "local" end of a connection.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -239,6 +239,76 @@ getaddr(Name::<a href="#type-ip_address">ip_address()</a> | <a href="#type-hostn
 <p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: the name to resolve<br /><code class="docutils literal notranslate"><span class="pre">Family</span></code>: the family to resolve it to<br /></p>
 <p>returns: The address or an error tuple.</p>
 <p>Get the IP address associated with a given name.</p>
+<p><a name="ntoa-1"></a></p>
+</section>
+<section id="ntoa-1">
+<h3>ntoa/1<a class="headerlink" href="#ntoa-1" title="Link to this heading"></a></h3>
+<pre><code>
+ntoa(IpAddress::<a href="#type-ip_address">ip_address()</a>) -&gt; string() | {error, einval}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">IpAddress</span></code>: an IPv4 address tuple<br /></p>
+<p>returns: a string representation of the IP address, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">einval}</span></code>
+if the argument is not a valid IPv4 address.</p>
+<p>Convert an IPv4 address to a string.</p>
+<p>This function converts an <code class="docutils literal notranslate"><span class="pre">ip4_address()</span></code> tuple to its dotted-decimal
+string representation, for example <code class="docutils literal notranslate"><span class="pre">{192,</span> <span class="pre">168,</span> <span class="pre">0,</span> <span class="pre">1}</span></code> becomes
+<code class="docutils literal notranslate"><span class="pre">&quot;192.168.0.1&quot;</span></code>.</p>
+<p><strong>Note:</strong> Unlike Erlang/OTP, IPv6 addresses are not supported.
+Passing an IPv6 address tuple will return <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">einval}</span></code>.</p>
+<p><a name="parse_address-1"></a></p>
+</section>
+<section id="parse-address-1">
+<h3>parse_address/1<a class="headerlink" href="#parse-address-1" title="Link to this heading"></a></h3>
+<pre><code>
+parse_address(Address::string()) -&gt; {ok, <a href="#type-ip4_address">ip4_address()</a>} | {error, einval}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Address</span></code>: a string representation of an IPv4 address<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">IPv4Address}</span></code> if the string is a valid strict IPv4 address,
+or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">einval}</span></code> otherwise.</p>
+<p>Parse an IP address string to an <code class="docutils literal notranslate"><span class="pre">ip4_address()</span></code>.</p>
+<p>This function is an alias for <code class="docutils literal notranslate"><span class="pre">parse_ipv4strict_address/1</span></code>.</p>
+<p><strong>Note:</strong> Unlike Erlang/OTP, IPv6 addresses are not supported.
+Only strict dotted-decimal IPv4 addresses with exactly four fields
+are accepted.  Short form addresses such as <code class="docutils literal notranslate"><span class="pre">&quot;127.1&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;0x7f000001&quot;</span></code> are not supported. Leading zeros are not supported
+as well, so <code class="docutils literal notranslate"><span class="pre">&quot;127.0.0.001&quot;</span></code> is not allowed.</p>
+<p><a name="parse_ipv4_address-1"></a></p>
+</section>
+<section id="parse-ipv4-address-1">
+<h3>parse_ipv4_address/1<a class="headerlink" href="#parse-ipv4-address-1" title="Link to this heading"></a></h3>
+<pre><code>
+parse_ipv4_address(Address::string()) -&gt; {ok, <a href="#type-ip4_address">ip4_address()</a>} | {error, einval}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Address</span></code>: a string representation of an IPv4 address<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">IPv4Address}</span></code> if the string is a valid strict IPv4 address,
+or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">einval}</span></code> otherwise.</p>
+<p>Parse an IPv4 address string to an <code class="docutils literal notranslate"><span class="pre">ip4_address()</span></code>.</p>
+<p>This function is an alias for <code class="docutils literal notranslate"><span class="pre">parse_ipv4strict_address/1</span></code>.</p>
+<p><strong>Note:</strong> Unlike Erlang/OTP, this function behaves like
+<code class="docutils literal notranslate"><span class="pre">parse_ipv4strict_address/1</span></code> and only accepts strict dotted-decimal
+IPv4 addresses with exactly four fields.  Short form addresses such
+as <code class="docutils literal notranslate"><span class="pre">&quot;127.1&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;0x7f000001&quot;</span></code> are not supported. Leading zeros are
+not supported as well, so <code class="docutils literal notranslate"><span class="pre">&quot;127.0.0.001&quot;</span></code> is not allowed.</p>
+<p><a name="parse_ipv4strict_address-1"></a></p>
+</section>
+<section id="parse-ipv4strict-address-1">
+<h3>parse_ipv4strict_address/1<a class="headerlink" href="#parse-ipv4strict-address-1" title="Link to this heading"></a></h3>
+<pre><code>
+parse_ipv4strict_address(Address::string()) -&gt; {ok, <a href="#type-ip4_address">ip4_address()</a>} | {error, einval}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Address</span></code>: a string representation of a strict IPv4 address<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">IPv4Address}</span></code> if the string is a valid strict IPv4 address,
+or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">einval}</span></code> otherwise.</p>
+<p>Parse a strict IPv4 address string to an <code class="docutils literal notranslate"><span class="pre">ip4_address()</span></code>.</p>
+<p>Requires an IPv4 address string containing exactly four decimal
+fields separated by dots, where each field is in the range 0-255.
+For example: <code class="docutils literal notranslate"><span class="pre">&quot;192.168.0.1&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;127.0.0.1&quot;</span></code>.</p>
+<p>Short form addresses such as <code class="docutils literal notranslate"><span class="pre">&quot;127.1&quot;</span></code> or hexadecimal notation
+such as <code class="docutils literal notranslate"><span class="pre">&quot;0x7f000001&quot;</span></code> are not accepted.</p>
 <p><a name="peername-1"></a></p>
 </section>
 <section id="peername-1">
