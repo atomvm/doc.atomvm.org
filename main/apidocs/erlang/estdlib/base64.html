@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module base64 &mdash; AtomVM 0.7.0-dev+git.5555dee1 documentation</title>
+  <title>Module base64 &mdash; AtomVM 0.7.0-dev+git.3c7b7006 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/base64.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=6c9e9c78"></script>
+      <script src="../../../_static/documentation_options.js?v=3c960617"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -155,6 +155,7 @@
 <h1>Module base64<a class="headerlink" href="#module-base64" title="Link to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="#description">Description</a></p></li>
+<li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
 <li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
 <li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
 </ul>
@@ -168,11 +169,49 @@ with the following exceptions:</p>
 <li><p>No support for decoding data with whitespace in base64 data</p></li>
 <li><p>No support for mime decoding functions</p></li>
 </ul>
+<p><a name="types"></a></p>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="decode-options">
+<h3><a name="type-decode_options">decode_options()</a><a class="headerlink" href="#decode-options" title="Link to this heading"></a></h3>
+<pre><code>
+decode_options() = #{padding =&gt; boolean(), mode =&gt; standard | urlsafe}
+</code></pre>
+<p>Options for decoding functions.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">padding</span></code>: when <code class="docutils literal notranslate"><span class="pre">true</span></code> (default), the input must be padded with the
+correct number of <code class="docutils literal notranslate"><span class="pre">=</span></code> characters.  When <code class="docutils literal notranslate"><span class="pre">false</span></code>, missing <code class="docutils literal notranslate"><span class="pre">=</span></code>
+padding is accepted, though padded input is still accepted too.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: selects the decoding alphabet.<code class="docutils literal notranslate"><span class="pre">standard</span></code> (default) uses
+the standard alphabet from RFC 4648 Section 4; <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">/</span></code> are
+valid, while <code class="docutils literal notranslate"><span class="pre">-</span></code> and <code class="docutils literal notranslate"><span class="pre">_</span></code> are illegal.<code class="docutils literal notranslate"><span class="pre">urlsafe</span></code> uses the URL and
+filename safe alphabet from RFC 4648 Section 5; <code class="docutils literal notranslate"><span class="pre">-</span></code> and <code class="docutils literal notranslate"><span class="pre">_</span></code> are
+valid, while <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">/</span></code> are illegal.</p></li>
+</ul>
+</section>
+<section id="encode-options">
+<h3><a name="type-encode_options">encode_options()</a><a class="headerlink" href="#encode-options" title="Link to this heading"></a></h3>
+<pre><code>
+encode_options() = #{padding =&gt; boolean(), mode =&gt; standard | urlsafe}
+</code></pre>
+<p>Options for encoding functions.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">padding</span></code>: when <code class="docutils literal notranslate"><span class="pre">true</span></code> (default), appends <code class="docutils literal notranslate"><span class="pre">=</span></code> padding characters to
+the encoded output so its length is a multiple of 4.  When <code class="docutils literal notranslate"><span class="pre">false</span></code>,
+trailing <code class="docutils literal notranslate"><span class="pre">=</span></code> characters are omitted.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: selects the encoding alphabet.<code class="docutils literal notranslate"><span class="pre">standard</span></code> (default) uses
+the standard alphabet from RFC 4648 Section 4 (<code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">/</span></code> for
+indices 62 and 63).<code class="docutils literal notranslate"><span class="pre">urlsafe</span></code> uses the URL and filename safe
+alphabet from RFC 4648 Section 5 (<code class="docutils literal notranslate"><span class="pre">-</span></code> and <code class="docutils literal notranslate"><span class="pre">_</span></code> for indices 62 and
+63).</p></li>
+</ul>
 <p><a name="index"></a></p>
+</section>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#decode-1">decode/1</a></td><td>    Base-64 decode a binary or string, outputting a binary.</td></tr><tr><td valign="top"><a href="#decode_to_string-1">decode_to_string/1</a></td><td>    Base-64 decode a binary or string, outputting a string.</td></tr><tr><td valign="top"><a href="#encode-1">encode/1</a></td><td>    Base-64 encode a binary or string, outputting a binary.</td></tr><tr><td valign="top"><a href="#encode_to_string-1">encode_to_string/1</a></td><td>    Base-64 encode a binary or string, outputting a string.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#decode-1">decode/1</a></td><td>    Equivalent to <code>decode(Data, #{})</code>.</td></tr><tr><td valign="top"><a href="#decode-2">decode/2</a></td><td>    Base-64 decode a binary or string, returning a binary.</td></tr><tr><td valign="top"><a href="#decode_to_string-1">decode_to_string/1</a></td><td>    Equivalent to <code>decode_to_string(Data, #{})</code>.</td></tr><tr><td valign="top"><a href="#decode_to_string-2">decode_to_string/2</a></td><td>    Base-64 decode a binary or string, returning a string.</td></tr><tr><td valign="top"><a href="#encode-1">encode/1</a></td><td>    Equivalent to <code>encode(Data, #{})</code>.</td></tr><tr><td valign="top"><a href="#encode-2">encode/2</a></td><td>    Base-64 encode a binary or string, returning a binary.</td></tr><tr><td valign="top"><a href="#encode_to_string-1">encode_to_string/1</a></td><td>    Equivalent to <code>encode_to_string(Data, #{})</code>.</td></tr><tr><td valign="top"><a href="#encode_to_string-2">encode_to_string/2</a></td><td>    Base-64 encode a binary or string, returning a string.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -184,11 +223,31 @@ with the following exceptions:</p>
 decode(Data::binary() | iolist()) -&gt; binary()
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to decode<br /></p>
-<p>returns: the base-64 data decoded, as a binary</p>
-<p>Base-64 decode a binary or string, outputting a binary.</p>
-<p>This function will raise a badarg exception if the supplied
-data is not valid base64-encoded data.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the base-64 encoded data to decode<br /></p>
+<p>returns: the decoded data as a binary</p>
+<p>Equivalent to <code class="docutils literal notranslate"><span class="pre">decode(Data,</span> <span class="pre">#{})</span></code>.</p>
+<p>Raises a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> exception if the input is not valid
+base-64-encoded data.  Whitespace in the input is not accepted.</p>
+<p><a name="decode-2"></a></p>
+</section>
+<section id="decode-2">
+<h3>decode/2<a class="headerlink" href="#decode-2" title="Link to this heading"></a></h3>
+<pre><code>
+decode(Data::binary() | iolist(), Options::<a href="#type-decode_options">decode_options()</a>) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the base-64 encoded data to decode<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: decoding options<br /></p>
+<p>returns: the decoded data as a binary</p>
+<p>Base-64 decode a binary or string, returning a binary.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">#{padding</span> <span class="pre">=&gt;</span> <span class="pre">true}</span></code> (default), the input must carry the
+correct number of <code class="docutils literal notranslate"><span class="pre">=</span></code> padding characters.  When
+<code class="docutils literal notranslate"><span class="pre">#{padding</span> <span class="pre">=&gt;</span> <span class="pre">false}</span></code>, missing <code class="docutils literal notranslate"><span class="pre">=</span></code> padding is tolerated; padded
+input is still accepted.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mode</span></code> option selects the decoding alphabet: <code class="docutils literal notranslate"><span class="pre">standard</span></code>
+(default, RFC 4648 Section 4) or <code class="docutils literal notranslate"><span class="pre">urlsafe</span></code> (RFC 4648 Section 5).
+Characters from the wrong alphabet cause a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> exception.</p>
+<p>Raises a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> exception if the input is not valid
+base-64-encoded data.  Whitespace in the input is not accepted.</p>
 <p><a name="decode_to_string-1"></a></p>
 </section>
 <section id="decode-to-string-1">
@@ -197,11 +256,31 @@ data is not valid base64-encoded data.</p>
 decode_to_string(Data::binary() | iolist()) -&gt; string()
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to decode<br /></p>
-<p>returns: the base-64 data decoded, as a string</p>
-<p>Base-64 decode a binary or string, outputting a string.</p>
-<p>This function will raise a badarg exception if the supplied
-data is not valid base64-encoded data.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the base-64 encoded data to decode<br /></p>
+<p>returns: the decoded data as a string</p>
+<p>Equivalent to <code class="docutils literal notranslate"><span class="pre">decode_to_string(Data,</span> <span class="pre">#{})</span></code>.</p>
+<p>Raises a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> exception if the input is not valid
+base-64-encoded data.  Whitespace in the input is not accepted.</p>
+<p><a name="decode_to_string-2"></a></p>
+</section>
+<section id="decode-to-string-2">
+<h3>decode_to_string/2<a class="headerlink" href="#decode-to-string-2" title="Link to this heading"></a></h3>
+<pre><code>
+decode_to_string(Data::binary() | iolist(), Options::<a href="#type-decode_options">decode_options()</a>) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the base-64 encoded data to decode<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: decoding options<br /></p>
+<p>returns: the decoded data as a string</p>
+<p>Base-64 decode a binary or string, returning a string.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">#{padding</span> <span class="pre">=&gt;</span> <span class="pre">true}</span></code> (default), the input must carry the
+correct number of <code class="docutils literal notranslate"><span class="pre">=</span></code> padding characters.  When
+<code class="docutils literal notranslate"><span class="pre">#{padding</span> <span class="pre">=&gt;</span> <span class="pre">false}</span></code>, missing <code class="docutils literal notranslate"><span class="pre">=</span></code> padding is tolerated; padded
+input is still accepted.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mode</span></code> option selects the decoding alphabet: <code class="docutils literal notranslate"><span class="pre">standard</span></code>
+(default, RFC 4648 Section 4) or <code class="docutils literal notranslate"><span class="pre">urlsafe</span></code> (RFC 4648 Section 5).
+Characters from the wrong alphabet cause a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> exception.</p>
+<p>Raises a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> exception if the input is not valid
+base-64-encoded data.  Whitespace in the input is not accepted.</p>
 <p><a name="encode-1"></a></p>
 </section>
 <section id="encode-1">
@@ -211,8 +290,23 @@ encode(Data::binary() | iolist()) -&gt; binary()
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to encode<br /></p>
-<p>returns: the base-64 data encoded, as a binary</p>
-<p>Base-64 encode a binary or string, outputting a binary.</p>
+<p>returns: the base-64 encoded data as a binary</p>
+<p>Equivalent to <code class="docutils literal notranslate"><span class="pre">encode(Data,</span> <span class="pre">#{})</span></code>.</p>
+<p><a name="encode-2"></a></p>
+</section>
+<section id="encode-2">
+<h3>encode/2<a class="headerlink" href="#encode-2" title="Link to this heading"></a></h3>
+<pre><code>
+encode(Data::binary() | iolist(), Options::<a href="#type-encode_options">encode_options()</a>) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to encode<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: encoding options<br /></p>
+<p>returns: the base-64 encoded data as a binary</p>
+<p>Base-64 encode a binary or string, returning a binary.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">padding</span></code> option controls whether <code class="docutils literal notranslate"><span class="pre">=</span></code> padding characters are
+appended.  The default is <code class="docutils literal notranslate"><span class="pre">#{padding</span> <span class="pre">=&gt;</span> <span class="pre">true}</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mode</span></code> option selects the encoding alphabet: <code class="docutils literal notranslate"><span class="pre">standard</span></code>
+(default, RFC 4648 Section 4) or <code class="docutils literal notranslate"><span class="pre">urlsafe</span></code> (RFC 4648 Section 5).</p>
 <p><a name="encode_to_string-1"></a></p>
 </section>
 <section id="encode-to-string-1">
@@ -222,8 +316,23 @@ encode_to_string(Data::binary() | iolist()) -&gt; string()
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to encode<br /></p>
-<p>returns: the base-64 data encoded, as a string</p>
-<p>Base-64 encode a binary or string, outputting a string.</p>
+<p>returns: the base-64 encoded data as a string</p>
+<p>Equivalent to <code class="docutils literal notranslate"><span class="pre">encode_to_string(Data,</span> <span class="pre">#{})</span></code>.</p>
+<p><a name="encode_to_string-2"></a></p>
+</section>
+<section id="encode-to-string-2">
+<h3>encode_to_string/2<a class="headerlink" href="#encode-to-string-2" title="Link to this heading"></a></h3>
+<pre><code>
+encode_to_string(Data::binary() | iolist(), Options::<a href="#type-encode_options">encode_options()</a>) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to encode<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: encoding options<br /></p>
+<p>returns: the base-64 encoded data as a string</p>
+<p>Base-64 encode a binary or string, returning a string.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">padding</span></code> option controls whether <code class="docutils literal notranslate"><span class="pre">=</span></code> padding characters are
+appended.  The default is <code class="docutils literal notranslate"><span class="pre">#{padding</span> <span class="pre">=&gt;</span> <span class="pre">true}</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mode</span></code> option selects the encoding alphabet: <code class="docutils literal notranslate"><span class="pre">standard</span></code>
+(default, RFC 4648 Section 4) or <code class="docutils literal notranslate"><span class="pre">urlsafe</span></code> (RFC 4648 Section 5).</p>
 </section>
 </section>
 </section>
