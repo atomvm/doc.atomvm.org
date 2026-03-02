@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.3c7b7006 documentation</title>
+  <title>Programmers Guide &mdash; AtomVM 0.7.0-dev+git.e662cf78 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/programmers-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3c960617"></script>
+      <script src="_static/documentation_options.js?v=5bde69b6"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -915,16 +915,18 @@ Binary = ...
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nv">MegaSecs</span><span class="p">,</span><span class="w"> </span><span class="nv">Secs</span><span class="p">,</span><span class="w"> </span><span class="nv">MicroSecs</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">timestamp</span><span class="p">().</span>
 </pre></div>
 </div>
-<p>Use <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#system-time-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:system_time/1</span></code></span></a> to obtain the seconds, milliseconds or microseconds since the UNIX epoch (Midnight, Jan 1, 1970, UTC):</p>
+<p>Use <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#system-time-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:system_time/1</span></code></span></a> to obtain the seconds, milliseconds, microseconds or nanoseconds since the UNIX epoch (Midnight, Jan 1, 1970, UTC):</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">system_time</span><span class="p">(</span><span class="n">second</span><span class="p">).</span>
 <span class="nv">MilliSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">system_time</span><span class="p">(</span><span class="n">millisecond</span><span class="p">).</span>
 <span class="nv">MicroSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">system_time</span><span class="p">(</span><span class="n">microsecond</span><span class="p">).</span>
+<span class="nv">NanoSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">system_time</span><span class="p">(</span><span class="n">nanosecond</span><span class="p">).</span>
 </pre></div>
 </div>
-<p>Use <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#monotonic-time-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:monotonic_time/1</span></code></span></a> to obtain a (possibly not strictly) monotonically increasing time measurement.  Use the same time units to convert to seconds, milliseconds, or microseconds:</p>
+<p>Use <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#monotonic-time-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:monotonic_time/1</span></code></span></a> to obtain a (possibly not strictly) monotonically increasing time measurement.  Use the same time units to convert to seconds, milliseconds, microseconds or nanoseconds:</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">monotonic_time</span><span class="p">(</span><span class="n">second</span><span class="p">).</span>
 <span class="nv">MilliSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">monotonic_time</span><span class="p">(</span><span class="n">millisecond</span><span class="p">).</span>
 <span class="nv">MicroSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">monotonic_time</span><span class="p">(</span><span class="n">microsecond</span><span class="p">).</span>
+<span class="nv">NanoSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">monotonic_time</span><span class="p">(</span><span class="n">nanosecond</span><span class="p">).</span>
 </pre></div>
 </div>
 <div class="admonition caution">
@@ -949,14 +951,14 @@ device.</p>
 permission to set the system time.</p>
 </div>
 <p>On the ESP32 platform, you can use the Wifi network to set the system time automatically.  For information about how to set system time on the ESP32 using SNTP, see the <a class="reference internal" href="network-programming-guide.html"><span class="std std-doc">Network Programming Guide</span></a>.</p>
-<p>To convert a time (in seconds, milliseconds, or microseconds from the UNIX epoch) to a date-time, use the <a class="reference internal" href="apidocs/erlang/estdlib/calendar.html#system-time-to-universal-time-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">calendar:system_time_to_universal_time/2</span></code></span></a> function.  For example,</p>
+<p>To convert a time (in seconds, milliseconds, microseconds, or nanoseconds from the UNIX epoch) to a date-time, use the <a class="reference internal" href="apidocs/erlang/estdlib/calendar.html#system-time-to-universal-time-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">calendar:system_time_to_universal_time/2</span></code></span></a> function.  For example,</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="c">%% get milliseconds from the UNIX epoch</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="p">{</span><span class="nv">Year</span><span class="p">,</span><span class="w"> </span><span class="nv">Month</span><span class="p">,</span><span class="w"> </span><span class="nv">Day</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nv">Hour</span><span class="p">,</span><span class="w"> </span><span class="nv">Minute</span><span class="p">,</span><span class="w"> </span><span class="nv">Second</span><span class="p">}</span>
 <span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">calendar</span><span class="p">:</span><span class="nf">system_time_to_universal_time</span><span class="p">(</span><span class="nv">Milliseconds</span><span class="p">,</span><span class="w"> </span><span class="n">millisecond</span><span class="p">).</span>
 </pre></div>
 </div>
-<p>Valid time units are <code class="docutils literal notranslate"><span class="pre">second</span></code>, <code class="docutils literal notranslate"><span class="pre">millisecond</span></code>, and <code class="docutils literal notranslate"><span class="pre">microsecond</span></code>.</p>
+<p>Valid time units are <code class="docutils literal notranslate"><span class="pre">second</span></code>, <code class="docutils literal notranslate"><span class="pre">millisecond</span></code>, <code class="docutils literal notranslate"><span class="pre">microsecond</span></code>, and <code class="docutils literal notranslate"><span class="pre">nanosecond</span></code>.</p>
 </section>
 <section id="date-and-time">
 <h3>Date and Time<a class="headerlink" href="#date-and-time" title="Link to this heading"></a></h3>
