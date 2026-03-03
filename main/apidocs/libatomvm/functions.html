@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; AtomVM 0.7.0-dev+git.e662cf78 documentation</title>
+  <title>Functions &mdash; AtomVM 0.7.0-dev+git.1a0f5cab documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/functions.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5bde69b6"></script>
+      <script src="../../_static/documentation_options.js?v=2069d3e4"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -1185,30 +1185,31 @@
 </dl>
 </dd></dl>
 
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenfunction: Cannot find function “external_term_deserialize” in doxygen xml output for project “libatomvm” from directory: /__w/AtomVM/AtomVM/build/doc/xml/</p>
+</div>
 <dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.functions.externalterm_from_binary">
-<span class="target" id="libatomvmexternalterm_8h_1acd5e5a654d7a73f7e97f3ab6a225702c"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">externalterm_from_binary</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">binary</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bytes_read</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.externalterm_from_binary" title="Link to this definition"></a><br /></dt>
-<dd><p>Create a term from a binary. </p>
-<p>Deserialize a binary term that stores term data in Erlang external term format, and instantiate the serialized terms. The heap from the context will be used to allocate the instantiated terms. This function is the complement of externalterm_to_binary. WARNING: This function may call the GC, which may render the input binary invalid. See externalterm_from_binary_with_roots </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ctx</strong> – the context that owns the memory that will be allocated. </p></li>
-<li><p><strong>binary</strong> – the binary. </p></li>
-<li><p><strong>bytes_read</strong> – the number of bytes read from the input binary. </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the term deserialized from the input term, or an invalid term, if deserialization fails. </p>
-</dd>
-</dl>
+<dt class="sig sig-object c" id="c.libAtomVM.functions.external_term_deserialize_buf_raw">
+<span class="target" id="libatomvmexternal__term_8h_1aef62a03b39310ffe054ee6bfc228c6fe"></span><span class="n"><span class="pre">external_term_read_result_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">external_term_deserialize_buf_raw</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">buf_size</span></span>, <span class="n"><span class="pre">external_term_read_opts_t</span></span><span class="w"> </span><span class="n"><span class="pre">opts</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_term</span></span>, <a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.external_term_deserialize_buf_raw" title="Link to this definition"></a><br /></dt>
+<dd><p>Deserialize a raw external term buffer (tag byte excluded) into a term. </p>
+<p>Like <code class="docutils literal notranslate"><a class="reference internal" href="src/external_term.h.html#libatomvmexternal__term_8h_1a479d8a313dc1e92dbd80d1fb70a3f139"><span class="std std-ref"><span class="pre">external_term_deserialize_buf()</span></span></a></code> but expects a buffer without the leading <code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_TAG</span></code> byte.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="src/external_term.h.html#libatomvmexternal__term_8h_1a479d8a313dc1e92dbd80d1fb70a3f139"><span class="std std-ref">external_term_deserialize_buf()</span></a> for the standard tag-included variant. </p>
+</div>
+</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><a class="reference internal" href="src/external_term.h.html#libatomvmexternal__term_8h_1a269d6245c7aa13802ab347e52daf848a"><span class="std std-ref"><span class="pre">external_term_validate_buf_raw()</span></span></a></code> MUST be called successfully on the same buffer before calling this function, and the heap must have been grown to accommodate at least the number of words reported by that call. Skipping validation or providing insufficient heap space results in undefined behavior.</p>
+</div>
 </dd></dl>
 
 <dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.functions.externalterm_to_binary">
-<span class="target" id="libatomvmexternalterm_8h_1ac206e81a0af456ae80d093af7b255a82"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">externalterm_to_binary</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.externalterm_to_binary" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object c" id="c.libAtomVM.functions.external_term_to_binary">
+<span class="target" id="libatomvmexternal__term_8h_1ab60313e645a2ee33514cc9354a83ab22"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">external_term_to_binary</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.external_term_to_binary" title="Link to this definition"></a><br /></dt>
 <dd><p>Create a binary from a term. </p>
-<p>Serialize a term in Erlang external term format, and store the result in a binary term. The heap from the context will be used to allocate the hydrated terms. This function is the complement of externalterm_to_binary. WARNING: This function may call the GC, which may render the input binary invalid. </p>
+<p>Serialize a term in Erlang external term format, and store the result in a binary term. The heap from the context will be used to allocate the hydrated terms. WARNING: This function may call the GC, which may render the input binary invalid. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1223,26 +1224,50 @@
 </dd></dl>
 
 <dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.functions.externalterm_to_term_internal">
-<span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">externalterm_to_term_internal</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">external_term</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <a class="reference internal" href="../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="n"><span class="pre">ExternalTermOpts</span></span><span class="w"> </span><span class="n"><span class="pre">opts</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bytes_read</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">copy</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.externalterm_to_term_internal" title="Link to this definition"></a><br /></dt>
-<dd><p>Copy an external term to internal storage.</p>
+<dt class="sig sig-object c" id="c.libAtomVM.functions.external_term_validate_buf">
+<span class="target" id="libatomvmexternal__term_8h_1a9a7439515a950c7860b82d1b57ae7066"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">external_term_read_result_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">external_term_validate_buf</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">buf_size</span></span>, <span class="n"><span class="pre">external_term_read_opts_t</span></span><span class="w"> </span><span class="n"><span class="pre">opts</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">required_heap</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bytes_read</span></span>, <a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.external_term_validate_buf" title="Link to this definition"></a><br /></dt>
+<dd><p>Validate an external term buffer and compute required heap size. </p>
+<p>Verifies that <code class="docutils literal notranslate"><span class="pre">buf</span></code> contains a well-formed Erlang external term, starting with <code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_TAG</span></code>. On success, <code class="docutils literal notranslate"><span class="pre">required_heap</span></code> holds the number of heap words needed by <code class="docutils literal notranslate"><a class="reference internal" href="src/external_term.h.html#libatomvmexternal__term_8h_1a479d8a313dc1e92dbd80d1fb70a3f139"><span class="std std-ref"><span class="pre">external_term_deserialize_buf()</span></span></a></code> and <code class="docutils literal notranslate"><span class="pre">bytes_read</span></code> holds the total number of bytes consumed (including the tag byte).</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="src/external_term.h.html#libatomvmexternal__term_8h_1a479d8a313dc1e92dbd80d1fb70a3f139"><span class="std std-ref">external_term_deserialize_buf()</span></a> to deserialize after a successful validation </p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="src/external_term.h.html#libatomvmexternal__term_8h_1a269d6245c7aa13802ab347e52daf848a"><span class="std std-ref">external_term_validate_buf_raw()</span></a> for the tag-excluded variant </p>
+</div>
+</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function MUST be called and must return <code class="docutils literal notranslate"><span class="pre">ExternalTermReadOk</span></code> before calling <code class="docutils literal notranslate"><a class="reference internal" href="src/external_term.h.html#libatomvmexternal__term_8h_1a479d8a313dc1e92dbd80d1fb70a3f139"><span class="std std-ref"><span class="pre">external_term_deserialize_buf()</span></span></a></code> on the same buffer. Calling the deserialize function on an unvalidated or invalid buffer results in undefined behavior.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>external_term</strong> – buffer containing external term</p></li>
-<li><p><strong>size</strong> – size of the external_term</p></li>
-<li><p><strong>ctx</strong> – current context in which terms may be stored</p></li>
-<li><p><strong>opts</strong> – additional opts, such as ExternalTermToHeapFragment for storing parsed
-terms in a heap fragment, otherwise terms are stored in the context heap.</p></li>
-<li><p><strong>bytes_read</strong> – the number of bytes read off external_term in order to yield a term</p></li>
-<li><p><strong>copy</strong> – whether to copy binary data and atom strings (pass <cite>true</cite>, unless
-<cite>external_term</cite> is a const binary and will not be deallocated)</p></li>
+<li><p><strong>buf</strong> – buffer holding the external term, including the leading <code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_TAG</span></code> byte </p></li>
+<li><p><strong>buf_size</strong> – size of <code class="docutils literal notranslate"><span class="pre">buf</span></code> in bytes </p></li>
+<li><p><strong>opts</strong> – options for the read operation; pass <code class="docutils literal notranslate"><span class="pre">ExternalTermReadNoOpts</span></code></p></li>
+<li><p><strong>required_heap</strong> – <strong>[out]</strong> number of heap words needed to deserialize the term </p></li>
+<li><p><strong>bytes_read</strong> – <strong>[out]</strong> total number of bytes consumed from <code class="docutils literal notranslate"><span class="pre">buf</span></code></p></li>
+<li><p><strong>glb</strong> – the global context </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the parsed term</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">ExternalTermReadOk</span></code> on success, <code class="docutils literal notranslate"><span class="pre">ExternalTermReadInvalid</span></code> if the buffer does not contain a valid external term</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.functions.external_term_validate_buf_raw">
+<span class="target" id="libatomvmexternal__term_8h_1a269d6245c7aa13802ab347e52daf848a"></span><span class="n"><span class="pre">external_term_read_result_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">external_term_validate_buf_raw</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">buf_size</span></span>, <span class="n"><span class="pre">external_term_read_opts_t</span></span><span class="w"> </span><span class="n"><span class="pre">opts</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">required_heap</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">bytes_read</span></span>, <a class="reference internal" href="../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.external_term_validate_buf_raw" title="Link to this definition"></a><br /></dt>
+<dd><p>Validate a raw external term buffer (tag byte excluded). </p>
+<p>Like <code class="docutils literal notranslate"><a class="reference internal" href="src/external_term.h.html#libatomvmexternal__term_8h_1a9a7439515a950c7860b82d1b57ae7066"><span class="std std-ref"><span class="pre">external_term_validate_buf()</span></span></a></code> but expects a buffer without the leading <code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_TAG</span></code> byte. <code class="docutils literal notranslate"><span class="pre">bytes_read</span></code> does not account for the tag byte.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="src/external_term.h.html#libatomvmexternal__term_8h_1a9a7439515a950c7860b82d1b57ae7066"><span class="std std-ref">external_term_validate_buf()</span></a> for the standard tag-included variant. </p>
+</div>
+</p>
 </dd></dl>
 
 <dl class="c function">

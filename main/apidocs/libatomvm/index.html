@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>libAtomVM &mdash; AtomVM 0.7.0-dev+git.e662cf78 documentation</title>
+  <title>libAtomVM &mdash; AtomVM 0.7.0-dev+git.1a0f5cab documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/index.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5bde69b6"></script>
+      <script src="../../_static/documentation_options.js?v=2069d3e4"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -101,8 +101,8 @@
 <li class="toctree-l4"><a class="reference internal" href="src/ets_hashtable.c.html">ets_hashtable.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/ets_hashtable.h.html">ets_hashtable.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/exportedfunction.h.html">exportedfunction.h</a></li>
-<li class="toctree-l4"><a class="reference internal" href="src/externalterm.c.html">externalterm.c</a></li>
-<li class="toctree-l4"><a class="reference internal" href="src/externalterm.h.html">externalterm.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src/external_term.c.html">external_term.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src/external_term.h.html">external_term.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/globalcontext.c.html">globalcontext.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/globalcontext.h.html">globalcontext.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/iff.c.html">iff.c</a></li>
@@ -270,9 +270,10 @@
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.enif_select"><code class="docutils literal notranslate"><span class="pre">enif_select()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.event_listener_add_to_polling_set"><code class="docutils literal notranslate"><span class="pre">event_listener_add_to_polling_set()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.event_listener_is_event"><code class="docutils literal notranslate"><span class="pre">event_listener_is_event()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.externalterm_from_binary"><code class="docutils literal notranslate"><span class="pre">externalterm_from_binary()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.externalterm_to_binary"><code class="docutils literal notranslate"><span class="pre">externalterm_to_binary()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.externalterm_to_term_internal"><code class="docutils literal notranslate"><span class="pre">externalterm_to_term_internal()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.external_term_deserialize_buf_raw"><code class="docutils literal notranslate"><span class="pre">external_term_deserialize_buf_raw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.external_term_to_binary"><code class="docutils literal notranslate"><span class="pre">external_term_to_binary()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.external_term_validate_buf"><code class="docutils literal notranslate"><span class="pre">external_term_validate_buf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.external_term_validate_buf_raw"><code class="docutils literal notranslate"><span class="pre">external_term_validate_buf_raw()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.globalcontext_destroy"><code class="docutils literal notranslate"><span class="pre">globalcontext_destroy()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.globalcontext_existing_term_from_atom_string"><code class="docutils literal notranslate"><span class="pre">globalcontext_existing_term_from_atom_string()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.globalcontext_get_module"><code class="docutils literal notranslate"><span class="pre">globalcontext_get_module()</span></code></a></li>
@@ -964,11 +965,17 @@
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ErlNifSelectFlags.ERL_NIF_SELECT_STOP"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_STOP</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ExternalTermResult"><code class="docutils literal notranslate"><span class="pre">ExternalTermResult</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ExternalTermResult.EXTERNAL_TERM_OK"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_OK</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ExternalTermResult.EXTERNAL_TERM_BAD_ARG"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_BAD_ARG</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ExternalTermResult.EXTERNAL_TERM_MALLOC"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_MALLOC</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ExternalTermResult.EXTERNAL_TERM_HEAP_ALLOC"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_HEAP_ALLOC</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.external_term_read_opts_t"><code class="docutils literal notranslate"><span class="pre">external_term_read_opts_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.external_term_read_opts_t.ExternalTermReadNoOpts"><code class="docutils literal notranslate"><span class="pre">ExternalTermReadNoOpts</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.external_term_read_result_t"><code class="docutils literal notranslate"><span class="pre">external_term_read_result_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.external_term_read_result_t.ExternalTermReadOk"><code class="docutils literal notranslate"><span class="pre">ExternalTermReadOk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.external_term_read_result_t.ExternalTermReadInvalid"><code class="docutils literal notranslate"><span class="pre">ExternalTermReadInvalid</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.external_term_write_result_t"><code class="docutils literal notranslate"><span class="pre">external_term_write_result_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.external_term_write_result_t.ExternalTermWriteOk"><code class="docutils literal notranslate"><span class="pre">ExternalTermWriteOk</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.FunctionType"><code class="docutils literal notranslate"><span class="pre">FunctionType</span></code></a><ul>
@@ -2264,71 +2271,81 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="src/externalterm.c.html">externalterm.c</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.NEW_FLOAT_EXT"><code class="docutils literal notranslate"><span class="pre">NEW_FLOAT_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.NEW_PID_EXT"><code class="docutils literal notranslate"><span class="pre">NEW_PID_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.NEWER_REFERENCE_EXT"><code class="docutils literal notranslate"><span class="pre">NEWER_REFERENCE_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.SMALL_INTEGER_EXT"><code class="docutils literal notranslate"><span class="pre">SMALL_INTEGER_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.INTEGER_EXT"><code class="docutils literal notranslate"><span class="pre">INTEGER_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.ATOM_EXT"><code class="docutils literal notranslate"><span class="pre">ATOM_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.PID_EXT"><code class="docutils literal notranslate"><span class="pre">PID_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.SMALL_TUPLE_EXT"><code class="docutils literal notranslate"><span class="pre">SMALL_TUPLE_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.LARGE_TUPLE_EXT"><code class="docutils literal notranslate"><span class="pre">LARGE_TUPLE_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.NIL_EXT"><code class="docutils literal notranslate"><span class="pre">NIL_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.STRING_EXT"><code class="docutils literal notranslate"><span class="pre">STRING_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.LIST_EXT"><code class="docutils literal notranslate"><span class="pre">LIST_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.BINARY_EXT"><code class="docutils literal notranslate"><span class="pre">BINARY_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.SMALL_BIG_EXT"><code class="docutils literal notranslate"><span class="pre">SMALL_BIG_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.NEW_FUN_EXT"><code class="docutils literal notranslate"><span class="pre">NEW_FUN_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.EXPORT_EXT"><code class="docutils literal notranslate"><span class="pre">EXPORT_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.MAP_EXT"><code class="docutils literal notranslate"><span class="pre">MAP_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.ATOM_UTF8_EXT"><code class="docutils literal notranslate"><span class="pre">ATOM_UTF8_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.SMALL_ATOM_UTF8_EXT"><code class="docutils literal notranslate"><span class="pre">SMALL_ATOM_UTF8_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.V4_PORT_EXT"><code class="docutils literal notranslate"><span class="pre">V4_PORT_EXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.INVALID_TERM_SIZE"><code class="docutils literal notranslate"><span class="pre">INVALID_TERM_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.NEW_FLOAT_EXT_SIZE"><code class="docutils literal notranslate"><span class="pre">NEW_FLOAT_EXT_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.SMALL_INTEGER_EXT_SIZE"><code class="docutils literal notranslate"><span class="pre">SMALL_INTEGER_EXT_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.INTEGER_EXT_SIZE"><code class="docutils literal notranslate"><span class="pre">INTEGER_EXT_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.SMALL_BIG_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">SMALL_BIG_EXT_BASE_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.ATOM_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">ATOM_EXT_BASE_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.STRING_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">STRING_EXT_BASE_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.LIST_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">LIST_EXT_BASE_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.BINARY_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">BINARY_EXT_BASE_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.MAP_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">MAP_EXT_BASE_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.SMALL_ATOM_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">SMALL_ATOM_EXT_BASE_SIZE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.parse_external_terms"><code class="docutils literal notranslate"><span class="pre">parse_external_terms()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.calculate_heap_usage"><code class="docutils literal notranslate"><span class="pre">calculate_heap_usage()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.compute_external_size"><code class="docutils literal notranslate"><span class="pre">compute_external_size()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.externalterm_from_term"><code class="docutils literal notranslate"><span class="pre">externalterm_from_term()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.serialize_term"><code class="docutils literal notranslate"><span class="pre">serialize_term()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.externalterm_from_binary_with_roots"><code class="docutils literal notranslate"><span class="pre">externalterm_from_binary_with_roots()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.externalterm_from_const_literal"><code class="docutils literal notranslate"><span class="pre">externalterm_from_const_literal()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.externalterm_from_binary"><code class="docutils literal notranslate"><span class="pre">externalterm_from_binary()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.externalterm_to_binary"><code class="docutils literal notranslate"><span class="pre">externalterm_to_binary()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.get_num_bytes"><code class="docutils literal notranslate"><span class="pre">get_num_bytes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.write_bytes"><code class="docutils literal notranslate"><span class="pre">write_bytes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.read_bytes"><code class="docutils literal notranslate"><span class="pre">read_bytes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.externalterm_compute_external_size_raw"><code class="docutils literal notranslate"><span class="pre">externalterm_compute_external_size_raw()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.c.html#c.libAtomVM.externalterm.c.externalterm_serialize_term_raw"><code class="docutils literal notranslate"><span class="pre">externalterm_serialize_term_raw()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/external_term.c.html">external_term.c</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.NEW_FLOAT_EXT"><code class="docutils literal notranslate"><span class="pre">NEW_FLOAT_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.NEW_PID_EXT"><code class="docutils literal notranslate"><span class="pre">NEW_PID_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.NEWER_REFERENCE_EXT"><code class="docutils literal notranslate"><span class="pre">NEWER_REFERENCE_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.SMALL_INTEGER_EXT"><code class="docutils literal notranslate"><span class="pre">SMALL_INTEGER_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.INTEGER_EXT"><code class="docutils literal notranslate"><span class="pre">INTEGER_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.ATOM_EXT"><code class="docutils literal notranslate"><span class="pre">ATOM_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.PID_EXT"><code class="docutils literal notranslate"><span class="pre">PID_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.SMALL_TUPLE_EXT"><code class="docutils literal notranslate"><span class="pre">SMALL_TUPLE_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.LARGE_TUPLE_EXT"><code class="docutils literal notranslate"><span class="pre">LARGE_TUPLE_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.NIL_EXT"><code class="docutils literal notranslate"><span class="pre">NIL_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.STRING_EXT"><code class="docutils literal notranslate"><span class="pre">STRING_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.LIST_EXT"><code class="docutils literal notranslate"><span class="pre">LIST_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.BINARY_EXT"><code class="docutils literal notranslate"><span class="pre">BINARY_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.SMALL_BIG_EXT"><code class="docutils literal notranslate"><span class="pre">SMALL_BIG_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.NEW_FUN_EXT"><code class="docutils literal notranslate"><span class="pre">NEW_FUN_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.EXPORT_EXT"><code class="docutils literal notranslate"><span class="pre">EXPORT_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.MAP_EXT"><code class="docutils literal notranslate"><span class="pre">MAP_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.ATOM_UTF8_EXT"><code class="docutils literal notranslate"><span class="pre">ATOM_UTF8_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.SMALL_ATOM_UTF8_EXT"><code class="docutils literal notranslate"><span class="pre">SMALL_ATOM_UTF8_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.V4_PORT_EXT"><code class="docutils literal notranslate"><span class="pre">V4_PORT_EXT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.INVALID_TERM_SIZE"><code class="docutils literal notranslate"><span class="pre">INVALID_TERM_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.NEW_FLOAT_EXT_SIZE"><code class="docutils literal notranslate"><span class="pre">NEW_FLOAT_EXT_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.SMALL_INTEGER_EXT_SIZE"><code class="docutils literal notranslate"><span class="pre">SMALL_INTEGER_EXT_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.INTEGER_EXT_SIZE"><code class="docutils literal notranslate"><span class="pre">INTEGER_EXT_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.SMALL_BIG_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">SMALL_BIG_EXT_BASE_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.ATOM_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">ATOM_EXT_BASE_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.STRING_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">STRING_EXT_BASE_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.LIST_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">LIST_EXT_BASE_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.BINARY_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">BINARY_EXT_BASE_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.MAP_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">MAP_EXT_BASE_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.SMALL_ATOM_EXT_BASE_SIZE"><code class="docutils literal notranslate"><span class="pre">SMALL_ATOM_EXT_BASE_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.parse_external_terms"><code class="docutils literal notranslate"><span class="pre">parse_external_terms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.calculate_heap_usage"><code class="docutils literal notranslate"><span class="pre">calculate_heap_usage()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.compute_external_size"><code class="docutils literal notranslate"><span class="pre">compute_external_size()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.external_term_from_term"><code class="docutils literal notranslate"><span class="pre">external_term_from_term()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.serialize_term"><code class="docutils literal notranslate"><span class="pre">serialize_term()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.external_term_validate_buf_raw"><code class="docutils literal notranslate"><span class="pre">external_term_validate_buf_raw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.external_term_deserialize_buf_raw"><code class="docutils literal notranslate"><span class="pre">external_term_deserialize_buf_raw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.external_term_from_binary_with_roots"><code class="docutils literal notranslate"><span class="pre">external_term_from_binary_with_roots()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.external_term_from_const_literal"><code class="docutils literal notranslate"><span class="pre">external_term_from_const_literal()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.external_term_to_binary"><code class="docutils literal notranslate"><span class="pre">external_term_to_binary()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.get_num_bytes"><code class="docutils literal notranslate"><span class="pre">get_num_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.write_bytes"><code class="docutils literal notranslate"><span class="pre">write_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.read_bytes"><code class="docutils literal notranslate"><span class="pre">read_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.external_term_compute_external_size_raw"><code class="docutils literal notranslate"><span class="pre">external_term_compute_external_size_raw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.c.html#c.libAtomVM.external_term.c.external_term_serialize_term_raw"><code class="docutils literal notranslate"><span class="pre">external_term_serialize_term_raw()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="src/externalterm.h.html">externalterm.h</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.EXTERNAL_TERM_TAG"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_TAG</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.ExternalTermResult"><code class="docutils literal notranslate"><span class="pre">ExternalTermResult</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.ExternalTermResult.EXTERNAL_TERM_OK"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_OK</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.ExternalTermResult.EXTERNAL_TERM_BAD_ARG"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_BAD_ARG</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.ExternalTermResult.EXTERNAL_TERM_MALLOC"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_MALLOC</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.ExternalTermResult.EXTERNAL_TERM_HEAP_ALLOC"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_HEAP_ALLOC</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/external_term.h.html">external_term.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.EXTERNAL_TERM_TAG"><code class="docutils literal notranslate"><span class="pre">EXTERNAL_TERM_TAG</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_write_result_t"><code class="docutils literal notranslate"><span class="pre">external_term_write_result_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_write_result_t.ExternalTermWriteOk"><code class="docutils literal notranslate"><span class="pre">ExternalTermWriteOk</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.externalterm_from_binary"><code class="docutils literal notranslate"><span class="pre">externalterm_from_binary()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.externalterm_from_binary_with_roots"><code class="docutils literal notranslate"><span class="pre">externalterm_from_binary_with_roots()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.externalterm_from_const_literal"><code class="docutils literal notranslate"><span class="pre">externalterm_from_const_literal()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.externalterm_to_binary"><code class="docutils literal notranslate"><span class="pre">externalterm_to_binary()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.externalterm_compute_external_size_raw"><code class="docutils literal notranslate"><span class="pre">externalterm_compute_external_size_raw()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.externalterm_serialize_term_raw"><code class="docutils literal notranslate"><span class="pre">externalterm_serialize_term_raw()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.externalterm_compute_external_size"><code class="docutils literal notranslate"><span class="pre">externalterm_compute_external_size()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/externalterm.h.html#c.libAtomVM.externalterm.h.externalterm_serialize_term"><code class="docutils literal notranslate"><span class="pre">externalterm_serialize_term()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_read_result_t"><code class="docutils literal notranslate"><span class="pre">external_term_read_result_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_read_result_t.ExternalTermReadOk"><code class="docutils literal notranslate"><span class="pre">ExternalTermReadOk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_read_result_t.ExternalTermReadInvalid"><code class="docutils literal notranslate"><span class="pre">ExternalTermReadInvalid</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_read_opts_t"><code class="docutils literal notranslate"><span class="pre">external_term_read_opts_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_read_opts_t.ExternalTermReadNoOpts"><code class="docutils literal notranslate"><span class="pre">ExternalTermReadNoOpts</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_validate_buf_raw"><code class="docutils literal notranslate"><span class="pre">external_term_validate_buf_raw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_deserialize_buf_raw"><code class="docutils literal notranslate"><span class="pre">external_term_deserialize_buf_raw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_validate_buf"><code class="docutils literal notranslate"><span class="pre">external_term_validate_buf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_deserialize_buf"><code class="docutils literal notranslate"><span class="pre">external_term_deserialize_buf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_from_binary_with_roots"><code class="docutils literal notranslate"><span class="pre">external_term_from_binary_with_roots()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_from_const_literal"><code class="docutils literal notranslate"><span class="pre">external_term_from_const_literal()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_to_binary"><code class="docutils literal notranslate"><span class="pre">external_term_to_binary()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_compute_external_size_raw"><code class="docutils literal notranslate"><span class="pre">external_term_compute_external_size_raw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_serialize_term_raw"><code class="docutils literal notranslate"><span class="pre">external_term_serialize_term_raw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_compute_external_size"><code class="docutils literal notranslate"><span class="pre">external_term_compute_external_size()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/external_term.h.html#c.libAtomVM.external_term.h.external_term_serialize_term"><code class="docutils literal notranslate"><span class="pre">external_term_serialize_term()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="src/globalcontext.c.html">globalcontext.c</a><ul>
