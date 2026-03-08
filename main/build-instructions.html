@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Instructions &mdash; AtomVM 0.7.0-dev+git.b0340f5b documentation</title>
+  <title>Build Instructions &mdash; AtomVM 0.7.0-dev+git.434cf178 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/build-instructions.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=7a18ce72"></script>
+      <script src="_static/documentation_options.js?v=3cfe48de"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -900,8 +900,9 @@ Example:</p></li>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Context</span> <span class="pre">*&lt;moniker&gt;_create_port(GlobalContext</span> <span class="pre">*global,</span> <span class="pre">term</span> <span class="pre">opts);</span></code></p>
 <ul class="simple">
-<li><p>This function will be called to locate the Nif during a function call.
-Example:</p></li>
+<li><p>This function is called when the <code class="docutils literal notranslate"><span class="pre">erlang:open_port/2</span></code> function is called with your
+port name.  For example: <code class="docutils literal notranslate"><span class="pre">open_port({spawn,</span> <span class="pre">&quot;my_port&quot;},</span> <span class="pre">[]).</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;moniker&gt;_init</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;moniker&gt;_create_port</span></code> function declarations:</p></li>
 </ul>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">my_port_init</span><span class="p">(</span><span class="n">GlobalContext</span><span class="w"> </span><span class="o">*</span><span class="n">global</span><span class="p">);</span>
 <span class="w">    </span><span class="n">Context</span><span class="w"> </span><span class="o">*</span><span class="nf">my_port_create_port</span><span class="p">(</span><span class="n">GlobalContext</span><span class="w"> </span><span class="o">*</span><span class="n">global</span><span class="p">,</span><span class="w"> </span><span class="n">term</span><span class="w"> </span><span class="n">opts</span><span class="p">);</span>
@@ -914,8 +915,8 @@ Example:</p></li>
 </li>
 </ul>
 </li>
-<li><p>Add the <code class="docutils literal notranslate"><span class="pre">REGISTER_PORT_COLLECTION</span></code> using the parameters <code class="docutils literal notranslate"><span class="pre">NAME</span></code>, <code class="docutils literal notranslate"><span class="pre">INIT_CB</span></code>, <code class="docutils literal notranslate"><span class="pre">DESTROY_CB</span></code>, <code class="docutils literal notranslate"><span class="pre">RESOLVE_NIF_CB</span></code> macro to the end of your nif code. Example:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="n">REGISTER_PORT_COLLECTION</span><span class="p">(</span><span class="n">my_port</span><span class="p">,</span><span class="w"> </span><span class="n">my_port_init</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">my_port_create_port</span><span class="p">);</span>
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">REGISTER_PORT_DRIVER</span></code> using the parameters <code class="docutils literal notranslate"><span class="pre">NAME</span></code>, <code class="docutils literal notranslate"><span class="pre">INIT_CB</span></code>, <code class="docutils literal notranslate"><span class="pre">DESTROY_CB</span></code>, <code class="docutils literal notranslate"><span class="pre">CREATE_PORT_CB</span></code> macro to the end of your port code. Example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="n">REGISTER_PORT_DRIVER</span><span class="p">(</span><span class="n">my_port</span><span class="p">,</span><span class="w"> </span><span class="n">my_port_init</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">my_port_create_port</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
