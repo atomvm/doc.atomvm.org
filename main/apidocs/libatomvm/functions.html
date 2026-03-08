@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; AtomVM 0.7.0-dev+git.434cf178 documentation</title>
+  <title>Functions &mdash; AtomVM 0.7.0-dev+git.928521a9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/functions.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=3cfe48de"></script>
+      <script src="../../_static/documentation_options.js?v=670fc035"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -1074,12 +1074,19 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.enif_make_resource">
-<span class="target" id="libatomvmerl__nif_8h_1ae5786c2a3432fd525f56faf876f00051"></span><span class="n"><span class="pre">ERL_NIF_TERM</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">enif_make_resource</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">env</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">obj</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.enif_make_resource" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmerl__nif_8h_1af2f6e74b5da198079d88330bf4d7ed44"></span><span class="n"><span class="pre">ERL_NIF_TERM</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">enif_make_resource</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ErlNifEnv</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">env</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">obj</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="pre">__attribute__((deprecated(&quot;use</span> <span class="pre">memory_erl_nif_env_ensure_free</span> <span class="pre">+</span> <span class="pre">term_from_resource</span> <span class="pre">instead&quot;)))</span><a class="headerlink" href="#c.libAtomVM.functions.enif_make_resource" title="Link to this definition"></a><br /></dt>
 <dd><p>create a term from a resource </p>
 <p>the term can be later passed to <code class="docutils literal notranslate"><span class="pre">enif_get_resource</span></code>.</p>
 <p>The resource reference counter is incremented and it is added to the MSO list of the heap of env (which must be a context).</p>
 <p>If the resource was just allocated with <code class="docutils literal notranslate"><span class="pre">enif_alloc_resource</span></code>, the reference counter should typically be decremented by a call to <code class="docutils literal notranslate"><span class="pre">enif_release_resource</span></code> matching usage documented by BEAM.</p>
 <p>If the resource was not just allocated with <code class="docutils literal notranslate"><span class="pre">enif_alloc_resource</span></code>, to clear usage confusion, users should rather call <code class="docutils literal notranslate"><span class="pre">term_from_resource</span></code> and should not decrement the reference counter.</p>
+<p><dl>
+<dt class="sig sig-object cpp">
+<em><span class="pre">Deprecated:</span></em></dt>
+<dd><p>This function aborts on out of memory. Use <code class="docutils literal notranslate"><span class="pre">memory_erl_nif_env_ensure_free</span></code> followed by <code class="docutils literal notranslate"><span class="pre">term_from_resource</span></code> instead.</p>
+</dd></dl>
+
+</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
