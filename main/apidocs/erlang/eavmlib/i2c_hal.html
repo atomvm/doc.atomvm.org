@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module i2c_hal &mdash; AtomVM 0.7.0-dev+git.c805acc6 documentation</title>
+  <title>Module i2c_hal &mdash; AtomVM 0.7.0-dev+git.e9cb79cc documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/eavmlib/i2c_hal.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=19dde9b0"></script>
+      <script src="../../../_static/documentation_options.js?v=951da415"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -126,9 +126,66 @@
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
 <p>This module defines the behavior that platform-specific I2C modules
-must implement. It provides a common interface for I2C operations
-across all supported platforms.
-<a name="types"></a></p>
+must implement. It provides a common interface for I2C (Inter-Integrated
+Circuit) operations across all supported platforms.</p>
+<p>Currently, only ESP32 provides an I2C implementation.</p>
+<section id="lifecycle">
+<h3>Lifecycle<a class="headerlink" href="#lifecycle" title="Link to this heading"></a></h3>
+<p>An I2C bus is opened with <code class="docutils literal notranslate"><span class="pre">open/1</span></code> and closed with <code class="docutils literal notranslate"><span class="pre">close/1</span></code>. The
+returned handle is passed to all subsequent operations.</p>
+</section>
+<section id="reading-data">
+<h3>Reading data<a class="headerlink" href="#reading-data" title="Link to this heading"></a></h3>
+<p>Data can be read from I2C devices using <code class="docutils literal notranslate"><span class="pre">read_bytes/3</span></code> or
+<code class="docutils literal notranslate"><span class="pre">read_bytes/4</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read_bytes/3</span></code> reads a number of bytes directly from a device
+at the given address.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_bytes/4</span></code> reads a number of bytes from a specific register
+within a device.</p></li>
+</ul>
+</section>
+<section id="writing-data">
+<h3>Writing data<a class="headerlink" href="#writing-data" title="Link to this heading"></a></h3>
+<p>There are two approaches for writing data:</p>
+<p><strong>Direct writes:</strong> <code class="docutils literal notranslate"><span class="pre">write_bytes/3</span></code> and <code class="docutils literal notranslate"><span class="pre">write_bytes/4</span></code> write data
+to a device address, optionally specifying a register:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  i2c:write_bytes(I2C, 16#68, 16#0D, &lt;&lt;16#FF&gt;&gt;).
+</pre></div>
+</div>
+<p><strong>Transaction-based writes:</strong> For more control, use
+<code class="docutils literal notranslate"><span class="pre">begin_transmission/2</span></code>, followed by one or more calls to
+<code class="docutils literal notranslate"><span class="pre">write_byte/2</span></code> or <code class="docutils literal notranslate"><span class="pre">write_bytes/2</span></code>, and finalize with
+<code class="docutils literal notranslate"><span class="pre">end_transmission/1</span></code>:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  i2c:begin_transmission(I2C, 16#68),
+  i2c:write_byte(I2C, 16#0D),
+  i2c:write_bytes(I2C, &lt;&lt;16#FF, 16#00&gt;&gt;),
+  i2c:end_transmission(I2C).
+</pre></div>
+</div>
+</section>
+<section id="configuration-parameters">
+<h3>Configuration parameters<a class="headerlink" href="#configuration-parameters" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">open/1</span></code> function accepts a proplist of configuration parameters.
+Common parameters include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{scl,</span> <span class="pre">pin()}</span></code> - SCL (clock) pin number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{sda,</span> <span class="pre">pin()}</span></code> - SDA (data) pin number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{clock_speed_hz,</span> <span class="pre">pos_integer()}</span></code> - Clock speed in Hz</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{peripheral,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code> - I2C peripheral name (e.g.
+<code class="docutils literal notranslate"><span class="pre">&quot;i2c0&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;i2c1&quot;</span></code>)</p></li>
+</ul>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  I2C = i2c:open([{scl, 22}, {sda, 21}, {clock_speed_hz, 100000}]),
+  {ok, Data} = i2c:read_bytes(I2C, 16#68, 16#75, 1),
+  i2c:write_bytes(I2C, 16#68, 16#6B, 0),
+  i2c:close(I2C).
+</pre></div>
+</div>
+<p><a name="types"></a></p>
+</section>
 </section>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
@@ -137,21 +194,24 @@ across all supported platforms.
 <pre><code>
 address() = non_neg_integer()
 </code></pre>
-<p>I2C device address.</p>
+<p>I2C device address (typically 7-bit, e.g. <code class="docutils literal notranslate"><span class="pre">16#68</span></code>).</p>
 </section>
 <section id="i2c">
 <h3><a name="type-i2c">i2c()</a><a class="headerlink" href="#i2c" title="Link to this heading"></a></h3>
 <pre><code>
 i2c() = port() | pid() | term()
 </code></pre>
-<p>Handle returned by <code class="docutils literal notranslate"><span class="pre">open/1</span></code>.</p>
+<p>Handle returned by <code class="docutils literal notranslate"><span class="pre">open/1</span></code>.
+On ESP32, this is either a port (port driver mode) or a resource
+tuple (NIF mode).</p>
 </section>
 <section id="params">
 <h3><a name="type-params">params()</a><a class="headerlink" href="#params" title="Link to this heading"></a></h3>
 <pre><code>
 params() = [term()]
 </code></pre>
-<p>Initialization parameters for the I2C bus.</p>
+<p>Initialization parameters for the I2C bus.
+See the module documentation for common parameters.</p>
 </section>
 <section id="register">
 <h3><a name="type-register">register()</a><a class="headerlink" href="#register" title="Link to this heading"></a></h3>

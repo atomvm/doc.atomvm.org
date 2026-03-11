@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module spi_hal &mdash; AtomVM 0.7.0-dev+git.c805acc6 documentation</title>
+  <title>Module spi_hal &mdash; AtomVM 0.7.0-dev+git.e9cb79cc documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/eavmlib/spi_hal.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=19dde9b0"></script>
+      <script src="../../../_static/documentation_options.js?v=951da415"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -126,9 +126,94 @@
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
 <p>This module defines the behavior that platform-specific SPI modules
-must implement. It provides a common interface for SPI operations
-across all supported platforms.
-<a name="types"></a></p>
+must implement. It provides a common interface for SPI (Serial
+Peripheral Interface) operations across all supported platforms.</p>
+<p>Currently, only ESP32 provides an SPI implementation.</p>
+<section id="lifecycle">
+<h3>Lifecycle<a class="headerlink" href="#lifecycle" title="Link to this heading"></a></h3>
+<p>An SPI bus is opened with <code class="docutils literal notranslate"><span class="pre">open/1</span></code> and closed with <code class="docutils literal notranslate"><span class="pre">close/1</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">open/1</span></code> function takes a configuration that includes both bus
+parameters (pins, peripheral) and device configurations. Multiple
+devices can share the same SPI bus.</p>
+</section>
+<section id="device-names">
+<h3>Device names<a class="headerlink" href="#device-names" title="Link to this heading"></a></h3>
+<p>Each device on the SPI bus is identified by a <code class="docutils literal notranslate"><span class="pre">device_name()</span></code> atom.
+Device names are defined during <code class="docutils literal notranslate"><span class="pre">open/1</span></code> configuration and used in
+all subsequent read/write operations. For example, if the
+configuration includes <code class="docutils literal notranslate"><span class="pre">{my_sensor,</span> <span class="pre">[{cs,</span> <span class="pre">5}]}</span></code>, then <code class="docutils literal notranslate"><span class="pre">my_sensor</span></code>
+is used as the device name in calls like
+<code class="docutils literal notranslate"><span class="pre">spi:read_at(SPI,</span> <span class="pre">my_sensor,</span> <span class="pre">Address,</span> <span class="pre">Len)</span></code>.</p>
+</section>
+<section id="simple-read-write">
+<h3>Simple read/write<a class="headerlink" href="#simple-read-write" title="Link to this heading"></a></h3>
+<p>For simple address-based operations:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read_at/4</span></code> - Read data from a device at a given address</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write_at/5</span></code> - Write data to a device at a given address</p></li>
+</ul>
+</section>
+<section id="transaction-based-operations">
+<h3>Transaction-based operations<a class="headerlink" href="#transaction-based-operations" title="Link to this heading"></a></h3>
+<p>For more complex operations, use transaction maps with <code class="docutils literal notranslate"><span class="pre">write/3</span></code>
+or <code class="docutils literal notranslate"><span class="pre">write_read/3</span></code>:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nx">Transaction</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">#</span><span class="p">{</span>
+<span class="w">      </span><span class="nx">command</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">16</span><span class="err">#</span><span class="mi">42</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">16</span><span class="err">#</span><span class="mi">00</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">write_data</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="o">&gt;&gt;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">write_bits</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">read_bits</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">8</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="nx">ok</span><span class="p">,</span><span class="w"> </span><span class="nx">ReadData</span><span class="p">}</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">spi</span><span class="p">:</span><span class="nx">write_read</span><span class="p">(</span><span class="nx">SPI</span><span class="p">,</span><span class="w"> </span><span class="nx">my_device</span><span class="p">,</span><span class="w"> </span><span class="nx">Transaction</span><span class="p">).</span>
+</pre></div>
+</div>
+</section>
+<section id="configuration-parameters">
+<h3>Configuration parameters<a class="headerlink" href="#configuration-parameters" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">open/1</span></code> function accepts a proplist or map with bus and device
+configuration. Bus parameters include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{sclk,</span> <span class="pre">non_neg_integer()}</span></code> - SCLK (clock) pin number
+(required)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{miso,</span> <span class="pre">non_neg_integer()}</span></code> - MISO pin number (optional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{mosi,</span> <span class="pre">non_neg_integer()}</span></code> - MOSI pin number (optional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{peripheral,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code> - SPI peripheral (e.g.
+<code class="docutils literal notranslate"><span class="pre">&quot;spi2&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;spi3&quot;</span></code>, default: <code class="docutils literal notranslate"><span class="pre">&quot;spi2&quot;</span></code>)</p></li>
+</ul>
+<p>Device parameters are specified as <code class="docutils literal notranslate"><span class="pre">{DeviceName,</span> <span class="pre">DeviceOpts}</span></code> entries:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{cs,</span> <span class="pre">non_neg_integer()}</span></code> - Chip Select pin number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{clock_speed_hz,</span> <span class="pre">non_neg_integer()}</span></code> - Clock speed (default:</p></li>
+</ul>
+<ol class="arabic simple" start="1000000">
+<li></li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{mode,</span> <span class="pre">0..3}</span></code> - SPI mode (default: 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{address_len_bits,</span> <span class="pre">0..64}</span></code> - Address width in bits (default:</p></li>
+</ul>
+<ol class="arabic simple" start="8">
+<li></li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{command_len_bits,</span> <span class="pre">0..16}</span></code> - Command width in bits (default:</p></li>
+</ul>
+<ol class="arabic simple" start="0">
+<li></li>
+</ol>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  SPI = spi:open([
+      {sclk, 18}, {miso, 19}, {mosi, 23},
+      {my_device, [{cs, 5}, {clock_speed_hz, 1000000}]}
+  ]),
+  {ok, Value} = spi:read_at(SPI, my_device, 16#0F, 8),
+  spi:close(SPI).
+</pre></div>
+</div>
+<p><a name="types"></a></p>
+</section>
 </section>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
@@ -144,14 +229,16 @@ address() = non_neg_integer()
 <pre><code>
 device_name() = atom()
 </code></pre>
-<p>Name identifying an SPI device, as specified in the device configuration.</p>
+<p>Name identifying an SPI device, as specified in the device
+configuration passed to <code class="docutils literal notranslate"><span class="pre">open/1</span></code>.</p>
 </section>
 <section id="params">
 <h3><a name="type-params">params()</a><a class="headerlink" href="#params" title="Link to this heading"></a></h3>
 <pre><code>
 params() = [term()] | map()
 </code></pre>
-<p>Initialization parameters for the SPI bus.</p>
+<p>Initialization parameters for the SPI bus and its devices.
+See the module documentation for common parameters.</p>
 </section>
 <section id="spi">
 <h3><a name="type-spi">spi()</a><a class="headerlink" href="#spi" title="Link to this heading"></a></h3>

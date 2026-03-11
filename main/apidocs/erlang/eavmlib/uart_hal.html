@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module uart_hal &mdash; AtomVM 0.7.0-dev+git.c805acc6 documentation</title>
+  <title>Module uart_hal &mdash; AtomVM 0.7.0-dev+git.e9cb79cc documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/eavmlib/uart_hal.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=19dde9b0"></script>
+      <script src="../../../_static/documentation_options.js?v=951da415"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -126,9 +126,59 @@
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
 <p>This module defines the behavior that platform-specific UART modules
-must implement. It provides a common interface for UART operations
-across all supported platforms.
-<a name="types"></a></p>
+must implement. It provides a common interface for UART (Universal
+Asynchronous Receiver-Transmitter) operations across all supported
+platforms.</p>
+<p>Currently, only ESP32 provides a UART implementation.</p>
+<section id="lifecycle">
+<h3>Lifecycle<a class="headerlink" href="#lifecycle" title="Link to this heading"></a></h3>
+<p>A UART port is opened with <code class="docutils literal notranslate"><span class="pre">open/1</span></code> or <code class="docutils literal notranslate"><span class="pre">open/2</span></code> and closed with
+<code class="docutils literal notranslate"><span class="pre">close/1</span></code>. The <code class="docutils literal notranslate"><span class="pre">open/2</span></code> variant is a convenience that takes the
+peripheral name as a separate argument. The returned handle is
+passed to all subsequent operations.</p>
+</section>
+<section id="reading-and-writing">
+<h3>Reading and writing<a class="headerlink" href="#reading-and-writing" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read/1</span></code> - Non-blocking read. Returns <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Data}</span></code> if data is
+available, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">timeout}</span></code> if no data is ready.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read/2</span></code> - Blocking read with a timeout in milliseconds.
+Waits up to the specified time for data to arrive.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write/2</span></code> - Write data to the UART port.</p></li>
+</ul>
+</section>
+<section id="configuration-parameters">
+<h3>Configuration parameters<a class="headerlink" href="#configuration-parameters" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">open/1</span></code> function accepts a proplist of configuration
+parameters. Common parameters include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{tx,</span> <span class="pre">integer()}</span></code> - Transmit pin number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rx,</span> <span class="pre">integer()}</span></code> - Receive pin number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{speed,</span> <span class="pre">pos_integer()}</span></code> - Baud rate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{data_bits,</span> <span class="pre">5..8}</span></code> - Number of data bits (default: 8)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{stop_bits,</span> <span class="pre">1</span> <span class="pre">|</span> <span class="pre">2}</span></code> - Number of stop bits (default: 1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{parity,</span> <span class="pre">none</span> <span class="pre">|</span> <span class="pre">even</span> <span class="pre">|</span> <span class="pre">odd}</span></code> - Parity mode</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{flow_control,</span> <span class="pre">none</span> <span class="pre">|</span> <span class="pre">hardware</span> <span class="pre">|</span> <span class="pre">software}</span></code> - Flow control
+type</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{rts,</span> <span class="pre">integer()}</span></code> - RTS pin for hardware flow control</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{cts,</span> <span class="pre">integer()}</span></code> - CTS pin for hardware flow control</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{peripheral,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code> - UART peripheral name
+(e.g. <code class="docutils literal notranslate"><span class="pre">&quot;UART0&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;UART1&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;UART2&quot;</span></code>)</p></li>
+</ul>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">UART</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nl">uart</span><span class="p">:</span><span class="k">open</span><span class="p">(</span><span class="o">[</span><span class="n">{tx, 17}, {rx, 16}, {speed, 115200}</span><span class="o">]</span><span class="p">),</span>
+<span class="w">  </span><span class="nl">uart</span><span class="p">:</span><span class="k">write</span><span class="p">(</span><span class="n">UART</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="ss">&quot;Hello\r\n&quot;</span><span class="o">&gt;&gt;</span><span class="p">),</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">uart</span><span class="p">:</span><span class="k">read</span><span class="p">(</span><span class="n">UART</span><span class="p">,</span><span class="w"> </span><span class="mi">5000</span><span class="p">)</span><span class="w"> </span><span class="k">of</span>
+<span class="w">      </span><span class="err">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="k">Data</span><span class="err">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nl">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="ss">&quot;Received: ~p~n&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">Data</span><span class="o">]</span><span class="p">);</span>
+<span class="w">      </span><span class="err">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">timeout</span><span class="err">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nl">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="ss">&quot;No response~n&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end</span><span class="p">,</span>
+<span class="w">  </span><span class="nl">uart</span><span class="p">:</span><span class="k">close</span><span class="p">(</span><span class="n">UART</span><span class="p">).</span>
+</pre></div>
+</div>
+<p><a name="types"></a></p>
+</section>
 </section>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
@@ -137,14 +187,15 @@ across all supported platforms.
 <pre><code>
 params() = [term()]
 </code></pre>
-<p>Initialization parameters for the UART bus.</p>
+<p>Initialization parameters for the UART port.
+See the module documentation for common parameters.</p>
 </section>
 <section id="peripheral">
 <h3><a name="type-peripheral">peripheral()</a><a class="headerlink" href="#peripheral" title="Link to this heading"></a></h3>
 <pre><code>
 peripheral() = string() | binary()
 </code></pre>
-<p>UART peripheral name.</p>
+<p>UART peripheral name (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;UART0&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;UART1&quot;</span></code>).</p>
 </section>
 <section id="uart">
 <h3><a name="type-uart">uart()</a><a class="headerlink" href="#uart" title="Link to this heading"></a></h3>
