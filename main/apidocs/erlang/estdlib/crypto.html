@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module crypto &mdash; AtomVM 0.7.0-dev+git.7c4cf556 documentation</title>
+  <title>Module crypto &mdash; AtomVM 0.7.0-dev+git.229d5c35 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/crypto.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=4a2bcfb5"></script>
+      <script src="../../../_static/documentation_options.js?v=d713e74d"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -162,16 +162,28 @@
 <p><a name="types"></a></p>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="cipher-aead">
+<h3><a name="type-cipher_aead">cipher_aead()</a><a class="headerlink" href="#cipher-aead" title="Link to this heading"></a></h3>
+<pre><code>
+cipher_aead() = aes_128_gcm | aes_192_gcm | aes_256_gcm | aes_128_ccm | aes_192_ccm | aes_256_ccm | chacha20_poly1305
+</code></pre>
+</section>
 <section id="cipher-iv">
 <h3><a name="type-cipher_iv">cipher_iv()</a><a class="headerlink" href="#cipher-iv" title="Link to this heading"></a></h3>
 <pre><code>
-cipher_iv() = aes_128_cbc | aes_192_cbc | aes_256_cbc | aes_128_cfb128 | aes_192_cfb128 | aes_256_cfb128 | aes_128_ctr | aes_192_ctr | aes_256_ctr
+cipher_iv() = aes_128_cbc | aes_192_cbc | aes_256_cbc | aes_128_cfb128 | aes_192_cfb128 | aes_256_cfb128 | aes_128_ctr | aes_192_ctr | aes_256_ctr | aes_128_ofb | aes_192_ofb | aes_256_ofb
 </code></pre>
 </section>
 <section id="cipher-no-iv">
 <h3><a name="type-cipher_no_iv">cipher_no_iv()</a><a class="headerlink" href="#cipher-no-iv" title="Link to this heading"></a></h3>
 <pre><code>
 cipher_no_iv() = aes_128_ecb | aes_192_ecb | aes_256_ecb
+</code></pre>
+</section>
+<section id="cmac-subtype">
+<h3><a name="type-cmac_subtype">cmac_subtype()</a><a class="headerlink" href="#cmac-subtype" title="Link to this heading"></a></h3>
+<pre><code>
+cmac_subtype() = aes_128_cbc | aes_128_ecb | aes_192_cbc | aes_192_ecb | aes_256_cbc | aes_256_ecb
 </code></pre>
 </section>
 <section id="crypto-opt">
@@ -186,10 +198,32 @@ crypto_opt() = {encrypt, boolean()} | {padding, <a href="#type-padding">padding(
 crypto_opts() = [<a href="#type-crypto_opt">crypto_opt()</a>]
 </code></pre>
 </section>
+<section id="crypto-state">
+<h3><a name="type-crypto_state">crypto_state()</a><a class="headerlink" href="#crypto-state" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">crypto_state()</span></code></p>
+</section>
 <section id="digest">
 <h3><a name="type-digest">digest()</a><a class="headerlink" href="#digest" title="Link to this heading"></a></h3>
 <pre><code>
 digest() = binary()
+</code></pre>
+</section>
+<section id="ecdsa-curve">
+<h3><a name="type-ecdsa_curve">ecdsa_curve()</a><a class="headerlink" href="#ecdsa-curve" title="Link to this heading"></a></h3>
+<pre><code>
+ecdsa_curve() = secp256k1 | secp256r1 | secp384r1 | secp521r1 | brainpoolP256r1 | brainpoolP384r1 | brainpoolP512r1
+</code></pre>
+</section>
+<section id="ecdsa-private-key">
+<h3><a name="type-ecdsa_private_key">ecdsa_private_key()</a><a class="headerlink" href="#ecdsa-private-key" title="Link to this heading"></a></h3>
+<pre><code>
+ecdsa_private_key() = [binary() | <a href="#type-ecdsa_curve">ecdsa_curve()</a>]
+</code></pre>
+</section>
+<section id="ecdsa-public-key">
+<h3><a name="type-ecdsa_public_key">ecdsa_public_key()</a><a class="headerlink" href="#ecdsa-public-key" title="Link to this heading"></a></h3>
+<pre><code>
+ecdsa_public_key() = [binary() | <a href="#type-ecdsa_curve">ecdsa_curve()</a>]
 </code></pre>
 </section>
 <section id="hash-algorithm">
@@ -198,23 +232,126 @@ digest() = binary()
 hash_algorithm() = md5 | sha | sha224 | sha256 | sha384 | sha512
 </code></pre>
 </section>
+<section id="hash-state">
+<h3><a name="type-hash_state">hash_state()</a><a class="headerlink" href="#hash-state" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">hash_state()</span></code></p>
+</section>
+<section id="mac-state">
+<h3><a name="type-mac_state">mac_state()</a><a class="headerlink" href="#mac-state" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">mac_state()</span></code></p>
+</section>
+<section id="mac-subtype">
+<h3><a name="type-mac_subtype">mac_subtype()</a><a class="headerlink" href="#mac-subtype" title="Link to this heading"></a></h3>
+<pre><code>
+mac_subtype() = <a href="#type-cmac_subtype">cmac_subtype()</a> | <a href="#type-hash_algorithm">hash_algorithm()</a> | ripemd160
+</code></pre>
+</section>
+<section id="mac-type">
+<h3><a name="type-mac_type">mac_type()</a><a class="headerlink" href="#mac-type" title="Link to this heading"></a></h3>
+<pre><code>
+mac_type() = cmac | hmac
+</code></pre>
+</section>
 <section id="padding">
 <h3><a name="type-padding">padding()</a><a class="headerlink" href="#padding" title="Link to this heading"></a></h3>
 <pre><code>
 padding() = none | pkcs_padding
+</code></pre>
+</section>
+<section id="pk-param">
+<h3><a name="type-pk_param">pk_param()</a><a class="headerlink" href="#pk-param" title="Link to this heading"></a></h3>
+<pre><code>
+pk_param() = x25519 | x448 | ed25519 | ed448 | secp256r1 | secp384r1 | secp521r1 | secp256k1 | brainpoolP256r1 | brainpoolP384r1 | brainpoolP512r1
+</code></pre>
+</section>
+<section id="pk-type">
+<h3><a name="type-pk_type">pk_type()</a><a class="headerlink" href="#pk-type" title="Link to this heading"></a></h3>
+<pre><code>
+pk_type() = eddh | eddsa | ecdh
 </code></pre>
 <p><a name="index"></a></p>
 </section>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#crypto_one_time-4">crypto_one_time/4</a></td><td>    Encrypted/decrypt data using given cipher and key.</td></tr><tr><td valign="top"><a href="#crypto_one_time-5">crypto_one_time/5</a></td><td>    Encrypted/decrypt data using given cipher, key, IV.</td></tr><tr><td valign="top"><a href="#hash-2">hash/2</a></td><td>    Hash data using a specified hash algorithm.</td></tr><tr><td valign="top"><a href="#strong_rand_bytes-1">strong_rand_bytes/1</a></td><td>    Generate N cryptographically secure random octets
-and return the result in a binary.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compute_key-4">compute_key/4</a></td><td>    Compute a shared secret.</td></tr><tr><td valign="top"><a href="#crypto_final-1">crypto_final/1</a></td><td>    Finalize a streaming cipher operation.</td></tr><tr><td valign="top"><a href="#crypto_init-3">crypto_init/3</a></td><td>    Initialize a streaming cipher operation for ciphers that do not use an IV.</td></tr><tr><td valign="top"><a href="#crypto_init-4">crypto_init/4</a></td><td>    Initialize a streaming cipher operation.</td></tr><tr><td valign="top"><a href="#crypto_one_time-4">crypto_one_time/4</a></td><td>    Encrypted/decrypt data using given cipher and key.</td></tr><tr><td valign="top"><a href="#crypto_one_time-5">crypto_one_time/5</a></td><td>    Encrypted/decrypt data using given cipher, key, IV.</td></tr><tr><td valign="top"><a href="#crypto_one_time_aead-6">crypto_one_time_aead/6</a></td><td>    Encrypt data using an AEAD cipher with the default tag length.</td></tr><tr><td valign="top"><a href="#crypto_one_time_aead-7">crypto_one_time_aead/7</a></td><td>    Encrypt or decrypt data using an AEAD cipher.</td></tr><tr><td valign="top"><a href="#crypto_update-2">crypto_update/2</a></td><td>    Feed data into a streaming cipher operation.</td></tr><tr><td valign="top"><a href="#generate_key-2">generate_key/2</a></td><td>    Generate a public/private key pair.</td></tr><tr><td valign="top"><a href="#hash-2">hash/2</a></td><td>    Hash data using a specified hash algorithm.</td></tr><tr><td valign="top"><a href="#hash_equals-2">hash_equals/2</a></td><td>    Compare two MACs or hashes for equality in constant time.</td></tr><tr><td valign="top"><a href="#hash_final-1">hash_final/1</a></td><td>    Finalize a streaming hash computation and return the digest.</td></tr><tr><td valign="top"><a href="#hash_init-1">hash_init/1</a></td><td>    Initialize a streaming hash computation.</td></tr><tr><td valign="top"><a href="#hash_update-2">hash_update/2</a></td><td>    Update a streaming hash computation with new data.</td></tr><tr><td valign="top"><a href="#info_lib-0">info_lib/0</a></td><td>    Get the name and version of the libraries used by crypto.</td></tr><tr><td valign="top"><a href="#mac-4">mac/4</a></td><td>    Compute a MAC.</td></tr><tr><td valign="top"><a href="#mac_final-1">mac_final/1</a></td><td>    Finalize a streaming MAC operation and return the MAC value.</td></tr><tr><td valign="top"><a href="#mac_finalN-2">mac_finalN/2</a></td><td>    Finalize a streaming MAC operation with a custom output length.</td></tr><tr><td valign="top"><a href="#mac_init-3">mac_init/3</a></td><td>    Initialize a streaming MAC operation.</td></tr><tr><td valign="top"><a href="#mac_update-2">mac_update/2</a></td><td>    Add data to a streaming MAC calculation.</td></tr><tr><td valign="top"><a href="#pbkdf2_hmac-5">pbkdf2_hmac/5</a></td><td>    Derive a key using PBKDF2-HMAC (RFC 8018 §5.2).</td></tr><tr><td valign="top"><a href="#sign-4">sign/4</a></td><td>    Create a digital signature.</td></tr><tr><td valign="top"><a href="#strong_rand_bytes-1">strong_rand_bytes/1</a></td><td>    Generate N cryptographically secure random octets
+and return the result in a binary.</td></tr><tr><td valign="top"><a href="#verify-5">verify/5</a></td><td>    Verify a digital signature.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
 <h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="compute_key-4"></a></p>
+<section id="compute-key-4">
+<h3>compute_key/4<a class="headerlink" href="#compute-key-4" title="Link to this heading"></a></h3>
+<pre><code>
+compute_key(Type::<a href="#type-pk_type">pk_type()</a>, OtherPublicKey::binary(), MyPrivateKey::binary(), Param::<a href="#type-pk_param">pk_param()</a>) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Type</span></code>: the key agreement type<br /><code class="docutils literal notranslate"><span class="pre">OtherPublicKey</span></code>: peer public key (binary)<br /><code class="docutils literal notranslate"><span class="pre">MyPrivateKey</span></code>: local private key (binary)<br /><code class="docutils literal notranslate"><span class="pre">Param</span></code>: curve/parameter selection<br /></p>
+<p>returns: Returns the shared secret as a binary.</p>
+<p>Compute a shared secret.</p>
+<p>Supported forms:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">eddh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">x448</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ecdh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">x448</span> <span class="pre">|</span> <span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
+</ul>
+<p>The public/private key binaries must be in the same format as returned by
+<code class="docutils literal notranslate"><span class="pre">generate_key/2</span></code>.</p>
+<p><a name="crypto_final-1"></a></p>
+</section>
+<section id="crypto-final-1">
+<h3>crypto_final/1<a class="headerlink" href="#crypto-final-1" title="Link to this heading"></a></h3>
+<pre><code>
+crypto_final(State::<a href="#type-crypto_state">crypto_state()</a>) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code>: an opaque cipher state returned from <code class="docutils literal notranslate"><span class="pre">crypto_init/3</span></code> or<code class="docutils literal notranslate"><span class="pre">crypto_init/4</span></code><br /></p>
+<p>returns: Returns any remaining bytes (e.g. a padded final block) as a binary,
+or <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&gt;&gt;</span></code> if there are none.</p>
+<p>Finalize a streaming cipher operation.</p>
+<p>For block ciphers with <code class="docutils literal notranslate"><span class="pre">{padding,</span> <span class="pre">none}</span></code> an error is raised if the
+total data fed was not a multiple of the block size.</p>
+<p><strong>AtomVM limitation:</strong> after <code class="docutils literal notranslate"><span class="pre">crypto_final/1</span></code> returns, the state is
+permanently finalized.  Calling <code class="docutils literal notranslate"><span class="pre">crypto_final/1</span></code> again, or calling
+<code class="docutils literal notranslate"><span class="pre">crypto_update/2</span></code> on the same state, raises a <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error.
+OTP allows reuse of the state after <code class="docutils literal notranslate"><span class="pre">crypto_final/1</span></code>.</p>
+<p><a name="crypto_init-3"></a></p>
+</section>
+<section id="crypto-init-3">
+<h3>crypto_init/3<a class="headerlink" href="#crypto-init-3" title="Link to this heading"></a></h3>
+<pre><code>
+crypto_init(Cipher::<a href="#type-cipher_no_iv">cipher_no_iv()</a>, Key::iodata(), FlagOrOptions::boolean() | <a href="#type-crypto_opts">crypto_opts()</a>) -&gt; <a href="#type-crypto_state">crypto_state()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Cipher</span></code>: a supported cipher (no IV required, e.g. ECB modes)<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the encryption / decryption key<br /><code class="docutils literal notranslate"><span class="pre">FlagOrOptions</span></code>: either <code class="docutils literal notranslate"><span class="pre">true</span></code> for encryption, <code class="docutils literal notranslate"><span class="pre">false</span></code> for decryption,
+or a proplist with options such as <code class="docutils literal notranslate"><span class="pre">{encrypt,</span> <span class="pre">boolean()}</span></code> and<code class="docutils literal notranslate"><span class="pre">{padding,</span> <span class="pre">padding()}</span></code>.<br /></p>
+<p>returns: Returns an opaque <code class="docutils literal notranslate"><span class="pre">crypto_state()</span></code> reference for use with
+<code class="docutils literal notranslate"><span class="pre">crypto_update/2</span></code> and <code class="docutils literal notranslate"><span class="pre">crypto_final/1</span></code>.</p>
+<p>Initialize a streaming cipher operation for ciphers that do not use an IV.</p>
+<p>This is equivalent to <code class="docutils literal notranslate"><span class="pre">crypto_init(Cipher,</span> <span class="pre">Key,</span> <span class="pre">&lt;&lt;&gt;&gt;,</span> <span class="pre">FlagOrOptions)</span></code>.</p>
+<p><a name="crypto_init-4"></a></p>
+</section>
+<section id="crypto-init-4">
+<h3>crypto_init/4<a class="headerlink" href="#crypto-init-4" title="Link to this heading"></a></h3>
+<pre><code>
+crypto_init(Cipher::<a href="#type-cipher_no_iv">cipher_no_iv()</a> | <a href="#type-cipher_iv">cipher_iv()</a>, Key::iodata(), IV::iodata(), FlagOrOptions::boolean() | <a href="#type-crypto_opts">crypto_opts()</a>) -&gt; <a href="#type-crypto_state">crypto_state()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Cipher</span></code>: a supported cipher<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the encryption / decryption key<br /><code class="docutils literal notranslate"><span class="pre">IV</span></code>: an initialization vector (use <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&gt;&gt;</span></code> for ciphers that do not require one)<br /><code class="docutils literal notranslate"><span class="pre">FlagOrOptions</span></code>: either <code class="docutils literal notranslate"><span class="pre">true</span></code> for encryption, <code class="docutils literal notranslate"><span class="pre">false</span></code> for decryption,
+or a proplist with options such as <code class="docutils literal notranslate"><span class="pre">{encrypt,</span> <span class="pre">boolean()}</span></code> and<code class="docutils literal notranslate"><span class="pre">{padding,</span> <span class="pre">padding()}</span></code>.<br /></p>
+<p>returns: Returns an opaque <code class="docutils literal notranslate"><span class="pre">crypto_state()</span></code> reference for use with
+<code class="docutils literal notranslate"><span class="pre">crypto_update/2</span></code> and <code class="docutils literal notranslate"><span class="pre">crypto_final/1</span></code>.</p>
+<p>Initialize a streaming cipher operation.</p>
+<p>The returned state is <strong>mutable</strong>: <code class="docutils literal notranslate"><span class="pre">crypto_update/2</span></code> and <code class="docutils literal notranslate"><span class="pre">crypto_final/1</span></code>
+mutate it in place.  After <code class="docutils literal notranslate"><span class="pre">crypto_final/1</span></code> the state must not be reused.</p>
+<p><strong>AtomVM padding support:</strong>
+<code class="docutils literal notranslate"><span class="pre">{padding,</span> <span class="pre">pkcs_padding}</span></code> is supported <strong>only with CBC ciphers</strong>
+(e.g. <code class="docutils literal notranslate"><span class="pre">aes_128_cbc</span></code>, <code class="docutils literal notranslate"><span class="pre">aes_192_cbc</span></code>, <code class="docutils literal notranslate"><span class="pre">aes_256_cbc</span></code>).  Requesting
+PKCS7 padding with ECB or any other cipher mode raises a <code class="docutils literal notranslate"><span class="pre">badarg</span></code>
+error.  This differs from OTP, which silently accepts the option
+for non-CBC modes.</p>
 <p><a name="crypto_one_time-4"></a></p>
+</section>
 <section id="crypto-one-time-4">
 <h3>crypto_one_time/4<a class="headerlink" href="#crypto-one-time-4" title="Link to this heading"></a></h3>
 <pre><code>
@@ -237,6 +374,65 @@ crypto_one_time(Cipher::<a href="#type-cipher_iv">cipher_iv()</a>, Key::iodata()
 for any additional option such as padding.<br /></p>
 <p>returns: Returns crypted or encrypted data.</p>
 <p>Encrypted/decrypt data using given cipher, key, IV.</p>
+<p><a name="crypto_one_time_aead-6"></a></p>
+</section>
+<section id="crypto-one-time-aead-6">
+<h3>crypto_one_time_aead/6<a class="headerlink" href="#crypto-one-time-aead-6" title="Link to this heading"></a></h3>
+<pre><code>
+crypto_one_time_aead(Cipher::<a href="#type-cipher_aead">cipher_aead()</a>, Key::iodata(), IV::iodata(), InText::iodata(), AAD::iodata(), EncFlag::true) -&gt; {binary(), binary()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Cipher</span></code>: an AEAD cipher<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the encryption key<br /><code class="docutils literal notranslate"><span class="pre">IV</span></code>: nonce / initialization vector<br /><code class="docutils literal notranslate"><span class="pre">InText</span></code>: plaintext to encrypt (iodata)<br /><code class="docutils literal notranslate"><span class="pre">AAD</span></code>: additional authenticated data (iodata)<br /><code class="docutils literal notranslate"><span class="pre">EncFlag</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code> for encryption<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">{CipherText,</span> <span class="pre">Tag}</span></code> on success.</p>
+<p>Encrypt data using an AEAD cipher with the default tag length.</p>
+<p>Supported ciphers: <code class="docutils literal notranslate"><span class="pre">aes_128_gcm</span></code>, <code class="docutils literal notranslate"><span class="pre">aes_192_gcm</span></code>, <code class="docutils literal notranslate"><span class="pre">aes_256_gcm</span></code>,
+<code class="docutils literal notranslate"><span class="pre">aes_128_ccm</span></code>, <code class="docutils literal notranslate"><span class="pre">aes_192_ccm</span></code>, <code class="docutils literal notranslate"><span class="pre">aes_256_ccm</span></code>, <code class="docutils literal notranslate"><span class="pre">chacha20_poly1305</span></code>.</p>
+<p><a name="crypto_one_time_aead-7"></a></p>
+</section>
+<section id="crypto-one-time-aead-7">
+<h3>crypto_one_time_aead/7<a class="headerlink" href="#crypto-one-time-aead-7" title="Link to this heading"></a></h3>
+<pre><code>
+crypto_one_time_aead(Cipher::<a href="#type-cipher_aead">cipher_aead()</a>, Key::iodata(), IV::iodata(), InText::iodata(), AAD::iodata(), TagOrTagLength::non_neg_integer() | binary(), EncFlag::boolean()) -&gt; {binary(), binary()} | binary() | error
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Cipher</span></code>: an AEAD cipher<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the encryption / decryption key<br /><code class="docutils literal notranslate"><span class="pre">IV</span></code>: nonce / initialization vector<br /><code class="docutils literal notranslate"><span class="pre">InText</span></code>: plaintext (encrypt) or ciphertext (decrypt) (iodata)<br /><code class="docutils literal notranslate"><span class="pre">AAD</span></code>: additional authenticated data (iodata)<br /><code class="docutils literal notranslate"><span class="pre">TagOrTagLength</span></code>: integer tag length when encrypting, tag binary when decrypting<br /><code class="docutils literal notranslate"><span class="pre">EncFlag</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code> for encryption, <code class="docutils literal notranslate"><span class="pre">false</span></code> for decryption<br /></p>
+<p>returns: Encryption: <code class="docutils literal notranslate"><span class="pre">{CipherText,</span> <span class="pre">Tag}</span></code>. Decryption: plaintext binary, or <code class="docutils literal notranslate"><span class="pre">error</span></code> on
+authentication failure.</p>
+<p>Encrypt or decrypt data using an AEAD cipher.</p>
+<p>When decrypting, authentication failure returns the atom <code class="docutils literal notranslate"><span class="pre">error</span></code>
+rather than raising an exception, matching OTP behaviour.</p>
+<p><a name="crypto_update-2"></a></p>
+</section>
+<section id="crypto-update-2">
+<h3>crypto_update/2<a class="headerlink" href="#crypto-update-2" title="Link to this heading"></a></h3>
+<pre><code>
+crypto_update(State::<a href="#type-crypto_state">crypto_state()</a>, Data::iodata()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code>: an opaque cipher state returned from <code class="docutils literal notranslate"><span class="pre">crypto_init/3</span></code> or<code class="docutils literal notranslate"><span class="pre">crypto_init/4</span></code><br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to encrypt or decrypt (iodata)<br /></p>
+<p>returns: Returns the encrypted/decrypted bytes produced so far as a binary.</p>
+<p>Feed data into a streaming cipher operation.</p>
+<p>For block ciphers the output may be shorter than the input if an
+incomplete block is buffered internally.</p>
+<p><a name="generate_key-2"></a></p>
+</section>
+<section id="generate-key-2">
+<h3>generate_key/2<a class="headerlink" href="#generate-key-2" title="Link to this heading"></a></h3>
+<pre><code>
+generate_key(Type::<a href="#type-pk_type">pk_type()</a>, Param::<a href="#type-pk_param">pk_param()</a>) -&gt; {binary(), binary()}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Type</span></code>: the key algorithm family<br /><code class="docutils literal notranslate"><span class="pre">Param</span></code>: curve/parameter selection<br /></p>
+<p>returns: Returns a tuple <code class="docutils literal notranslate"><span class="pre">{PublicKey,</span> <span class="pre">PrivateKey}</span></code>.</p>
+<p>Generate a public/private key pair.</p>
+<p>Supported forms:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">eddh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">x448</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ecdh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">x448</span> <span class="pre">|</span> <span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eddsa</span></code> with <code class="docutils literal notranslate"><span class="pre">ed25519</span> <span class="pre">|</span> <span class="pre">ed448</span></code> (availability depends on the underlying mbedTLS build)</p></li>
+</ul>
+<p>Keys are returned as <strong>raw exported key material</strong>, not PEM, DER, or <code class="docutils literal notranslate"><span class="pre">public_key</span></code>
+records.</p>
 <p><a name="hash-2"></a></p>
 </section>
 <section id="hash-2">
@@ -249,6 +445,170 @@ hash(Type::<a href="#type-hash_algorithm">hash_algorithm()</a>, Data::iolist()) 
 <p>returns: Returns the result of hashing the supplied data using the supplied
 hash algorithm.</p>
 <p>Hash data using a specified hash algorithm.</p>
+<p><a name="hash_equals-2"></a></p>
+</section>
+<section id="hash-equals-2">
+<h3>hash_equals/2<a class="headerlink" href="#hash-equals-2" title="Link to this heading"></a></h3>
+<pre><code>
+hash_equals(Mac1::binary(), Mac2::binary()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Mac1</span></code>: first MAC or hash binary<br /><code class="docutils literal notranslate"><span class="pre">Mac2</span></code>: second MAC or hash binary<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the two binaries are equal, <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise.</p>
+<p>Compare two MACs or hashes for equality in constant time.</p>
+<p>Both arguments must be binaries of the same length; otherwise
+an error is raised. The comparison is performed in constant time
+to prevent timing side-channel attacks.</p>
+<p><a name="hash_final-1"></a></p>
+</section>
+<section id="hash-final-1">
+<h3>hash_final/1<a class="headerlink" href="#hash-final-1" title="Link to this heading"></a></h3>
+<pre><code>
+hash_final(State::<a href="#type-hash_state">hash_state()</a>) -&gt; <a href="#type-digest">digest()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code>: an opaque hash state returned from <code class="docutils literal notranslate"><span class="pre">hash_init/1</span></code> or<code class="docutils literal notranslate"><span class="pre">hash_update/2</span></code><br /></p>
+<p>returns: Returns the final hash digest as a binary.</p>
+<p>Finalize a streaming hash computation and return the digest.</p>
+<p>The state is not consumed; calling <code class="docutils literal notranslate"><span class="pre">hash_final/1</span></code> again on the
+same state will produce the same digest.</p>
+<p><a name="hash_init-1"></a></p>
+</section>
+<section id="hash-init-1">
+<h3>hash_init/1<a class="headerlink" href="#hash-init-1" title="Link to this heading"></a></h3>
+<pre><code>
+hash_init(Type::<a href="#type-hash_algorithm">hash_algorithm()</a>) -&gt; <a href="#type-hash_state">hash_state()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Type</span></code>: the hash algorithm<br /></p>
+<p>returns: Returns an opaque hash state that can be passed to <code class="docutils literal notranslate"><span class="pre">hash_update/2</span></code>
+and <code class="docutils literal notranslate"><span class="pre">hash_final/1</span></code>.</p>
+<p>Initialize a streaming hash computation.</p>
+<p><a name="hash_update-2"></a></p>
+</section>
+<section id="hash-update-2">
+<h3>hash_update/2<a class="headerlink" href="#hash-update-2" title="Link to this heading"></a></h3>
+<pre><code>
+hash_update(State::<a href="#type-hash_state">hash_state()</a>, Data::iolist()) -&gt; <a href="#type-hash_state">hash_state()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code>: an opaque hash state returned from <code class="docutils literal notranslate"><span class="pre">hash_init/1</span></code> or a
+previous call to <code class="docutils literal notranslate"><span class="pre">hash_update/2</span></code><br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: the data to feed into the hash computation<br /></p>
+<p>returns: Returns a new opaque hash state with the supplied data folded in.</p>
+<p>Update a streaming hash computation with new data.</p>
+<p>The original <code class="docutils literal notranslate"><span class="pre">State</span></code> is not modified; a new state is returned so
+the same state can be forked into independent hash computations.</p>
+<p><a name="info_lib-0"></a></p>
+</section>
+<section id="info-lib-0">
+<h3>info_lib/0<a class="headerlink" href="#info-lib-0" title="Link to this heading"></a></h3>
+<pre><code>
+info_lib() -&gt; [{binary(), integer(), binary()}]
+</code></pre>
+<br />
+<p>returns: Returns a list of tuples describing the crypto library name, version number,
+and version string.</p>
+<p>Get the name and version of the libraries used by crypto.</p>
+<p>Returns a list containing a single tuple <code class="docutils literal notranslate"><span class="pre">{Name,</span> <span class="pre">VerNum,</span> <span class="pre">VerStr}</span></code> where:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Name</span></code> is the library name as a binary (e.g., <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;mbedtls&quot;&gt;&gt;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VerNum</span></code> is the numeric version according to the library’s versioning scheme</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VerStr</span></code> is the version string as a binary</p></li>
+</ul>
+<p>Example: <code class="docutils literal notranslate"><span class="pre">[{&lt;&lt;&quot;mbedtls&quot;&gt;&gt;,</span> <span class="pre">50790144,</span> <span class="pre">&lt;&lt;&quot;Mbed</span> <span class="pre">TLS</span> <span class="pre">3.6.1&quot;&gt;&gt;}]</span></code></p>
+<p><a name="mac-4"></a></p>
+</section>
+<section id="mac-4">
+<h3>mac/4<a class="headerlink" href="#mac-4" title="Link to this heading"></a></h3>
+<pre><code>
+mac(Type::<a href="#type-mac_type">mac_type()</a>, SubType::<a href="#type-mac_subtype">mac_subtype()</a>, Key::binary(), Data::iodata()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Type</span></code>: MAC algorithm family (<code class="docutils literal notranslate"><span class="pre">cmac</span></code> or <code class="docutils literal notranslate"><span class="pre">hmac</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">SubType</span></code>: MAC subtype (cipher for CMAC, digest for HMAC)<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: MAC key bytes<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: message bytes (iodata)<br /></p>
+<p>returns: Returns the computed MAC as a binary.</p>
+<p>Compute a MAC.</p>
+<p>Supported forms:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mac(cmac,</span> <span class="pre">Cipher,</span> <span class="pre">Key,</span> <span class="pre">Data)</span></code> where <code class="docutils literal notranslate"><span class="pre">Cipher</span></code> selects AES key size:
+<code class="docutils literal notranslate"><span class="pre">aes_128_(cbc|ecb)</span> <span class="pre">|</span> <span class="pre">aes_192_(cbc|ecb)</span> <span class="pre">|</span> <span class="pre">aes_256_(cbc|ecb)</span></code>
+(key length must match the selected size)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mac(hmac,</span> <span class="pre">Digest,</span> <span class="pre">Key,</span> <span class="pre">Data)</span></code> where <code class="docutils literal notranslate"><span class="pre">Digest</span></code> is a supported hash atom
+(AtomVM accepts <code class="docutils literal notranslate"><span class="pre">ripemd160</span></code> in addition to the <code class="docutils literal notranslate"><span class="pre">hash/2</span></code> digests)</p></li>
+</ul>
+<p><a name="mac_final-1"></a></p>
+</section>
+<section id="mac-final-1">
+<h3>mac_final/1<a class="headerlink" href="#mac-final-1" title="Link to this heading"></a></h3>
+<pre><code>
+mac_final(State::<a href="#type-mac_state">mac_state()</a>) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code>: MAC state from mac_init/3 or mac_update/2<br /></p>
+<p>returns: Returns the computed MAC as a binary.</p>
+<p>Finalize a streaming MAC operation and return the MAC value.</p>
+<p><a name="mac_finalN-2"></a></p>
+</section>
+<section id="mac-finaln-2">
+<h3>mac_finalN/2<a class="headerlink" href="#mac-finaln-2" title="Link to this heading"></a></h3>
+<pre><code>
+mac_finalN(State::<a href="#type-mac_state">mac_state()</a>, MacLength::pos_integer()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code>: MAC state from mac_init/3 or mac_update/2<br /><code class="docutils literal notranslate"><span class="pre">MacLength</span></code>: desired output length in bytes<br /></p>
+<p>returns: Returns the computed MAC truncated to MacLength bytes.</p>
+<p>Finalize a streaming MAC operation with a custom output length.</p>
+<p><a name="mac_init-3"></a></p>
+</section>
+<section id="mac-init-3">
+<h3>mac_init/3<a class="headerlink" href="#mac-init-3" title="Link to this heading"></a></h3>
+<pre><code>
+mac_init(Type::<a href="#type-mac_type">mac_type()</a>, SubType::<a href="#type-mac_subtype">mac_subtype()</a>, Key::iodata()) -&gt; <a href="#type-mac_state">mac_state()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Type</span></code>: MAC algorithm family (<code class="docutils literal notranslate"><span class="pre">cmac</span></code> or <code class="docutils literal notranslate"><span class="pre">hmac</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">SubType</span></code>: MAC subtype (cipher for CMAC, digest for HMAC)<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: MAC key bytes (iodata)<br /></p>
+<p>returns: Returns an opaque MAC state for use with mac_update/2 and mac_final/1.</p>
+<p>Initialize a streaming MAC operation.</p>
+<p><a name="mac_update-2"></a></p>
+</section>
+<section id="mac-update-2">
+<h3>mac_update/2<a class="headerlink" href="#mac-update-2" title="Link to this heading"></a></h3>
+<pre><code>
+mac_update(State::<a href="#type-mac_state">mac_state()</a>, Data::iodata()) -&gt; <a href="#type-mac_state">mac_state()</a>
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code>: MAC state from mac_init/3 or a previous mac_update/2<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: data to add (iodata)<br /></p>
+<p>returns: Returns an updated MAC state.</p>
+<p>Add data to a streaming MAC calculation.</p>
+<p><a name="pbkdf2_hmac-5"></a></p>
+</section>
+<section id="pbkdf2-hmac-5">
+<h3>pbkdf2_hmac/5<a class="headerlink" href="#pbkdf2-hmac-5" title="Link to this heading"></a></h3>
+<pre><code>
+pbkdf2_hmac(DigestType::<a href="#type-hash_algorithm">hash_algorithm()</a>, Password::iodata(), Salt::iodata(), Iterations::pos_integer(), KeyLen::pos_integer()) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">DigestType</span></code>: hash algorithm (<code class="docutils literal notranslate"><span class="pre">sha</span></code>, <code class="docutils literal notranslate"><span class="pre">sha256</span></code>, etc.)<br /><code class="docutils literal notranslate"><span class="pre">Password</span></code>: password bytes (iodata)<br /><code class="docutils literal notranslate"><span class="pre">Salt</span></code>: salt bytes (iodata)<br /><code class="docutils literal notranslate"><span class="pre">Iterations</span></code>: iteration count (positive integer)<br /><code class="docutils literal notranslate"><span class="pre">KeyLen</span></code>: desired output length in bytes (positive integer)<br /></p>
+<p>returns: Returns the derived key as a binary of <code class="docutils literal notranslate"><span class="pre">KeyLen</span></code> bytes.</p>
+<p>Derive a key using PBKDF2-HMAC (RFC 8018 §5.2).</p>
+<p>Supported digest types are the same as for <code class="docutils literal notranslate"><span class="pre">hash/2</span></code>.</p>
+<p><a name="sign-4"></a></p>
+</section>
+<section id="sign-4">
+<h3>sign/4<a class="headerlink" href="#sign-4" title="Link to this heading"></a></h3>
+<pre><code>
+sign(Algorithm::ecdsa, DigestType::<a href="#type-hash_algorithm">hash_algorithm()</a>, Data::iodata(), Key::<a href="#type-ecdsa_private_key">ecdsa_private_key()</a>) -&gt; binary()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Algorithm</span></code>: signing algorithm (AtomVM supports <code class="docutils literal notranslate"><span class="pre">ecdsa</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">DigestType</span></code>: hash algorithm identifier<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: message bytes (iodata)<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: signing key material<br /></p>
+<p>returns: Returns a DER-encoded signature as a binary.</p>
+<p>Create a digital signature.</p>
+<p>AtomVM currently supports:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Algorithm</span> <span class="pre">=</span> <span class="pre">ecdsa</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Key</span> <span class="pre">=</span> <span class="pre">[PrivateKeyBin,</span> <span class="pre">Curve]</span></code> where <code class="docutils literal notranslate"><span class="pre">Curve</span></code> is one of
+<code class="docutils literal notranslate"><span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
+</ul>
+<p>The signature is returned in <strong>DER</strong> form.</p>
 <p><a name="strong_rand_bytes-1"></a></p>
 </section>
 <section id="strong-rand-bytes-1">
@@ -261,6 +621,24 @@ strong_rand_bytes(N::non_neg_integer()) -&gt; binary()
 <p>returns: Returns Cryptographically secure random data of length <code class="docutils literal notranslate"><span class="pre">N</span></code></p>
 <p>Generate N cryptographically secure random octets
 and return the result in a binary.</p>
+<p><a name="verify-5"></a></p>
+</section>
+<section id="verify-5">
+<h3>verify/5<a class="headerlink" href="#verify-5" title="Link to this heading"></a></h3>
+<pre><code>
+verify(Algorithm::ecdsa, DigestType::<a href="#type-hash_algorithm">hash_algorithm()</a>, Data::iodata(), Signature::binary(), Key::<a href="#type-ecdsa_public_key">ecdsa_public_key()</a>) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Algorithm</span></code>: verification algorithm (AtomVM supports <code class="docutils literal notranslate"><span class="pre">ecdsa</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">DigestType</span></code>: hash algorithm identifier<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: message bytes (iodata)<br /><code class="docutils literal notranslate"><span class="pre">Signature</span></code>: DER-encoded signature<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: verification key material<br /></p>
+<p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the signature is valid, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Verify a digital signature.</p>
+<p>AtomVM currently supports:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Algorithm</span> <span class="pre">=</span> <span class="pre">ecdsa</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Key</span> <span class="pre">=</span> <span class="pre">[PublicKeyBin,</span> <span class="pre">Curve]</span></code> where <code class="docutils literal notranslate"><span class="pre">Curve</span></code> is one of
+<code class="docutils literal notranslate"><span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
+</ul>
+<p>Invalid DER signatures yield <code class="docutils literal notranslate"><span class="pre">false</span></code> (not an exception).</p>
 </section>
 </section>
 </section>
