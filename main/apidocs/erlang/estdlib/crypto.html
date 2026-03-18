@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module crypto &mdash; AtomVM 0.7.0-dev+git.a9454d0f documentation</title>
+  <title>Module crypto &mdash; AtomVM 0.7.0-dev+git.f7d61c3b documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/crypto.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=7c565f59"></script>
+      <script src="../../../_static/documentation_options.js?v=23d7b2a8"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -208,22 +208,71 @@ crypto_opts() = boolean() | [<a href="#type-crypto_opt">crypto_opt()</a>]
 digest() = binary()
 </code></pre>
 </section>
-<section id="ecdsa-curve">
-<h3><a name="type-ecdsa_curve">ecdsa_curve()</a><a class="headerlink" href="#ecdsa-curve" title="Link to this heading"></a></h3>
+<section id="ec-named-curve">
+<h3><a name="type-ec_named_curve">ec_named_curve()</a><a class="headerlink" href="#ec-named-curve" title="Link to this heading"></a></h3>
 <pre><code>
-ecdsa_curve() = secp256k1 | secp256r1 | secp384r1 | secp521r1 | brainpoolP256r1 | brainpoolP384r1 | brainpoolP512r1
+ec_named_curve() = secp256k1 | secp256r1 | secp384r1 | secp521r1 | brainpoolP256r1 | brainpoolP384r1 | brainpoolP512r1
 </code></pre>
 </section>
-<section id="ecdsa-private-key">
-<h3><a name="type-ecdsa_private_key">ecdsa_private_key()</a><a class="headerlink" href="#ecdsa-private-key" title="Link to this heading"></a></h3>
+<section id="ecdh-params">
+<h3><a name="type-ecdh_params">ecdh_params()</a><a class="headerlink" href="#ecdh-params" title="Link to this heading"></a></h3>
 <pre><code>
-ecdsa_private_key() = [binary() | <a href="#type-ecdsa_curve">ecdsa_curve()</a>]
+ecdh_params() = <a href="#type-ec_named_curve">ec_named_curve()</a> | <a href="#type-edwards_curve_dh">edwards_curve_dh()</a>
 </code></pre>
 </section>
-<section id="ecdsa-public-key">
-<h3><a name="type-ecdsa_public_key">ecdsa_public_key()</a><a class="headerlink" href="#ecdsa-public-key" title="Link to this heading"></a></h3>
+<section id="ecdsa-digest-type">
+<h3><a name="type-ecdsa_digest_type">ecdsa_digest_type()</a><a class="headerlink" href="#ecdsa-digest-type" title="Link to this heading"></a></h3>
 <pre><code>
-ecdsa_public_key() = [binary() | <a href="#type-ecdsa_curve">ecdsa_curve()</a>]
+ecdsa_digest_type() = <a href="#type-sha1">sha1()</a> | <a href="#type-sha2">sha2()</a>
+</code></pre>
+</section>
+<section id="ecdsa-params">
+<h3><a name="type-ecdsa_params">ecdsa_params()</a><a class="headerlink" href="#ecdsa-params" title="Link to this heading"></a></h3>
+<pre><code>
+ecdsa_params() = <a href="#type-ec_named_curve">ec_named_curve()</a>
+</code></pre>
+</section>
+<section id="ecdsa-private">
+<h3><a name="type-ecdsa_private">ecdsa_private()</a><a class="headerlink" href="#ecdsa-private" title="Link to this heading"></a></h3>
+<pre><code>
+ecdsa_private() = binary()
+</code></pre>
+</section>
+<section id="ecdsa-public">
+<h3><a name="type-ecdsa_public">ecdsa_public()</a><a class="headerlink" href="#ecdsa-public" title="Link to this heading"></a></h3>
+<pre><code>
+ecdsa_public() = binary()
+</code></pre>
+</section>
+<section id="eddsa-params">
+<h3><a name="type-eddsa_params">eddsa_params()</a><a class="headerlink" href="#eddsa-params" title="Link to this heading"></a></h3>
+<pre><code>
+eddsa_params() = <a href="#type-edwards_curve_ed">edwards_curve_ed()</a>
+</code></pre>
+</section>
+<section id="eddsa-private">
+<h3><a name="type-eddsa_private">eddsa_private()</a><a class="headerlink" href="#eddsa-private" title="Link to this heading"></a></h3>
+<pre><code>
+eddsa_private() = binary()
+</code></pre>
+</section>
+<section id="eddsa-public">
+<h3><a name="type-eddsa_public">eddsa_public()</a><a class="headerlink" href="#eddsa-public" title="Link to this heading"></a></h3>
+<pre><code>
+eddsa_public() = binary()
+</code></pre>
+</section>
+<section id="edwards-curve-dh">
+<h3><a name="type-edwards_curve_dh">edwards_curve_dh()</a><a class="headerlink" href="#edwards-curve-dh" title="Link to this heading"></a></h3>
+<pre><code>
+edwards_curve_dh() = x25519
+</code></pre>
+<p>Supported EdDSA curve (Ed25519 via libsodium when AVM_USE_LIBSODIUM is enabled).</p>
+</section>
+<section id="edwards-curve-ed">
+<h3><a name="type-edwards_curve_ed">edwards_curve_ed()</a><a class="headerlink" href="#edwards-curve-ed" title="Link to this heading"></a></h3>
+<pre><code>
+edwards_curve_ed() = ed25519
 </code></pre>
 </section>
 <section id="hash-algorithm">
@@ -258,16 +307,16 @@ mac_type() = cmac | hmac
 padding() = none | pkcs_padding
 </code></pre>
 </section>
-<section id="pk-param">
-<h3><a name="type-pk_param">pk_param()</a><a class="headerlink" href="#pk-param" title="Link to this heading"></a></h3>
+<section id="sha1">
+<h3><a name="type-sha1">sha1()</a><a class="headerlink" href="#sha1" title="Link to this heading"></a></h3>
 <pre><code>
-pk_param() = x25519 | x448 | ed25519 | ed448 | secp256r1 | secp384r1 | secp521r1 | secp256k1 | brainpoolP256r1 | brainpoolP384r1 | brainpoolP512r1
+sha1() = sha
 </code></pre>
 </section>
-<section id="pk-type">
-<h3><a name="type-pk_type">pk_type()</a><a class="headerlink" href="#pk-type" title="Link to this heading"></a></h3>
+<section id="sha2">
+<h3><a name="type-sha2">sha2()</a><a class="headerlink" href="#sha2" title="Link to this heading"></a></h3>
 <pre><code>
-pk_type() = eddh | eddsa | ecdh
+sha2() = sha224 | sha256 | sha384 | sha512
 </code></pre>
 <p><a name="index"></a></p>
 </section>
@@ -284,7 +333,7 @@ and return the result in a binary.</td></tr><tr><td valign="top"><a href="#verif
 <section id="compute-key-4">
 <h3>compute_key/4<a class="headerlink" href="#compute-key-4" title="Link to this heading"></a></h3>
 <pre><code>
-compute_key(Type::<a href="#type-pk_type">pk_type()</a>, OtherPublicKey::binary(), MyPrivateKey::binary(), Param::<a href="#type-pk_param">pk_param()</a>) -&gt; binary()
+compute_key(Type::ecdh | eddh, OtherPublicKey::binary(), MyPrivateKey::binary(), Param::<a href="#type-ecdh_params">ecdh_params()</a>) -&gt; binary()
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Type</span></code>: the key agreement type<br /><code class="docutils literal notranslate"><span class="pre">OtherPublicKey</span></code>: peer public key (binary)<br /><code class="docutils literal notranslate"><span class="pre">MyPrivateKey</span></code>: local private key (binary)<br /><code class="docutils literal notranslate"><span class="pre">Param</span></code>: curve/parameter selection<br /></p>
@@ -292,11 +341,13 @@ compute_key(Type::<a href="#type-pk_type">pk_type()</a>, OtherPublicKey::binary(
 <p>Compute a shared secret.</p>
 <p>Supported forms:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">eddh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">x448</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ecdh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">x448</span> <span class="pre">|</span> <span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eddh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ecdh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
 </ul>
 <p>The public/private key binaries must be in the same format as returned by
 <code class="docutils literal notranslate"><span class="pre">generate_key/2</span></code>.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">x25519</span></code>, the returned value is the raw shared secret. Applications
+should derive a symmetric key from it with a KDF before use.</p>
 <p><a name="crypto_final-1"></a></p>
 </section>
 <section id="crypto-final-1">
@@ -419,7 +470,7 @@ incomplete block is buffered internally.</p>
 <section id="generate-key-2">
 <h3>generate_key/2<a class="headerlink" href="#generate-key-2" title="Link to this heading"></a></h3>
 <pre><code>
-generate_key(Type::<a href="#type-pk_type">pk_type()</a>, Param::<a href="#type-pk_param">pk_param()</a>) -&gt; {binary(), binary()}
+generate_key(Type::ecdh | eddh | eddsa, Param::<a href="#type-ecdh_params">ecdh_params()</a> | <a href="#type-eddsa_params">eddsa_params()</a>) -&gt; {binary(), binary()}
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Type</span></code>: the key algorithm family<br /><code class="docutils literal notranslate"><span class="pre">Param</span></code>: curve/parameter selection<br /></p>
@@ -427,11 +478,11 @@ generate_key(Type::<a href="#type-pk_type">pk_type()</a>, Param::<a href="#type-
 <p>Generate a public/private key pair.</p>
 <p>Supported forms:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">eddh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">x448</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ecdh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">x448</span> <span class="pre">|</span> <span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">eddsa</span></code> with <code class="docutils literal notranslate"><span class="pre">ed25519</span> <span class="pre">|</span> <span class="pre">ed448</span></code> (availability depends on the underlying mbedTLS build)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eddh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ecdh</span></code> with <code class="docutils literal notranslate"><span class="pre">x25519</span> <span class="pre">|</span> <span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eddsa</span></code> with <code class="docutils literal notranslate"><span class="pre">ed25519</span></code></p></li>
 </ul>
-<p>Keys are returned as <strong>raw exported key material</strong>, not PEM, DER, or <code class="docutils literal notranslate"><span class="pre">public_key</span></code>
+<p>Keys are returned as raw key material, not PEM, DER, or <code class="docutils literal notranslate"><span class="pre">public_key</span></code>
 records.</p>
 <p>Key generation draws from the platform entropy source.  Consult
 your platform documentation to ensure the hardware RNG is properly
@@ -509,15 +560,17 @@ the same state can be forked into independent hash computations.</p>
 info_lib() -&gt; [{binary(), integer(), binary()}]
 </code></pre>
 <br />
-<p>returns: Returns a list of tuples describing the crypto library name, version number,
-and version string.</p>
+<p>returns: Returns a list of tuples describing the crypto libraries used by crypto.</p>
 <p>Get the name and version of the libraries used by crypto.</p>
-<p>Returns a list containing a single tuple <code class="docutils literal notranslate"><span class="pre">{Name,</span> <span class="pre">VerNum,</span> <span class="pre">VerStr}</span></code> where:</p>
+<p>Returns a list of one or more tuples <code class="docutils literal notranslate"><span class="pre">{Name,</span> <span class="pre">VerNum,</span> <span class="pre">VerStr}</span></code> where:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Name</span></code> is the library name as a binary (e.g., <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;mbedtls&quot;&gt;&gt;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Name</span></code> is the library name as a binary (for example, <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;mbedtls&quot;&gt;&gt;</span></code>
+or <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;libsodium&quot;&gt;&gt;</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">VerNum</span></code> is the numeric version according to the library’s versioning scheme</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">VerStr</span></code> is the version string as a binary</p></li>
 </ul>
+<p>AtomVM may return multiple entries, for example one for Mbed TLS and one
+for libsodium.</p>
 <p>Example: <code class="docutils literal notranslate"><span class="pre">[{&lt;&lt;&quot;mbedtls&quot;&gt;&gt;,</span> <span class="pre">50790144,</span> <span class="pre">&lt;&lt;&quot;Mbed</span> <span class="pre">TLS</span> <span class="pre">3.6.1&quot;&gt;&gt;}]</span></code></p>
 <p><a name="mac-4"></a></p>
 </section>
@@ -599,19 +652,25 @@ pbkdf2_hmac(DigestType::<a href="#type-hash_algorithm">hash_algorithm()</a>, Pas
 <section id="sign-4">
 <h3>sign/4<a class="headerlink" href="#sign-4" title="Link to this heading"></a></h3>
 <pre><code>
-sign(Algorithm::ecdsa, DigestType::<a href="#type-hash_algorithm">hash_algorithm()</a>, Data::iodata(), Key::<a href="#type-ecdsa_private_key">ecdsa_private_key()</a>) -&gt; binary()
+sign(Algorithm::ecdsa | eddsa, DigestType::<a href="#type-ecdsa_digest_type">ecdsa_digest_type()</a> | none, Msg::iodata(), Key::[<a href="#type-ecdsa_private">ecdsa_private()</a> | <a href="#type-ecdsa_params">ecdsa_params()</a>] | [<a href="#type-eddsa_private">eddsa_private()</a> | <a href="#type-eddsa_params">eddsa_params()</a>]) -&gt; binary()
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Algorithm</span></code>: signing algorithm (AtomVM supports <code class="docutils literal notranslate"><span class="pre">ecdsa</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">DigestType</span></code>: hash algorithm identifier<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: message bytes (iodata)<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: signing key material<br /></p>
-<p>returns: Returns a DER-encoded signature as a binary.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Algorithm</span></code>: signing algorithm (<code class="docutils literal notranslate"><span class="pre">ecdsa</span></code> or <code class="docutils literal notranslate"><span class="pre">eddsa</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">DigestType</span></code>: hash algorithm identifier for <code class="docutils literal notranslate"><span class="pre">ecdsa</span></code>, or <code class="docutils literal notranslate"><span class="pre">none</span></code> for <code class="docutils literal notranslate"><span class="pre">eddsa</span></code><br /><code class="docutils literal notranslate"><span class="pre">Msg</span></code>: message bytes (iodata)<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: signing key material<br /></p>
+<p>returns: Returns the signature as a binary.</p>
 <p>Create a digital signature.</p>
 <p>AtomVM currently supports:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Algorithm</span> <span class="pre">=</span> <span class="pre">ecdsa</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Key</span> <span class="pre">=</span> <span class="pre">[PrivateKeyBin,</span> <span class="pre">Curve]</span></code> where <code class="docutils literal notranslate"><span class="pre">Curve</span></code> is one of
 <code class="docutils literal notranslate"><span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Algorithm</span> <span class="pre">=</span> <span class="pre">eddsa</span></code> (requires build with libsodium support)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Key</span> <span class="pre">=</span> <span class="pre">[PrivateKeyBin,</span> <span class="pre">ed25519]</span></code> and <code class="docutils literal notranslate"><span class="pre">DigestType</span> <span class="pre">=</span> <span class="pre">none</span></code></p></li>
 </ul>
-<p>The signature is returned in <strong>DER</strong> form.</p>
+<p>Signature encoding depends on <code class="docutils literal notranslate"><span class="pre">Algorithm</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ecdsa</span></code> returns a DER-encoded signature</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eddsa</span></code> with <code class="docutils literal notranslate"><span class="pre">ed25519</span></code> returns a raw 64-byte Ed25519 signature</p></li>
+</ul>
 <p>ECDSA signing requires a random nonce internally.  The quality of
 this nonce depends on the platform entropy source.  Consult your
 platform documentation to ensure the hardware RNG is properly
@@ -637,10 +696,10 @@ other security-sensitive purposes.</p>
 <section id="verify-5">
 <h3>verify/5<a class="headerlink" href="#verify-5" title="Link to this heading"></a></h3>
 <pre><code>
-verify(Algorithm::ecdsa, DigestType::<a href="#type-hash_algorithm">hash_algorithm()</a>, Data::iodata(), Signature::binary(), Key::<a href="#type-ecdsa_public_key">ecdsa_public_key()</a>) -&gt; boolean()
+verify(Algorithm::ecdsa | eddsa, DigestType::<a href="#type-ecdsa_digest_type">ecdsa_digest_type()</a> | none, Msg::iodata(), Signature::binary(), Key::[<a href="#type-ecdsa_public">ecdsa_public()</a> | <a href="#type-ecdsa_params">ecdsa_params()</a>] | [<a href="#type-eddsa_public">eddsa_public()</a> | <a href="#type-eddsa_params">eddsa_params()</a>]) -&gt; boolean()
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Algorithm</span></code>: verification algorithm (AtomVM supports <code class="docutils literal notranslate"><span class="pre">ecdsa</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">DigestType</span></code>: hash algorithm identifier<br /><code class="docutils literal notranslate"><span class="pre">Data</span></code>: message bytes (iodata)<br /><code class="docutils literal notranslate"><span class="pre">Signature</span></code>: DER-encoded signature<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: verification key material<br /></p>
+<p><code class="docutils literal notranslate"><span class="pre">Algorithm</span></code>: verification algorithm (<code class="docutils literal notranslate"><span class="pre">ecdsa</span></code> or <code class="docutils literal notranslate"><span class="pre">eddsa</span></code>)<br /><code class="docutils literal notranslate"><span class="pre">DigestType</span></code>: hash algorithm identifier for <code class="docutils literal notranslate"><span class="pre">ecdsa</span></code>, or <code class="docutils literal notranslate"><span class="pre">none</span></code> for <code class="docutils literal notranslate"><span class="pre">eddsa</span></code><br /><code class="docutils literal notranslate"><span class="pre">Msg</span></code>: message bytes (iodata)<br /><code class="docutils literal notranslate"><span class="pre">Signature</span></code>: signature to verify<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: verification key material<br /></p>
 <p>returns: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the signature is valid, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <p>Verify a digital signature.</p>
 <p>AtomVM currently supports:</p>
@@ -648,8 +707,15 @@ verify(Algorithm::ecdsa, DigestType::<a href="#type-hash_algorithm">hash_algorit
 <li><p><code class="docutils literal notranslate"><span class="pre">Algorithm</span> <span class="pre">=</span> <span class="pre">ecdsa</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Key</span> <span class="pre">=</span> <span class="pre">[PublicKeyBin,</span> <span class="pre">Curve]</span></code> where <code class="docutils literal notranslate"><span class="pre">Curve</span></code> is one of
 <code class="docutils literal notranslate"><span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Algorithm</span> <span class="pre">=</span> <span class="pre">eddsa</span></code> (requires build with libsodium support)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Key</span> <span class="pre">=</span> <span class="pre">[PublicKeyBin,</span> <span class="pre">ed25519]</span></code> and <code class="docutils literal notranslate"><span class="pre">DigestType</span> <span class="pre">=</span> <span class="pre">none</span></code></p></li>
 </ul>
-<p>Invalid DER signatures yield <code class="docutils literal notranslate"><span class="pre">false</span></code> (not an exception).</p>
+<p>Signature encoding depends on <code class="docutils literal notranslate"><span class="pre">Algorithm</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ecdsa</span></code> expects a DER-encoded signature</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eddsa</span></code> with <code class="docutils literal notranslate"><span class="pre">ed25519</span></code> expects a raw 64-byte Ed25519 signature</p></li>
+</ul>
+<p>Invalid signatures yield <code class="docutils literal notranslate"><span class="pre">false</span></code> (not an exception).</p>
 </section>
 </section>
 </section>
