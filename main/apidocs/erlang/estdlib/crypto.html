@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module crypto &mdash; AtomVM 0.7.0-dev+git.380befa9 documentation</title>
+  <title>Module crypto &mdash; AtomVM 0.7.0-dev+git.9d55e14c documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/crypto.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=5181246b"></script>
+      <script src="../../../_static/documentation_options.js?v=74e15a69"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -195,7 +195,7 @@ crypto_opt() = {encrypt, boolean()} | {padding, <a href="#type-padding">padding(
 <section id="crypto-opts">
 <h3><a name="type-crypto_opts">crypto_opts()</a><a class="headerlink" href="#crypto-opts" title="Link to this heading"></a></h3>
 <pre><code>
-crypto_opts() = [<a href="#type-crypto_opt">crypto_opt()</a>]
+crypto_opts() = boolean() | [<a href="#type-crypto_opt">crypto_opt()</a>]
 </code></pre>
 </section>
 <section id="crypto-state">
@@ -320,7 +320,7 @@ OTP allows reuse of the state after <code class="docutils literal notranslate"><
 <section id="crypto-init-3">
 <h3>crypto_init/3<a class="headerlink" href="#crypto-init-3" title="Link to this heading"></a></h3>
 <pre><code>
-crypto_init(Cipher::<a href="#type-cipher_no_iv">cipher_no_iv()</a>, Key::iodata(), FlagOrOptions::boolean() | <a href="#type-crypto_opts">crypto_opts()</a>) -&gt; <a href="#type-crypto_state">crypto_state()</a>
+crypto_init(Cipher::<a href="#type-cipher_no_iv">cipher_no_iv()</a>, Key::iodata(), FlagOrOptions::<a href="#type-crypto_opts">crypto_opts()</a>) -&gt; <a href="#type-crypto_state">crypto_state()</a>
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Cipher</span></code>: a supported cipher (no IV required, e.g. ECB modes)<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the encryption / decryption key<br /><code class="docutils literal notranslate"><span class="pre">FlagOrOptions</span></code>: either <code class="docutils literal notranslate"><span class="pre">true</span></code> for encryption, <code class="docutils literal notranslate"><span class="pre">false</span></code> for decryption,
@@ -334,7 +334,7 @@ or a proplist with options such as <code class="docutils literal notranslate"><s
 <section id="crypto-init-4">
 <h3>crypto_init/4<a class="headerlink" href="#crypto-init-4" title="Link to this heading"></a></h3>
 <pre><code>
-crypto_init(Cipher::<a href="#type-cipher_no_iv">cipher_no_iv()</a> | <a href="#type-cipher_iv">cipher_iv()</a>, Key::iodata(), IV::iodata(), FlagOrOptions::boolean() | <a href="#type-crypto_opts">crypto_opts()</a>) -&gt; <a href="#type-crypto_state">crypto_state()</a>
+crypto_init(Cipher::<a href="#type-cipher_no_iv">cipher_no_iv()</a> | <a href="#type-cipher_iv">cipher_iv()</a>, Key::iodata(), IV::iodata(), FlagOrOptions::<a href="#type-crypto_opts">crypto_opts()</a>) -&gt; <a href="#type-crypto_state">crypto_state()</a>
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Cipher</span></code>: a supported cipher<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the encryption / decryption key<br /><code class="docutils literal notranslate"><span class="pre">IV</span></code>: an initialization vector (use <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&gt;&gt;</span></code> for ciphers that do not require one)<br /><code class="docutils literal notranslate"><span class="pre">FlagOrOptions</span></code>: either <code class="docutils literal notranslate"><span class="pre">true</span></code> for encryption, <code class="docutils literal notranslate"><span class="pre">false</span></code> for decryption,
@@ -433,6 +433,9 @@ generate_key(Type::<a href="#type-pk_type">pk_type()</a>, Param::<a href="#type-
 </ul>
 <p>Keys are returned as <strong>raw exported key material</strong>, not PEM, DER, or <code class="docutils literal notranslate"><span class="pre">public_key</span></code>
 records.</p>
+<p>Key generation draws from the platform entropy source.  Consult
+your platform documentation to ensure the hardware RNG is properly
+seeded before generating keys.</p>
 <p><a name="hash-2"></a></p>
 </section>
 <section id="hash-2">
@@ -609,6 +612,10 @@ sign(Algorithm::ecdsa, DigestType::<a href="#type-hash_algorithm">hash_algorithm
 <code class="docutils literal notranslate"><span class="pre">secp256k1</span> <span class="pre">|</span> <span class="pre">secp256r1</span> <span class="pre">|</span> <span class="pre">secp384r1</span> <span class="pre">|</span> <span class="pre">secp521r1</span> <span class="pre">|</span> <span class="pre">brainpoolP256r1</span> <span class="pre">|</span> <span class="pre">brainpoolP384r1</span> <span class="pre">|</span> <span class="pre">brainpoolP512r1</span></code></p></li>
 </ul>
 <p>The signature is returned in <strong>DER</strong> form.</p>
+<p>ECDSA signing requires a random nonce internally.  The quality of
+this nonce depends on the platform entropy source.  Consult your
+platform documentation to ensure the hardware RNG is properly
+seeded; a predictable nonce can lead to private key recovery.</p>
 <p><a name="strong_rand_bytes-1"></a></p>
 </section>
 <section id="strong-rand-bytes-1">
@@ -621,6 +628,10 @@ strong_rand_bytes(N::non_neg_integer()) -&gt; binary()
 <p>returns: Returns Cryptographically secure random data of length <code class="docutils literal notranslate"><span class="pre">N</span></code></p>
 <p>Generate N cryptographically secure random octets
 and return the result in a binary.</p>
+<p>The quality of the output depends on the platform entropy source.
+Consult your platform documentation to ensure the hardware RNG is
+properly seeded before using this function for key material or
+other security-sensitive purposes.</p>
 <p><a name="verify-5"></a></p>
 </section>
 <section id="verify-5">

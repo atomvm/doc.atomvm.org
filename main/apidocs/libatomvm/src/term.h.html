@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>term.h &mdash; AtomVM 0.7.0-dev+git.380befa9 documentation</title>
+  <title>term.h &mdash; AtomVM 0.7.0-dev+git.9d55e14c documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/term.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=5181246b"></script>
+      <script src="../../../_static/documentation_options.js?v=74e15a69"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -1560,6 +1560,59 @@
 </dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_to_int">
+<span class="target" id="libatomvmterm_8h_1a3b3e1276735fee3c782bf2a2c570de2b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">avm_int_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_int</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_to_int" title="Link to this definition"></a><br /></dt>
+<dd><p>Extract <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> value from unboxed integer term. </p>
+<p>Extracts the <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> value from a term that contains an unboxed integer. An unboxed integer is an integer value stored directly within the term itself, not as a separate allocation on the heap.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmterm_8h_1af2e905198c11113fdead7f9d568eaf6e"><span class="std std-ref">term_is_int()</span></a> to validate <a class="reference internal" href="../types.html#libatomvmterm__typedef_8h_1a603769ce1e8eeb1faa458d7e6cf904d8"><span class="std std-ref">term</span></a> before extraction </p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmterm_8h_1a80b2887ea603d78f680313ef58f8b788"><span class="std std-ref">term_unbox_int()</span></a> for extracting boxed integers </p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#libatomvmterm_8h_1a4c8cb65ec787cf7c2c96bced81c9a4d7"><span class="std std-ref">term_maybe_unbox_int()</span></a> for extracting from either unboxed or boxed integers </p>
+</div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function performs no type checking - validation must be done by caller using <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmterm_8h_1af2e905198c11113fdead7f9d568eaf6e"><span class="std std-ref"><span class="pre">term_is_int()</span></span></a></code></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only extracts from unboxed integers (28-bit on 32-bit builds, 60-bit on 64-bit builds) </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Safe conversions: <code class="docutils literal notranslate"><span class="pre">size_t</span></code> s = term_to_int(t) is valid for non-negative values (check with <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmterm_8h_1a0bc80bc5a47dc13602a1f3dc951c869a"><span class="std std-ref"><span class="pre">term_is_non_neg_int()</span></span></a></code> first) </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Undefined behavior if called on non-integer or boxed integer terms</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Unsafe conversions on 64-bit builds: <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> may overflow since <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> can hold 60-bit values</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – Term containing unboxed integer </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The extracted <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> value</p>
+</dd>
+<dt class="field-odd">Pre<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">term_is_int(t)</span></code> must be true </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_is_int">
 <span class="target" id="libatomvmterm_8h_1af2e905198c11113fdead7f9d568eaf6e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_is_int</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_is_int" title="Link to this definition"></a><br /></dt>
 <dd><p>Check if term is an integer within platform-specific <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> range. </p>
@@ -2057,59 +2110,6 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>an uint8_t value. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_to_int">
-<span class="target" id="libatomvmterm_8h_1a3b3e1276735fee3c782bf2a2c570de2b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">avm_int_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_to_int</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_to_int" title="Link to this definition"></a><br /></dt>
-<dd><p>Extract <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> value from unboxed integer term. </p>
-<p>Extracts the <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> value from a term that contains an unboxed integer. An unboxed integer is an integer value stored directly within the term itself, not as a separate allocation on the heap.</p>
-<p><div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#libatomvmterm_8h_1af2e905198c11113fdead7f9d568eaf6e"><span class="std std-ref">term_is_int()</span></a> to validate <a class="reference internal" href="../types.html#libatomvmterm__typedef_8h_1a603769ce1e8eeb1faa458d7e6cf904d8"><span class="std std-ref">term</span></a> before extraction </p>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#libatomvmterm_8h_1a80b2887ea603d78f680313ef58f8b788"><span class="std std-ref">term_unbox_int()</span></a> for extracting boxed integers </p>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#libatomvmterm_8h_1a4c8cb65ec787cf7c2c96bced81c9a4d7"><span class="std std-ref">term_maybe_unbox_int()</span></a> for extracting from either unboxed or boxed integers </p>
-</div>
-</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This function performs no type checking - validation must be done by caller using <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmterm_8h_1af2e905198c11113fdead7f9d568eaf6e"><span class="std std-ref"><span class="pre">term_is_int()</span></span></a></code></p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Only extracts from unboxed integers (28-bit on 32-bit builds, 60-bit on 64-bit builds) </p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Safe conversions: <code class="docutils literal notranslate"><span class="pre">size_t</span></code> s = term_to_int(t) is always valid </p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Undefined behavior if called on non-integer or boxed integer terms</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Unsafe conversions on 64-bit builds: <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">int32_t</span></code> may overflow since <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> can hold 60-bit values</p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> – Term containing unboxed integer </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The extracted <code class="docutils literal notranslate"><span class="pre">avm_int_t</span></code> value</p>
-</dd>
-<dt class="field-odd">Pre<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">term_is_int(t)</span></code> must be true </p>
 </dd>
 </dl>
 </dd></dl>
