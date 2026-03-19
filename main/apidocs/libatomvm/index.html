@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>libAtomVM &mdash; AtomVM 0.7.0-dev+git.f7d61c3b documentation</title>
+  <title>libAtomVM &mdash; AtomVM 0.7.0-dev+git.006aa370 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/index.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=23d7b2a8"></script>
+      <script src="../../_static/documentation_options.js?v=789ae70c"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -98,8 +98,8 @@
 <li class="toctree-l4"><a class="reference internal" href="src/erl_nif_priv.h.html">erl_nif_priv.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/ets.c.html">ets.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/ets.h.html">ets.h</a></li>
-<li class="toctree-l4"><a class="reference internal" href="src/ets_hashtable.c.html">ets_hashtable.c</a></li>
-<li class="toctree-l4"><a class="reference internal" href="src/ets_hashtable.h.html">ets_hashtable.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src/ets_multimap.c.html">ets_multimap.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src/ets_multimap.h.html">ets_multimap.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/exportedfunction.h.html">exportedfunction.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/external_term.c.html">external_term.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src/external_term.h.html">external_term.h</a></li>
@@ -1845,6 +1845,7 @@
 <li class="toctree-l3"><a class="reference internal" href="src/defaultatoms.h.html#c.libAtomVM.defaultatoms.h.&#64;4.PLATFORM_ATOMS_BASE_DUMMY"><code class="docutils literal notranslate"><span class="pre">PLATFORM_ATOMS_BASE_DUMMY</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="src/defaultatoms.h.html#c.libAtomVM.defaultatoms.h.atom_is_boolean"><code class="docutils literal notranslate"><span class="pre">atom_is_boolean()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/defaultatoms.h.html#c.libAtomVM.defaultatoms.h.defaultatoms_init"><code class="docutils literal notranslate"><span class="pre">defaultatoms_init()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/defaultatoms.h.html#c.libAtomVM.defaultatoms.h.platform_defaultatoms_init"><code class="docutils literal notranslate"><span class="pre">platform_defaultatoms_init()</span></code></a></li>
 </ul>
@@ -2048,153 +2049,168 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="src/ets.c.html">ets.c</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ETS_NO_INDEX"><code class="docutils literal notranslate"><span class="pre">ETS_NO_INDEX</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ETS_ANY_PROCESS"><code class="docutils literal notranslate"><span class="pre">ETS_ANY_PROCESS</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ETS_WHOLE_TUPLE"><code class="docutils literal notranslate"><span class="pre">ETS_WHOLE_TUPLE</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.SMP_RDLOCK"><code class="docutils literal notranslate"><span class="pre">SMP_RDLOCK</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.SMP_WRLOCK"><code class="docutils literal notranslate"><span class="pre">SMP_WRLOCK</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.SMP_UNLOCK"><code class="docutils literal notranslate"><span class="pre">SMP_UNLOCK</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_table_filter_pred"><code class="docutils literal notranslate"><span class="pre">ets_table_filter_pred</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.TableAccessType"><code class="docutils literal notranslate"><span class="pre">TableAccessType</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.TableAccessType.TableAccessNone"><code class="docutils literal notranslate"><span class="pre">TableAccessNone</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.TableAccessType.TableAccessRead"><code class="docutils literal notranslate"><span class="pre">TableAccessRead</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.TableAccessType.TableAccessWrite"><code class="docutils literal notranslate"><span class="pre">TableAccessWrite</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.TableAccess"><code class="docutils literal notranslate"><span class="pre">TableAccess</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.TableAccess.TableAccessNone"><code class="docutils literal notranslate"><span class="pre">TableAccessNone</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.TableAccess.TableAccessRead"><code class="docutils literal notranslate"><span class="pre">TableAccessRead</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.TableAccess.TableAccessWrite"><code class="docutils literal notranslate"><span class="pre">TableAccessWrite</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_delete_all_tables"><code class="docutils literal notranslate"><span class="pre">ets_delete_all_tables()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_add_table"><code class="docutils literal notranslate"><span class="pre">ets_add_table()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_acquire_table"><code class="docutils literal notranslate"><span class="pre">ets_acquire_table()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.get_table"><code class="docutils literal notranslate"><span class="pre">get_table()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.add_table"><code class="docutils literal notranslate"><span class="pre">add_table()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.delete_all_tables"><code class="docutils literal notranslate"><span class="pre">delete_all_tables()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.table_destroy"><code class="docutils literal notranslate"><span class="pre">table_destroy()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.insert_one"><code class="docutils literal notranslate"><span class="pre">insert_one()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.insert_many"><code class="docutils literal notranslate"><span class="pre">insert_many()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.lookup_select_maybe_gc"><code class="docutils literal notranslate"><span class="pre">lookup_select_maybe_gc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.lookup_or_default"><code class="docutils literal notranslate"><span class="pre">lookup_or_default()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.apply_spec"><code class="docutils literal notranslate"><span class="pre">apply_spec()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.apply_op"><code class="docutils literal notranslate"><span class="pre">apply_op()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_init"><code class="docutils literal notranslate"><span class="pre">ets_init()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_destroy"><code class="docutils literal notranslate"><span class="pre">ets_destroy()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_create_table_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_create_table_maybe_gc()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_table_destroy"><code class="docutils literal notranslate"><span class="pre">ets_table_destroy()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_delete_tables_internal"><code class="docutils literal notranslate"><span class="pre">ets_delete_tables_internal()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.equal_process_id_pred"><code class="docutils literal notranslate"><span class="pre">equal_process_id_pred()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_delete_owned_tables"><code class="docutils literal notranslate"><span class="pre">ets_delete_owned_tables()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.true_pred"><code class="docutils literal notranslate"><span class="pre">true_pred()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_table_insert"><code class="docutils literal notranslate"><span class="pre">ets_table_insert()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_table_insert_list"><code class="docutils literal notranslate"><span class="pre">ets_table_insert_list()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_insert"><code class="docutils literal notranslate"><span class="pre">ets_insert()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_table_lookup_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_table_lookup_maybe_gc()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_lookup_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_lookup_maybe_gc()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_lookup_element_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_lookup_element_maybe_gc()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_drop_table"><code class="docutils literal notranslate"><span class="pre">ets_drop_table()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_delete"><code class="docutils literal notranslate"><span class="pre">ets_delete()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.operation_to_tuple4"><code class="docutils literal notranslate"><span class="pre">operation_to_tuple4()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_member"><code class="docutils literal notranslate"><span class="pre">ets_member()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_insert"><code class="docutils literal notranslate"><span class="pre">ets_insert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_update_element"><code class="docutils literal notranslate"><span class="pre">ets_update_element()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_update_counter_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_update_counter_maybe_gc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_take_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_take_maybe_gc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_delete"><code class="docutils literal notranslate"><span class="pre">ets_delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_delete_table"><code class="docutils literal notranslate"><span class="pre">ets_delete_table()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_delete_object"><code class="docutils literal notranslate"><span class="pre">ets_delete_object()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.ets_delete_owned_tables"><code class="docutils literal notranslate"><span class="pre">ets_delete_owned_tables()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable"><code class="docutils literal notranslate"><span class="pre">EtsTable</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.head"><code class="docutils literal notranslate"><span class="pre">head</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.ref_ticks"><code class="docutils literal notranslate"><span class="pre">ref_ticks</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.is_named"><code class="docutils literal notranslate"><span class="pre">is_named</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.named"><code class="docutils literal notranslate"><span class="pre">named</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.key_index"><code class="docutils literal notranslate"><span class="pre">key_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.type"><code class="docutils literal notranslate"><span class="pre">type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.access"><code class="docutils literal notranslate"><span class="pre">access</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.multimap"><code class="docutils literal notranslate"><span class="pre">multimap</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.owner_process_id"><code class="docutils literal notranslate"><span class="pre">owner_process_id</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.keypos"><code class="docutils literal notranslate"><span class="pre">keypos</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.table_type"><code class="docutils literal notranslate"><span class="pre">table_type</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.hashtable"><code class="docutils literal notranslate"><span class="pre">hashtable</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.access_type"><code class="docutils literal notranslate"><span class="pre">access_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.ref_ticks"><code class="docutils literal notranslate"><span class="pre">ref_ticks</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/ets.c.html#c.libAtomVM.ets.c.EtsTable.lock"><code class="docutils literal notranslate"><span class="pre">lock</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="src/ets.h.html">ets.h</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsTableType"><code class="docutils literal notranslate"><span class="pre">EtsTableType</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsTableType.EtsTableSet"><code class="docutils literal notranslate"><span class="pre">EtsTableSet</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsTableType.EtsTableOrderedSet"><code class="docutils literal notranslate"><span class="pre">EtsTableOrderedSet</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsTableType.EtsTableBag"><code class="docutils literal notranslate"><span class="pre">EtsTableBag</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsTableType.EtsTableDuplicateBag"><code class="docutils literal notranslate"><span class="pre">EtsTableDuplicateBag</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.Ets"><code class="docutils literal notranslate"><span class="pre">Ets</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_table_type_t"><code class="docutils literal notranslate"><span class="pre">ets_table_type_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_table_type_t.EtsTableSet"><code class="docutils literal notranslate"><span class="pre">EtsTableSet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_table_type_t.EtsTableOrderedSet"><code class="docutils literal notranslate"><span class="pre">EtsTableOrderedSet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_table_type_t.EtsTableBag"><code class="docutils literal notranslate"><span class="pre">EtsTableBag</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_table_type_t.EtsTableDuplicateBag"><code class="docutils literal notranslate"><span class="pre">EtsTableDuplicateBag</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsAccessType"><code class="docutils literal notranslate"><span class="pre">EtsAccessType</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsAccessType.EtsAccessPrivate"><code class="docutils literal notranslate"><span class="pre">EtsAccessPrivate</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsAccessType.EtsAccessProtected"><code class="docutils literal notranslate"><span class="pre">EtsAccessProtected</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsAccessType.EtsAccessPublic"><code class="docutils literal notranslate"><span class="pre">EtsAccessPublic</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_table_access_t"><code class="docutils literal notranslate"><span class="pre">ets_table_access_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_table_access_t.EtsTableAccessPrivate"><code class="docutils literal notranslate"><span class="pre">EtsTableAccessPrivate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_table_access_t.EtsTableAccessProtected"><code class="docutils literal notranslate"><span class="pre">EtsTableAccessProtected</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_table_access_t.EtsTableAccessPublic"><code class="docutils literal notranslate"><span class="pre">EtsTableAccessPublic</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsErrorCode"><code class="docutils literal notranslate"><span class="pre">EtsErrorCode</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsErrorCode.EtsOk"><code class="docutils literal notranslate"><span class="pre">EtsOk</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsErrorCode.EtsBadAccess"><code class="docutils literal notranslate"><span class="pre">EtsBadAccess</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsErrorCode.EtsTableNameInUse"><code class="docutils literal notranslate"><span class="pre">EtsTableNameInUse</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsErrorCode.EtsBadEntry"><code class="docutils literal notranslate"><span class="pre">EtsBadEntry</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsErrorCode.EtsAllocationFailure"><code class="docutils literal notranslate"><span class="pre">EtsAllocationFailure</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsErrorCode.EtsEntryNotFound"><code class="docutils literal notranslate"><span class="pre">EtsEntryNotFound</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsErrorCode.EtsBadPosition"><code class="docutils literal notranslate"><span class="pre">EtsBadPosition</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.EtsErrorCode.EtsOverflow"><code class="docutils literal notranslate"><span class="pre">EtsOverflow</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t"><code class="docutils literal notranslate"><span class="pre">ets_result_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t.EtsOk"><code class="docutils literal notranslate"><span class="pre">EtsOk</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t.EtsKeyExists"><code class="docutils literal notranslate"><span class="pre">EtsKeyExists</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t.EtsTableNameExists"><code class="docutils literal notranslate"><span class="pre">EtsTableNameExists</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t.EtsTupleNotExists"><code class="docutils literal notranslate"><span class="pre">EtsTupleNotExists</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t.EtsBadEntry"><code class="docutils literal notranslate"><span class="pre">EtsBadEntry</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t.EtsBadAccess"><code class="docutils literal notranslate"><span class="pre">EtsBadAccess</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t.EtsBadIndex"><code class="docutils literal notranslate"><span class="pre">EtsBadIndex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t.EtsAllocationError"><code class="docutils literal notranslate"><span class="pre">EtsAllocationError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_result_t.EtsOverflow"><code class="docutils literal notranslate"><span class="pre">EtsOverflow</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_init"><code class="docutils literal notranslate"><span class="pre">ets_init()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_destroy"><code class="docutils literal notranslate"><span class="pre">ets_destroy()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_create_table_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_create_table_maybe_gc()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_delete_owned_tables"><code class="docutils literal notranslate"><span class="pre">ets_delete_owned_tables()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_insert"><code class="docutils literal notranslate"><span class="pre">ets_insert()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_lookup_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_lookup_maybe_gc()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_lookup_element_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_lookup_element_maybe_gc()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_delete"><code class="docutils literal notranslate"><span class="pre">ets_delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_member"><code class="docutils literal notranslate"><span class="pre">ets_member()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_insert"><code class="docutils literal notranslate"><span class="pre">ets_insert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_update_element"><code class="docutils literal notranslate"><span class="pre">ets_update_element()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_update_counter_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_update_counter_maybe_gc()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_drop_table"><code class="docutils literal notranslate"><span class="pre">ets_drop_table()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.Ets"><code class="docutils literal notranslate"><span class="pre">Ets</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.Ets.ets_tables"><code class="docutils literal notranslate"><span class="pre">ets_tables</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_take_maybe_gc"><code class="docutils literal notranslate"><span class="pre">ets_take_maybe_gc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_delete"><code class="docutils literal notranslate"><span class="pre">ets_delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_delete_table"><code class="docutils literal notranslate"><span class="pre">ets_delete_table()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.ets_delete_object"><code class="docutils literal notranslate"><span class="pre">ets_delete_object()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets.h.html#c.libAtomVM.ets.h.Ets.ets_tables"><code class="docutils literal notranslate"><span class="pre">ets_tables</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="src/ets_multimap.c.html">ets_multimap.c</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.DYNARRAY_INITIAL_CAPACITY"><code class="docutils literal notranslate"><span class="pre">DYNARRAY_INITIAL_CAPACITY</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.DYNARRAY_GROWTH_FACTOR"><code class="docutils literal notranslate"><span class="pre">DYNARRAY_GROWTH_FACTOR</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_INITIAL"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_INITIAL</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_ATOM"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_ATOM</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_INTEGER"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_INTEGER</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_FLOAT"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_FLOAT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_PID"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_PID</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_REF"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_REF</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_BINARY"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_BINARY</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_TUPLE"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_TUPLE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_LIST"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_LIST</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_MAP"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_MAP</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.LARGE_PRIME_PORT"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_PORT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_term"><code class="docutils literal notranslate"><span class="pre">hash_term()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.entry_new"><code class="docutils literal notranslate"><span class="pre">entry_new()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.entry_delete"><code class="docutils literal notranslate"><span class="pre">entry_delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.node_new"><code class="docutils literal notranslate"><span class="pre">node_new()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.node_delete"><code class="docutils literal notranslate"><span class="pre">node_delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.node_find"><code class="docutils literal notranslate"><span class="pre">node_find()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.node_key"><code class="docutils literal notranslate"><span class="pre">node_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.multimap_to_single"><code class="docutils literal notranslate"><span class="pre">multimap_to_single()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.insert_revert"><code class="docutils literal notranslate"><span class="pre">insert_revert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.tuple_exists"><code class="docutils literal notranslate"><span class="pre">tuple_exists()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.ets_multimap_new"><code class="docutils literal notranslate"><span class="pre">ets_multimap_new()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.ets_multimap_delete"><code class="docutils literal notranslate"><span class="pre">ets_multimap_delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.ets_multimap_lookup"><code class="docutils literal notranslate"><span class="pre">ets_multimap_lookup()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.ets_multimap_insert"><code class="docutils literal notranslate"><span class="pre">ets_multimap_insert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.ets_multimap_remove"><code class="docutils literal notranslate"><span class="pre">ets_multimap_remove()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.ets_multimap_remove_tuple"><code class="docutils literal notranslate"><span class="pre">ets_multimap_remove_tuple()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_atom"><code class="docutils literal notranslate"><span class="pre">hash_atom()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_integer"><code class="docutils literal notranslate"><span class="pre">hash_integer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_float"><code class="docutils literal notranslate"><span class="pre">hash_float()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_local_pid"><code class="docutils literal notranslate"><span class="pre">hash_local_pid()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_local_port"><code class="docutils literal notranslate"><span class="pre">hash_local_port()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_external_pid"><code class="docutils literal notranslate"><span class="pre">hash_external_pid()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_external_port"><code class="docutils literal notranslate"><span class="pre">hash_external_port()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_local_reference"><code class="docutils literal notranslate"><span class="pre">hash_local_reference()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_external_reference"><code class="docutils literal notranslate"><span class="pre">hash_external_reference()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_binary"><code class="docutils literal notranslate"><span class="pre">hash_binary()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.c.html#c.libAtomVM.ets_multimap.c.hash_term_incr"><code class="docutils literal notranslate"><span class="pre">hash_term_incr()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="src/ets_hashtable.c.html">ets_hashtable.c</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_INITIAL"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_INITIAL</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_ATOM"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_ATOM</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_INTEGER"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_INTEGER</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_FLOAT"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_FLOAT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_PID"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_PID</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_REF"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_REF</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_BINARY"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_BINARY</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_TUPLE"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_TUPLE</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_LIST"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_LIST</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_MAP"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_MAP</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.LARGE_PRIME_PORT"><code class="docutils literal notranslate"><span class="pre">LARGE_PRIME_PORT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_term"><code class="docutils literal notranslate"><span class="pre">hash_term()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.ets_hashtable_new"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_new()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.ets_hashtable_free_node"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_free_node()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.ets_hashtable_destroy"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_destroy()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.ets_hashtable_new_node"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_new_node()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.ets_hashtable_insert"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_insert()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.ets_hashtable_lookup"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_lookup()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.ets_hashtable_remove"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_remove()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_atom"><code class="docutils literal notranslate"><span class="pre">hash_atom()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_integer"><code class="docutils literal notranslate"><span class="pre">hash_integer()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_float"><code class="docutils literal notranslate"><span class="pre">hash_float()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_local_pid"><code class="docutils literal notranslate"><span class="pre">hash_local_pid()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_local_port"><code class="docutils literal notranslate"><span class="pre">hash_local_port()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_external_pid"><code class="docutils literal notranslate"><span class="pre">hash_external_pid()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_external_port"><code class="docutils literal notranslate"><span class="pre">hash_external_port()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_local_reference"><code class="docutils literal notranslate"><span class="pre">hash_local_reference()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_external_reference"><code class="docutils literal notranslate"><span class="pre">hash_external_reference()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_binary"><code class="docutils literal notranslate"><span class="pre">hash_binary()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.hash_term_incr"><code class="docutils literal notranslate"><span class="pre">hash_term_incr()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.c.html#c.libAtomVM.ets_hashtable.c.HNode"><code class="docutils literal notranslate"><span class="pre">HNode</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/ets_multimap.h.html">ets_multimap.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ETS_MULTIMAP_NUM_BUCKETS"><code class="docutils literal notranslate"><span class="pre">ETS_MULTIMAP_NUM_BUCKETS</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimap"><code class="docutils literal notranslate"><span class="pre">EtsMultimap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimapNode"><code class="docutils literal notranslate"><span class="pre">EtsMultimapNode</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimapEntry"><code class="docutils literal notranslate"><span class="pre">EtsMultimapEntry</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_type_t"><code class="docutils literal notranslate"><span class="pre">ets_multimap_type_t</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_type_t.EtsMultimapTypeSingle"><code class="docutils literal notranslate"><span class="pre">EtsMultimapTypeSingle</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_type_t.EtsMultimapTypeSet"><code class="docutils literal notranslate"><span class="pre">EtsMultimapTypeSet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_type_t.EtsMultimapTypeList"><code class="docutils literal notranslate"><span class="pre">EtsMultimapTypeList</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="src/ets_hashtable.h.html">ets_hashtable.h</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.NUM_BUCKETS"><code class="docutils literal notranslate"><span class="pre">NUM_BUCKETS</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.EtsHashtableOptions"><code class="docutils literal notranslate"><span class="pre">EtsHashtableOptions</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.EtsHashtableOptions.EtsHashtableAllowOverwrite"><code class="docutils literal notranslate"><span class="pre">EtsHashtableAllowOverwrite</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.EtsHashtableStatus"><code class="docutils literal notranslate"><span class="pre">EtsHashtableStatus</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.EtsHashtableStatus.EtsHashtableOk"><code class="docutils literal notranslate"><span class="pre">EtsHashtableOk</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.EtsHashtableStatus.EtsHashtableKeyAlreadyExists"><code class="docutils literal notranslate"><span class="pre">EtsHashtableKeyAlreadyExists</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.EtsHashtableStatus.EtsHashtableOutOfMemory"><code class="docutils literal notranslate"><span class="pre">EtsHashtableOutOfMemory</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.ets_hashtable_new"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_new()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.ets_hashtable_destroy"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_destroy()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.ets_hashtable_insert"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_insert()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.ets_hashtable_lookup"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_lookup()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.ets_hashtable_remove"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_remove()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.ets_hashtable_new_node"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_new_node()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.ets_hashtable_free_node"><code class="docutils literal notranslate"><span class="pre">ets_hashtable_free_node()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.EtsHashTable"><code class="docutils literal notranslate"><span class="pre">EtsHashTable</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.EtsHashTable.capacity"><code class="docutils literal notranslate"><span class="pre">capacity</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/ets_hashtable.h.html#c.libAtomVM.ets_hashtable.h.EtsHashTable.buckets"><code class="docutils literal notranslate"><span class="pre">buckets</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_new"><code class="docutils literal notranslate"><span class="pre">ets_multimap_new()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_delete"><code class="docutils literal notranslate"><span class="pre">ets_multimap_delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_lookup"><code class="docutils literal notranslate"><span class="pre">ets_multimap_lookup()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_insert"><code class="docutils literal notranslate"><span class="pre">ets_multimap_insert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_remove"><code class="docutils literal notranslate"><span class="pre">ets_multimap_remove()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.ets_multimap_remove_tuple"><code class="docutils literal notranslate"><span class="pre">ets_multimap_remove_tuple()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimap.type"><code class="docutils literal notranslate"><span class="pre">type</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimap.key_index"><code class="docutils literal notranslate"><span class="pre">key_index</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimap.buckets"><code class="docutils literal notranslate"><span class="pre">buckets</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimapNode.next"><code class="docutils literal notranslate"><span class="pre">next</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimapNode.entries"><code class="docutils literal notranslate"><span class="pre">entries</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimapEntry.next"><code class="docutils literal notranslate"><span class="pre">next</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimapEntry.tuple"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/ets_multimap.h.html#c.libAtomVM.ets_multimap.h.EtsMultimapEntry.heap"><code class="docutils literal notranslate"><span class="pre">heap</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="src/exportedfunction.h.html">exportedfunction.h</a><ul>
@@ -3458,8 +3474,18 @@
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.DEFINE_MATH_NIF"><code class="docutils literal notranslate"><span class="pre">DEFINE_MATH_NIF</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_OPEN_CLOSE"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_OPEN_CLOSE</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_EXECVE"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_EXECVE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_LSEEK"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_LSEEK</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_PREAD"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_PREAD</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_PWRITE"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_PWRITE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_FSYNC"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_FSYNC</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_FTRUNCATE"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_FTRUNCATE</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_MKFIFO"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_MKFIFO</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_MKDIR"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_MKDIR</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_UNLINK"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_UNLINK</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_RMDIR"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_RMDIR</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_RENAME"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_RENAME</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_STAT"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_STAT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_FSTAT"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_FSTAT</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_CLOCK_SETTIME_OR_SETTIMEOFDAY"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_CLOCK_SETTIME_OR_SETTIMEOFDAY</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_OPENDIR_READDIR_CLOSEDIR"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_OPENDIR_READDIR_CLOSEDIR</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.IF_HAVE_GETCWD_PATHMAX"><code class="docutils literal notranslate"><span class="pre">IF_HAVE_GETCWD_PATHMAX</span></code></a></li>
@@ -3543,11 +3569,16 @@
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_erlang_throw"><code class="docutils literal notranslate"><span class="pre">nif_erlang_throw()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_erlang_raise"><code class="docutils literal notranslate"><span class="pre">nif_erlang_raise()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_new"><code class="docutils literal notranslate"><span class="pre">nif_ets_new()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_insert"><code class="docutils literal notranslate"><span class="pre">nif_ets_insert()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_lookup"><code class="docutils literal notranslate"><span class="pre">nif_ets_lookup()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_lookup_element"><code class="docutils literal notranslate"><span class="pre">nif_ets_lookup_element()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_delete"><code class="docutils literal notranslate"><span class="pre">nif_ets_delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_member"><code class="docutils literal notranslate"><span class="pre">nif_ets_member()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_insert"><code class="docutils literal notranslate"><span class="pre">nif_ets_insert()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_insert_new"><code class="docutils literal notranslate"><span class="pre">nif_ets_insert_new()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_update_element"><code class="docutils literal notranslate"><span class="pre">nif_ets_update_element()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_update_counter"><code class="docutils literal notranslate"><span class="pre">nif_ets_update_counter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_take"><code class="docutils literal notranslate"><span class="pre">nif_ets_take()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_delete"><code class="docutils literal notranslate"><span class="pre">nif_ets_delete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_ets_delete_object"><code class="docutils literal notranslate"><span class="pre">nif_ets_delete_object()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_erlang_pid_to_list"><code class="docutils literal notranslate"><span class="pre">nif_erlang_pid_to_list()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_erlang_port_to_list"><code class="docutils literal notranslate"><span class="pre">nif_erlang_port_to_list()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.nif_erlang_ref_to_list"><code class="docutils literal notranslate"><span class="pre">nif_erlang_ref_to_list()</span></code></a></li>
@@ -3780,10 +3811,15 @@
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.raise_nif"><code class="docutils literal notranslate"><span class="pre">raise_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_new_nif"><code class="docutils literal notranslate"><span class="pre">ets_new_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_insert_nif"><code class="docutils literal notranslate"><span class="pre">ets_insert_nif</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_insert_new_nif"><code class="docutils literal notranslate"><span class="pre">ets_insert_new_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_lookup_nif"><code class="docutils literal notranslate"><span class="pre">ets_lookup_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_lookup_element_nif"><code class="docutils literal notranslate"><span class="pre">ets_lookup_element_nif</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_delete_nif"><code class="docutils literal notranslate"><span class="pre">ets_delete_nif</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_member_nif"><code class="docutils literal notranslate"><span class="pre">ets_member_nif</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_update_element_nif"><code class="docutils literal notranslate"><span class="pre">ets_update_element_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_update_counter_nif"><code class="docutils literal notranslate"><span class="pre">ets_update_counter_nif</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_take_nif"><code class="docutils literal notranslate"><span class="pre">ets_take_nif</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_delete_nif"><code class="docutils literal notranslate"><span class="pre">ets_delete_nif</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.ets_delete_object_nif"><code class="docutils literal notranslate"><span class="pre">ets_delete_object_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.atomvm_add_avm_pack_binary_nif"><code class="docutils literal notranslate"><span class="pre">atomvm_add_avm_pack_binary_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.atomvm_add_avm_pack_file_nif"><code class="docutils literal notranslate"><span class="pre">atomvm_add_avm_pack_file_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/nifs.c.html#c.libAtomVM.nifs.c.atomvm_close_avm_pack_nif"><code class="docutils literal notranslate"><span class="pre">atomvm_close_avm_pack_nif</span></code></a></li>

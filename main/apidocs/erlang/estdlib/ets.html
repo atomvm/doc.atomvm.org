@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module ets &mdash; AtomVM 0.7.0-dev+git.f7d61c3b documentation</title>
+  <title>Module ets &mdash; AtomVM 0.7.0-dev+git.006aa370 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/ets.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=23d7b2a8"></script>
+      <script src="../../../_static/documentation_options.js?v=789ae70c"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -189,14 +189,20 @@ options() = [<a href="#type-option">option()</a>]
 <section id="table-type">
 <h3><a name="type-table_type">table_type()</a><a class="headerlink" href="#table-type" title="Link to this heading"></a></h3>
 <pre><code>
-table_type() = set
+table_type() = set | bag | duplicate_bag
+</code></pre>
+</section>
+<section id="update-op">
+<h3><a name="type-update_op">update_op()</a><a class="headerlink" href="#update-op" title="Link to this heading"></a></h3>
+<pre><code>
+update_op() = {pos_integer(), integer()} | {pos_integer(), integer(), integer(), integer()}
 </code></pre>
 <p><a name="index"></a></p>
 </section>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#delete-1">delete/1</a></td><td>Delete an ets table.</td></tr><tr><td valign="top"><a href="#delete-2">delete/2</a></td><td>Delete an entry from an ets table.</td></tr><tr><td valign="top"><a href="#insert-2">insert/2</a></td><td>Insert an entry into an ets table.</td></tr><tr><td valign="top"><a href="#lookup-2">lookup/2</a></td><td>Look up an entry in an ets table.</td></tr><tr><td valign="top"><a href="#lookup_element-3">lookup_element/3</a></td><td>Look up an element from an entry in an ets table.</td></tr><tr><td valign="top"><a href="#new-2">new/2</a></td><td>Create a new ets table.</td></tr><tr><td valign="top"><a href="#update_counter-3">update_counter/3</a></td><td>Updates a counter value at Key in the table.</td></tr><tr><td valign="top"><a href="#update_counter-4">update_counter/4</a></td><td>Updates a counter value at Key in the table.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#delete-1">delete/1</a></td><td>Delete an ets table.</td></tr><tr><td valign="top"><a href="#delete-2">delete/2</a></td><td>Delete all entries with the given key from an ets table.</td></tr><tr><td valign="top"><a href="#delete_object-2">delete_object/2</a></td><td>Delete a specific object from an ets table.</td></tr><tr><td valign="top"><a href="#insert-2">insert/2</a></td><td>Insert an entry into an ets table.</td></tr><tr><td valign="top"><a href="#insert_new-2">insert_new/2</a></td><td>Insert an entry into an ets table only if the key does not already exist.</td></tr><tr><td valign="top"><a href="#lookup-2">lookup/2</a></td><td>Look up an entry in an ets table.</td></tr><tr><td valign="top"><a href="#lookup_element-3">lookup_element/3</a></td><td>Look up an element from an entry in an ets table.</td></tr><tr><td valign="top"><a href="#lookup_element-4">lookup_element/4</a></td><td>Look up an element from an entry in an ets table with a default value.</td></tr><tr><td valign="top"><a href="#member-2">member/2</a></td><td>Check if a key exists in an ets table.</td></tr><tr><td valign="top"><a href="#new-2">new/2</a></td><td>Create a new ets table.</td></tr><tr><td valign="top"><a href="#take-2">take/2</a></td><td>Return and delete all entries with the given key from an ets table.</td></tr><tr><td valign="top"><a href="#update_counter-3">update_counter/3</a></td><td>Updates one or more counter values at Key in the table.</td></tr><tr><td valign="top"><a href="#update_counter-4">update_counter/4</a></td><td>Updates one or more counter values at Key in the table.</td></tr><tr><td valign="top"><a href="#update_element-3">update_element/3</a></td><td>Update one or more elements of an existing entry in an ets table.</td></tr><tr><td valign="top"><a href="#update_element-4">update_element/4</a></td><td>Update one or more elements of an existing entry, inserting Default if missing.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -221,7 +227,22 @@ delete(Table::<a href="#type-table">table()</a>, Key::term()) -&gt; true
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to lookup one or more entries to delete<br /></p>
 <p>returns: true; otherwise, an error is raised if arguments are bad</p>
-<p>Delete an entry from an ets table.</p>
+<p>Delete all entries with the given key from an ets table.</p>
+<p><a name="delete_object-2"></a></p>
+</section>
+<section id="delete-object-2">
+<h3>delete_object/2<a class="headerlink" href="#delete-object-2" title="Link to this heading"></a></h3>
+<pre><code>
+delete_object(Table::<a href="#type-table">table()</a>, Object::tuple()) -&gt; true
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Object</span></code>: the exact object to delete<br /></p>
+<p>returns: true; otherwise, an error is raised if arguments are bad</p>
+<p>Delete a specific object from an ets table.</p>
+<p>Unlike <code class="docutils literal notranslate"><span class="pre">delete/2</span></code>, which deletes all entries matching a key, this function
+deletes only entries that exactly match the given object. For <code class="docutils literal notranslate"><span class="pre">bag</span></code> tables,
+other objects sharing the same key are left intact. For <code class="docutils literal notranslate"><span class="pre">duplicate_bag</span></code>
+tables, all instances of the identical object are removed.</p>
 <p><a name="insert-2"></a></p>
 </section>
 <section id="insert-2">
@@ -230,9 +251,24 @@ delete(Table::<a href="#type-table">table()</a>, Key::term()) -&gt; true
 insert(Table::<a href="#type-table">table()</a>, Entry::tuple() | [tuple()]) -&gt; true
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Entry</span></code>: the entry to insert<br /></p>
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Entry</span></code>: the entry or list of entries to insert<br /></p>
 <p>returns: true; otherwise, an error is raised if arguments are bad</p>
 <p>Insert an entry into an ets table.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">set</span></code> tables, an existing entry with the same key is overwritten.
+For <code class="docutils literal notranslate"><span class="pre">bag</span></code> tables, the object is added unless an identical object already
+exists. For <code class="docutils literal notranslate"><span class="pre">duplicate_bag</span></code> tables, the object is always added.
+The operation is atomic.</p>
+<p><a name="insert_new-2"></a></p>
+</section>
+<section id="insert-new-2">
+<h3>insert_new/2<a class="headerlink" href="#insert-new-2" title="Link to this heading"></a></h3>
+<pre><code>
+insert_new(Table::<a href="#type-table">table()</a>, Entry::tuple() | [tuple()]) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Entry</span></code>: the entry or list of entries to insert<br /></p>
+<p>returns: true if all entries were inserted; false if any key already exists</p>
+<p>Insert an entry into an ets table only if the key does not already exist.</p>
 <p><a name="lookup-2"></a></p>
 </section>
 <section id="lookup-2">
@@ -242,20 +278,48 @@ lookup(Table::<a href="#type-table">table()</a>, Key::term()) -&gt; [tuple()]
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to lookup one or more entries<br /></p>
-<p>returns: the entry in a set, or a list of entries, if the table permits</p>
+<p>returns: a list of matching tuples, or an empty list if none found</p>
 <p>Look up an entry in an ets table.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">set</span></code> tables, returns at most one element. For <code class="docutils literal notranslate"><span class="pre">bag</span></code> and <code class="docutils literal notranslate"><span class="pre">duplicate_bag</span></code>
+tables, returns all objects with the matching key.</p>
 <p><a name="lookup_element-3"></a></p>
 </section>
 <section id="lookup-element-3">
 <h3>lookup_element/3<a class="headerlink" href="#lookup-element-3" title="Link to this heading"></a></h3>
 <pre><code>
-lookup_element(Table::<a href="#type-table">table()</a>, Key::term(), Pos::pos_integer()) -&gt; term()
+lookup_element(Table::<a href="#type-table">table()</a>, Key::term(), Pos::pos_integer()) -&gt; term() | [term()]
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to lookup one or more entries<br /><code class="docutils literal notranslate"><span class="pre">Pos</span></code>: index of the element to retrieve (1-based)<br /></p>
-<p>returns: the Pos:nth element of entry in a set, or a list of entries, if the
-table permits</p>
+<p>returns: the element at position Pos from the matching tuple, or a list of
+such elements if the table is of type <code class="docutils literal notranslate"><span class="pre">bag</span></code> or <code class="docutils literal notranslate"><span class="pre">duplicate_bag</span></code></p>
 <p>Look up an element from an entry in an ets table.</p>
+<p><a name="lookup_element-4"></a></p>
+</section>
+<section id="lookup-element-4">
+<h3>lookup_element/4<a class="headerlink" href="#lookup-element-4" title="Link to this heading"></a></h3>
+<pre><code>
+lookup_element(Table::<a href="#type-table">table()</a>, Key::term(), Pos::pos_integer(), Default::term()) -&gt; term() | [term()]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to lookup one or more entries<br /><code class="docutils literal notranslate"><span class="pre">Pos</span></code>: index of the element to retrieve (1-based)<br /><code class="docutils literal notranslate"><span class="pre">Default</span></code>: value returned if the key does not exist<br /></p>
+<p>returns: the element at position Pos from the matching tuple, or a list of
+such elements if the table is of type <code class="docutils literal notranslate"><span class="pre">bag</span></code> or <code class="docutils literal notranslate"><span class="pre">duplicate_bag</span></code>,
+or Default if the key does not exist</p>
+<p>Look up an element from an entry in an ets table with a default value.</p>
+<p>Unlike <code class="docutils literal notranslate"><span class="pre">lookup_element/3</span></code>, returns Default instead of raising <code class="docutils literal notranslate"><span class="pre">badarg</span></code> when
+the key does not exist.</p>
+<p><a name="member-2"></a></p>
+</section>
+<section id="member-2">
+<h3>member/2<a class="headerlink" href="#member-2" title="Link to this heading"></a></h3>
+<pre><code>
+member(Table::<a href="#type-table">table()</a>, Key::term()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key to check for existence<br /></p>
+<p>returns: true if the key exists in the table; false otherwise</p>
+<p>Check if a key exists in an ets table.</p>
 <p><a name="new-2"></a></p>
 </section>
 <section id="new-2">
@@ -267,30 +331,77 @@ new(Name::atom(), Options::<a href="#type-options">options()</a>) -&gt; <a href=
 <p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: the ets table name<br /><code class="docutils literal notranslate"><span class="pre">Options</span></code>: the options used to create the table<br /></p>
 <p>returns: A new ets table</p>
 <p>Create a new ets table.</p>
+<p>Supported table types are <code class="docutils literal notranslate"><span class="pre">set</span></code>, <code class="docutils literal notranslate"><span class="pre">bag</span></code>, and <code class="docutils literal notranslate"><span class="pre">duplicate_bag</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">ordered_set</span></code> type is not currently supported.</p>
+<p><a name="take-2"></a></p>
+</section>
+<section id="take-2">
+<h3>take/2<a class="headerlink" href="#take-2" title="Link to this heading"></a></h3>
+<pre><code>
+take(Table::<a href="#type-table">table()</a>, Key::term()) -&gt; [tuple()]
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to look up and remove entries<br /></p>
+<p>returns: a list of the removed objects, or an empty list if none found</p>
+<p>Return and delete all entries with the given key from an ets table.</p>
 <p><a name="update_counter-3"></a></p>
 </section>
 <section id="update-counter-3">
 <h3>update_counter/3<a class="headerlink" href="#update-counter-3" title="Link to this heading"></a></h3>
 <pre><code>
-update_counter(Table::<a href="#type-table">table()</a>, Key::term(), Params::integer() | {pos_integer(), integer()} | {pos_integer(), integer(), integer(), integer()}) -&gt; integer()
+update_counter(Table::<a href="#type-table">table()</a>, Key::term(), Params::integer() | <a href="#type-update_op">update_op()</a> | [<a href="#type-update_op">update_op()</a>]) -&gt; integer() | [integer()]
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to look up the entry expecting to contain a tuple of integers or a single integer<br /><code class="docutils literal notranslate"><span class="pre">Params</span></code>: the increment value or a tuple {Pos, Increment} or {Pos, Increment, Treshold, SetValue},
-where Pos is an integer (1-based index) specifying the position in the tuple to increment. Value is clamped to SetValue if it exceeds Threshold after update.<br /></p>
-<p>returns: the updated element’s value after performing the increment, or the default value if applicable</p>
-<p>Updates a counter value at Key in the table. If Params is a single integer, it increments the direct integer value at Key or the first integer in a tuple. If Params is a tuple {Pos, Increment}, it increments the integer at the specified position Pos in the tuple stored at Key.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to look up the entry expecting to contain a tuple
+of integers or a single integer<br /><code class="docutils literal notranslate"><span class="pre">Params</span></code>: an integer increment, a single update operation, or a list
+of update operations. An update operation is a tuple<code class="docutils literal notranslate"><span class="pre">{Pos,</span> <span class="pre">Increment}</span></code> or <code class="docutils literal notranslate"><span class="pre">{Pos,</span> <span class="pre">Increment,</span> <span class="pre">Threshold,</span> <span class="pre">SetValue}</span></code>,
+where Pos is a 1-based index.<br /></p>
+<p>returns: the new counter value, or a list of new values when Params is a list</p>
+<p>Updates one or more counter values at Key in the table.</p>
 <p><a name="update_counter-4"></a></p>
 </section>
 <section id="update-counter-4">
 <h3>update_counter/4<a class="headerlink" href="#update-counter-4" title="Link to this heading"></a></h3>
 <pre><code>
-update_counter(Table::<a href="#type-table">table()</a>, Key::term(), Params::integer() | {pos_integer(), integer()} | {pos_integer(), integer(), integer(), integer()}, Default::integer()) -&gt; integer()
+update_counter(Table::<a href="#type-table">table()</a>, Key::term(), Params::integer() | <a href="#type-update_op">update_op()</a> | [<a href="#type-update_op">update_op()</a>], Default::tuple()) -&gt; integer() | [integer()]
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to look up the entry expecting to contain a tuple of integers or a single integer<br /><code class="docutils literal notranslate"><span class="pre">Params</span></code>: the increment value or a tuple {Pos, Increment} or {Pos, Increment, Treshold, SetValue},
-where Pos is an integer (1-based index) specifying the position in the tuple to increment. If after incrementation value exceeds the Treshold, it is set to SetValue.<br /><code class="docutils literal notranslate"><span class="pre">Default</span></code>: the default value used if the entry at Key doesn’t exist or doesn’t contain a valid tuple with a sufficient size or integer at Pos<br /></p>
-<p>returns: the updated element’s value after performing the increment, or the default value if applicable</p>
-<p>Updates a counter value at Key in the table. If Params is a single integer, it increments the direct integer value at Key or the first integer in a tuple. If Params is a tuple {Pos, Increment}, it increments the integer at the specified position Pos in the tuple stored at Key. If the needed element does not exist, uses Default value as a fallback.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to look up the entry expecting to contain a tuple
+of integers or a single integer<br /><code class="docutils literal notranslate"><span class="pre">Params</span></code>: an integer increment, a single update operation, or a list
+of update operations (see <code class="docutils literal notranslate"><span class="pre">update_counter/3</span></code> for the format)<br /><code class="docutils literal notranslate"><span class="pre">Default</span></code>: a default object (tuple) to insert if the key does not
+exist, after which the update operation is applied to it<br /></p>
+<p>returns: the new counter value, or a list of new values when Params is a list</p>
+<p>Updates one or more counter values at Key in the table.</p>
+<p>Equivalent to <code class="docutils literal notranslate"><span class="pre">update_counter/3</span></code>, but inserts Default as a new entry if
+no object with Key exists, then performs the counter update on it.</p>
+<p><a name="update_element-3"></a></p>
+</section>
+<section id="update-element-3">
+<h3>update_element/3<a class="headerlink" href="#update-element-3" title="Link to this heading"></a></h3>
+<pre><code>
+update_element(Table::<a href="#type-table">table()</a>, Key::term(), ElementSpec::{pos_integer(), term()} | [{pos_integer(), term()}]) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to look up the entry to update<br /><code class="docutils literal notranslate"><span class="pre">ElementSpec</span></code>: a tuple {Pos, Value} or a list of such tuples, specifying
+the position(s) (1-based) and new value(s) to set<br /></p>
+<p>returns: true if the entry was updated; false if the key does not exist</p>
+<p>Update one or more elements of an existing entry in an ets table.</p>
+<p>The key field itself cannot be updated. Returns <code class="docutils literal notranslate"><span class="pre">false</span></code> if no entry with
+the given key exists.</p>
+<p><a name="update_element-4"></a></p>
+</section>
+<section id="update-element-4">
+<h3>update_element/4<a class="headerlink" href="#update-element-4" title="Link to this heading"></a></h3>
+<pre><code>
+update_element(Table::<a href="#type-table">table()</a>, Key::term(), ElementSpec::{pos_integer(), term()} | [{pos_integer(), term()}], Default::tuple()) -&gt; boolean()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Table</span></code>: a reference to the ets table<br /><code class="docutils literal notranslate"><span class="pre">Key</span></code>: the key used to look up the entry to update<br /><code class="docutils literal notranslate"><span class="pre">ElementSpec</span></code>: a tuple {Pos, Value} or a list of such tuples, specifying
+the position(s) (1-based) and new value(s) to set<br /><code class="docutils literal notranslate"><span class="pre">Default</span></code>: a default tuple to insert if the key does not exist<br /></p>
+<p>returns: true if the entry was updated or inserted; false if insertion failed</p>
+<p>Update one or more elements of an existing entry, inserting Default if missing.</p>
+<p>If no entry with the given key exists, inserts Default into the table,
+then applies the element updates.</p>
 </section>
 </section>
 </section>

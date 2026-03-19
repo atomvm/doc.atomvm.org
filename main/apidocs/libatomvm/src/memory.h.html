@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>memory.h &mdash; AtomVM 0.7.0-dev+git.f7d61c3b documentation</title>
+  <title>memory.h &mdash; AtomVM 0.7.0-dev+git.006aa370 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/memory.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=23d7b2a8"></script>
+      <script src="../../../_static/documentation_options.js?v=789ae70c"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -91,8 +91,8 @@
 <li class="toctree-l4"><a class="reference internal" href="erl_nif_priv.h.html">erl_nif_priv.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ets.c.html">ets.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ets.h.html">ets.h</a></li>
-<li class="toctree-l4"><a class="reference internal" href="ets_hashtable.c.html">ets_hashtable.c</a></li>
-<li class="toctree-l4"><a class="reference internal" href="ets_hashtable.h.html">ets_hashtable.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets_multimap.c.html">ets_multimap.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets_multimap.h.html">ets_multimap.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exportedfunction.h.html">exportedfunction.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="external_term.c.html">external_term.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="external_term.h.html">external_term.h</a></li>
@@ -239,7 +239,7 @@
 </figure>
 <p>This graph shows which files directly or indirectly include memory.h:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-3b4ad2e87bdf4f219bb0fdf3470a9c11a83d40ac.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-083e1a930a8e84744f6898e75388b07a4ae97f45.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -262,8 +262,8 @@
     &quot;4&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/erl_nif_priv.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/erl_nif_priv.h&quot;]
     &quot;16&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.c&quot;]
     &quot;56&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets.h&quot;]
-    &quot;62&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.c&quot;]
-    &quot;61&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_hashtable.h&quot;]
+    &quot;61&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_multimap.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_multimap.c&quot;]
+    &quot;62&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_multimap.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/ets_multimap.h&quot;]
     &quot;64&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/exportedfunction.h&quot;]
     &quot;17&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/external_term.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/external_term.c&quot;]
     &quot;65&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/external_term.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/external_term.h&quot;]
@@ -405,8 +405,8 @@
     &quot;56&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;56&quot; -&gt; &quot;57&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;56&quot; -&gt; &quot;8&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;61&quot; -&gt; &quot;62&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;62&quot; -&gt; &quot;61&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;64&quot; -&gt; &quot;34&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;64&quot; -&gt; &quot;55&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;64&quot; -&gt; &quot;32&quot; [dir=back tooltip=&quot;include&quot;]
@@ -425,6 +425,7 @@
     &quot;57&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;57&quot; -&gt; &quot;55&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;57&quot; -&gt; &quot;61&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;57&quot; -&gt; &quot;62&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;57&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;57&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;57&quot; -&gt; &quot;42&quot; [dir=back tooltip=&quot;include&quot;]
@@ -571,8 +572,8 @@
     &quot;27&quot; -&gt; &quot;55&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;27&quot; -&gt; &quot;16&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;27&quot; -&gt; &quot;56&quot; [dir=back tooltip=&quot;include&quot;]
-    &quot;27&quot; -&gt; &quot;62&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;27&quot; -&gt; &quot;61&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;27&quot; -&gt; &quot;62&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;27&quot; -&gt; &quot;64&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;27&quot; -&gt; &quot;17&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;27&quot; -&gt; &quot;65&quot; [dir=back tooltip=&quot;include&quot;]
