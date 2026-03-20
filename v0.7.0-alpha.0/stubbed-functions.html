@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stubbed Functions &mdash; AtomVM 0.7.0-alpha.0+git.f60c037e documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/stubbed-functions.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=6ea5e9b6"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Build Instructions" href="build-instructions.html" />
+    <link rel="prev" title="Differences between AtomVM and BEAM" href="differences-with-beam.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Stubbed Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#purpose-of-stubbed-functions">Purpose of Stubbed Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#list-of-stubbed-functions">List of Stubbed Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#i-o-functions">I/O Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-functions">Other functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#important-considerations">Important Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detecting-stubbed-functions">Detecting Stubbed Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#future-implementations">Future Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference-documentation.html">API Reference Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="C_CODING_STYLE.html">AtomVM C Coding Style Guide (AVMCCS Guide)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Stubbed Functions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+ Copyright 2025 AtomVM Contributors
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+-->
+<section id="stubbed-functions">
+<h1>Stubbed Functions<a class="headerlink" href="#stubbed-functions" title="Link to this heading"></a></h1>
+<p>AtomVM implements stub functions for certain BEAM operations that are either not applicable to
+embedded environments, not yet implemented, or intentionally left as no-ops for compatibility
+reasons. These functions allow BEAM code that references them to load and execute without errors,
+even though the actual functionality may not be present.</p>
+<section id="purpose-of-stubbed-functions">
+<h2>Purpose of Stubbed Functions<a class="headerlink" href="#purpose-of-stubbed-functions" title="Link to this heading"></a></h2>
+<p>Stubbed functions serve several purposes in AtomVM:</p>
+<ol class="arabic simple">
+<li><p><strong>Compatibility</strong>: Allow BEAM modules that use these functions to work anyway</p></li>
+<li><p><strong>Environment Differences</strong>: Functions that make no sense in embedded contexts (or in AtomVM)
+but are required for code compatibility</p></li>
+<li><p><strong>Performance</strong>: Operations that would be too expensive on microcontrollers and are safely
+ignored</p></li>
+</ol>
+</section>
+<section id="list-of-stubbed-functions">
+<h2>List of Stubbed Functions<a class="headerlink" href="#list-of-stubbed-functions" title="Link to this heading"></a></h2>
+<p>The following functions are currently stubbed in AtomVM and always return a fixed value:</p>
+<section id="i-o-functions">
+<h3>I/O Functions<a class="headerlink" href="#i-o-functions" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Module</p></th>
+<th class="head"><p>Function</p></th>
+<th class="head"><p>Return Value</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">io</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">set_ops/1,2</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p>Standard IO options are currently ignored</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="other-functions">
+<h3>Other functions<a class="headerlink" href="#other-functions" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Module</p></th>
+<th class="head"><p>Function</p></th>
+<th class="head"><p>Return Value</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">jaro_similarity/2</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="important-considerations">
+<h2>Important Considerations<a class="headerlink" href="#important-considerations" title="Link to this heading"></a></h2>
+<p>When using AtomVM, be aware that stubbed functions will not provide the functionality you might
+expect from BEAM. Code that relies on these functions for critical behavior will need to be adapted
+for the AtomVM environment.</p>
+</section>
+<section id="detecting-stubbed-functions">
+<h2>Detecting Stubbed Functions<a class="headerlink" href="#detecting-stubbed-functions" title="Link to this heading"></a></h2>
+<p>To write portable code that works on both BEAM and AtomVM, you can detect the runtime environment:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nb">system_info</span><span class="p">(</span><span class="n">machine</span><span class="p">)</span><span class="w"> </span><span class="k">of</span>
+<span class="w">    </span><span class="s">&quot;BEAM&quot;</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="c">%% Use full functionality</span>
+<span class="w">        </span><span class="n">full_implementation</span><span class="p">();</span>
+<span class="w">    </span><span class="s">&quot;ATOM&quot;</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="c">%% Use alternative approach or skip</span>
+<span class="w">        </span><span class="n">alternative_implementation</span><span class="p">()</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="future-implementations">
+<h2>Future Implementations<a class="headerlink" href="#future-implementations" title="Link to this heading"></a></h2>
+<p>Some stubbed functions may be implemented in future versions of AtomVM. Use
+<a class="reference external" href="https://github.com/atomvm/AtomVM/issues">GitHub issues</a> for providing any kind of feedback.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="differences-with-beam.html" class="btn btn-neutral float-left" title="Differences between AtomVM and BEAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="build-instructions.html" class="btn btn-neutral float-right" title="Build Instructions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      v0.7.0-alpha.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.6/">v0.6.6</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/v0.7.0-alpha.0/">v0.7.0-alpha.0</a></dd>
+           </strong> 
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.7/">release-0.7 branch (unreleased)</a></dd>
+          
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/v0.7.0-alpha.0/epub/AtomVM-v0.7.0-alpha.0.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
