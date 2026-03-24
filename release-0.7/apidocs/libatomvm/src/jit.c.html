@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jit.c &mdash; AtomVM 0.7.0-alpha.0+git.8ec15f26 documentation</title>
+  <title>jit.c &mdash; AtomVM 0.7.0-alpha.0+git.d8cccd48 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/jit.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=5bcf5091"></script>
+      <script src="../../../_static/documentation_options.js?v=b8985e06"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -59,6 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../stubbed-functions.html">Stubbed Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../jit.html">JIT Compilation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
@@ -202,7 +203,7 @@
 </div>
 <p>Include dependency graph for jit.c:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-582672349afefa38023bae9c6a86c880f06c2624.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-37450c95cf7f57c01dc1ea1cccf81a4e485f8c22.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -316,6 +317,8 @@
     &quot;1&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;44&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;45&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;28&quot; [dir=forward tooltip=&quot;include&quot;]
@@ -399,6 +402,11 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
 <dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.ELF_ST_TYPE">
+<span class="target" id="libatomvmjit_8c_1a8ac7402c5c7e3fcdaa466bd151f670f7"></span><span class="sig-name descname"><span class="n"><span class="pre">ELF_ST_TYPE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">info</span></span><span class="sig-paren">)</span> <span class="pre">((info)</span> <span class="pre">&amp;0xf)</span><a class="headerlink" href="#c.libAtomVM.jit.c.ELF_ST_TYPE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
 <dt class="sig sig-object c" id="c.libAtomVM.jit.c.PROCESS_MAYBE_TRAP_RETURN_VALUE">
 <span class="target" id="libatomvmjit_8c_1a6665d4fef1a3249e53e34d7ad5c1ac49"></span><span class="sig-name descname"><span class="n"><span class="pre">PROCESS_MAYBE_TRAP_RETURN_VALUE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">return_value</span></span>, <span class="n"><span class="pre">offset</span></span><span class="sig-paren">)</span> &#160;&#160;&#160; <span class="pre">if</span> <span class="pre">(</span><a class="reference internal" href="term.h.html#libatomvmterm_8h_1aa1fbe2d06ee2bb8bc5d03ce5d9dd2340"><span class="std std-ref"><span class="pre">term_is_invalid_term</span></span></a><p><span class="pre">(return_value))</span> <span class="pre">{</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\</span></p>
 <p><span class="pre">if</span> <span class="pre">(</span></p>
@@ -475,6 +483,30 @@
 <dt class="sig sig-object c" id="c.libAtomVM.jit.c.MINI">
 <span class="target" id="libatomvmjit_8c_1aed7c3425e10ec83585103048cd41691b"></span><span class="sig-name descname"><span class="n"><span class="pre">MINI</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">A</span></span>, <span class="n"><span class="pre">B</span></span><span class="sig-paren">)</span> <span class="pre">((A</span> <span class="pre">&gt;</span> <span class="pre">B)</span> <span class="pre">?</span> <span class="pre">(B)</span> <span class="pre">:</span> <span class="pre">(A))</span><a class="headerlink" href="#c.libAtomVM.jit.c.MINI" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="c enum">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_actions_t">
+<span class="target" id="libatomvmjit_8c_1a7bdc22420dff03da746c36ea0d1e61e3"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jit_actions_t</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_actions_t" title="Link to this definition"></a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_actions_t.JIT_NOACTION">
+<span class="target" id="libatomvmjit_8c_1a7bdc22420dff03da746c36ea0d1e61e3ab377153f3ed86c501cb1146c7d22b0d0"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">JIT_NOACTION</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_actions_t.JIT_NOACTION" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_actions_t.JIT_REGISTER_FN">
+<span class="target" id="libatomvmjit_8c_1a7bdc22420dff03da746c36ea0d1e61e3a7ccf38e37a6098410fdc26338f5ff57e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">JIT_REGISTER_FN</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_actions_t.JIT_REGISTER_FN" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c enumerator">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_actions_t.JIT_UNREGISTER_FN">
+<span class="target" id="libatomvmjit_8c_1a7bdc22420dff03da746c36ea0d1e61e3a48c61cea990bfeda4289f748f0f248fc"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">JIT_UNREGISTER_FN</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_actions_t.JIT_UNREGISTER_FN" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
@@ -984,6 +1016,43 @@
 <span class="target" id="libatomvmjit_8c_1afc44bb720e05ad30d7e80b6118f3a307"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jit_stacktrace_build</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_stacktrace_build" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
+<dl class="c function">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmjit_8c_1a189705fbc4254ff3cc332e052cd13215"></span><span class="sig-name descname"><span class="pre">void</span> <span class="pre">__attribute__</span> <span class="pre">((noinline))</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_debug_register_code">
+<span class="target" id="libatomvmjit_8c_1a8fde89ac773065d1ce30d6f1344d1307"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jit_debug_register_code</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">native_code</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">native_size</span></span>, <span class="n"><span class="pre">ModuleNativeEntryPoint</span></span><span class="w"> </span><span class="n"><span class="pre">entry_point</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_debug_register_code" title="Link to this definition"></a><br /></dt>
+<dd><p>Register JIT-compiled code with debug info with GDB/LLDB. </p>
+<p>This function registers native code and associated DWARF debug information with the debugger using the GDB JIT interface. This allows debuggers to show function names and source line information for JIT code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mod</strong> – The module containing the JIT code </p></li>
+<li><p><strong>native_code</strong> – Pointer to the native machine code </p></li>
+<li><p><strong>native_size</strong> – Size of the native code in bytes </p></li>
+<li><p><strong>entry_point</strong> – The actual mapped entry point address </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_debug_unregister_code">
+<span class="target" id="libatomvmjit_8c_1ae9ec21b43a96f2d67b55fed1d19446f3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jit_debug_unregister_code</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <a class="reference internal" href="../../../atomvm-internals.html#c.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_debug_unregister_code" title="Link to this definition"></a><br /></dt>
+<dd><p>Unregister JIT-compiled code from debugger. </p>
+<p>This function unregisters previously registered JIT code from the debugger. Should be called when a module is unloaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> – The context </p></li>
+<li><p><strong>mod</strong> – The module being unloaded </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-variables">Variables</p>
@@ -992,7 +1061,230 @@
 <span class="target" id="libatomvmjit_8c_1acd7e1fa092053f4bff967c7a7b86b5cd"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">ModuleNativeInterface</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">module_native_interface</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.module_native_interface" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.__jit_debug_descriptor">
+<span class="target" id="libatomvmjit_8c_1a0203c5bae237f4c8fd1c14f5d5879de4"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.jit.c.jit_descriptor" title="jit_descriptor"><span class="n"><span class="pre">jit_descriptor</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">__jit_debug_descriptor</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">NULL</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">NULL</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#c.libAtomVM.jit.c.__jit_debug_descriptor" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
 </div>
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr">
+<span class="target" id="libatomvmstruct_elf___ehdr"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Elf_Ehdr</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr" title="Link to this definition"></a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_ident">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a5ea363fb37ee853ef528c99ca09382d8"></span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_ident</span></span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">16</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_ident" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_type">
+<span class="target" id="libatomvmstruct_elf___ehdr_1ac3282282f330d89f12cd759ee625ad70"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_type</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_type" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_machine">
+<span class="target" id="libatomvmstruct_elf___ehdr_1af264facc73f5724820af0d3533b00bda"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_machine</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_machine" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_version">
+<span class="target" id="libatomvmstruct_elf___ehdr_1acd0378115551d08e594d548c41554cd7"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_version</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_version" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_entry">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a47320a54427caec10c5cddb8a4da3676"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_entry</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_entry" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_phoff">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a2909382629926b8ca02af7856bbc06cf"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_phoff</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_phoff" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_shoff">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a51ee95f9cbe2c8eba3cfc9ca8e66d019"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_shoff</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_shoff" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_flags">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a4cc53ae30dc72d3c011be12917fc5c6e"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_flags</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_flags" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_ehsize">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a481a3e0fb388ee61ffabcc2988122dc3"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_ehsize</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_ehsize" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_phentsize">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a92dc117910860fcf235c5b5be856f8d8"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_phentsize</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_phentsize" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_phnum">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a110382a82d7e9a5bb89382469335e1cb"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_phnum</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_phnum" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_shentsize">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a3b66b573ee7b870a6581c50349910b90"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_shentsize</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_shentsize" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_shnum">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a683cd72bf6210068c25e573e4811b07a"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_shnum</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_shnum" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Ehdr.e_shstrndx">
+<span class="target" id="libatomvmstruct_elf___ehdr_1a7e2dbf3c4ae0bea923dae00666404196"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e_shstrndx</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Ehdr.e_shstrndx" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr">
+<span class="target" id="libatomvmstruct_elf___shdr"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Elf_Shdr</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr" title="Link to this definition"></a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_name">
+<span class="target" id="libatomvmstruct_elf___shdr_1ac0e1cf6bdb9d86379a2200e07a1be926"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_name</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_name" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_type">
+<span class="target" id="libatomvmstruct_elf___shdr_1a4f04082f23f08cb7ca529f81b300b92d"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_type</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_type" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_flags">
+<span class="target" id="libatomvmstruct_elf___shdr_1a20d60aea0a7cf50b7919642b74db7e6a"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_flags</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_flags" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_addr">
+<span class="target" id="libatomvmstruct_elf___shdr_1a756ef267a554e6524db7440041d7179d"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_addr</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_addr" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_offset">
+<span class="target" id="libatomvmstruct_elf___shdr_1ae4d0a2892f7327865b1c9cfaa1766258"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_offset</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_offset" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_size">
+<span class="target" id="libatomvmstruct_elf___shdr_1a770d842482869663ad94d4c38c693256"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_size</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_size" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_link">
+<span class="target" id="libatomvmstruct_elf___shdr_1aa75a2a8e411a5b0ca1141b11651e8011"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_link</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_link" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_info">
+<span class="target" id="libatomvmstruct_elf___shdr_1a310d603ae948cf8a158c0db7452e50cd"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_info</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_info" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_addralign">
+<span class="target" id="libatomvmstruct_elf___shdr_1aa77b87630fede86a726368bf8e402cf7"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_addralign</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_addralign" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.Elf_Shdr.sh_entsize">
+<span class="target" id="libatomvmstruct_elf___shdr_1abd2d3b5636394028bd6e985f6e97fde3"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sh_entsize</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.Elf_Shdr.sh_entsize" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_code_entry">
+<span class="target" id="libatomvmstructjit__code__entry"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jit_code_entry</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_code_entry" title="Link to this definition"></a><br /></dt>
+<dd><p>Collaboration diagram for jit_code_entry:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-d3ba05c4d0c2a0a9709c311e277c82f659e53259.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;1&quot; [label=&quot;jit_code_entry&quot; tooltip=&quot;jit_code_entry&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;1&quot; -&gt; &quot;1&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_code_entry.next_entry">
+<span class="target" id="libatomvmstructjit__code__entry_1a2318871ac1b7480b8b5498df5f479f94"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.jit.c.jit_code_entry" title="jit_code_entry"><span class="n"><span class="pre">jit_code_entry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">next_entry</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_code_entry.next_entry" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_code_entry.prev_entry">
+<span class="target" id="libatomvmstructjit__code__entry_1a16189a051a2e8163a278c6919f14877f"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.jit.c.jit_code_entry" title="jit_code_entry"><span class="n"><span class="pre">jit_code_entry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">prev_entry</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_code_entry.prev_entry" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_code_entry.symfile_addr">
+<span class="target" id="libatomvmstructjit__code__entry_1ac781fa5f55811526f72c433b492f09f2"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">symfile_addr</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_code_entry.symfile_addr" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_code_entry.symfile_size">
+<span class="target" id="libatomvmstructjit__code__entry_1aad8fa2b15fe70092d6fdd41ff48e1f76"></span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">symfile_size</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_code_entry.symfile_size" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="c struct">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_descriptor">
+<span class="target" id="libatomvmstructjit__descriptor"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jit_descriptor</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_descriptor" title="Link to this definition"></a><br /></dt>
+<dd><p>Collaboration diagram for jit_descriptor:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-2632f59fc1aba1b2eed8546a14dea753038b2e77.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;2&quot; [label=&quot;jit_code_entry&quot; tooltip=&quot;jit_code_entry&quot;]
+    &quot;1&quot; [label=&quot;jit_descriptor&quot; tooltip=&quot;jit_descriptor&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;2&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;usage&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_descriptor.version">
+<span class="target" id="libatomvmstructjit__descriptor_1a99a4d52c382bfded369e98acc42b38c7"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">version</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_descriptor.version" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_descriptor.action_flag">
+<span class="target" id="libatomvmstructjit__descriptor_1a5caa0e4b5007a2b528343dab212f061c"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">action_flag</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_descriptor.action_flag" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_descriptor.relevant_entry">
+<span class="target" id="libatomvmstructjit__descriptor_1ab01ffce05af5fd40db9edc08bbd3b28e"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.jit.c.jit_code_entry" title="jit_code_entry"><span class="n"><span class="pre">jit_code_entry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">relevant_entry</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_descriptor.relevant_entry" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.c.jit_descriptor.first_entry">
+<span class="target" id="libatomvmstructjit__descriptor_1a48fe23669f2f9a1a96aa1b5af1f6eb50"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.jit.c.jit_code_entry" title="jit_code_entry"><span class="n"><span class="pre">jit_code_entry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">first_entry</span></span></span><a class="headerlink" href="#c.libAtomVM.jit.c.jit_descriptor.first_entry" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
 </section>
 
 
