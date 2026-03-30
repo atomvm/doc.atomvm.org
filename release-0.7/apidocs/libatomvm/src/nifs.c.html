@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>nifs.c &mdash; AtomVM 0.7.0-alpha.0+git.d4ad8a32 documentation</title>
+  <title>nifs.c &mdash; AtomVM 0.7.0-alpha.0+git.72d635d5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/nifs.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=6028437f"></script>
+      <script src="../../../_static/documentation_options.js?v=a29c88ae"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -158,8 +158,8 @@
 <li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unlocalized_snprintf.c.html">unlocalized_snprintf.c</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unlocalized_snprintf.h.html">unlocalized_snprintf.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.c.html">unlocalized.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.h.html">unlocalized.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="utils.c.html">utils.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="utils.h.html">utils.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
@@ -206,7 +206,7 @@
 </div>
 <p>Include dependency graph for nifs.c:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-08303c66854bf3b2b2cac389497281027150c80a.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-51cd8bfa5e95d9de259021fe2024a2240917e571.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -249,6 +249,7 @@
     &quot;15&quot; [label=&quot;term_typedef.h&quot; tooltip=&quot;term_typedef.h&quot;]
     &quot;30&quot; [label=&quot;timer_list.h&quot; tooltip=&quot;timer_list.h&quot;]
     &quot;34&quot; [label=&quot;unicode.h&quot; tooltip=&quot;unicode.h&quot;]
+    &quot;58&quot; [label=&quot;unlocalized.h&quot; tooltip=&quot;unlocalized.h&quot;]
     &quot;10&quot; [label=&quot;utils.h&quot; tooltip=&quot;utils.h&quot;]
     &quot;31&quot; [label=&quot;valueshashtable.h&quot; tooltip=&quot;valueshashtable.h&quot;]
     &quot;16&quot; [label=&quot;assert.h&quot; tooltip=&quot;assert.h&quot;]
@@ -259,7 +260,7 @@
     &quot;11&quot; [label=&quot;inttypes.h&quot; tooltip=&quot;inttypes.h&quot;]
     &quot;17&quot; [label=&quot;limits.h&quot; tooltip=&quot;limits.h&quot;]
     &quot;38&quot; [label=&quot;math.h&quot; tooltip=&quot;math.h&quot;]
-    &quot;58&quot; [label=&quot;nifs_hash.h&quot; tooltip=&quot;nifs_hash.h&quot;]
+    &quot;59&quot; [label=&quot;nifs_hash.h&quot; tooltip=&quot;nifs_hash.h&quot;]
     &quot;9&quot; [label=&quot;stdbool.h&quot; tooltip=&quot;stdbool.h&quot;]
     &quot;12&quot; [label=&quot;stddef.h&quot; tooltip=&quot;stddef.h&quot;]
     &quot;4&quot; [label=&quot;stdint.h&quot; tooltip=&quot;stdint.h&quot;]
@@ -397,8 +398,9 @@
     &quot;1&quot; -&gt; &quot;22&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;34&quot; [dir=forward tooltip=&quot;include&quot;]
-    &quot;1&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;58&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;59&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;2&quot; -&gt; &quot;35&quot; [dir=forward tooltip=&quot;include&quot;]
@@ -455,6 +457,9 @@
     &quot;34&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;34&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;34&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;58&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;58&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;58&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;10&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;10&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;10&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;include&quot;]
@@ -1605,11 +1610,6 @@ Implicit parameters (must be in scope): </p>
 <dd></dd></dl>
 
 <dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.nifs.c.is_valid_float_string">
-<span class="target" id="libatomvmnifs_8c_1a9988e0bcd0b5366b41b115f20d56a090"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">is_valid_float_string</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">str</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.nifs.c.is_valid_float_string" title="Link to this definition"></a><br /></dt>
-<dd></dd></dl>
-
-<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.nifs.c.parse_float">
 <span class="target" id="libatomvmnifs_8c_1a60d153c1d06f0b3d6dc20a06ee6c5a63"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parse_float</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.nifs.c.parse_float" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
@@ -1621,12 +1621,12 @@ Implicit parameters (must be in scope): </p>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.nifs.c.format_float">
-<span class="target" id="libatomvmnifs_8c_1aac9d64c6554c7fee11a04e7beb0c1d49"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">format_float</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">value</span></span>, <span class="n"><span class="pre">double_format_t</span></span><span class="w"> </span><span class="n"><span class="pre">format</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">precision</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_buf</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.nifs.c.format_float" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmnifs_8c_1a968e99f7242c859e254d9945a7662d99"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">format_float</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">value</span></span>, <span class="n"><span class="pre">float_format_t</span></span><span class="w"> </span><span class="n"><span class="pre">format</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">precision</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_buf</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.nifs.c.format_float" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.nifs.c.get_float_format_opts">
-<span class="target" id="libatomvmnifs_8c_1a78816733f674bfc0ff90944146843990"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_float_format_opts</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">opts</span></span>, <span class="n"><span class="pre">double_format_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">format</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.nifs.c.get_float_format_opts" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmnifs_8c_1a84e1cbaaa652346abe2f9884e831556a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_float_format_opts</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">opts</span></span>, <span class="n"><span class="pre">float_format_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">format</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.nifs.c.get_float_format_opts" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c function">

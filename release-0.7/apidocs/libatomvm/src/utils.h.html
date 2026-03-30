@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>utils.h &mdash; AtomVM 0.7.0-alpha.0+git.d4ad8a32 documentation</title>
+  <title>utils.h &mdash; AtomVM 0.7.0-alpha.0+git.72d635d5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/utils.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=6028437f"></script>
+      <script src="../../../_static/documentation_options.js?v=a29c88ae"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -158,8 +158,8 @@
 <li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unlocalized_snprintf.c.html">unlocalized_snprintf.c</a></li>
-<li class="toctree-l4"><a class="reference internal" href="unlocalized_snprintf.h.html">unlocalized_snprintf.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.c.html">unlocalized.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.h.html">unlocalized.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="utils.c.html">utils.c</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">utils.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
@@ -227,7 +227,7 @@
 </figure>
 <p>This graph shows which files directly or indirectly include utils.h:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-fe62d10c2c1ecc0ffa0d191d52d7aa03c8d2148c.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-0d6657671895c9bf85d407ac66fa479099558f99.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -307,9 +307,10 @@
     &quot;37&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.c&quot;]
     &quot;67&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/term.h&quot;]
     &quot;76&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/unicode.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/unicode.c&quot;]
-    &quot;77&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.c&quot;]
+    &quot;77&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/unlocalized.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/unlocalized.c&quot;]
+    &quot;78&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.c&quot;]
     &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.h&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/utils.h&quot; fillcolor=&quot;#BFBFBF&quot;]
-    &quot;78&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/valueshashtable.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/valueshashtable.c&quot;]
+    &quot;79&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/valueshashtable.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/valueshashtable.c&quot;]
     &quot;4&quot; -&gt; &quot;3&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;4&quot; -&gt; &quot;5&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;4&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
@@ -652,6 +653,7 @@
     &quot;1&quot; -&gt; &quot;76&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;77&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;78&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;79&quot; [dir=back tooltip=&quot;include&quot;]
 }</p></object></div>
 </div>
 </figure>

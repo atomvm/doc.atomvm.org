@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-alpha.0+git.d4ad8a32 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-alpha.0+git.72d635d5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=6028437f"></script>
+      <script src="_static/documentation_options.js?v=a29c88ae"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -217,6 +217,8 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <ul class="simple">
 <li><p>~10% binary size reduction by rewriting module loading logic</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">erlang:float_to_binary/2</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:float_to_list/2</span></code> now accept <code class="docutils literal notranslate"><span class="pre">{decimals,</span> <span class="pre">0..253}</span></code> and <code class="docutils literal notranslate"><span class="pre">{scientific,</span> <span class="pre">0..249}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">erlang:binary_to_float/1</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:list_to_float/1</span></code> now use locale-independent parsing and
+strict format validation</p></li>
 </ul>
 </section>
 <section id="fixed">
@@ -226,6 +228,8 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <li><p>Fixed map type ordering in term comparison to match OTP specification (maps should order between tuples and nil)</p></li>
 <li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">bs_match</span></code> <code class="docutils literal notranslate"><span class="pre">get_tail</span></code> logic that occurred with OTP26-compiled beams</p></li>
 <li><p>Fixed locale-dependent decimal separator in <code class="docutils literal notranslate"><span class="pre">erlang:float_to_binary</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:float_to_list</span></code></p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">erlang:binary_to_float/1</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:list_to_float/1</span></code> returning <code class="docutils literal notranslate"><span class="pre">inf</span></code> for overflow instead
+of raising <code class="docutils literal notranslate"><span class="pre">badarg</span></code></p></li>
 </ul>
 </section>
 </section>
