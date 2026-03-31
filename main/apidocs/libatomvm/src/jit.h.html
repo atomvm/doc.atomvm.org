@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jit.h &mdash; AtomVM 0.8.0-dev+git.75055883 documentation</title>
+  <title>jit.h &mdash; AtomVM 0.8.0-dev+git.41030483 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/jit.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=3b30cf3b"></script>
+      <script src="../../../_static/documentation_options.js?v=02e83cd1"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -59,6 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../stubbed-functions.html">Stubbed Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../jit.html">JIT Compilation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
@@ -96,6 +97,8 @@
 <li class="toctree-l4"><a class="reference internal" href="exportedfunction.h.html">exportedfunction.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="external_term.c.html">external_term.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="external_term.h.html">external_term.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="float_utils.c.html">float_utils.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="float_utils.h.html">float_utils.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="globalcontext.c.html">globalcontext.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="globalcontext.h.html">globalcontext.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="iff.c.html">iff.c</a></li>
@@ -120,7 +123,6 @@
 <li class="toctree-l4"><a class="reference internal" href="module.h.html">module.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nifs.c.html">nifs.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nifs.h.html">nifs.h</a></li>
-<li class="toctree-l4"><a class="reference internal" href="opcodes.h.html">opcodes.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="otp_crypto.c.html">otp_crypto.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="otp_crypto.h.html">otp_crypto.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="otp_net.c.html">otp_net.c</a></li>
@@ -156,6 +158,8 @@
 <li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.c.html">unlocalized.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.h.html">unlocalized.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="utils.c.html">utils.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="utils.h.html">utils.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
@@ -528,6 +532,11 @@
 <dd></dd></dl>
 
 <dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.h.JIT_ARCH_RISCV64">
+<span class="target" id="libatomvmjit_8h_1a5ed2895c4a4260d523a24d9b324d74fc"></span><span class="sig-name descname"><span class="n"><span class="pre">JIT_ARCH_RISCV64</span></span></span> <span class="pre">5</span><a class="headerlink" href="#c.libAtomVM.jit.h.JIT_ARCH_RISCV64" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
 <dt class="sig sig-object c" id="c.libAtomVM.jit.h.JIT_VARIANT_PIC">
 <span class="target" id="libatomvmjit_8h_1ad186e34427ff0edc7a8229f33805e01c"></span><span class="sig-name descname"><span class="n"><span class="pre">JIT_VARIANT_PIC</span></span></span> <span class="pre">1</span><a class="headerlink" href="#c.libAtomVM.jit.h.JIT_VARIANT_PIC" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
@@ -600,6 +609,38 @@
 <li><p><strong>ctx</strong> – the process to trap </p></li>
 <li><p><strong>mod</strong> – the module to load </p></li>
 <li><p><strong>label</strong> – the label to resume the process to </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.h.jit_debug_register_code">
+<span class="target" id="libatomvmjit_8h_1a8fde89ac773065d1ce30d6f1344d1307"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jit_debug_register_code</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.jit.h.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">native_code</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">native_size</span></span>, <a class="reference internal" href="#c.libAtomVM.jit.h.ModuleNativeEntryPoint" title="ModuleNativeEntryPoint"><span class="n"><span class="pre">ModuleNativeEntryPoint</span></span></a><span class="w"> </span><span class="n"><span class="pre">entry_point</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.jit.h.jit_debug_register_code" title="Link to this definition"></a><br /></dt>
+<dd><p>Register JIT-compiled code with debug info with GDB/LLDB. </p>
+<p>This function registers native code and associated DWARF debug information with the debugger using the GDB JIT interface. This allows debuggers to show function names and source line information for JIT code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mod</strong> – The module containing the JIT code </p></li>
+<li><p><strong>native_code</strong> – Pointer to the native machine code </p></li>
+<li><p><strong>native_size</strong> – Size of the native code in bytes </p></li>
+<li><p><strong>entry_point</strong> – The actual mapped entry point address </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.jit.h.jit_debug_unregister_code">
+<span class="target" id="libatomvmjit_8h_1ae9ec21b43a96f2d67b55fed1d19446f3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jit_debug_unregister_code</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <a class="reference internal" href="#c.libAtomVM.jit.h.Module" title="Module"><span class="n"><span class="pre">Module</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mod</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.jit.h.jit_debug_unregister_code" title="Link to this definition"></a><br /></dt>
+<dd><p>Unregister JIT-compiled code from debugger. </p>
+<p>This function unregisters previously registered JIT code from the debugger. Should be called when a module is unloaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> – The context </p></li>
+<li><p><strong>mod</strong> – The module being unloaded </p></li>
 </ul>
 </dd>
 </dl>

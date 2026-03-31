@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>intn.h &mdash; AtomVM 0.8.0-dev+git.75055883 documentation</title>
+  <title>intn.h &mdash; AtomVM 0.8.0-dev+git.41030483 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/intn.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=3b30cf3b"></script>
+      <script src="../../../_static/documentation_options.js?v=02e83cd1"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -59,6 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../stubbed-functions.html">Stubbed Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../jit.html">JIT Compilation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
@@ -96,6 +97,8 @@
 <li class="toctree-l4"><a class="reference internal" href="exportedfunction.h.html">exportedfunction.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="external_term.c.html">external_term.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="external_term.h.html">external_term.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="float_utils.c.html">float_utils.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="float_utils.h.html">float_utils.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="globalcontext.c.html">globalcontext.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="globalcontext.h.html">globalcontext.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="iff.c.html">iff.c</a></li>
@@ -120,7 +123,6 @@
 <li class="toctree-l4"><a class="reference internal" href="module.h.html">module.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nifs.c.html">nifs.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nifs.h.html">nifs.h</a></li>
-<li class="toctree-l4"><a class="reference internal" href="opcodes.h.html">opcodes.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="otp_crypto.c.html">otp_crypto.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="otp_crypto.h.html">otp_crypto.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="otp_net.c.html">otp_net.c</a></li>
@@ -156,6 +158,8 @@
 <li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.c.html">unlocalized.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.h.html">unlocalized.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="utils.c.html">utils.c</a></li>
 <li class="toctree-l4"><a class="reference internal" href="utils.h.html">utils.h</a></li>
 <li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
@@ -228,7 +232,7 @@
 </figure>
 <p>This graph shows which files directly or indirectly include intn.h:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-09b01b8156161933fa0d3d8df3c149c331db025c.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-8dea13ef8e285231a1c419d61bb5fe88e878933a.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -355,6 +359,7 @@
     &quot;59&quot; -&gt; &quot;6&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;59&quot; -&gt; &quot;7&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;59&quot; -&gt; &quot;21&quot; [dir=back tooltip=&quot;include&quot;]
+    &quot;59&quot; -&gt; &quot;11&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;59&quot; -&gt; &quot;12&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;59&quot; -&gt; &quot;22&quot; [dir=back tooltip=&quot;include&quot;]
     &quot;59&quot; -&gt; &quot;33&quot; [dir=back tooltip=&quot;include&quot;]

@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>float_utils.c &mdash; AtomVM 0.8.0-dev+git.41030483 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=e925141f" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/float_utils.c.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=02e83cd1"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="float_utils.h" href="float_utils.h.html" />
+    <link rel="prev" title="external_term.h" href="external_term.h.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/avm_logo_banner.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../welcome-to-atomvm.html">Welcome to AtomVM!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started-guide.html">Getting Started Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-tooling.html">AtomVM Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../programmers-guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../network-programming-guide.html">Network Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributed-erlang.html">Distributed Erlang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stubbed-functions.html">Stubbed Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../build-instructions.html">Build Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../jit.html">JIT Compilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../atomvm-internals.html">AtomVM Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory-management.html">Memory Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../packbeam-format.html">Packbeam Format</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../api-reference-documentation.html">API Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#erlang-libraries">Erlang Libraries</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html">libAtomVM</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#libatomvm-source-files">libAtomVM source files</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="atom.c.html">atom.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom.h.html">atom.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.c.html">atom_table.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atom_table.h.html">atom_table.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atomvm_version.h.html">atomvm_version.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.c.html">avmpack.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="avmpack.h.html">avmpack.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.c.html">bif.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bif.h.html">bif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.c.html">bitstring.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitstring.h.html">bitstring.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.c.html">context.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="context.h.html">context.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.c.html">debug.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug.h.html">debug.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="defaultatoms.h.html">defaultatoms.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.c.html">dictionary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dictionary.h.html">dictionary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dist_nifs.c.html">dist_nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dist_nifs.h.html">dist_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif.h.html">erl_nif.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="erl_nif_priv.h.html">erl_nif_priv.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets.c.html">ets.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets.h.html">ets.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets_multimap.c.html">ets_multimap.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ets_multimap.h.html">ets_multimap.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exportedfunction.h.html">exportedfunction.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="external_term.c.html">external_term.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="external_term.h.html">external_term.h</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">float_utils.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="float_utils.h.html">float_utils.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.c.html">globalcontext.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="globalcontext.h.html">globalcontext.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.c.html">iff.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iff.h.html">iff.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.c.html">inet.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inet.h.html">inet.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.c.html">interop.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interop.h.html">interop.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="intn.c.html">intn.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="intn.h.html">intn.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit.c.html">jit.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit.h.html">jit.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit_stream_flash.c.html">jit_stream_flash.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jit_stream_flash.h.html">jit_stream_flash.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list.h.html">list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="listeners.h.html">listeners.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.c.html">mailbox.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mailbox.h.html">mailbox.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.c.html">memory.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.h.html">memory.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.c.html">module.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="module.h.html">module.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.c.html">nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nifs.h.html">nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.c.html">otp_crypto.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_crypto.h.html">otp_crypto.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.c.html">otp_net.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_net.h.html">otp_net.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.c.html">otp_socket.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_socket.h.html">otp_socket.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.c.html">otp_ssl.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="otp_ssl.h.html">otp_ssl.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="overflow_helpers.h.html">overflow_helpers.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="platform_nifs.h.html">platform_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.c.html">port.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="port.h.html">port.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="portnifloader.c.html">portnifloader.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="portnifloader.h.html">portnifloader.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.c.html">posix_nifs.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="posix_nifs.h.html">posix_nifs.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.c.html">refc_binary.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="refc_binary.h.html">refc_binary.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.c.html">resources.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="resources.h.html">resources.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scheduler.h.html">scheduler.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smp.h.html">smp.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.c.html">stacktrace.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stacktrace.h.html">stacktrace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="synclist.h.html">synclist.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys.h.html">sys.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sys_mbedtls.h.html">sys_mbedtls.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.c.html">term.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term.h.html">term.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="term_typedef.h.html">term_typedef.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.c.html">timer_list.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="timer_list.h.html">timer_list.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trace.h.html">trace.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.c.html">unicode.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unicode.h.html">unicode.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.c.html">unlocalized.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unlocalized.h.html">unlocalized.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.c.html">utils.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.h.html">utils.h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.c.html">valueshashtable.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="valueshashtable.h.html">valueshashtable.h</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../C_CODING_STYLE.html">AtomVM C Coding Style Guide (AVMCCS Guide)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AtomVM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">libAtomVM</a></li>
+      <li class="breadcrumb-item active">float_utils.c</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="float-utils-c">
+<h1>float_utils.c<a class="headerlink" href="#float-utils-c" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>Include dependency graph for float_utils.c:</p>
+<figure class="align-default">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-6ea4b64e9bd46e2a4606be6274bc64ff7127435e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph {
+    graph [bgcolor=&quot;#00000000&quot;]
+    node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
+    edge [color=&quot;#1414CE&quot;]
+    &quot;1&quot; [label=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/float_utils.c&quot; tooltip=&quot;/__w/AtomVM/AtomVM/src/libAtomVM/float_utils.c&quot; fillcolor=&quot;#BFBFBF&quot;]
+    &quot;2&quot; [label=&quot;float_utils.h&quot; tooltip=&quot;float_utils.h&quot;]
+    &quot;5&quot; [label=&quot;term_typedef.h&quot; tooltip=&quot;term_typedef.h&quot;]
+    &quot;12&quot; [label=&quot;unlocalized.h&quot; tooltip=&quot;unlocalized.h&quot;]
+    &quot;14&quot; [label=&quot;utils.h&quot; tooltip=&quot;utils.h&quot;]
+    &quot;6&quot; [label=&quot;assert.h&quot; tooltip=&quot;assert.h&quot;]
+    &quot;9&quot; [label=&quot;float.h&quot; tooltip=&quot;float.h&quot;]
+    &quot;8&quot; [label=&quot;inttypes.h&quot; tooltip=&quot;inttypes.h&quot;]
+    &quot;7&quot; [label=&quot;limits.h&quot; tooltip=&quot;limits.h&quot;]
+    &quot;10&quot; [label=&quot;math.h&quot; tooltip=&quot;math.h&quot;]
+    &quot;13&quot; [label=&quot;stdbool.h&quot; tooltip=&quot;stdbool.h&quot;]
+    &quot;3&quot; [label=&quot;stddef.h&quot; tooltip=&quot;stddef.h&quot;]
+    &quot;4&quot; [label=&quot;stdint.h&quot; tooltip=&quot;stdint.h&quot;]
+    &quot;15&quot; [label=&quot;stdio.h&quot; tooltip=&quot;stdio.h&quot;]
+    &quot;16&quot; [label=&quot;stdlib.h&quot; tooltip=&quot;stdlib.h&quot;]
+    &quot;11&quot; [label=&quot;string.h&quot; tooltip=&quot;string.h&quot;]
+    &quot;1&quot; -&gt; &quot;2&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;9&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;10&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;14&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;2&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;5&quot; -&gt; &quot;6&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;5&quot; -&gt; &quot;7&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;5&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;5&quot; -&gt; &quot;4&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;12&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;12&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;12&quot; -&gt; &quot;5&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;8&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;13&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;3&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;15&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;14&quot; -&gt; &quot;16&quot; [dir=forward tooltip=&quot;include&quot;]
+}</p></object></div>
+</div>
+</figure>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.D64_SIGN">
+<span class="target" id="libatomvmfloat__utils_8c_1a8c32e41eefa3aabfe8582f76085fd9f8"></span><span class="sig-name descname"><span class="n"><span class="pre">D64_SIGN</span></span></span> <span class="pre">UINT64_C(0x8000000000000000)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.D64_SIGN" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.D64_EXP_MASK">
+<span class="target" id="libatomvmfloat__utils_8c_1a64456e3eb793ced1b88d9facf51eb306"></span><span class="sig-name descname"><span class="n"><span class="pre">D64_EXP_MASK</span></span></span> <span class="pre">UINT64_C(0x7FF0000000000000)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.D64_EXP_MASK" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.D64_FRACT_MASK">
+<span class="target" id="libatomvmfloat__utils_8c_1a47fc8328351274060a09a82e5b9a2d3f"></span><span class="sig-name descname"><span class="n"><span class="pre">D64_FRACT_MASK</span></span></span> <span class="pre">UINT64_C(0x000FFFFFFFFFFFFF)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.D64_FRACT_MASK" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.D64_IMPLICIT_ONE">
+<span class="target" id="libatomvmfloat__utils_8c_1a2242d180daaa7d8efe47c7ecd8b95fb1"></span><span class="sig-name descname"><span class="n"><span class="pre">D64_IMPLICIT_ONE</span></span></span> <span class="pre">UINT64_C(0x0010000000000000)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.D64_IMPLICIT_ONE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.D64_EXP_POS">
+<span class="target" id="libatomvmfloat__utils_8c_1a5126681543741ee787c485e31bb4e618"></span><span class="sig-name descname"><span class="n"><span class="pre">D64_EXP_POS</span></span></span> <span class="pre">52</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.D64_EXP_POS" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.D64_EXP_BIAS">
+<span class="target" id="libatomvmfloat__utils_8c_1a29d928199f3e5d5b5b00fa0ffb52c2d3"></span><span class="sig-name descname"><span class="n"><span class="pre">D64_EXP_BIAS</span></span></span> <span class="pre">1075</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.D64_EXP_BIAS" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.DIYFP_FRACT_SIZE">
+<span class="target" id="libatomvmfloat__utils_8c_1aea9db46f331065eb421c96526d309641"></span><span class="sig-name descname"><span class="n"><span class="pre">DIYFP_FRACT_SIZE</span></span></span> <span class="pre">64</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.DIYFP_FRACT_SIZE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.D_1_LOG2_10">
+<span class="target" id="libatomvmfloat__utils_8c_1ab146b61da0b48e4993b2d4bae2fa0499"></span><span class="sig-name descname"><span class="n"><span class="pre">D_1_LOG2_10</span></span></span> <span class="pre">0.30102999566398114</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.D_1_LOG2_10" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.MIN_TARGET_EXP">
+<span class="target" id="libatomvmfloat__utils_8c_1a92878fe977139d0edc5f49a0f6309f28"></span><span class="sig-name descname"><span class="n"><span class="pre">MIN_TARGET_EXP</span></span></span> <span class="pre">-60</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.MIN_TARGET_EXP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.MASK32">
+<span class="target" id="libatomvmfloat__utils_8c_1ab12d2f92df56bc1b5104853fd9c89660"></span><span class="sig-name descname"><span class="n"><span class="pre">MASK32</span></span></span> <span class="pre">UINT64_C(0xFFFFFFFF)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.MASK32" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.TWO_POW_53">
+<span class="target" id="libatomvmfloat__utils_8c_1a85c8b43c44f00d6d1c90a5be43a1b8be"></span><span class="sig-name descname"><span class="n"><span class="pre">TWO_POW_53</span></span></span> <span class="pre">9007199254740992.0</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.TWO_POW_53" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.MIN">
+<span class="target" id="libatomvmfloat__utils_8c_1a74e75242132eaabbc1c512488a135926"></span><span class="sig-name descname"><span class="n"><span class="pre">MIN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span>, <span class="n"><span class="pre">y</span></span><span class="sig-paren">)</span> <span class="pre">((x)</span> <span class="pre">&lt;=</span> <span class="pre">(y)</span> <span class="pre">?</span> <span class="pre">(x)</span> <span class="pre">:</span> <span class="pre">(y))</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.MIN" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.MAX">
+<span class="target" id="libatomvmfloat__utils_8c_1aacc3ee1a7f283f8ef65cea31f4436a95"></span><span class="sig-name descname"><span class="n"><span class="pre">MAX</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span>, <span class="n"><span class="pre">y</span></span><span class="sig-paren">)</span> <span class="pre">((x)</span> <span class="pre">&gt;=</span> <span class="pre">(y)</span> <span class="pre">?</span> <span class="pre">(x)</span> <span class="pre">:</span> <span class="pre">(y))</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.MAX" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.MIN_CACHED_EXP">
+<span class="target" id="libatomvmfloat__utils_8c_1abfc1377013fcae5bac25175c754ef2a2"></span><span class="sig-name descname"><span class="n"><span class="pre">MIN_CACHED_EXP</span></span></span> <span class="pre">-348</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.MIN_CACHED_EXP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.CACHED_EXP_STEP">
+<span class="target" id="libatomvmfloat__utils_8c_1a4c7d743fee64bdadcc5bd2cde737bef3"></span><span class="sig-name descname"><span class="n"><span class="pre">CACHED_EXP_STEP</span></span></span> <span class="pre">8</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.CACHED_EXP_STEP" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.diy_fp">
+<span class="target" id="libatomvmfloat__utils_8c_1ab4e39e2674885aad6abca377b63a1784"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">diy_fp</span></span></span><a class="headerlink" href="#c.libAtomVM.float_utils.c.diy_fp" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="c function">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmfloat__utils_8c_1a3f7e02a0305fe26437a6d1b0667e25d3"></span><span class="sig-name descname"><span class="pre">_Static_assert</span> <span class="pre">(sizeof(double)==sizeof(uint64_t),</span> <span class="pre">&quot;double</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">64</span> <span class="pre">bits&quot;)</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmfloat__utils_8c_1a68191d17bff0a39894397b52c9e241eb"></span><span class="sig-name descname"><span class="pre">_Static_assert</span> <span class="pre">(DBL_MANT_DIG==53,</span> <span class="pre">&quot;double</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">IEEE</span> <span class="pre">754</span> <span class="pre">binary64&quot;)</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.cast_u64">
+<span class="target" id="libatomvmfloat__utils_8c_1afdbd7c43f8c7f38311eab8b8ba22b897"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cast_u64</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">d</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.cast_u64" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.cached_pow">
+<span class="target" id="libatomvmfloat__utils_8c_1acf87818e8a4f79bbefb9f20824cb90b0"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cached_pow</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">exp</span></span>, <a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.cached_pow" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.minus">
+<span class="target" id="libatomvmfloat__utils_8c_1ac0176ba01bdcd39e0bd24d348aaf1be4"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">minus</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="n"><span class="pre">x</span></span>, <a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="n"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.minus" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.multiply">
+<span class="target" id="libatomvmfloat__utils_8c_1a1aeb6d7b80a79b12f00ac51fc69ed470"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">multiply</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="n"><span class="pre">x</span></span>, <a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="n"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.multiply" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.normalize_diy_fp">
+<span class="target" id="libatomvmfloat__utils_8c_1a375fa44379b1d7b885ff5aa7696066df"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">normalize_diy_fp</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.normalize_diy_fp" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.double2diy_fp">
+<span class="target" id="libatomvmfloat__utils_8c_1a1cfc248d07efd3ab521a4ef36b918c0e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">double2diy_fp</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">d</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.double2diy_fp" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.largest_pow10">
+<span class="target" id="libatomvmfloat__utils_8c_1a7c8aaddc82099823e3649c3ce89c8986"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">largest_pow10</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">n_bits</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">power</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.largest_pow10" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.round_weed">
+<span class="target" id="libatomvmfloat__utils_8c_1affc3a460864f7f8b40cb6acbc40996e5"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">round_weed</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buffer</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">wp_W</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">delta</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">rest</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ten_kappa</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ulp</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.round_weed" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.digit_gen">
+<span class="target" id="libatomvmfloat__utils_8c_1acb5dfaa1e9223bd840c66c3f22f057ab"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">digit_gen</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="n"><span class="pre">low</span></span>, <a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="n"><span class="pre">w</span></span>, <a class="reference internal" href="#c.libAtomVM.float_utils.c.diy_fp" title="diy_fp"><span class="n"><span class="pre">diy_fp</span></span></a><span class="w"> </span><span class="n"><span class="pre">high</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buffer</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">length</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">kappa</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.digit_gen" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.grisu3">
+<span class="target" id="libatomvmfloat__utils_8c_1a9a8506729b4bd8626de54a4b5d9281ee"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">grisu3</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">v</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buffer</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">length</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">d_exp</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.grisu3" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.write_exponent">
+<span class="target" id="libatomvmfloat__utils_8c_1aa79d964ffa96c57e75ee097f88599e6b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write_exponent</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">exp</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dst</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.write_exponent" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.fixup_g_format">
+<span class="target" id="libatomvmfloat__utils_8c_1a85bebdb68e15285dbca11ce789b0df39"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fixup_g_format</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.fixup_g_format" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.dtoa_grisu3">
+<span class="target" id="libatomvmfloat__utils_8c_1a76ed4b968d57bfcb7cb436c1593b7cc3"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dtoa_grisu3</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">v</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dst</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.dtoa_grisu3" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.strip_trailing_zeros">
+<span class="target" id="libatomvmfloat__utils_8c_1ab6c8a2335a31b0ba04e84bbfad274210"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">strip_trailing_zeros</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.strip_trailing_zeros" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.double_write_to_ascii_buf">
+<span class="target" id="libatomvmfloat__utils_8c_1a9a0dcad48a133fe95398d610c26282c4"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">double_write_to_ascii_buf</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">value</span></span>, <span class="n"><span class="pre">float_format_t</span></span><span class="w"> </span><span class="n"><span class="pre">format</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">precision</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.float_utils.c.double_write_to_ascii_buf" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert a finite double to an ASCII string. </p>
+<p>Caller must ensure isfinite(value) is true. Output always uses ‘.’ as decimal separator regardless of locale.</p>
+<p>buf must be at least DOUBLE_WRITE_TO_ASCII_BUF_LEN bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – the double to convert </p></li>
+<li><p><strong>format</strong> – output format </p></li>
+<li><p><strong>precision</strong> – digits after decimal point (ignored for FloatFormatShort) </p></li>
+<li><p><strong>buf</strong> – output buffer (at least DOUBLE_WRITE_TO_ASCII_BUF_LEN bytes) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>number of characters written (excluding null terminator), or -1 if the output was truncated </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-variables">Variables</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.pow_cache_fract">
+<span class="target" id="libatomvmfloat__utils_8c_1ab82bd6d6842a06db551922f74579cefc"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pow_cache_fract</span></span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xfa8fd5a0081c0288</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xbaaee17fa23ebf76</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x8b16fb203055ac76</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xcf42894a5dce35ea</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x9a6bb0aa55653b2d</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xe61acf033d1a45df</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xab70fe17c79ac6ca</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xff77b1fcbebcdc4f</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xbe5691ef416bd60c</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x8dd01fad907ffc3c</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xd3515c2831559a83</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x9d71ac8fada6c9b5</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xea9c227723ee8bcb</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xaecc49914078536d</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x823c12795db6ce57</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xc21094364dfb5637</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x9096ea6f3848984f</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xd77485cb25823ac7</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xa086cfcd97bf97f4</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xef340a98172aace5</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xb23867fb2a35b28e</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x84c8d4dfd2c63f3b</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xc5dd44271ad3cdba</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x936b9fcebb25c996</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xdbac6c247d62a584</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xa3ab66580d5fdaf6</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xf3e2f893dec3f126</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xb5b5ada8aaff80b8</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x87625f056c7c4a8b</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xc9bcff6034c13053</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x964e858c91ba2655</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xdff9772470297ebd</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xa6dfbd9fb8e5b88f</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xf8a95fcf88747d94</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xb94470938fa89bcf</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x8a08f0f8bf0f156b</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xcdb02555653131b6</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x993fe2c6d07b7fac</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xe45c10c42a2b3b06</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xaa242499697392d3</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xfd87b5f28300ca0e</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xbce5086492111aeb</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x8cbccc096f5088cc</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xd1b71758e219652c</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x9c40000000000000</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xe8d4a51000000000</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xad78ebc5ac620000</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x813f3978f8940984</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xc097ce7bc90715b3</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x8f7e32ce7bea5c70</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xd5d238a4abe98068</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x9f4f2726179a2245</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xed63a231d4c4fb27</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xb0de65388cc8ada8</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x83c7088e1aab65db</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xc45d1df942711d9a</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x924d692ca61be758</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xda01ee641a708dea</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xa26da3999aef774a</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xf209787bb47d6b85</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xb454e4a179dd1877</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x865b86925b9bc5c2</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xc83553c5c8965d3d</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x952ab45cfa97a0b3</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xde469fbd99a05fe3</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xa59bc234db398c25</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xf6c69a72a3989f5c</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xb7dcbf5354e9bece</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x88fcf317f22241e2</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xcc20ce9bd35c78a5</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x98165af37b2153df</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xe2a0b5dc971f303a</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xa8d9d1535ce3b396</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xfb9b7cd9a4a7443c</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xbb764c4ca7a44410</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x8bab8eefb6409c1a</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xd01fef10a657842c</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x9b10a4e5e9913129</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xe7109bfba19c0c9d</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xac2820d9623bf429</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x80444b5e7aa7cf85</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xbf21e44003acdd2d</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x8e679c2f5e44ff8f</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xd433179d9c8cb841</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0x9e19db92b4e31ba9</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xeb96bf6ebadf77d9</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">UINT64_C</span></span><span class="p"><span class="pre">(</span></span><span class="m"><span class="pre">0xaf87023b9bf0ee6b</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#c.libAtomVM.float_utils.c.pow_cache_fract" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.pow_cache_b_exp">
+<span class="target" id="libatomvmfloat__utils_8c_1a931acf2cce026f31c4cb6b7218080021"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pow_cache_b_exp</span></span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1220</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1193</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1166</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1140</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1113</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1087</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1060</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1034</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1007</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">980</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">954</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">927</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">901</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">874</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">847</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">821</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">794</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">768</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">741</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">715</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">688</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">661</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">635</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">608</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">582</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">555</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">529</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">502</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">475</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">449</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">422</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">396</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">369</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">343</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">316</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">289</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">263</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">236</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">210</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">183</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">157</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">130</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">103</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">77</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">50</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">30</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">56</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">83</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">109</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">136</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">162</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">189</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">216</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">242</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">269</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">295</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">322</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">348</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">375</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">402</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">428</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">455</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">481</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">508</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">534</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">561</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">588</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">614</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">641</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">667</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">694</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">720</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">747</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">774</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">800</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">827</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">853</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">880</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">907</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">933</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">960</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">986</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1013</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1039</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1066</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#c.libAtomVM.float_utils.c.pow_cache_b_exp" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.pow_cache_d_exp">
+<span class="target" id="libatomvmfloat__utils_8c_1a3c8da5b253df050c578a590dbfb2051f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pow_cache_d_exp</span></span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">348</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">340</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">332</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">324</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">316</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">308</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">300</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">292</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">284</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">276</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">268</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">260</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">252</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">244</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">236</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">228</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">220</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">212</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">204</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">196</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">188</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">180</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">172</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">164</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">156</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">148</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">140</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">132</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">124</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">116</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">108</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">100</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">92</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">84</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">76</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">68</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">60</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">52</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">44</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">36</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">28</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">20</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">12</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">12</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">20</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">28</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">36</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">44</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">52</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">60</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">68</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">76</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">84</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">92</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">100</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">108</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">116</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">124</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">132</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">140</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">148</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">156</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">164</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">172</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">180</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">188</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">196</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">204</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">212</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">220</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">228</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">236</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">244</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">252</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">260</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">268</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">276</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">284</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">292</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">300</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">308</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">316</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">324</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">332</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">340</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#c.libAtomVM.float_utils.c.pow_cache_d_exp" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.pow10_cache">
+<span class="target" id="libatomvmfloat__utils_8c_1a1aa1cbca8ae26fcc081a903ebc1bc281"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pow10_cache</span></span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">10</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">100</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1000</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">10000</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">100000</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1000000</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">10000000</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">100000000</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1000000000</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#c.libAtomVM.float_utils.c.pow10_cache" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="c struct">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmstructdiy__fp"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">diy_fp</span></span></span><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.diy_fp.f">
+<span class="target" id="libatomvmstructdiy__fp_1a0e4bfd132d8f9b706fd7dad054469368"></span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">f</span></span></span><a class="headerlink" href="#c.libAtomVM.float_utils.c.diy_fp.f" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.libAtomVM.float_utils.c.diy_fp.e">
+<span class="target" id="libatomvmstructdiy__fp_1abcfcd98f6176cf500de0410e3ee8cd21"></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">e</span></span></span><a class="headerlink" href="#c.libAtomVM.float_utils.c.diy_fp.e" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="external_term.h.html" class="btn btn-neutral float-left" title="external_term.h" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="float_utils.h.html" class="btn btn-neutral float-right" title="float_utils.h" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017-2024, AtomVM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+ Copyright 2023 Winford (Uncle Grumpy) <winford@object.stream>
+
+ SPDX-License-Identifier: Apache-2.0 OR LGPL-2.1-or-later
+
+ Based on the work of  Michael Altfield:
+ https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
+-->
+
+
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-download"></span><span class="fa fa-book"> AtomVM Docs version:</span>
+      main branch (unstable)
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      
+      <dl>
+        <dt><span class="fa fa-book"> Versions</span></dt>
+        
+          
+          <dd><a href="/v0.5.0/">v0.5.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.0/">v0.6.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.1/">v0.6.1</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.2/">v0.6.2</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.3/">v0.6.3</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.4/">v0.6.4</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.5/">v0.6.5</a></dd>
+          
+        
+          
+          <dd><a href="/v0.6.6/">v0.6.6</a></dd>
+          
+        
+          
+          <dd><a href="/v0.7.0-alpha.0/">v0.7.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
+          
+        
+          
+          <dd><a href="/release-0.7/">release-0.7 branch (unreleased)</a></dd>
+          
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
+        
+      </dl>
+      
+      
+      <dl>
+        <dt><span class="fa fa-download"> Downloads</span></dt>
+        
+          <dd><a href="/main/epub/AtomVM-main.epub">epub</a></dd>
+        
+      </dl>
+      
+    </div>
+  </div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
