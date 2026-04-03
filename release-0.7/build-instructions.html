@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Instructions &mdash; AtomVM 0.7.0-alpha.0+git.d053d696 documentation</title>
+  <title>Build Instructions &mdash; AtomVM 0.7.0-alpha.0+git.28d4906a documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/build-instructions.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=6f4a9e2d"></script>
+      <script src="_static/documentation_options.js?v=24560177"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -593,9 +593,9 @@ Use <code class="docutils literal notranslate"><span class="pre">idf.py</span> <
 |    (factory)    |             |
 |                 |             |
 +-----------------+             |
-|     boot.avm    | 256-512KB   v
-+-----------------+  ------------- 0x210000 for Erlang only images or
-|                 |             ^  0x250000 for images with Elixir modules
+|     boot.avm    | 512KB       v
++-----------------+  ------------- 0x250000
+|                 |             ^
 |                 |             |
 |     main.avm    | 1MB+        | Erlang/Elixir
 |                 |             | Application
@@ -641,26 +641,28 @@ Use <code class="docutils literal notranslate"><span class="pre">idf.py</span> <
 </tr>
 <tr class="row-odd"><td class="text-left"><p>boot.avm</p></td>
 <td class="text-left"><p>0x1D0000</p></td>
-<td class="text-left"><p>256k</p></td>
+<td class="text-left"><p>512k</p></td>
 <td class="text-left"><p>The AtomVM BEAM library, compiled from Erlang and Elixir files in the AtomVM source tree.</p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p>main.avm</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">0x210000</span></code> | <code class="docutils literal notranslate"><span class="pre">0x250000</span></code></p></td>
+<td class="text-left"><p>0x250000</p></td>
 <td class="text-left"><p>1mB</p></td>
 <td class="text-left"><p>The user application.  This is where users flash their compiled Erlang/Elixir code</p></td>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>There is an important difference in the partition layout between the minimal images and those build with Elixir support. To accommodate the extra Elixir modules the boot.avm partition on these images is larger, and the application offset is moved accordingly. When working with Elixir supported images it is important to always use the offset <code class="docutils literal notranslate"><span class="pre">0x250000</span></code> whether using <code class="docutils literal notranslate"><span class="pre">mix</span></code> or the <code class="docutils literal notranslate"><span class="pre">atomvm_rebar3_plugin</span></code> (possibly to test an Erlang app), otherwise part of the boot.avm partition (specifically the area where many Elixir modules are located) will be overwritten with the application, but the VM will still be trying to load from the later <code class="docutils literal notranslate"><span class="pre">0x250000</span></code> offset. This should be kept in mind reading the rest of build instructions, and <a class="reference internal" href="atomvm-tooling.html"><span class="std std-doc">AtomVM Tooling</span></a> sections of the docs that cover the use of rebar3, for these sections an Erlang only image is assumed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v0.7.0-alpha.1, both Erlang-only and Elixir-supported images use the same partition layout
+and the same <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> offset of <code class="docutils literal notranslate"><span class="pre">0x250000</span></code>. Previous versions used <code class="docutils literal notranslate"><span class="pre">0x210000</span></code> for Erlang-only
+images.</p>
 </div>
 </section>
 <section id="the-boot-avm-and-main-avm-partitions">
 <h3>The <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> and <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partitions<a class="headerlink" href="#the-boot-avm-and-main-avm-partitions" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> and <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partitions are intended to store Erlang/Elixir libraries (compiled down to BEAM files, and assembled as AVM files).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> partition is intended for core Erlang/Elixir libraries that are built as part of the AtomVM build.  The release image of AtomVM (see below) includes both the AtomVM virtual machine and the <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> partition, which includes the BEAM files from the <code class="docutils literal notranslate"><span class="pre">estdlib</span></code> and <code class="docutils literal notranslate"><span class="pre">eavmlib</span></code> libraries.</p>
-<p>In contrast, the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition is intended for user applications.  Currently, the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition starts at address <code class="docutils literal notranslate"><span class="pre">0x210000</span></code> for thin images or <code class="docutils literal notranslate"><span class="pre">0x250000</span></code> for images with Elixir modules, and it is to that location to which application developers should flash their application AVM files.</p>
+<p>In contrast, the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition is intended for user applications.  Currently, the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition starts at address <code class="docutils literal notranslate"><span class="pre">0x250000</span></code>, and it is to that location to which application developers should flash their application AVM files.</p>
 <p>The AtomVM search path for BEAM modules starts in the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition and falls back to <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code>.  Users should not have a need to override any functionality in the <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> partition, but if necessary, a BEAM module of the same name in the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition will be loaded instead of the version in the <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> partition.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -698,7 +700,7 @@ Wrote<span class="w"> </span>AtomVM<span class="w"> </span>Virtual<span class="w
 Wrote<span class="w"> </span>AtomVM<span class="w"> </span>Core<span class="w"> </span>BEAM<span class="w"> </span>Library<span class="w"> </span>at<span class="w"> </span>offset<span class="w"> </span>0x1D0000<span class="w"> </span><span class="o">(</span><span class="m">1114112</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Users can then use the <code class="docutils literal notranslate"><span class="pre">esptool.py</span></code> directly to flash the entire image to the ESP32 device, and then flash their applications to the <code class="docutils literal notranslate"><span class="pre">main.app</span></code> partition at address <code class="docutils literal notranslate"><span class="pre">0x210000</span></code>, (or <code class="docutils literal notranslate"><span class="pre">0x250000</span></code> for Elixir images)</p>
+<p>Users can then use the <code class="docutils literal notranslate"><span class="pre">esptool.py</span></code> directly to flash the entire image to the ESP32 device, and then flash their applications to the <code class="docutils literal notranslate"><span class="pre">main.app</span></code> partition at address <code class="docutils literal notranslate"><span class="pre">0x250000</span></code>.</p>
 <p>But first, it is a good idea to erase the flash, e.g.,</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>esptool.py<span class="w"> </span>--chip<span class="w"> </span>esp32<span class="w"> </span>--port<span class="w"> </span>/dev/ttyUSB0<span class="w"> </span>erase_flash
 esptool.py<span class="w"> </span>v2.1
