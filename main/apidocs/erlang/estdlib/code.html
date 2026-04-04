@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module code &mdash; AtomVM 0.8.0-dev+git.41030483 documentation</title>
+  <title>Module code &mdash; AtomVM 0.8.0-dev+git.45a77198 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/code.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=02e83cd1"></script>
+      <script src="../../../_static/documentation_options.js?v=b539923a"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -92,6 +92,7 @@
 <li class="toctree-l4"><a class="reference internal" href="init.html">Module init</a></li>
 <li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
 <li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="json.html">Module json</a></li>
 <li class="toctree-l4"><a class="reference internal" href="kernel.html">Module kernel</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
 <li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
@@ -165,7 +166,7 @@
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#all_available-0">all_available/0</a></td><td>    Return all modules available from loaded avm packs, in addition
-to loaded modules.</td></tr><tr><td valign="top"><a href="#all_loaded-0">all_loaded/0</a></td><td>    Return a list of all loaded modules.</td></tr><tr><td valign="top"><a href="#ensure_loaded-1">ensure_loaded/1</a></td><td>    Try to load a module if it's not already loaded.</td></tr><tr><td valign="top"><a href="#is_loaded-1">is_loaded/1</a></td><td>    Determine if a module is loaded.</td></tr><tr><td valign="top"><a href="#load_abs-1">load_abs/1</a></td><td>    Load a module from a path.</td></tr><tr><td valign="top"><a href="#load_binary-3">load_binary/3</a></td><td>    Load a module from a binary.</td></tr><tr><td valign="top"><a href="#which-1">which/1</a></td><td>    Determine if a module is loaded.</td></tr></table>
+to loaded modules.</td></tr><tr><td valign="top"><a href="#all_loaded-0">all_loaded/0</a></td><td>    Return a list of all loaded modules.</td></tr><tr><td valign="top"><a href="#ensure_loaded-1">ensure_loaded/1</a></td><td>    Try to load a module if it's not already loaded.</td></tr><tr><td valign="top"><a href="#get_object_code-1">get_object_code/1</a></td><td>    Return module binary of a given module.</td></tr><tr><td valign="top"><a href="#is_loaded-1">is_loaded/1</a></td><td>    Determine if a module is loaded.</td></tr><tr><td valign="top"><a href="#load_abs-1">load_abs/1</a></td><td>    Load a module from a path.</td></tr><tr><td valign="top"><a href="#load_binary-3">load_binary/3</a></td><td>    Load a module from a binary.</td></tr><tr><td valign="top"><a href="#which-1">which/1</a></td><td>    Determine if a module is loaded.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -211,6 +212,20 @@ an embedded-like mode where modules are loaded at start-up but modules
 can be loaded explicitely as well (especially from a binary with <code class="docutils literal notranslate"><span class="pre">load_binary/3</span></code>).
 So this function can be used to determine if a module is loaded.
 It is called by Elixir Code module.</p>
+<p><a name="get_object_code-1"></a></p>
+</section>
+<section id="get-object-code-1">
+<h3>get_object_code/1<a class="headerlink" href="#get-object-code-1" title="Link to this heading"></a></h3>
+<pre><code>
+get_object_code(Module) -&gt; {Module, Binary, Filename} | error
+</code></pre>
+<ul class="definitions"><li><code>Module = atom()</code></li><li><code>Binary = binary()</code></li><li><code>Filename = string()</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">Module</span></code>: module to get object code from<br /></p>
+<p>returns: Tuple <code class="docutils literal notranslate"><span class="pre">{Module,</span> <span class="pre">Binary,</span> <span class="pre">Filename}</span></code> if successful, otherwise <code class="docutils literal notranslate"><span class="pre">error</span></code>.</p>
+<p>Return module binary of a given module. Note: this function doesn’t
+behave like on the BEAM: on the BEAM, modules loaded from a binary with
+<code class="docutils literal notranslate"><span class="pre">code:load_binary/3</span></code> are not returned, while On AtomVM they are returned.
+This behavior might change in the future.</p>
 <p><a name="is_loaded-1"></a></p>
 </section>
 <section id="is-loaded-1">

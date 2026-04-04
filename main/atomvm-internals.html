@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AtomVM Internals &mdash; AtomVM 0.8.0-dev+git.41030483 documentation</title>
+  <title>AtomVM Internals &mdash; AtomVM 0.8.0-dev+git.45a77198 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/atomvm-internals.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=02e83cd1"></script>
+      <script src="_static/documentation_options.js?v=b539923a"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -830,7 +830,7 @@ size of a struct, therefore, is determined simply by the size of the component f
 <li><p>Native: the VM only runs native code and all code must be precompiled on the desktop using the JIT compiler (which effectively is a AOT or Ahead-of-Time compiler). In this mode, it is not necessary to bundle the jit compiler on the embedded target.</p></li>
 <li><p>Hybrid: the VM can run native code as well as emulated BEAM code and some code is precompiled on the desktop.</p></li>
 </ul>
-<p>JIT is available on some platforms (currently x86_64, aarch64, armv6m and riscv32) and compiles Erlang bytecode at runtime. Erlang bytecode is never interpreted. EMU is available on all platforms and Erlang bytecode is interpreted.</p>
+<p>JIT is available on some platforms (currently x86_64, aarch64, arm32, armv6m, armv6m+thumb2, riscv32 and riscv64) and compiles Erlang bytecode at runtime. Erlang bytecode is never interpreted. EMU is available on all platforms and Erlang bytecode is interpreted.</p>
 <p>Modules can include precompiled code in a dedicated beam chunk with name ‘avmN’. The chunk can contain native code for several architectures, however it may only contain native code for a given version of the native interface. Current version is 1. This native code is executed by the jit-flavor of the emulator as well as the emu flavor if execution of precompiled is enabled.</p>
 <p>JIT is an experimental feature and is currently disabled by default. Enabling JIT disables the interpreter.
 JIT can enabled with <code class="docutils literal notranslate"><span class="pre">-DAVM_DISABLE_JIT=Off</span></code></p>
@@ -845,8 +845,10 @@ JIT can enabled with <code class="docutils literal notranslate"><span class="pre
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">jit_x86_64</span></code> for System V X86 64 ABI</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">jit_aarch64</span></code> for AArch64 ABI</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">jit_armv6m</span></code> for AArch32 ABI</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">jit_riscv32</span></code> for rv32imc ilp32 ABI.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_arm32</span></code> for ARM32 (AArch32 ARM mode) ABI</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_armv6m</span></code> for ARMv6-M (AArch32 Thumb mode) ABI, with an ARMv7-M or later variant using Thumb-2 32-bit encodings for Cortex-M3+ targets (Raspberry Pi Pico 2, STM32 with Cortex-M3/M4/M7/M33)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_riscv32</span></code> for rv32imc ilp32 ABI</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jit_riscv64</span></code> for rv64gc lp64 ABI.</p></li>
 </ul>
 <p>A stream implementation is responsible for streaming the machine code, especially in the context of low memory. Three implementations currently exist:</p>
 <ul class="simple">
@@ -857,7 +859,7 @@ JIT can enabled with <code class="docutils literal notranslate"><span class="pre
 </section>
 <section id="embedded-jit-and-native">
 <h3>Embedded JIT and Native<a class="headerlink" href="#embedded-jit-and-native" title="Link to this heading"></a></h3>
-<p>On embedded devices, Native mode means the code is precompiled on the desktop and executed natively on the device. This currently works on all ARMv6M devices (Pico and STM32).</p>
+<p>On embedded devices, Native mode means the code is precompiled on the desktop and executed natively on the device. This currently works on all ARMv6-M devices (Pico and STM32 with Cortex-M0/M0+) as well as ARMv7-M devices using the Thumb-2 variant (Pico 2 and STM32 with Cortex-M3/M4/M7/M33).</p>
 <p>The default partition scheme on all platforms is optimized for the Emulated VM which is larger than the JIT or Native VM, and for the Emulated atomvmlib (with no native code for estdlib and no jit library) which is smaller than the JIT atomvmlib (that includes native code for estdlib and jit library).</p>
 <p>JIT mode means the Erlang bytecode is compiled to native code directly on the device. This actually is possible on Raspberry Pi Pico by using the flash to store the native code. The first time the code is executed, it is compiled and streamed to flash, and for next runs (including at a future boot), the native code is directly executed.</p>
 <p>To achive embedded JIT, it is required to flash the device with the JIT compiler for armv6m which is part of the jit library. This library is quite large, so for Pico boards that come with 2MB of flash, it is required to remove jit modules for other backends. It is also required to change the way code is partitioned.</p>
@@ -1286,6 +1288,16 @@ instead on logging or other mechanisms for diagnosing problems in the field.</p>
 <dl class="c var">
 <dt class="sig sig-object c" id="c.Module.locations_table">
 <span class="target" id="libatomvmstruct_module_1a193558d3f80dc356ec728c10ec492556"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">locations_table</span></span></span><a class="headerlink" href="#c.Module.locations_table" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.binary">
+<span class="target" id="libatomvmstruct_module_1ad6776e4e659e4f9b4f88341e3b659c20"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">binary</span></span></span><a class="headerlink" href="#c.Module.binary" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.Module.binary_size">
+<span class="target" id="libatomvmstruct_module_1a6ecfaab729eba60da9a4a451d38506c6"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">binary_size</span></span></span><a class="headerlink" href="#c.Module.binary_size" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 <dl class="c var">

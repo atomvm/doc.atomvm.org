@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module io_lib &mdash; AtomVM 0.8.0-dev+git.45a77198 documentation</title>
+  <title>Module json &mdash; AtomVM 0.8.0-dev+git.45a77198 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -14,7 +14,7 @@
 
   
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
-    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/io_lib.html" />
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/json.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../../_static/documentation_options.js?v=b539923a"></script>
@@ -23,8 +23,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Module json" href="json.html" />
-    <link rel="prev" title="Module io" href="io.html" /> 
+    <link rel="next" title="Module kernel" href="kernel.html" />
+    <link rel="prev" title="Module io_lib" href="io_lib.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -91,8 +91,8 @@
 <li class="toctree-l4"><a class="reference internal" href="inet.html">Module inet</a></li>
 <li class="toctree-l4"><a class="reference internal" href="init.html">Module init</a></li>
 <li class="toctree-l4"><a class="reference internal" href="io.html">Module io</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Module io_lib</a></li>
-<li class="toctree-l4"><a class="reference internal" href="json.html">Module json</a></li>
+<li class="toctree-l4"><a class="reference internal" href="io_lib.html">Module io_lib</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module json</a></li>
 <li class="toctree-l4"><a class="reference internal" href="kernel.html">Module kernel</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lists.html">Module lists</a></li>
 <li class="toctree-l4"><a class="reference internal" href="logger.html">Module logger</a></li>
@@ -145,7 +145,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
-      <li class="breadcrumb-item active">Module io_lib</li>
+      <li class="breadcrumb-item active">Module json</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -154,121 +154,236 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-io-lib">
-<h1>Module io_lib<a class="headerlink" href="#module-io-lib" title="Link to this heading"></a></h1>
+  <section id="module-json">
+<h1>Module json<a class="headerlink" href="#module-json" title="Link to this heading"></a></h1>
 <ul class="simple">
-<li><p><a class="reference internal" href="#description">Description</a></p></li>
 <li><p><a class="reference internal" href="#data-types">Data Types</a></p></li>
 <li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
 <li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
 </ul>
-<p>An implementation of the Erlang/OTP io_lib interface.</p>
-<p><a name="description"></a></p>
-<section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
-<p>This module implements a strict subset of the Erlang/OTP io_lib
-interface.
-<a name="types"></a></p>
-</section>
+<p><a name="types"></a></p>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
-<section id="chars">
-<h3><a name="type-chars">chars()</a><a class="headerlink" href="#chars" title="Link to this heading"></a></h3>
+<section id="array-finish-fun">
+<h3><a name="type-array_finish_fun">array_finish_fun()</a><a class="headerlink" href="#array-finish-fun" title="Link to this heading"></a></h3>
 <pre><code>
-chars() = [char() | <a href="#type-chars">chars()</a>]
+array_finish_fun() = fun((ArrayAcc::term(), OldAcc::term()) -&gt; {term(), term()})
+</code></pre>
+</section>
+<section id="array-push-fun">
+<h3><a name="type-array_push_fun">array_push_fun()</a><a class="headerlink" href="#array-push-fun" title="Link to this heading"></a></h3>
+<pre><code>
+array_push_fun() = fun((Value::term(), Acc::term()) -&gt; NewAcc::term())
+</code></pre>
+</section>
+<section id="array-start-fun">
+<h3><a name="type-array_start_fun">array_start_fun()</a><a class="headerlink" href="#array-start-fun" title="Link to this heading"></a></h3>
+<pre><code>
+array_start_fun() = fun((Acc::term()) -&gt; ArrayAcc::term())
+</code></pre>
+</section>
+<section id="continuation-state">
+<h3><a name="type-continuation_state">continuation_state()</a><a class="headerlink" href="#continuation-state" title="Link to this heading"></a></h3>
+<p><strong>abstract datatype</strong>: <code class="docutils literal notranslate"><span class="pre">continuation_state()</span></code></p>
+</section>
+<section id="decode-value">
+<h3><a name="type-decode_value">decode_value()</a><a class="headerlink" href="#decode-value" title="Link to this heading"></a></h3>
+<pre><code>
+decode_value() = integer() | float() | boolean() | null | binary() | [<a href="#type-decode_value">decode_value()</a>] | #{binary() =&gt; <a href="#type-decode_value">decode_value()</a>}
+</code></pre>
+</section>
+<section id="decoders">
+<h3><a name="type-decoders">decoders()</a><a class="headerlink" href="#decoders" title="Link to this heading"></a></h3>
+<pre><code>
+decoders() = #{array_start =&gt; <a href="#type-array_start_fun">array_start_fun()</a>, array_push =&gt; <a href="#type-array_push_fun">array_push_fun()</a>, array_finish =&gt; <a href="#type-array_finish_fun">array_finish_fun()</a>, object_start =&gt; <a href="#type-object_start_fun">object_start_fun()</a>, object_push =&gt; <a href="#type-object_push_fun">object_push_fun()</a>, object_finish =&gt; <a href="#type-object_finish_fun">object_finish_fun()</a>, float =&gt; <a href="#type-from_binary_fun">from_binary_fun()</a>, integer =&gt; <a href="#type-from_binary_fun">from_binary_fun()</a>, string =&gt; <a href="#type-from_binary_fun">from_binary_fun()</a>, null =&gt; term()}
+</code></pre>
+</section>
+<section id="encode-map">
+<h3><a name="type-encode_map">encode_map()</a><a class="headerlink" href="#encode-map" title="Link to this heading"></a></h3>
+<pre><code>
+encode_map(Value) = #{binary() | atom() | integer() =&gt; Value}
+</code></pre>
+</section>
+<section id="encode-value">
+<h3><a name="type-encode_value">encode_value()</a><a class="headerlink" href="#encode-value" title="Link to this heading"></a></h3>
+<pre><code>
+encode_value() = integer() | float() | boolean() | null | binary() | atom() | [<a href="#type-encode_value">encode_value()</a>] | <a href="#type-encode_map">encode_map</a>(<a href="#type-encode_value">encode_value()</a>)
+</code></pre>
+</section>
+<section id="encoder">
+<h3><a name="type-encoder">encoder()</a><a class="headerlink" href="#encoder" title="Link to this heading"></a></h3>
+<pre><code>
+encoder() = fun((term(), <a href="#type-encoder">encoder()</a>) -&gt; iodata())
+</code></pre>
+</section>
+<section id="from-binary-fun">
+<h3><a name="type-from_binary_fun">from_binary_fun()</a><a class="headerlink" href="#from-binary-fun" title="Link to this heading"></a></h3>
+<pre><code>
+from_binary_fun() = fun((binary()) -&gt; term())
+</code></pre>
+</section>
+<section id="object-finish-fun">
+<h3><a name="type-object_finish_fun">object_finish_fun()</a><a class="headerlink" href="#object-finish-fun" title="Link to this heading"></a></h3>
+<pre><code>
+object_finish_fun() = fun((ObjectAcc::term(), OldAcc::term()) -&gt; {term(), term()})
+</code></pre>
+</section>
+<section id="object-push-fun">
+<h3><a name="type-object_push_fun">object_push_fun()</a><a class="headerlink" href="#object-push-fun" title="Link to this heading"></a></h3>
+<pre><code>
+object_push_fun() = fun((Key::term(), Value::term(), Acc::term()) -&gt; NewAcc::term())
+</code></pre>
+</section>
+<section id="object-start-fun">
+<h3><a name="type-object_start_fun">object_start_fun()</a><a class="headerlink" href="#object-start-fun" title="Link to this heading"></a></h3>
+<pre><code>
+object_start_fun() = fun((Acc::term()) -&gt; ObjectAcc::term())
 </code></pre>
 <p><a name="index"></a></p>
 </section>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#format-2">format/2</a></td><td>    Format string and data to a string.</td></tr><tr><td valign="top"><a href="#fwrite-2">fwrite/2</a></td><td>    Format string and data to a string.</td></tr><tr><td valign="top"><a href="#latin1_char_list-1">latin1_char_list/1</a></td><td>    Determine if passed term is a list of ISO-8859-1 characters (0-255).</td></tr><tr><td valign="top"><a href="#printable_list-1">printable_list/1</a></td><td>Determine if <code>List</code> is a flat list of printable characters.</td></tr><tr><td valign="top"><a href="#write-1">write/1</a></td><td>Returns a character list that represents Term.</td></tr><tr><td valign="top"><a href="#write_atom-1">write_atom/1</a></td><td></td></tr><tr><td valign="top"><a href="#write_binary-3">write_binary/3</a></td><td></td></tr><tr><td valign="top"><a href="#write_string-1">write_string/1</a></td><td>Returns the list of characters needed to print String as a string.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#decode-1">decode/1</a></td><td></td></tr><tr><td valign="top"><a href="#decode-3">decode/3</a></td><td></td></tr><tr><td valign="top"><a href="#decode_continue-2">decode_continue/2</a></td><td></td></tr><tr><td valign="top"><a href="#decode_start-3">decode_start/3</a></td><td></td></tr><tr><td valign="top"><a href="#encode-1">encode/1</a></td><td></td></tr><tr><td valign="top"><a href="#encode-2">encode/2</a></td><td></td></tr><tr><td valign="top"><a href="#encode_atom-2">encode_atom/2</a></td><td></td></tr><tr><td valign="top"><a href="#encode_binary-1">encode_binary/1</a></td><td></td></tr><tr><td valign="top"><a href="#encode_binary_escape_all-1">encode_binary_escape_all/1</a></td><td></td></tr><tr><td valign="top"><a href="#encode_float-1">encode_float/1</a></td><td></td></tr><tr><td valign="top"><a href="#encode_integer-1">encode_integer/1</a></td><td></td></tr><tr><td valign="top"><a href="#encode_key_value_list-2">encode_key_value_list/2</a></td><td></td></tr><tr><td valign="top"><a href="#encode_key_value_list_checked-2">encode_key_value_list_checked/2</a></td><td></td></tr><tr><td valign="top"><a href="#encode_list-2">encode_list/2</a></td><td></td></tr><tr><td valign="top"><a href="#encode_map-2">encode_map/2</a></td><td></td></tr><tr><td valign="top"><a href="#encode_map_checked-2">encode_map_checked/2</a></td><td></td></tr><tr><td valign="top"><a href="#encode_value-2">encode_value/2</a></td><td></td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
 <h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
-<p><a name="format-2"></a></p>
-<section id="format-2">
-<h3>format/2<a class="headerlink" href="#format-2" title="Link to this heading"></a></h3>
+<p><a name="decode-1"></a></p>
+<section id="decode-1">
+<h3>decode/1<a class="headerlink" href="#decode-1" title="Link to this heading"></a></h3>
 <pre><code>
-format(Format::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/io.md#type-format">io:format()</a>, Args::list()) -&gt; string()
+decode(Bin::binary()) -&gt; <a href="#type-decode_value">decode_value()</a>
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Format</span></code>: format string<br /><code class="docutils literal notranslate"><span class="pre">Args</span></code>: format argument<br /></p>
-<p>returns: string</p>
-<p>Format string and data to a string.
-Features most of OTP <code class="docutils literal notranslate"><span class="pre">io_lib:format/2</span></code>.
-Raises <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error if the number of format specifiers
-does not match the length of the Args.</p>
-<p><a name="fwrite-2"></a></p>
+<p><a name="decode-3"></a></p>
 </section>
-<section id="fwrite-2">
-<h3>fwrite/2<a class="headerlink" href="#fwrite-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">fwrite(Format,</span> <span class="pre">Args)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p>Equivalent to <a class="reference internal" href="#format-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">format(Format,</span> <span class="pre">Args)</span></code></span></a>.</p>
-<p>Format string and data to a string.
-Features most of OTP <code class="docutils literal notranslate"><span class="pre">io_lib:format/2</span></code>.
-Raises <code class="docutils literal notranslate"><span class="pre">badarg</span></code> error if the number of format specifiers
-does not match the length of the Args.</p>
-<p><a name="latin1_char_list-1"></a></p>
-</section>
-<section id="latin1-char-list-1">
-<h3>latin1_char_list/1<a class="headerlink" href="#latin1-char-list-1" title="Link to this heading"></a></h3>
+<section id="decode-3">
+<h3>decode/3<a class="headerlink" href="#decode-3" title="Link to this heading"></a></h3>
 <pre><code>
-latin1_char_list(Term::any()) -&gt; boolean()
+decode(Bin::binary(), Acc::term(), Decoders::<a href="#type-decoders">decoders()</a>) -&gt; {Result::term(), Acc::term(), binary()}
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Term</span></code>: term to test<br /></p>
-<p>returns: true if Term is a list of latin1 characters, false otherwise.</p>
-<p>Determine if passed term is a list of ISO-8859-1 characters (0-255).</p>
-<p><a name="printable_list-1"></a></p>
+<p><a name="decode_continue-2"></a></p>
 </section>
-<section id="printable-list-1">
-<h3>printable_list/1<a class="headerlink" href="#printable-list-1" title="Link to this heading"></a></h3>
+<section id="decode-continue-2">
+<h3>decode_continue/2<a class="headerlink" href="#decode-continue-2" title="Link to this heading"></a></h3>
 <pre><code>
-printable_list(List::any()) -&gt; boolean()
+decode_continue(NewData::binary() | end_of_input, State::<a href="#type-continuation_state">continuation_state()</a>) -&gt; {Result::term(), Acc::term(), binary()} | {continue, <a href="#type-continuation_state">continuation_state()</a>}
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">List</span></code>: term to test<br /></p>
-<p>Determine if <code class="docutils literal notranslate"><span class="pre">List</span></code> is a flat list of printable characters</p>
-<p><a name="write-1"></a></p>
+<p><a name="decode_start-3"></a></p>
 </section>
-<section id="write-1">
-<h3>write/1<a class="headerlink" href="#write-1" title="Link to this heading"></a></h3>
+<section id="decode-start-3">
+<h3>decode_start/3<a class="headerlink" href="#decode-start-3" title="Link to this heading"></a></h3>
 <pre><code>
-write(Term::any()) -&gt; <a href="#type-chars">chars()</a>
+decode_start(Bin::binary(), Acc::term(), Decoders::<a href="#type-decoders">decoders()</a>) -&gt; {Result::term(), Acc::term(), binary()} | {continue, <a href="#type-continuation_state">continuation_state()</a>}
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">Term</span></code>: term to represent<br /></p>
-<p>Equivalent to <a class="reference internal" href="#forma-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">forma(&quot;~w&quot;,</span> <span class="pre">[Term])</span></code></span></a>.</p>
-<p>Returns a character list that represents Term</p>
-<p><a name="write_atom-1"></a></p>
+<p><a name="encode-1"></a></p>
 </section>
-<section id="write-atom-1">
-<h3>write_atom/1<a class="headerlink" href="#write-atom-1" title="Link to this heading"></a></h3>
+<section id="encode-1">
+<h3>encode/1<a class="headerlink" href="#encode-1" title="Link to this heading"></a></h3>
 <pre><code>
-write_atom(Atom::atom()) -&gt; <a href="#type-chars">chars()</a>
+encode(Term::<a href="#type-encode_value">encode_value()</a>) -&gt; iodata()
 </code></pre>
 <br />
-<p><a name="write_binary-3"></a></p>
+<p><a name="encode-2"></a></p>
 </section>
-<section id="write-binary-3">
-<h3>write_binary/3<a class="headerlink" href="#write-binary-3" title="Link to this heading"></a></h3>
+<section id="encode-2">
+<h3>encode/2<a class="headerlink" href="#encode-2" title="Link to this heading"></a></h3>
 <pre><code>
-write_binary(Binary::binary(), Depth::integer(), CharLimit::integer()) -&gt; {iodata(), binary()}
+encode(Term::term(), Encoder::<a href="#type-encoder">encoder()</a>) -&gt; iodata()
 </code></pre>
 <br />
-<p><a name="write_string-1"></a></p>
+<p><a name="encode_atom-2"></a></p>
 </section>
-<section id="write-string-1">
-<h3>write_string/1<a class="headerlink" href="#write-string-1" title="Link to this heading"></a></h3>
+<section id="encode-atom-2">
+<h3>encode_atom/2<a class="headerlink" href="#encode-atom-2" title="Link to this heading"></a></h3>
 <pre><code>
-write_string(String::string()) -&gt; <a href="#type-chars">chars()</a>
+encode_atom(Atom::atom(), Encoder::<a href="#type-encoder">encoder()</a>) -&gt; iodata()
 </code></pre>
 <br />
-<p><code class="docutils literal notranslate"><span class="pre">String</span></code>: string to print<br /></p>
-<p>Equivalent to <a class="reference internal" href="#write_string-2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">write_string(String,</span> <span class="pre">$&quot;)</span></code></span></a>.</p>
-<p>Returns the list of characters needed to print String as a string.</p>
+<p><a name="encode_binary-1"></a></p>
+</section>
+<section id="encode-binary-1">
+<h3>encode_binary/1<a class="headerlink" href="#encode-binary-1" title="Link to this heading"></a></h3>
+<pre><code>
+encode_binary(Bin::binary()) -&gt; iodata()
+</code></pre>
+<br />
+<p><a name="encode_binary_escape_all-1"></a></p>
+</section>
+<section id="encode-binary-escape-all-1">
+<h3>encode_binary_escape_all/1<a class="headerlink" href="#encode-binary-escape-all-1" title="Link to this heading"></a></h3>
+<pre><code>
+encode_binary_escape_all(Bin::binary()) -&gt; iodata()
+</code></pre>
+<br />
+<p><a name="encode_float-1"></a></p>
+</section>
+<section id="encode-float-1">
+<h3>encode_float/1<a class="headerlink" href="#encode-float-1" title="Link to this heading"></a></h3>
+<pre><code>
+encode_float(Float::float()) -&gt; iodata()
+</code></pre>
+<br />
+<p><a name="encode_integer-1"></a></p>
+</section>
+<section id="encode-integer-1">
+<h3>encode_integer/1<a class="headerlink" href="#encode-integer-1" title="Link to this heading"></a></h3>
+<pre><code>
+encode_integer(Int::integer()) -&gt; iodata()
+</code></pre>
+<br />
+<p><a name="encode_key_value_list-2"></a></p>
+</section>
+<section id="encode-key-value-list-2">
+<h3>encode_key_value_list/2<a class="headerlink" href="#encode-key-value-list-2" title="Link to this heading"></a></h3>
+<pre><code>
+encode_key_value_list(List::[{term(), term()}], Encoder::<a href="#type-encoder">encoder()</a>) -&gt; iodata()
+</code></pre>
+<br />
+<p><a name="encode_key_value_list_checked-2"></a></p>
+</section>
+<section id="encode-key-value-list-checked-2">
+<h3>encode_key_value_list_checked/2<a class="headerlink" href="#encode-key-value-list-checked-2" title="Link to this heading"></a></h3>
+<pre><code>
+encode_key_value_list_checked(List::[{term(), term()}], Encoder::<a href="#type-encoder">encoder()</a>) -&gt; iodata()
+</code></pre>
+<br />
+<p><a name="encode_list-2"></a></p>
+</section>
+<section id="encode-list-2">
+<h3>encode_list/2<a class="headerlink" href="#encode-list-2" title="Link to this heading"></a></h3>
+<pre><code>
+encode_list(T::list(), Encoder::<a href="#type-encoder">encoder()</a>) -&gt; iodata()
+</code></pre>
+<br />
+<p><a name="encode_map-2"></a></p>
+</section>
+<section id="encode-map-2">
+<h3>encode_map/2<a class="headerlink" href="#encode-map-2" title="Link to this heading"></a></h3>
+<pre><code>
+encode_map(Map::<a href="#type-encode_map">encode_map</a>(term()), Encoder::<a href="#type-encoder">encoder()</a>) -&gt; iodata()
+</code></pre>
+<br />
+<p><a name="encode_map_checked-2"></a></p>
+</section>
+<section id="encode-map-checked-2">
+<h3>encode_map_checked/2<a class="headerlink" href="#encode-map-checked-2" title="Link to this heading"></a></h3>
+<pre><code>
+encode_map_checked(Map::map(), Encoder::<a href="#type-encoder">encoder()</a>) -&gt; iodata()
+</code></pre>
+<br />
+<p><a name="encode_value-2"></a></p>
+</section>
+<section id="encode-value-2">
+<h3>encode_value/2<a class="headerlink" href="#encode-value-2" title="Link to this heading"></a></h3>
+<pre><code>
+encode_value(Atom::term(), Encoder::<a href="#type-encoder">encoder()</a>) -&gt; iodata()
+</code></pre>
+<br />
 </section>
 </section>
 </section>
@@ -277,8 +392,8 @@ write_string(String::string()) -&gt; <a href="#type-chars">chars()</a>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="io.html" class="btn btn-neutral float-left" title="Module io" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="json.html" class="btn btn-neutral float-right" title="Module json" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="io_lib.html" class="btn btn-neutral float-left" title="Module io_lib" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kernel.html" class="btn btn-neutral float-right" title="Module kernel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
