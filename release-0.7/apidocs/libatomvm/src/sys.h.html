@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sys.h &mdash; AtomVM 0.7.0-beta.0+git.0299f175 documentation</title>
+  <title>sys.h &mdash; AtomVM 0.7.0-beta.0+git.3fe0bf0a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/sys.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=715a1bc4"></script>
+      <script src="../../../_static/documentation_options.js?v=3f60cd67"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -735,15 +735,14 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.sys.h.sys_map_native_code">
-<span class="target" id="libatomvmsys_8h_1ac3e10d3125fec77e46492283456f0e5c"></span><span class="n"><span class="pre">ModuleNativeEntryPoint</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sys_map_native_code</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">native_code</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.sys.h.sys_map_native_code" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmsys_8h_1a4cc7e534f6d5317be9baa5c847cd2887"></span><span class="n"><span class="pre">ModuleNativeEntryPoint</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sys_map_native_code</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">code</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">code_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.sys.h.sys_map_native_code" title="Link to this definition"></a><br /></dt>
 <dd><p>Map precompiled native code to a module entry point. </p>
 <p>If mmap module is executable, returns native_code + offset. Otherwise (Apple Silicon) copy it to an executable buffer. Only implemented on platforms with JIT. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>native_code</strong> – pointer to native code chunk </p></li>
-<li><p><strong>size</strong> – size of native code chunk </p></li>
-<li><p><strong>offset</strong> – offset to the module entry point </p></li>
+<li><p><strong>code</strong> – pointer to the target architecture’s code block within the chunk </p></li>
+<li><p><strong>code_size</strong> – size of that architecture’s code block only </p></li>
 </ul>
 </dd>
 </dl>
@@ -782,6 +781,20 @@
 <li><p><strong>version</strong> – version of the native code </p></li>
 <li><p><strong>entry_point</strong> – entry point to the module </p></li>
 <li><p><strong>labels</strong> – number of labels </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.sys.h.sys_release_native_code">
+<span class="target" id="libatomvmsys_8h_1a42192f613bee3a05ce86c52202eb596d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sys_release_native_code</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ModuleNativeEntryPoint</span></span><span class="w"> </span><span class="n"><span class="pre">entry_point</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.sys.h.sys_release_native_code" title="Link to this definition"></a><br /></dt>
+<dd><p>Release native code resources allocated by sys_map_native_code or jit_stream_entry_point. </p>
+<p>Called from <a class="reference internal" href="module.c.html#libatomvmmodule_8c_1aaa7a1b996bc81fb5a4697312ee981c24"><span class="std std-ref">module_destroy()</span></a> when native_code is not NULL. Platforms that allocate heap or mmap memory for native code must free it here. Platforms that point directly into flash/ROM implement a no-op. Recovery of the allocation base and size is done by each platform from the entry_point alone, using metadata embedded at fixed offsets. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entry_point</strong> – the native_code pointer stored in the <a class="reference internal" href="../../../atomvm-internals.html#libatomvmstruct_module"><span class="std std-ref">Module</span></a></p></li>
 </ul>
 </dd>
 </dl>
