@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AtomVM Update Instructions &mdash; AtomVM 0.8.0-dev+git.45a77198 documentation</title>
+  <title>AtomVM Update Instructions &mdash; AtomVM 0.8.0-dev+git.7142bfd0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/UPDATING.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=b539923a"></script>
+      <script src="_static/documentation_options.js?v=1cf9ec69"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -130,6 +130,16 @@ standard Erlang/OTP API, that takes maps instead of proplists.</p></li>
 The <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> offset is now <code class="docutils literal notranslate"><span class="pre">0x250000</span></code> for all images (previously <code class="docutils literal notranslate"><span class="pre">0x210000</span></code> for Erlang-only).
 Update flashing offsets in your tooling, build scripts, and <code class="docutils literal notranslate"><span class="pre">mix.exs</span></code> or <code class="docutils literal notranslate"><span class="pre">rebar.config</span></code> if you
 were using the <code class="docutils literal notranslate"><span class="pre">0x210000</span></code> offset.</p></li>
+<li><p>The emscripten port now uses ES6 modules (<code class="docutils literal notranslate"><span class="pre">.mjs</span></code> suffix). This is a breaking change for
+existing web integrations:</p>
+<ul>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">async</span> <span class="pre">src=&quot;AtomVM.js&quot;&gt;&lt;/script&gt;</span></code> with a module script</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">type=&quot;module&quot;&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">AtomVM</span> <span class="pre">from</span> <span class="pre">&quot;AtomVM.mjs&quot;</span></code></p></li>
+<li><p>Instantiate with <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">module</span> <span class="pre">=</span> <span class="pre">await</span> <span class="pre">AtomVM({</span> <span class="pre">arguments:</span> <span class="pre">[...]</span> <span class="pre">})</span></code></p></li>
+<li><p>The old implicit global-script pattern is no longer supported</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AtomVM.worker.js</span></code> is no longer emitted; only <code class="docutils literal notranslate"><span class="pre">AtomVM.mjs</span></code> and <code class="docutils literal notranslate"><span class="pre">AtomVM.wasm</span></code> are needed</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="v0-6-4-v0-6-5">
@@ -262,6 +272,10 @@ code off this partition name.</p></li>
         
           
           <dd><a href="/v0.7.0-alpha.0/">v0.7.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.7.0-alpha.1/">v0.7.0-alpha.1</a></dd>
           
         
           

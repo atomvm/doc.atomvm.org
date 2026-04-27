@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Distributed Erlang &mdash; AtomVM 0.8.0-dev+git.45a77198 documentation</title>
+  <title>Distributed Erlang &mdash; AtomVM 0.8.0-dev+git.7142bfd0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/distributed-erlang.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=b539923a"></script>
+      <script src="_static/documentation_options.js?v=1cf9ec69"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -67,6 +67,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#erlang-otp-compatibility">Erlang/OTP compatibility</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#security">Security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#alternative-carrier">Alternative carrier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#serial-distribution">Serial distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#serial-dist-options">serial_dist options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wire-protocol">Wire protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#peer-to-peer-connection-model">Peer-to-peer connection model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-with-socat">Testing with socat</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#distribution-features">Distribution features</a></li>
 </ul>
 </li>
@@ -120,10 +128,14 @@
 <li><p>ESP32</p></li>
 <li><p>RP2 (Pico)</p></li>
 </ul>
-<p>Two examples are provided:</p>
+<p>Distribution over serial (UART) is also available for point-to-point
+connections between any two nodes, including microcontrollers without
+networking (e.g. STM32). See <a class="reference internal" href="#serial-distribution">Serial distribution</a>.</p>
+<p>Three examples are provided:</p>
 <ul class="simple">
 <li><p>disterl in <code class="docutils literal notranslate"><span class="pre">examples/erlang/disterl.erl</span></code>: distribution on Unix systems</p></li>
 <li><p>epmd_disterl in <code class="docutils literal notranslate"><span class="pre">examples/erlang/esp32/epmd_disterl.erl</span></code>: distribution on ESP32 devices</p></li>
+<li><p>serial_disterl in <code class="docutils literal notranslate"><span class="pre">examples/erlang/serial_disterl.erl</span></code>: distribution over serial (ESP32 and Unix)</p></li>
 </ul>
 <section id="starting-and-stopping-distribution">
 <h2>Starting and stopping distribution<a class="headerlink" href="#starting-and-stopping-distribution" title="Link to this heading"></a></h2>
@@ -185,6 +197,135 @@
 </pre></div>
 </div>
 <p>AtomVM’s distribution is based on <code class="docutils literal notranslate"><span class="pre">socket_dist</span></code> and <code class="docutils literal notranslate"><span class="pre">socket_dist_controller</span></code> modules which can also be used with BEAM by definining <code class="docutils literal notranslate"><span class="pre">BEAM_INTERFACE</span></code> to adjust for the difference.</p>
+</section>
+<section id="serial-distribution">
+<h2>Serial distribution<a class="headerlink" href="#serial-distribution" title="Link to this heading"></a></h2>
+<p>AtomVM supports distribution over serial (UART) connections using the
+<code class="docutils literal notranslate"><span class="pre">serial_dist</span></code> module. This is useful for microcontrollers that lack
+WiFi/TCP (e.g. STM32) but have UART, and for testing distribution
+locally using virtual serial ports.</p>
+<section id="quick-start">
+<h3>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h3>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;mynode@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
+<span class="w">    </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
+<span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span>
+<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UART1&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">},</span>
+<span class="w">                      </span><span class="p">{</span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">rx</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">}],</span>
+<span class="w">        </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">uart</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}).</span>
+</pre></div>
+</div>
+<p>On Unix, the <code class="docutils literal notranslate"><span class="pre">peripheral</span></code> is a device path such as <code class="docutils literal notranslate"><span class="pre">&quot;/dev/ttyUSB0&quot;</span></code> and
+the <code class="docutils literal notranslate"><span class="pre">uart_module</span></code> is <code class="docutils literal notranslate"><span class="pre">uart</span></code> from the <code class="docutils literal notranslate"><span class="pre">avm_unix</span></code> library.</p>
+</section>
+<section id="serial-dist-options">
+<h3>serial_dist options<a class="headerlink" href="#serial-dist-options" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uart_opts</span></code> — proplist passed to <code class="docutils literal notranslate"><span class="pre">UartModule:open/1</span></code> for a single port
+(see <code class="docutils literal notranslate"><span class="pre">uart_hal</span></code> for common parameters: <code class="docutils literal notranslate"><span class="pre">peripheral</span></code>, <code class="docutils literal notranslate"><span class="pre">speed</span></code>,
+<code class="docutils literal notranslate"><span class="pre">data_bits</span></code>, <code class="docutils literal notranslate"><span class="pre">stop_bits</span></code>, <code class="docutils literal notranslate"><span class="pre">parity</span></code>, <code class="docutils literal notranslate"><span class="pre">flow_control</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uart_ports</span></code> — list of proplists, one per UART port. Use instead of
+<code class="docutils literal notranslate"><span class="pre">uart_opts</span></code> when connecting to multiple peers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uart_module</span></code> — module implementing the <code class="docutils literal notranslate"><span class="pre">uart_hal</span></code> behaviour. Defaults
+to <code class="docutils literal notranslate"><span class="pre">uart</span></code>.</p></li>
+</ul>
+</section>
+<section id="wire-protocol">
+<h3>Wire protocol<a class="headerlink" href="#wire-protocol" title="Link to this heading"></a></h3>
+<p>All packets on the wire use the same frame format:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="c1">#AA, 16#55, Length:LenBits/big, Payload:Length/binary, CRC32:32/big&gt;&gt;</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">LenBits</span></code> is 16 during the handshake phase and 32 during the data
+phase. The CRC32 covers the <code class="docutils literal notranslate"><span class="pre">Length</span></code> and <code class="docutils literal notranslate"><span class="pre">Payload</span></code> bytes (everything
+between the sync marker and the CRC itself).</p>
+<p>The receiver scans for the <code class="docutils literal notranslate"><span class="pre">&lt;&lt;16#AA,</span> <span class="pre">16#55&gt;&gt;</span></code> sync marker, reads the
+length field, validates it against a maximum frame size (to reject false
+sync matches where the marker appears in stale data), then verifies the
+CRC32. On CRC failure the connection is torn down.</p>
+<p><strong>Sync markers</strong></p>
+<p>Both sides periodically send bare 2-byte sync markers
+(<code class="docutils literal notranslate"><span class="pre">&lt;&lt;16#AA,</span> <span class="pre">16#55&gt;&gt;</span></code>) on the UART outside of any frame. These serve two
+purposes:</p>
+<ul class="simple">
+<li><p><strong>Liveness detection</strong>: a node knows its peer is alive when it
+receives sync markers.</p></li>
+<li><p><strong>Stale data recovery</strong>: after a failed handshake attempt, leftover
+bytes remain in the UART buffer. The frame scanner skips over any
+data (including stale sync markers) that does not form a valid frame
+with a correct length and CRC.</p></li>
+</ul>
+<p><strong>Handshake phase (16-bit length)</strong></p>
+<p>During the Erlang distribution handshake, the <code class="docutils literal notranslate"><span class="pre">Length</span></code> field is 16 bits.
+The handshake follows the standard Erlang distribution protocol
+(send_name, send_status, send_challenge, send_challenge_reply,
+send_challenge_ack).</p>
+<p><strong>Data phase (32-bit length)</strong></p>
+<p>After the handshake completes, the <code class="docutils literal notranslate"><span class="pre">Length</span></code> field switches to 32 bits.
+Tick (keepalive) messages are sent as a frame with a zero-length payload
+(i.e. <code class="docutils literal notranslate"><span class="pre">Length</span> <span class="pre">=</span> <span class="pre">0</span></code>).</p>
+</section>
+<section id="peer-to-peer-connection-model">
+<h3>Peer-to-peer connection model<a class="headerlink" href="#peer-to-peer-connection-model" title="Link to this heading"></a></h3>
+<p>Unlike TCP distribution which uses a client/server model (one side
+listens, the other connects), serial is point-to-point: both nodes
+share a single UART link.</p>
+<p>A <strong>link manager</strong> process on each node is the sole owner of UART
+reads. On each iteration it:</p>
+<ol class="arabic simple">
+<li><p>Checks its mailbox for a <code class="docutils literal notranslate"><span class="pre">setup</span></code> request from <code class="docutils literal notranslate"><span class="pre">net_kernel</span></code>
+(non-blocking). If found, enters the <strong>setup</strong> path (initiator)
+immediately without proceeding to subsequent steps.</p></li>
+<li><p>Sends a sync marker.</p></li>
+<li><p>Reads from the UART with a short timeout.</p></li>
+<li><p>Passes the buffer to <code class="docutils literal notranslate"><span class="pre">scan_frame</span></code> which searches for a valid framed
+handshake packet.</p></li>
+<li><p>If a complete or partial frame is detected, enters the <strong>accept</strong>
+path (responder).</p></li>
+<li><p>Otherwise, loops.</p></li>
+</ol>
+<p>This design ensures only one process reads from the UART at any time,
+avoiding the race condition that would occur if separate accept and
+setup processes competed for the same byte stream.</p>
+<p>If a handshake fails (the distribution controller process exits), the
+link manager flushes stale <code class="docutils literal notranslate"><span class="pre">setup</span></code> messages from its mailbox and
+restarts the loop, allowing retries.</p>
+</section>
+<section id="testing-with-socat">
+<h3>Testing with socat<a class="headerlink" href="#testing-with-socat" title="Link to this heading"></a></h3>
+<p>On Unix, <code class="docutils literal notranslate"><span class="pre">socat</span></code> can create virtual serial port pairs for testing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>socat<span class="w"> </span>-d<span class="w"> </span>-d<span class="w"> </span>pty,raw,echo<span class="o">=</span><span class="m">0</span><span class="w"> </span>pty,raw,echo<span class="o">=</span><span class="m">0</span>
+</pre></div>
+</div>
+<p>This creates two pseudo-terminal devices (e.g. <code class="docutils literal notranslate"><span class="pre">/dev/ttys003</span></code> and
+<code class="docutils literal notranslate"><span class="pre">/dev/ttys004</span></code>) connected back-to-back. Each AtomVM node uses one side:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="c">%% Node A</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;a@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
+<span class="w">    </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
+<span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span>
+<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/dev/ttys003&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
+<span class="w">        </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">uart</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}).</span>
+
+<span class="c">%% Node B (separate AtomVM process)</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;b@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
+<span class="w">    </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
+<span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span>
+<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/dev/ttys004&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
+<span class="w">        </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">uart</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}).</span>
+
+<span class="c">%% From Node B, trigger autoconnect:</span>
+<span class="p">{</span><span class="n">some_registered_name</span><span class="p">,</span><span class="w"> </span><span class="n">&#39;a@serial.local&#39;</span><span class="p">}</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="n">hello</span><span class="p">}.</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="distribution-features">
 <h2>Distribution features<a class="headerlink" href="#distribution-features" title="Link to this heading"></a></h2>
@@ -282,6 +423,10 @@
         
           
           <dd><a href="/v0.7.0-alpha.0/">v0.7.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.7.0-alpha.1/">v0.7.0-alpha.1</a></dd>
           
         
           

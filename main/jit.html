@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JIT Compilation &mdash; AtomVM 0.8.0-dev+git.45a77198 documentation</title>
+  <title>JIT Compilation &mdash; AtomVM 0.8.0-dev+git.7142bfd0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/jit.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=b539923a"></script>
+      <script src="_static/documentation_options.js?v=1cf9ec69"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -74,6 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#debugging-with-lldb">Debugging with LLDB</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#setting-breakpoints">Setting breakpoints</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#inspecting-vm-registers">Inspecting VM registers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#named-variable-inspection">Named variable inspection</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#backtraces">Backtraces</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#source-line-mapping">Source line mapping</a></li>
 </ul>
@@ -132,15 +133,39 @@
 <section id="supported-architectures">
 <h3>Supported architectures<a class="headerlink" href="#supported-architectures" title="Link to this heading"></a></h3>
 <p>The JIT compiler supports the following target architectures:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code> — 64-bit x86 (Linux, macOS, FreeBSD)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">aarch64</span></code> — 64-bit ARM (Linux, macOS)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">arm32</span></code> — 32-bit ARM (Linux)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">armv6m</span></code> — ARM Cortex-M0+ (Raspberry Pi Pico, STM32 with Cortex-M0/M0+)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">armv6m+thumb2</span></code> — ARM Cortex-M3+ with Thumb-2 support, ARMv7-M or later (Raspberry Pi Pico 2, STM32 with Cortex-M3/M4/M7/M33)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">riscv32</span></code> — 32-bit RISC-V</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">riscv64</span></code> — 64-bit RISC-V</p></li>
-</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description and example devices</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x86_64</span></code></p></td>
+<td><p>64-bit x86 (Linux, macOS, FreeBSD)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">aarch64</span></code></p></td>
+<td><p>64-bit ARM (Linux, macOS)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">arm32</span></code></p></td>
+<td><p>32-bit ARM (Linux)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">armv6m</span></code></p></td>
+<td><p>ARM Cortex-M0+ (Raspberry Pi Pico, STM32 with Cortex-M0/M0+)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">armv6m+thumb2</span></code></p></td>
+<td><p>ARM Cortex-M3+ with Thumb-2 support, ARMv7-M or later (Raspberry Pi Pico 2, STM32 with Cortex-M3/M4/M7/M33)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">riscv32</span></code></p></td>
+<td><p>32-bit RISC-V (ESP32Cx, ESP32Hx, ESP32P4)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">riscv64</span></code></p></td>
+<td><p>64-bit RISC-V (Linux)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wasm32</span></code></p></td>
+<td><p>WebAssembly (nodeJS, browsers)</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="requirements">
 <h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h3>
@@ -175,6 +200,7 @@ $<span class="w"> </span>make<span class="w"> </span>-j<span class="w"> </span><
 <li><p>Label symbols</p></li>
 <li><p>Source file and line number mappings</p></li>
 <li><p>Context structure type information for inspecting VM registers</p></li>
+<li><p>Named variable locations (when compiled with <code class="docutils literal notranslate"><span class="pre">beam_debug_info</span></code>, OTP 28+)</p></li>
 </ul>
 </section>
 </section>
@@ -207,7 +233,48 @@ $<span class="w"> </span>make<span class="w"> </span>-j<span class="w"> </span><
 </pre></div>
 </div>
 <p>The x register values are displayed as raw tagged terms. For small integers, the value is <code class="docutils literal notranslate"><span class="pre">(term</span> <span class="pre">&gt;&gt;</span> <span class="pre">4)</span></code>, so <code class="docutils literal notranslate"><span class="pre">x[0]</span> <span class="pre">=</span> <span class="pre">143</span></code> means the integer <code class="docutils literal notranslate"><span class="pre">8</span></code> (since <code class="docutils literal notranslate"><span class="pre">143</span> <span class="pre">=</span> <span class="pre">8</span> <span class="pre">&lt;&lt;</span> <span class="pre">4</span> <span class="pre">|</span> <span class="pre">0xf</span></code>).</p>
-<p>When the JIT compiler has cached an x register in a native CPU register, the debugger reads it directly from the CPU register instead of memory — this is tracked automatically through DWARF location lists.</p>
+<p>When the JIT compiler has cached an x register in a native CPU register, the debugger reads it directly from the CPU register instead of memory, this is tracked automatically through DWARF location lists.</p>
+</section>
+<section id="named-variable-inspection">
+<h4>Named variable inspection<a class="headerlink" href="#named-variable-inspection" title="Link to this heading"></a></h4>
+<p>When an Erlang module is compiled with the <code class="docutils literal notranslate"><span class="pre">beam_debug_info</span></code> option (OTP 28+), the compiler emits <code class="docutils literal notranslate"><span class="pre">debug_line</span></code> opcodes that carry variable-to-register mappings. The JIT DWARF backend uses these to generate named variable entries, so the debugger can display Erlang variable names instead of raw register indices.</p>
+<p>To enable this, add <code class="docutils literal notranslate"><span class="pre">beam_debug_info</span></code> as a compile attribute in your module:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">-</span><span class="ni">compile</span><span class="p">([</span><span class="n">beam_debug_info</span><span class="p">]).</span>
+</pre></div>
+</div>
+<p>Or pass it as a compiler flag:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>erlc<span class="w"> </span>+beam_debug_info<span class="w"> </span>my_module.erl
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">beam_debug_info</span></code> option disables several compiler optimizations (constant folding,
+binary match optimization, etc.) to preserve variable-to-register mappings. Use it only
+for modules you intend to debug, not for production builds.</p>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">beam_debug_info</span></code> enabled, the debugger shows named variables:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">$</span><span class="w"> </span><span class="n">lldb</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="o">./</span><span class="n">AtomVM</span><span class="w"> </span><span class="n">my_module</span><span class="o">.</span><span class="n">avm</span>
+<span class="p">(</span><span class="n">lldb</span><span class="p">)</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">plugin</span><span class="o">.</span><span class="n">jit</span><span class="o">-</span><span class="n">loader</span><span class="o">.</span><span class="n">gdb</span><span class="o">.</span><span class="n">enable</span><span class="w"> </span><span class="n">on</span>
+<span class="p">(</span><span class="n">lldb</span><span class="p">)</span><span class="w"> </span><span class="k">breakpoint</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="n">my_module</span><span class="o">.</span><span class="n">erl</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="mi">10</span>
+<span class="p">(</span><span class="n">lldb</span><span class="p">)</span><span class="w"> </span><span class="n">run</span>
+</pre></div>
+</div>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="k">Proc</span><span class="nv">ess</span><span class="w"> </span><span class="nv">stopped</span>
+<span class="err">*</span><span class="w"> </span><span class="nf">thread</span><span class="w"> </span><span class="err">#</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nv">stop</span><span class="w"> </span><span class="nv">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">breakpoint</span><span class="w"> </span><span class="mf">1.1</span>
+<span class="w">    </span><span class="nf">frame</span><span class="w"> </span><span class="err">#</span><span class="mi">0</span><span class="p">:</span><span class="w"> </span><span class="nv">JIT</span><span class="err">`</span><span class="nv">my_module</span><span class="p">:</span><span class="nv">my_fun</span><span class="o">/</span><span class="mi">1</span><span class="p">(</span><span class="nv">ctx</span><span class="o">=</span><span class="mi">0</span><span class="nv">x...</span><span class="p">)</span><span class="w"> </span><span class="nv">at</span><span class="w"> </span><span class="nv">my_module.erl</span><span class="p">:</span><span class="mi">10</span>
+<span class="err">(</span><span class="nf">lldb</span><span class="p">)</span><span class="w"> </span><span class="nv">frame</span><span class="w"> </span><span class="nv">variable</span><span class="w"> </span><span class="nv">N</span><span class="w"> </span><span class="nv">M</span>
+<span class="err">(</span><span class="nf">unsigned</span><span class="w"> </span><span class="nv">long</span><span class="p">)</span><span class="w"> </span><span class="nv">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">687</span>
+<span class="err">(</span><span class="nf">unsigned</span><span class="w"> </span><span class="nv">long</span><span class="p">)</span><span class="w"> </span><span class="nv">M</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">703</span>
+</pre></div>
+</div>
+<p>The variables are displayed as raw tagged terms, just like x registers. Use <code class="docutils literal notranslate"><span class="pre">term_to_int()</span></code> to convert small integers:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>(lldb) print term_to_int(N)
+(avm_int_t) 42
+(lldb) print term_to_int(M)
+(avm_int_t) 43
+</pre></div>
+</div>
+<p>The variable locations are tracked through DWARF location lists, so the debugger shows the correct value at each point in the function. A variable that moves from one register to another (or goes out of scope) is handled automatically.</p>
 </section>
 <section id="backtraces">
 <h4>Backtraces<a class="headerlink" href="#backtraces" title="Link to this heading"></a></h4>
@@ -221,12 +288,14 @@ $<span class="w"> </span>make<span class="w"> </span>-j<span class="w"> </span><
 </section>
 <section id="source-line-mapping">
 <h4>Source line mapping<a class="headerlink" href="#source-line-mapping" title="Link to this heading"></a></h4>
-<p>If the Erlang source was compiled with debug information and the BEAM Line chunk is present, the debugger maps JIT code addresses to source file and line numbers.</p>
+<p>If the Erlang source was compiled with debug information and the BEAM Line chunk is present, the debugger maps JIT code addresses to source file and line numbers. You can set breakpoints by file and line:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>(lldb) breakpoint set -f my_module.erl -l 15
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>LLDB 19 (including Apple’s system LLDB shipped with Xcode) has a regression in the JIT loader
-that causes hangs when resolving breakpoints in JIT-loaded modules. Use LLDB 20 or later.
-On macOS, install it from <a class="reference external" href="https://www.macports.org/">MacPorts</a> (<code class="docutils literal notranslate"><span class="pre">port</span> <span class="pre">install</span> <span class="pre">lldb-20</span></code>) or
+<p>LLDB 19 has a regression in the JIT loader that causes hangs when resolving breakpoints in JIT-loaded modules. Use LLDB 20 or later.
+On macOS, you can use lldb that ships with Xcode 26+ or install lldb 20 from <a class="reference external" href="https://www.macports.org/">MacPorts</a> (<code class="docutils literal notranslate"><span class="pre">port</span> <span class="pre">install</span> <span class="pre">lldb-20</span></code>) or
 build from the <a class="reference external" href="https://github.com/llvm/llvm-project">LLVM project source</a>.</p>
 </div>
 </section>
@@ -297,10 +366,6 @@ $<span class="w"> </span>riscv64-elf-objdump<span class="w"> </span>-d<span clas
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AVM_JIT_TARGET_ARCH</span></code></p></td>
 <td><p>auto-detected</p></td>
 <td><p>Target architecture (<code class="docutils literal notranslate"><span class="pre">x86_64</span></code>, <code class="docutils literal notranslate"><span class="pre">aarch64</span></code>, <code class="docutils literal notranslate"><span class="pre">arm32</span></code>, <code class="docutils literal notranslate"><span class="pre">armv6m</span></code>, <code class="docutils literal notranslate"><span class="pre">armv6m+thumb2</span></code>, <code class="docutils literal notranslate"><span class="pre">riscv32</span></code>, <code class="docutils literal notranslate"><span class="pre">riscv64</span></code>)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AVM_DISABLE_SMP</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">OFF</span></code></p></td>
-<td><p>Disable SMP support</p></td>
 </tr>
 </tbody>
 </table>
@@ -387,6 +452,10 @@ $<span class="w"> </span>riscv64-elf-objdump<span class="w"> </span>-d<span clas
         
           
           <dd><a href="/v0.7.0-alpha.0/">v0.7.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.7.0-alpha.1/">v0.7.0-alpha.1</a></dd>
           
         
           

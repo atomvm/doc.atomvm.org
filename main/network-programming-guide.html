@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Network Programming Guide &mdash; AtomVM 0.8.0-dev+git.45a77198 documentation</title>
+  <title>Network Programming Guide &mdash; AtomVM 0.8.0-dev+git.7142bfd0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/network-programming-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=b539923a"></script>
+      <script src="_static/documentation_options.js?v=1cf9ec69"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -61,6 +61,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#station-mode-example-configuration">Station mode example configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sta-mode-convenience-functions">STA Mode Convenience Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sta-or-ap-sta-mode-functions">STA (or AP+STA) mode functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sta-rssi"><code class="docutils literal notranslate"><span class="pre">sta_rssi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wifi-scan"><code class="docutils literal notranslate"><span class="pre">wifi_scan</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sta-status"><code class="docutils literal notranslate"><span class="pre">sta_status</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sta-disconnect"><code class="docutils literal notranslate"><span class="pre">sta_disconnect</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sta-connect"><code class="docutils literal notranslate"><span class="pre">sta_connect</span></code></a></li>
@@ -182,6 +184,11 @@ acquisition.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">{connected,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device connects to the target network.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{disconnected,</span> <span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device disconnects from the target network. If no callback function is provided the default behavior is to attempt to reconnect immediately. By providing a callback function the application can decide whether to reconnect, or connect to a new access point.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{got_ip,</span> <span class="pre">fun((ip_info())</span> <span class="pre">-&gt;</span> <span class="pre">term())}</span></code> A callback function which will be called when the device obtains an IP address.  In this case, the IPv4 IP address, net mask, and gateway are provided as a parameter to the callback function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{scan_done,</span> <span class="pre">fun((scan_results()</span> <span class="pre">|</span> <span class="pre">{error,</span> <span class="pre">Reason</span> <span class="pre">::</span> <span class="pre">term()})</span> <span class="pre">-&gt;</span> <span class="pre">term())</span> <span class="pre">|</span> <span class="pre">pid()}</span></code>
+<strong>(ESP32 only)</strong> A callback function (receives <code class="docutils literal notranslate"><span class="pre">scan_results()</span> <span class="pre">|</span> <span class="pre">{error,</span> <span class="pre">Reason}</span></code>) or pid (receives
+<code class="docutils literal notranslate"><span class="pre">{scan_results,</span> <span class="pre">scan_results()</span> <span class="pre">|</span> <span class="pre">{error,</span> <span class="pre">Reason}}</span></code>) which will be invoked once a network scan is
+completed. This allows for event-driven connection management and prevents blocking the caller when
+requesting a scan of available wifi networks.</p></li>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -194,28 +201,69 @@ acquisition.</p>
 <p>The following example illustrates initialization of the WiFi network in STA mode.  The example program will configure the network to connect to a specified network.  Events that occur during the lifecycle of the network will trigger invocations of the specified callback functions.</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span><span class="n">sta</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span><span class="n">ssid</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;myssid&quot;</span><span class="o">&gt;&gt;</span><span class="p">},</span>
-<span class="w">        </span><span class="p">{</span><span class="n">psk</span><span class="p">,</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="s">&quot;mypsk&quot;</span><span class="o">&gt;&gt;</span><span class="p">},</span>
+<span class="w">        </span><span class="n">managed</span><span class="p">,</span>
 <span class="w">        </span><span class="p">{</span><span class="n">connected</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">connected</span><span class="o">/</span><span class="mi">0</span><span class="p">},</span>
 <span class="w">        </span><span class="p">{</span><span class="n">got_ip</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">got_ip</span><span class="o">/</span><span class="mi">1</span><span class="p">},</span>
-<span class="w">        </span><span class="p">{</span><span class="n">disconnected</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">disconnected</span><span class="o">/</span><span class="mi">0</span><span class="p">}</span>
+<span class="w">        </span><span class="p">{</span><span class="n">disconnected</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">disconnected</span><span class="o">/</span><span class="mi">0</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">scan_done</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">got_scan_results</span><span class="o">/</span><span class="mi">1</span><span class="p">},</span>
 <span class="w">        </span><span class="p">{</span><span class="n">dhcp_hostname</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">&quot;myesp32&quot;</span><span class="o">&gt;&gt;</span><span class="p">}</span>
 <span class="w">    </span><span class="p">]}</span>
 <span class="p">],</span>
 <span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="nv">Pid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="nv">Config</span><span class="p">),</span>
+<span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">wifi_scan</span><span class="p">(),</span>
 <span class="p">...</span>
 </pre></div>
 </div>
-<p>The following callback functions will be called when the corresponding events occur during the lifetime of the network connection.</p>
+<p>The following callback functions will be called when the corresponding events occur during the
+lifetime of the network connection. This example demonstrates using callbacks to scan for networks,
+and if a found network is stored in nvs with an <code class="docutils literal notranslate"><span class="pre">ssid</span></code> key value that matches, it will use the
+stored <code class="docutils literal notranslate"><span class="pre">psk</span></code> key value to authenticate. After an IP address is acquired, the example application’s
+supervised network service will be started by the <code class="docutils literal notranslate"><span class="pre">start_my_server_sup</span></code> function (this function is
+left as an exercise for the reader, see: <a class="reference internal" href="apidocs/erlang/estdlib/supervisor.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">supervisor</span></code></span></a>).</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nf">connected</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
 <span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Connected to AP.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">).</span>
 
-<span class="nf">gotIp</span><span class="p">(</span><span class="nv">IpInfo</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Got IP: </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">IpInfo</span><span class="p">]).</span>
+<span class="nf">got_ip</span><span class="p">(</span><span class="nv">IpInfo</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Got IP: </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">IpInfo</span><span class="p">]),</span>
+<span class="w">    </span><span class="nn">erlang</span><span class="p">:</span><span class="nb">spawn</span><span class="p">(</span><span class="k">fun</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">start_my_server_sup</span><span class="p">()</span><span class="w"> </span><span class="k">end</span><span class="p">).</span>
 
 <span class="nf">disconnected</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Disconnected from AP, attempting to reconnect</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">),</span>
-<span class="w">    </span><span class="nn">network</span><span class="p">:</span><span class="nf">sta_connect</span><span class="p">().</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Disconnected from AP, starting scan</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="nn">erlang</span><span class="p">:</span><span class="nb">spawn</span><span class="p">(</span><span class="k">fun</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">wifi_scan</span><span class="p">()</span><span class="w"> </span><span class="k">end</span><span class="p">).</span>
+
+<span class="nf">got_scan_results</span><span class="p">({</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="nv">Reason</span><span class="p">})</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;WiFi scan error </span><span class="si">~p</span><span class="s">, retrying in 60 seconds.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Reason</span><span class="p">]),</span>
+<span class="w">    </span><span class="nn">erlang</span><span class="p">:</span><span class="nb">spawn</span><span class="p">(</span><span class="k">fun</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">timer</span><span class="p">:</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">_</span><span class="mi">000</span><span class="p">),</span>
+<span class="w">        </span><span class="nn">network</span><span class="p">:</span><span class="nf">wifi_scan</span><span class="p">()</span>
+<span class="w">    </span><span class="k">end</span><span class="p">);</span>
+<span class="nf">got_scan_results</span><span class="p">({</span><span class="nv">NumResults</span><span class="p">,</span><span class="w"> </span><span class="nv">Results</span><span class="p">})</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;WiFi scan found </span><span class="si">~p</span><span class="s"> networks.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">NumResults</span><span class="p">]),</span>
+<span class="w">    </span><span class="nn">erlang</span><span class="p">:</span><span class="nb">spawn</span><span class="p">(</span><span class="k">fun</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">connect_if_known</span><span class="p">(</span><span class="nv">Results</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="p">).</span>
+
+<span class="nf">connect_if_known</span><span class="p">([])</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;No known networks found, re-scanning in 60 seconds.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="nn">erlang</span><span class="p">:</span><span class="nb">spawn</span><span class="p">(</span><span class="k">fun</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">timer</span><span class="p">:</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">_</span><span class="mi">000</span><span class="p">),</span>
+<span class="w">        </span><span class="nn">network</span><span class="p">:</span><span class="nf">wifi_scan</span><span class="p">()</span>
+<span class="w">    </span><span class="k">end</span><span class="p">);</span>
+<span class="nf">connect_if_known</span><span class="p">([#{</span><span class="n">ssid</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nv">SSID</span><span class="p">,</span><span class="w"> </span><span class="n">authmode</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nv">Auth</span><span class="p">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">Results</span><span class="p">])</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nv">SSID</span><span class="w"> </span><span class="o">=:=</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">nvs_fetch_binary</span><span class="p">(</span><span class="n">network</span><span class="p">,</span><span class="w"> </span><span class="n">ssid</span><span class="p">)</span><span class="w"> </span><span class="k">of</span>
+<span class="w">        </span><span class="n">true</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">nvs_fetch_binary</span><span class="p">(</span><span class="n">network</span><span class="p">,</span><span class="w"> </span><span class="n">psk</span><span class="p">)</span><span class="w"> </span><span class="k">of</span>
+<span class="w">                </span><span class="n">undefined</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="nv">Auth</span><span class="w"> </span><span class="o">=:=</span><span class="w"> </span><span class="n">open</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">                    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Connecting to unsecured network </span><span class="si">~s</span><span class="s">...</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">SSID</span><span class="p">]),</span>
+<span class="w">                    </span><span class="nn">network</span><span class="p">:</span><span class="nf">sta_connect</span><span class="p">([{</span><span class="n">ssid</span><span class="p">,</span><span class="w"> </span><span class="nv">SSID</span><span class="p">}]);</span>
+<span class="w">                </span><span class="n">undefined</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">                    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;No psk stored in nvs for network </span><span class="si">~s</span><span class="s"> with </span><span class="si">~p</span><span class="s"> security!</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">SSID</span><span class="p">,</span><span class="w"> </span><span class="nv">Auth</span><span class="p">]),</span>
+<span class="w">                    </span><span class="n">connect_if_known</span><span class="p">(</span><span class="nv">Results</span><span class="p">);</span>
+<span class="w">                </span><span class="nv">PSK</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">                    </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Connecting to </span><span class="si">~s</span><span class="s"> (</span><span class="si">~p</span><span class="s">)...</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">SSID</span><span class="p">,</span><span class="w"> </span><span class="nv">Auth</span><span class="p">]),</span>
+<span class="w">                    </span><span class="nn">network</span><span class="p">:</span><span class="nf">sta_connect</span><span class="p">([{</span><span class="n">ssid</span><span class="p">,</span><span class="w"> </span><span class="nv">SSID</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">psk</span><span class="p">,</span><span class="w"> </span><span class="nv">PSK</span><span class="p">}])</span>
+<span class="w">            </span><span class="k">end</span><span class="p">;</span>
+<span class="w">        </span><span class="n">false</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="n">connect_if_known</span><span class="p">(</span><span class="nv">Results</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 </pre></div>
 </div>
 <p>In a typical application, the network should be configured and an IP address should be acquired first, before starting clients or services that have a dependency on the network.</p>
@@ -237,10 +285,96 @@ acquisition.</p>
 <span class="k">end</span>
 </pre></div>
 </div>
-<p>To obtain the signal strength (in decibels) of the connection to the associated access point use <a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#sta_rssi0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:sta_rssi/0</span></code></span></a>.</p>
 </section>
 <section id="sta-or-ap-sta-mode-functions">
 <h3>STA (or AP+STA) mode functions<a class="headerlink" href="#sta-or-ap-sta-mode-functions" title="Link to this heading"></a></h3>
+<p>Some functions are only available if the device is configured in STA or AP+STA mode.</p>
+<section id="sta-rssi">
+<h4><code class="docutils literal notranslate"><span class="pre">sta_rssi</span></code><a class="headerlink" href="#sta-rssi" title="Link to this heading"></a></h4>
+<p>Once connected to an access point, the signal strength in decibel-milliwatts (dBm) of the
+connection to the associated access point may be obtained using
+<a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#sta_rssi0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:sta_rssi/0</span></code></span></a>. The value returned as
+<code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Value}</span></code> will typically be a negative number, but in the
+presence of a powerful signal this can be a positive number. A level of 0 dBm corresponds to the
+power of 1 milliwatt. A 10 dBm decrease in level is equivalent to a ten-fold decrease in signal
+power.</p>
+</section>
+<section id="wifi-scan">
+<h4><code class="docutils literal notranslate"><span class="pre">wifi_scan</span></code><a class="headerlink" href="#wifi-scan" title="Link to this heading"></a></h4>
+<p>After the network has been configured for STA or AP+STA mode and started, you may scan for
+available access points using
+<a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#wifi_scan0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:wifi_scan/0</span></code></span></a> or
+<a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#wifi_scan1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:wifi_scan/1</span></code></span></a>.  Scanning for access
+points will temporarily inhibit other traffic on the access point network if it is in use, but
+should not cause any active connections to be dropped.  With no options, a default ‘active’
+(<code class="docutils literal notranslate"><span class="pre">{passive,</span> <span class="pre">false}</span></code>) scan, with a per-channel dwell time of 120ms will be used and will return
+network details for up to 6 access points, the default may be changed using the <code class="docutils literal notranslate"><span class="pre">sta_scan_config()</span></code>
+option in the <code class="docutils literal notranslate"><span class="pre">sta_config()</span></code>.  The return value for the scan takes the form of a tuple consisting
+of <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Results}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Results</span> <span class="pre">=</span> <span class="pre">{FoundAPs,</span> <span class="pre">NetworkList}</span></code>. <code class="docutils literal notranslate"><span class="pre">FoundAPs</span></code> may be a number larger
+than the length of the NetworkList if more access points were discovered than the number of results
+requested.  The entries in the <code class="docutils literal notranslate"><span class="pre">NetworkList</span></code> take the form of a map with the keys <code class="docutils literal notranslate"><span class="pre">ssid</span></code> mapped to
+the network name, <code class="docutils literal notranslate"><span class="pre">rssi</span></code> for the dBm signal strength of the access point, <code class="docutils literal notranslate"><span class="pre">authmode</span></code> value is the
+authentication method used by the network, <code class="docutils literal notranslate"><span class="pre">bssid</span></code> (a.k.a MAC address) of the access point, the
+<code class="docutils literal notranslate"><span class="pre">channel</span></code> key for the primary channel for the network, hidden networks (when <code class="docutils literal notranslate"><span class="pre">show_hidden</span></code> is
+used in the <code class="docutils literal notranslate"><span class="pre">scan_options()</span></code>) will have an empty <code class="docutils literal notranslate"><span class="pre">ssid</span></code> and the <code class="docutils literal notranslate"><span class="pre">hidden</span></code> key will be set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.
+If an error is encountered the return will be <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason</span> <span class="pre">::</span> <span class="pre">term()}</span></code>. If the network is
+stopped while a scan is in progress, the callback or caller may receive either a successful scan
+result, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">scan_canceled}</span></code>.</p>
+<p>Blocking example with no <code class="docutils literal notranslate"><span class="pre">scan_done</span></code> callback:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">wifi_scan</span><span class="p">()</span><span class="w"> </span><span class="k">of</span>
+<span class="w">    </span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nv">Num</span><span class="p">,</span><span class="w"> </span><span class="nv">Networks</span><span class="p">}}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;network scan found </span><span class="si">~p</span><span class="s"> networks.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Num</span><span class="p">]),</span>
+<span class="w">        </span><span class="nn">lists</span><span class="p">:</span><span class="nf">foreach</span><span class="p">(</span>
+<span class="w">            </span><span class="k">fun</span><span class="p">(</span>
+<span class="w">                </span><span class="p">_</span><span class="nv">Network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">#{</span><span class="n">ssid</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nv">SSID</span><span class="p">,</span><span class="w"> </span><span class="n">rssi</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nv">DBm</span><span class="p">,</span><span class="w"> </span><span class="n">authmode</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nv">Mode</span><span class="p">,</span><span class="w"> </span><span class="n">bssid</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nv">BSSID</span><span class="p">,</span><span class="w"> </span><span class="n">channel</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nv">Number</span><span class="p">}</span>
+<span class="w">            </span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">                </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span>
+<span class="w">                    </span><span class="s">&quot;Network: </span><span class="si">~p</span><span class="s">, BSSID: </span><span class="si">~p</span><span class="s">, signal </span><span class="si">~p</span><span class="s"> dBm, Security: </span><span class="si">~p</span><span class="s">, channel </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="p">[</span><span class="nv">SSID</span><span class="p">,</span><span class="w"> </span><span class="nv">BSSID</span><span class="p">,</span><span class="w"> </span><span class="nv">DBm</span><span class="p">,</span><span class="w"> </span><span class="nv">Mode</span><span class="p">,</span><span class="w"> </span><span class="nv">Number</span><span class="p">]</span>
+<span class="w">                </span><span class="p">)</span>
+<span class="w">            </span><span class="k">end</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Networks</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="w">    </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="nv">Reason</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Failed to scan for wifi networks for reason </span><span class="si">~p</span><span class="s">.</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Reason</span><span class="p">])</span>
+<span class="k">end</span><span class="p">,</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>To avoid blocking the caller for extended lengths of time, especially on 5 Ghz capable devices,
+a callback function may be configured in the network config. See
+<a class="reference internal" href="#station-mode-callbacks">Station mode callbacks</a>.</p>
+<p>To minimize the risk of out-of-memory errors, this driver limits the maximum number of returned
+networks depending on the target and memory configuration:
+ESP32-C2 supports up to 10, ESP32-S2/ESP32-C61/ESP32-C5 up to 14, most other targets up to 20,
+and ESP32-P4 or PSRAM-enabled builds up to 64.</p>
+<p>The default scan is quite fast, and likely may not find all the available networks.  Scans are
+quite configurable with <code class="docutils literal notranslate"><span class="pre">active</span></code> (the default) and <code class="docutils literal notranslate"><span class="pre">passive</span></code> modes. Options should take the form of
+a proplist.  The per-channel scan time can be changed with the <code class="docutils literal notranslate"><span class="pre">dwell</span></code> key, the channel dwell time
+can be set for up to 1500 ms.  Passive scans are slower, as they always linger on each channel for
+the full dwell time. Passive mode can be used by simply adding <code class="docutils literal notranslate"><span class="pre">passive</span></code> to the configuration
+proplist. Keep in mind when choosing a dwell time that between each progressively scanned channel
+the device must return to the home channel for a short time (typically 30ms), but for scans with a
+dwell time of over 1000ms the home channel dwell time will increase to 60ms to help mitigate
+beacon-timeout events.  In some network configuration beacon timeout events may still occur, but
+should not lead to a dropped connection, and after the scan completes the device should receive the
+next beacon from the access point. The default of 6 access points in the returned <code class="docutils literal notranslate"><span class="pre">NetworkList</span></code> may
+be changed with the <code class="docutils literal notranslate"><span class="pre">results</span></code> key. By default hidden networks are ignored, but can be included in
+the results by adding <code class="docutils literal notranslate"><span class="pre">show_hidden</span></code> to the configuration.</p>
+<p>For example, to do a passive scan using an ESP32-C6, including hidden networks, using the longest
+allowed scan time and showing the maximum number of networks available use the following:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="nv">Results</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">wifi_scan</span><span class="p">([</span><span class="n">passive</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="n">results</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">dwell</span><span class="p">,</span><span class="w"> </span><span class="mi">1500</span><span class="p">},</span><span class="w"> </span><span class="n">show_hidden</span><span class="p">]).</span>
+</pre></div>
+</div>
+<p>For convenience the default options used by <code class="docutils literal notranslate"><span class="pre">network:wifi_scan/0</span></code> may be configured along
+with the <code class="docutils literal notranslate"><span class="pre">sta_config()</span></code> used to start the network driver. For the corresponding startup-time scan
+configuration keys, consult <code class="docutils literal notranslate"><span class="pre">sta_scan_config()</span></code> in the <code class="docutils literal notranslate"><span class="pre">sta_config()</span></code> definition rather than the
+runtime <a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#scan-options"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">scan_options()</span></code></span></a> accepted by
+<code class="docutils literal notranslate"><span class="pre">network:wifi_scan/1</span></code>. For most applications that will use wifi scan results, it is recommended to
+start the driver with a configuration that uses a custom callback function for <code class="docutils literal notranslate"><span class="pre">disconnected</span></code>
+events, so that the driver will remain idle and allow the use of scan results to decide if a
+connection should be made.</p>
+</section>
 <section id="sta-status">
 <h4><code class="docutils literal notranslate"><span class="pre">sta_status</span></code><a class="headerlink" href="#sta-status" title="Link to this heading"></a></h4>
 <p>The function <a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#sta_status0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:sta_status/0</span></code></span></a> may be used
@@ -287,8 +421,8 @@ hostname is optional, and <code class="docutils literal notranslate"><span class
 <li><p><code class="docutils literal notranslate"><span class="pre">{ap_channel,</span> <span class="pre">wifi_channel()}</span></code> The channel the access point should use.</p></li>
 </ul>
 <p>If the SSID is omitted in configuration, the SSID name <code class="docutils literal notranslate"><span class="pre">atomvm-&lt;hexmac&gt;</span></code> will be created, where <code class="docutils literal notranslate"><span class="pre">&lt;hexmac&gt;</span></code> is the hexadecimal representation of the factory-assigned MAC address of the device.  This name should be sufficiently unique to disambiguate it from other reachable ESP32 devices, but it may also be difficult to read or remember.</p>
-<p>If the password is omitted, then an <em>open network</em> will be created, and a warning will be printed to the console.  Otherwise, the AP network will be started using WPA+WPA2 authentication.</p>
-<p>If the channel is omitted the default chanel for esp32 is <code class="docutils literal notranslate"><span class="pre">1</span></code>. This setting is only used while a device is operation is AP mode only. If <code class="docutils literal notranslate"><span class="pre">ap_channel</span></code> is configured, it will be temporarily changed to match the associated access point if AP + STA mode is used and the station is associated with an access point. This is a hardware limitation due to the modem radio only being able to operate on a single channel (frequency) at a time.</p>
+<p>If the password is omitted, then an <strong>open network</strong> will be created, and a warning will be printed to the console.  Otherwise, the AP network will be started using WPA+WPA2 authentication.</p>
+<p>If the channel is omitted the default channel for esp32 is <code class="docutils literal notranslate"><span class="pre">1</span></code>. This setting is only used while a device is operation in AP mode only. If <code class="docutils literal notranslate"><span class="pre">ap_channel</span></code> is configured, it will be temporarily changed to match the associated access point if AP + STA mode is used and the station is associated with an access point. This is a hardware limitation due to the modem radio only being able to operate on a single channel (frequency) at a time.</p>
 <p>The <a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#start1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:start/1</span></code></span></a> will immediately return <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Pid}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Pid</span></code> is the process id of the network server, if the network was properly initialized, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if there was an error in configuration.  However, the application may want to wait for the device to to be ready to accept connections from other devices, or to be notified when other devices connect to this AP.</p>
 <p>Applications can specify callback functions, which get triggered as events emerge from the network layer, including when a station connects or disconnects from the AP, as well as when a station is assigned an IP address.</p>
 <p>Callback functions can be specified by the following configuration parameters:</p>
@@ -399,9 +533,10 @@ encrypted NVS storage.</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nn">network</span><span class="p">:</span><span class="nf">stop</span><span class="p">().</span>
 </pre></div>
 </div>
-<div class="admonition caution">
-<p class="admonition-title">Caution</p>
-<p>Stop is currently unimplemented.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">network:stop/0</span></code> is called while a WiFi scan is in progress, the scan caller or callback may
+receive either the final scan result or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">scan_canceled}</span></code>.</p>
 </div>
 </section>
 </section>
@@ -486,6 +621,10 @@ encrypted NVS storage.</p>
         
           
           <dd><a href="/v0.7.0-alpha.0/">v0.7.0-alpha.0</a></dd>
+          
+        
+          
+          <dd><a href="/v0.7.0-alpha.1/">v0.7.0-alpha.1</a></dd>
           
         
           
