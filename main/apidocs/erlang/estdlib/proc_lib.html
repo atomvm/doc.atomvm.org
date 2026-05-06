@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module proc_lib &mdash; AtomVM 0.8.0-dev+git.74de760c documentation</title>
+  <title>Module proc_lib &mdash; AtomVM 0.8.0-dev+git.cdea44f3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/proc_lib.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=c7d5f1ee"></script>
+      <script src="../../../_static/documentation_options.js?v=55dec4d8"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -181,6 +181,12 @@ and therefore in these cases, <code class="docutils literal notranslate"><span c
 </section>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="exception">
+<h3><a name="type-exception">exception()</a><a class="headerlink" href="#exception" title="Link to this heading"></a></h3>
+<pre><code>
+exception() = {error | exit | throw, Reason::term()} | {Class::error | exit | throw, Reason::term(), Stacktrace::list()}
+</code></pre>
+</section>
 <section id="start-spawn-option">
 <h3><a name="type-start_spawn_option">start_spawn_option()</a><a class="headerlink" href="#start-spawn-option" title="Link to this heading"></a></h3>
 <pre><code>
@@ -191,7 +197,8 @@ start_spawn_option() = {min_heap_size, pos_integer()} | {max_heap_size, pos_inte
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#init_ack-1">init_ack/1</a></td><td>    Callback to signal that initialization succeeded.</td></tr><tr><td valign="top"><a href="#init_ack-2">init_ack/2</a></td><td>    Callback to signal that initialization succeeded.</td></tr><tr><td valign="top"><a href="#initial_call-1">initial_call/1</a></td><td>    Get the initial call for a given process or <code>false</code>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#init_ack-1">init_ack/1</a></td><td>    Callback to signal that initialization succeeded.</td></tr><tr><td valign="top"><a href="#init_ack-2">init_ack/2</a></td><td>    Callback to signal that initialization succeeded.</td></tr><tr><td valign="top"><a href="#init_fail-2">init_fail/2</a></td><td>Equivalent to <a href="#init_fail-3"><tt>init_fail(Parent, Return, Exception)</tt></a>.</td></tr><tr><td valign="top"><a href="#init_fail-3">init_fail/3</a></td><td>    Signal init failure: nack the starter with Return and raise
+Exception.</td></tr><tr><td valign="top"><a href="#initial_call-1">initial_call/1</a></td><td>    Get the initial call for a given process or <code>false</code>
 if it's not available.</td></tr><tr><td valign="top"><a href="#spawn-1">spawn/1</a></td><td>Restricted set of spawn options.</td></tr><tr><td valign="top"><a href="#spawn-3">spawn/3</a></td><td>    Spawn a new process and initialize it.</td></tr><tr><td valign="top"><a href="#spawn_link-1">spawn_link/1</a></td><td>Equivalent to <a href="#spawn_link-3"><tt>spawn_link(erlang, apply, [Fun, []])</tt></a>.</td></tr><tr><td valign="top"><a href="#spawn_link-3">spawn_link/3</a></td><td>    Spawn and atomically link a new process and initialize it.</td></tr><tr><td valign="top"><a href="#start-3">start/3</a></td><td>Equivalent to <a href="#start-4"><tt>start(Module, Function, Args, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#start-4">start/4</a></td><td>Equivalent to <a href="#start-5"><tt>start(Module, Function, Args, Timeout, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#start-5">start/5</a></td><td>    Start a new process synchronously.</td></tr><tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td>Equivalent to <a href="#start_link-4"><tt>start_link(Module, Function, Args, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#start_link-4">start_link/4</a></td><td>Equivalent to <a href="#start_link-5"><tt>start_link(Module, Function, Args, Timeout, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#start_link-5">start_link/5</a></td><td>    Start a new process synchronously and atomically link it.</td></tr><tr><td valign="top"><a href="#start_monitor-3">start_monitor/3</a></td><td>Equivalent to <a href="#start_monitor-4"><tt>start_monitor(Module, Function, Args, infinity)</tt></a>.</td></tr><tr><td valign="top"><a href="#start_monitor-4">start_monitor/4</a></td><td>Equivalent to <a href="#start_monitor-5"><tt>start_monitor(Module, Function, Args, Timeout, [])</tt></a>.</td></tr><tr><td valign="top"><a href="#start_monitor-5">start_monitor/5</a></td><td>    Start a new process synchronously and atomically link it.</td></tr><tr><td valign="top"><a href="#translate_initial_call-1">translate_initial_call/1</a></td><td>    Get the initial call for a given process or <code>{proc_lib, init_p, 5}</code>
 if it's not available.</td></tr></table>
 <p><a name="functions"></a></p>
@@ -217,6 +224,26 @@ init_ack(Parent::pid(), Result::any()) -&gt; ok
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">Parent</span></code>: parent process<br /><code class="docutils literal notranslate"><span class="pre">Result</span></code>: result sent back to parent<br /></p>
 <p>Callback to signal that initialization succeeded.</p>
+<p><a name="init_fail-2"></a></p>
+</section>
+<section id="init-fail-2">
+<h3>init_fail/2<a class="headerlink" href="#init-fail-2" title="Link to this heading"></a></h3>
+<pre><code>
+init_fail(Return::term(), Exception::<a href="#type-exception">exception()</a>) -&gt; no_return()
+</code></pre>
+<br />
+<p>Equivalent to <a class="reference internal" href="#init_fail-3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">init_fail(Parent,</span> <span class="pre">Return,</span> <span class="pre">Exception)</span></code></span></a>.</p>
+<p><a name="init_fail-3"></a></p>
+</section>
+<section id="init-fail-3">
+<h3>init_fail/3<a class="headerlink" href="#init-fail-3" title="Link to this heading"></a></h3>
+<pre><code>
+init_fail(Parent::pid(), Return::term(), Exception::<a href="#type-exception">exception()</a>) -&gt; no_return()
+</code></pre>
+<br />
+<p>Signal init failure: nack the starter with Return and raise
+Exception. Starter blocks until this process is dead, so any
+registered name is released before the starter sees the failure.</p>
 <p><a name="initial_call-1"></a></p>
 </section>
 <section id="initial-call-1">
