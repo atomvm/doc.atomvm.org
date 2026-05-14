@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JIT Compilation &mdash; AtomVM 0.8.0-dev+git.cdea44f3 documentation</title>
+  <title>JIT Compilation &mdash; AtomVM 0.8.0-dev+git.5ce483a5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/jit.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=55dec4d8"></script>
+      <script src="_static/documentation_options.js?v=bb613f1b"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -79,7 +79,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#source-line-mapping">Source line mapping</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#disassembling-precompiled-modules">Disassembling precompiled modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#extracting-elf-from-a-precompiled-beam-file">Extracting ELF from a precompiled .beam file</a></li>
 </ul>
 </li>
@@ -294,18 +293,34 @@ for modules you intend to debug, not for production builds.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>LLDB 19 has a regression in the JIT loader that causes hangs when resolving breakpoints in JIT-loaded modules. Use LLDB 20 or later.
-On macOS, you can use lldb that ships with Xcode 26+ or install lldb 20 from <a class="reference external" href="https://www.macports.org/">MacPorts</a> (<code class="docutils literal notranslate"><span class="pre">port</span> <span class="pre">install</span> <span class="pre">lldb-20</span></code>) or
-build from the <a class="reference external" href="https://github.com/llvm/llvm-project">LLVM project source</a>.</p>
+<p>Upstream LLVM LLDB 19 and Apple LLDB versions earlier than <code class="docutils literal notranslate"><span class="pre">lldb-2100</span></code> (shipped in Xcode 26.4 and later) hang when resolving pending source-line breakpoints against JIT-emitted DWARF.</p>
+<p>Workarounds without changing lldb:</p>
+<ul class="simple">
+<li><p>Set breakpoints by symbol name (<code class="docutils literal notranslate"><span class="pre">breakpoint</span> <span class="pre">set</span> <span class="pre">-n</span> <span class="pre">'mod:fun/N'</span></code>) instead of file/line</p></li>
+<li><p>Defer source-line breakpoints until after the relevant module has been JIT-registered (e.g. break first on a symbol, then add the source-line breakpoint, then continue).</p></li>
+</ul>
+<p>For a fresh lldb:</p>
+<ul class="simple">
+<li><p>On macOS 26, the LLDB shipped with the CommandLineTools is already at <code class="docutils literal notranslate"><span class="pre">lldb-2100</span></code> (independent of the active Xcode), so a quick fix is to invoke it directly:</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>/Library/Developer/CommandLineTools/usr/bin/lldb<span class="w"> </span>--<span class="w"> </span>...
+</pre></div>
 </div>
-</section>
-</section>
-<section id="disassembling-precompiled-modules">
-<h3>Disassembling precompiled modules<a class="headerlink" href="#disassembling-precompiled-modules" title="Link to this heading"></a></h3>
-<p>Precompiled <code class="docutils literal notranslate"><span class="pre">.beam</span></code> files contain an ELF object with the native code and symbol table. You can extract and disassemble it to inspect the generated code.</p>
-<p>When DWARF is enabled, the ELF is embedded in the <code class="docutils literal notranslate"><span class="pre">avmN</span></code> chunk of the <code class="docutils literal notranslate"><span class="pre">.beam</span></code> file. At runtime, <code class="docutils literal notranslate"><span class="pre">jit_dwarf:elf/2</span></code> produces the ELF binary that can be written to a file for offline analysis:</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">TextOffset</span><span class="p">,</span><span class="w"> </span><span class="nv">ElfBinary</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">jit_dwarf</span><span class="p">:</span><span class="nf">elf</span><span class="p">(</span><span class="nv">DwarfState</span><span class="p">,</span><span class="w"> </span><span class="nv">NativeCode</span><span class="p">),</span>
-<span class="nn">file</span><span class="p">:</span><span class="nf">write_file</span><span class="p">(</span><span class="s">&quot;module.elf&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">ElfBinary</span><span class="p">).</span>
+</div>
+<p>Alternatively, switch the active Xcode to 26.4 or later (<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">xcode-select</span> <span class="pre">-s</span> <span class="pre">/Applications/Xcode_26.4.app</span></code>).</p>
+<ul class="simple">
+<li><p>On any platform, install upstream LLDB 20 or later with <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">port</span> <span class="pre">install</span> <span class="pre">lldb-20</span></code> from <a class="reference external" href="https://www.macports.org/">MacPorts</a>, <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">llvm</span></code> (Homebrew), or build from the <a class="reference external" href="https://github.com/llvm/llvm-project">LLVM project source</a>. A self-signed <code class="docutils literal notranslate"><span class="pre">lldb</span></code> binary on macOS needs a debugger entitlement.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">lldb</span> <span class="pre">--version</span></code> reports the version: <code class="docutils literal notranslate"><span class="pre">lldb-1703.x</span></code> and earlier are affected; <code class="docutils literal notranslate"><span class="pre">lldb-2100.x</span></code> and upstream LLDB 20+ are fixed.</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="c1">### Disassembling precompiled modules</span>
+
+<span class="n">Precompiled</span><span class="w"> </span><span class="n n-Quoted">`.beam`</span><span class="w"> </span><span class="k">files</span><span class="w"> </span><span class="n">contain</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">ELF</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">native</span><span class="w"> </span><span class="k">code</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">symbol</span><span class="w"> </span><span class="k">table</span><span class="p">.</span><span class="w"> </span><span class="n">You</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">extract</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">disassemble</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">inspect</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">generated</span><span class="w"> </span><span class="k">code</span><span class="p">.</span>
+
+<span class="k">When</span><span class="w"> </span><span class="n">DWARF</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">enabled</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ELF</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">embedded</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n n-Quoted">`avmN`</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n n-Quoted">`.beam`</span><span class="w"> </span><span class="k">file</span><span class="p">.</span><span class="w"> </span><span class="k">At</span><span class="w"> </span><span class="n">runtime</span><span class="p">,</span><span class="w"> </span><span class="n n-Quoted">`jit_dwarf:elf/2`</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ELF</span><span class="w"> </span><span class="kt">binary</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">written</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">offline</span><span class="w"> </span><span class="n">analysis</span><span class="o">:</span>
+
+<span class="n n-Quoted">`</span><span class="n n-Quoted n-Quoted-Escape">``</span><span class="n n-Quoted">erlang</span>
+<span class="n n-Quoted">{ok, _TextOffset, ElfBinary} = jit_dwarf:elf(DwarfState, NativeCode),</span>
+<span class="n n-Quoted">file:write_file(&quot;module.elf&quot;, ElfBinary).</span>
 </pre></div>
 </div>
 <p>The resulting ELF file can be disassembled with standard tools:</p>
@@ -313,6 +328,7 @@ build from the <a class="reference external" href="https://github.com/llvm/llvm-
 </pre></div>
 </div>
 <p>This will show the disassembly with function names like <code class="docutils literal notranslate"><span class="pre">module:function/arity</span></code>, making it easy to correlate the generated machine code with the original Erlang source.</p>
+</section>
 </section>
 <section id="extracting-elf-from-a-precompiled-beam-file">
 <h3>Extracting ELF from a precompiled .beam file<a class="headerlink" href="#extracting-elf-from-a-precompiled-beam-file" title="Link to this heading"></a></h3>
