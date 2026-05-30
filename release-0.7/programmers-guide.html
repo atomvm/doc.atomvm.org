@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programmers Guide &mdash; AtomVM 0.7.0-beta.0+git.36e21177 documentation</title>
+  <title>Programmers Guide &mdash; AtomVM 0.7.0-beta.0+git.b93752af documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/programmers-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3bc81854"></script>
+      <script src="_static/documentation_options.js?v=5d0b8ebd"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -1458,6 +1458,30 @@ sensitive security information, such as account passwords, are stored in NVS sto
 <span class="k">end</span><span class="p">.</span>
 </pre></div>
 </div>
+<p>The SDMMC slot uses the default ESP-IDF pins unless pin options are supplied.  On SoCs whose SDMMC peripheral
+is routed through the GPIO matrix (for example ESP32-S3, and ESP32-P4 slot 1), boards that route the SD card to
+different GPIOs can configure the SDMMC lines in the mount options.  On the classic ESP32, the SDMMC pins are
+fixed by IOMUX; AtomVM rejects pin overrides on fixed-pin targets by raising <code class="docutils literal notranslate"><span class="pre">badarg</span></code>:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">SDMMCOpts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="mi">39</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="n">cmd</span><span class="p">,</span><span class="w"> </span><span class="mi">38</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="n">d0</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">}</span>
+<span class="p">],</span>
+<span class="k">case</span><span class="w"> </span><span class="nn">esp</span><span class="p">:</span><span class="nf">mount</span><span class="p">(</span><span class="s">&quot;sdmmc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/sdcard&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fat</span><span class="p">,</span><span class="w"> </span><span class="nv">SDMMCOpts</span><span class="p">)</span><span class="w"> </span><span class="k">of</span>
+<span class="w">    </span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="nv">MountedRef</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;SD card mounted successfully</span><span class="si">~n</span><span class="s">&quot;</span><span class="p">),</span>
+<span class="w">        </span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="nv">MountedRef</span><span class="p">};</span>
+<span class="w">    </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="nv">Reason</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Failed to mount SD card: </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Reason</span><span class="p">]),</span>
+<span class="w">        </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="nv">Reason</span><span class="p">}</span>
+<span class="k">end</span><span class="p">.</span>
+</pre></div>
+</div>
+<p>The supported SDMMC options are <code class="docutils literal notranslate"><span class="pre">clk</span></code>, <code class="docutils literal notranslate"><span class="pre">cmd</span></code>, <code class="docutils literal notranslate"><span class="pre">d0</span></code>, <code class="docutils literal notranslate"><span class="pre">d1</span></code>, <code class="docutils literal notranslate"><span class="pre">d2</span></code>, <code class="docutils literal notranslate"><span class="pre">d3</span></code>, and <code class="docutils literal notranslate"><span class="pre">width</span></code>.  Use <code class="docutils literal notranslate"><span class="pre">{width,</span> <span class="pre">1}</span></code> for
+1-bit mode or <code class="docutils literal notranslate"><span class="pre">{width,</span> <span class="pre">4}</span></code> for 4-bit mode; omit <code class="docutils literal notranslate"><span class="pre">width</span></code> for the ESP-IDF default (the widest mode supported
+by the card).  The <code class="docutils literal notranslate"><span class="pre">d1</span></code>, <code class="docutils literal notranslate"><span class="pre">d2</span></code>, and <code class="docutils literal notranslate"><span class="pre">d3</span></code> pins are only required for 4-bit mode.  The <code class="docutils literal notranslate"><span class="pre">width</span></code> option is
+supported on fixed-pin and GPIO-matrix targets.</p>
 </section>
 <section id="mounting-spi-sd-card">
 <h4>Mounting SPI SD card<a class="headerlink" href="#mounting-spi-sd-card" title="Link to this heading"></a></h4>
