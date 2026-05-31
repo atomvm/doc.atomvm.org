@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module serial_dist_controller &mdash; AtomVM 0.7.0-beta.0+git.3879e562 documentation</title>
+  <title>Module erts_internal &mdash; AtomVM 0.7.0-beta.0+git.3879e562 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -14,7 +14,7 @@
 
   
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
-    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/serial_dist_controller.html" />
+    <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/erts_internal.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../../_static/documentation_options.js?v=bf4c7efe"></script>
@@ -23,8 +23,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Module sets" href="sets.html" />
-    <link rel="prev" title="Module serial_dist" href="serial_dist.html" /> 
+    <link rel="next" title="Module ets" href="ets.html" />
+    <link rel="prev" title="Module erts_debug" href="erts_debug.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -79,7 +79,7 @@
 <li class="toctree-l4"><a class="reference internal" href="erlang.html">Module erlang</a></li>
 <li class="toctree-l4"><a class="reference internal" href="erpc.html">Module erpc</a></li>
 <li class="toctree-l4"><a class="reference internal" href="erts_debug.html">Module erts_debug</a></li>
-<li class="toctree-l4"><a class="reference internal" href="erts_internal.html">Module erts_internal</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Module erts_internal</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ets.html">Module ets</a></li>
 <li class="toctree-l4"><a class="reference internal" href="file.html">Module file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="filename.html">Module filename</a></li>
@@ -107,7 +107,7 @@
 <li class="toctree-l4"><a class="reference internal" href="proplists.html">Module proplists</a></li>
 <li class="toctree-l4"><a class="reference internal" href="queue.html">Module queue</a></li>
 <li class="toctree-l4"><a class="reference internal" href="serial_dist.html">Module serial_dist</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Module serial_dist_controller</a></li>
+<li class="toctree-l4"><a class="reference internal" href="serial_dist_controller.html">Module serial_dist_controller</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sets.html">Module sets</a></li>
 <li class="toctree-l4"><a class="reference internal" href="socket.html">Module socket</a></li>
 <li class="toctree-l4"><a class="reference internal" href="socket_dist.html">Module socket_dist</a></li>
@@ -148,7 +148,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../api-reference-documentation.html">API Reference Documentation</a></li>
-      <li class="breadcrumb-item active">Module serial_dist_controller</li>
+      <li class="breadcrumb-item active">Module erts_internal</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -157,161 +157,59 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-serial-dist-controller">
-<h1>Module serial_dist_controller<a class="headerlink" href="#module-serial-dist-controller" title="Link to this heading"></a></h1>
+  <section id="module-erts-internal">
+<h1>Module erts_internal<a class="headerlink" href="#module-erts-internal" title="Link to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="#description">Description</a></p></li>
 <li><p><a class="reference internal" href="#function-index">Function Index</a></p></li>
 <li><p><a class="reference internal" href="#function-details">Function Details</a></p></li>
 </ul>
-<p>Distribution controller for serial (UART) connections.</p>
-<p><strong>Behaviours:</strong> <a class="reference internal" href="gen_server.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">gen_server</span></code></span></a>.</p>
+<p>An implementation of a subset of the Erlang/OTP erts_internal interface.</p>
 <p><a name="description"></a></p>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
-<p>This module manages the serial link for the Erlang distribution protocol.
-It is used by <a class="reference internal" href="serial_dist.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">serial_dist</span></code></span></a> and follows the same pattern as
-<a class="reference internal" href="socket_dist_controller.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">socket_dist_controller</span></code></span></a>.</p>
-<p>All packets on the wire use the following frame format:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="c1">#AA, 16#55, Length:LenBits, Payload:Length/binary, CRC32:32&gt;&gt;</span>
-</pre></div>
-</div>
-<p>where <code class="docutils literal notranslate"><span class="pre">LenBits</span></code> is 16 during the handshake phase and 32 during the
-data phase. CRC32 covers the <code class="docutils literal notranslate"><span class="pre">Length</span></code> and <code class="docutils literal notranslate"><span class="pre">Payload</span></code> bytes.</p>
-<p>The receiver scans for the <code class="docutils literal notranslate"><span class="pre">&lt;&lt;16#AA,</span> <span class="pre">16#55&gt;&gt;</span></code> sync marker, reads the
-length, validates against a maximum frame size (to reject false sync
-matches), then verifies the CRC32. On CRC failure, the connection is
-torn down (no retry/ACK mechanism).</p>
-<p>During the handshake phase, <code class="docutils literal notranslate"><span class="pre">send/2</span></code> and <code class="docutils literal notranslate"><span class="pre">recv/3</span></code> are called
-synchronously.</p>
-<p>After <code class="docutils literal notranslate"><span class="pre">handshake_complete/3</span></code>, the controller switches to asynchronous
-mode: a dedicated reader process continuously reads from the UART and
-forwards data to the controller, which reassembles framed distribution
-packets and feeds them to <code class="docutils literal notranslate"><span class="pre">erlang:dist_ctrl_put_data/2</span></code>.<a name="index"></a></p>
+<p>These functions are not meant to be called directly.  They are helpers,
+called from code generated by the compiler.  In particular <code class="docutils literal notranslate"><span class="pre">mc_iterator/1</span></code>
+and <code class="docutils literal notranslate"><span class="pre">mc_refill/1</span></code> implement map comprehensions (<code class="docutils literal notranslate"><span class="pre">#{K</span> <span class="pre">=&gt;</span> <span class="pre">V</span> <span class="pre">||</span> <span class="pre">K</span> <span class="pre">:=</span> <span class="pre">V</span> <span class="pre">&lt;-</span> <span class="pre">M}</span></code>),
+introduced in OTP 26.  The generated bytecode is identical from OTP 26 to at
+least OTP 29.<a name="index"></a></p>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#address-2">address/2</a></td><td></td></tr><tr><td valign="top"><a href="#code_change-3">code_change/3</a></td><td></td></tr><tr><td valign="top"><a href="#getll-1">getll/1</a></td><td></td></tr><tr><td valign="top"><a href="#getstat-1">getstat/1</a></td><td></td></tr><tr><td valign="top"><a href="#handle_call-3">handle_call/3</a></td><td></td></tr><tr><td valign="top"><a href="#handle_cast-2">handle_cast/2</a></td><td></td></tr><tr><td valign="top"><a href="#handle_info-2">handle_info/2</a></td><td></td></tr><tr><td valign="top"><a href="#handshake_complete-3">handshake_complete/3</a></td><td></td></tr><tr><td valign="top"><a href="#init-1">init/1</a></td><td></td></tr><tr><td valign="top"><a href="#recv-3">recv/3</a></td><td>Synchronous receive during handshake.</td></tr><tr><td valign="top"><a href="#scan_frame-2">scan_frame/2</a></td><td>Scan a buffer for a framed packet.</td></tr><tr><td valign="top"><a href="#send-2">send/2</a></td><td>Synchronous send during handshake.</td></tr><tr><td valign="top"><a href="#send_preamble-2">send_preamble/2</a></td><td></td></tr><tr><td valign="top"><a href="#setopts_post_nodeup-1">setopts_post_nodeup/1</a></td><td></td></tr><tr><td valign="top"><a href="#setopts_pre_nodeup-1">setopts_pre_nodeup/1</a></td><td></td></tr><tr><td valign="top"><a href="#start-2">start/2</a></td><td>Start a controller for an outgoing (setup) connection.</td></tr><tr><td valign="top"><a href="#start-3">start/3</a></td><td>Start a controller for an incoming (accept) connection with
-initial data already read from the UART by the accept loop.</td></tr><tr><td valign="top"><a href="#supervisor-2">supervisor/2</a></td><td></td></tr><tr><td valign="top"><a href="#terminate-2">terminate/2</a></td><td></td></tr><tr><td valign="top"><a href="#tick-1">tick/1</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#mc_iterator-1">mc_iterator/1</a></td><td>    Start iterating over a map comprehension generator.</td></tr><tr><td valign="top"><a href="#mc_refill-1">mc_refill/1</a></td><td>    Advance a map comprehension iterator.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
 <h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
-<p><a name="address-2"></a></p>
-<section id="address-2">
-<h3>address/2<a class="headerlink" href="#address-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">address(Controller,</span> <span class="pre">Node)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="code_change-3"></a></p>
-</section>
-<section id="code-change-3">
-<h3>code_change/3<a class="headerlink" href="#code-change-3" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">code_change(OldVsn,</span> <span class="pre">State,</span> <span class="pre">Extra)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="getll-1"></a></p>
-</section>
-<section id="getll-1">
-<h3>getll/1<a class="headerlink" href="#getll-1" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">getll(Controller)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="getstat-1"></a></p>
-</section>
-<section id="getstat-1">
-<h3>getstat/1<a class="headerlink" href="#getstat-1" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">getstat(Controller)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="handle_call-3"></a></p>
-</section>
-<section id="handle-call-3">
-<h3>handle_call/3<a class="headerlink" href="#handle-call-3" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">handle_call(X1,</span> <span class="pre">From,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="handle_cast-2"></a></p>
-</section>
-<section id="handle-cast-2">
-<h3>handle_cast/2<a class="headerlink" href="#handle-cast-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">handle_cast(X1,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="handle_info-2"></a></p>
-</section>
-<section id="handle-info-2">
-<h3>handle_info/2<a class="headerlink" href="#handle-info-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">handle_info(X1,</span> <span class="pre">State0)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="handshake_complete-3"></a></p>
-</section>
-<section id="handshake-complete-3">
-<h3>handshake_complete/3<a class="headerlink" href="#handshake-complete-3" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">handshake_complete(Controller,</span> <span class="pre">Node,</span> <span class="pre">DHandle)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="init-1"></a></p>
-</section>
-<section id="init-1">
-<h3>init/1<a class="headerlink" href="#init-1" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">init(X1)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="recv-3"></a></p>
-</section>
-<section id="recv-3">
-<h3>recv/3<a class="headerlink" href="#recv-3" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">recv(Controller,</span> <span class="pre">Length,</span> <span class="pre">Timeout)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p>Synchronous receive during handshake. Reads one complete
-framed packet (with 16-bit length field) from UART.</p>
-<p><a name="scan_frame-2"></a></p>
-</section>
-<section id="scan-frame-2">
-<h3>scan_frame/2<a class="headerlink" href="#scan-frame-2" title="Link to this heading"></a></h3>
+<p><a name="mc_iterator-1"></a></p>
+<section id="mc-iterator-1">
+<h3>mc_iterator/1<a class="headerlink" href="#mc-iterator-1" title="Link to this heading"></a></h3>
 <pre><code>
-scan_frame(Buffer::binary(), LenBits::16 | 32) -&gt; {ok, binary(), binary()} | {need_more, binary()} | {crc_error, binary()}
+mc_iterator(MapOrIter) -&gt; Iter
 </code></pre>
-<br />
-<p>Scan a buffer for a framed packet.</p>
-<p><code class="docutils literal notranslate"><span class="pre">LenBits</span></code> is 16 (handshake) or 32 (data phase).
-Returns:
-<code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Payload,</span> <span class="pre">Rest}</span></code> - a complete, CRC-verified frame was found
-<code class="docutils literal notranslate"><span class="pre">{need_more,</span> <span class="pre">TrimmedBuffer}</span></code> - no complete frame yet
-<code class="docutils literal notranslate"><span class="pre">{crc_error,</span> <span class="pre">Rest}</span></code> - a frame was found but CRC did not match</p>
-<p><a name="send-2"></a></p>
+<ul class="definitions"><li><code>MapOrIter = map() | <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/maps.md#type-iterator">maps:iterator()</a></code></li><li><code>Iter = {term(), term(), <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/maps.md#type-iterator">maps:iterator()</a>} | none | []</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">MapOrIter</span></code>: a map or a map iterator to iterate over<br /></p>
+<p>returns: the first association as <code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">Value,</span> <span class="pre">NextIterator}</span></code>, <code class="docutils literal notranslate"><span class="pre">none</span></code> if the
+map or iterator is empty, or <code class="docutils literal notranslate"><span class="pre">[]</span></code> if the argument is not a valid
+generator</p>
+<p>Start iterating over a map comprehension generator.</p>
+<p>This function is a helper called from compiler generated code for map
+comprehensions.  It must be kept compatible as long as code calling this
+helper can still be loaded.</p>
+<p><a name="mc_refill-1"></a></p>
 </section>
-<section id="send-2">
-<h3>send/2<a class="headerlink" href="#send-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">send(Controller,</span> <span class="pre">Data)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p>Synchronous send during handshake. Wraps data in a framed
-packet with 16-bit length field.</p>
-<p><a name="send_preamble-2"></a></p>
-</section>
-<section id="send-preamble-2">
-<h3>send_preamble/2<a class="headerlink" href="#send-preamble-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">send_preamble(UartMod,</span> <span class="pre">Uart)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="setopts_post_nodeup-1"></a></p>
-</section>
-<section id="setopts-post-nodeup-1">
-<h3>setopts_post_nodeup/1<a class="headerlink" href="#setopts-post-nodeup-1" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">setopts_post_nodeup(Controller)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="setopts_pre_nodeup-1"></a></p>
-</section>
-<section id="setopts-pre-nodeup-1">
-<h3>setopts_pre_nodeup/1<a class="headerlink" href="#setopts-pre-nodeup-1" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">setopts_pre_nodeup(Controller)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="start-2"></a></p>
-</section>
-<section id="start-2">
-<h3>start/2<a class="headerlink" href="#start-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">start(Uart,</span> <span class="pre">UartMod)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p>Start a controller for an outgoing (setup) connection.</p>
-<p><a name="start-3"></a></p>
-</section>
-<section id="start-3">
-<h3>start/3<a class="headerlink" href="#start-3" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">start(Uart,</span> <span class="pre">UartMod,</span> <span class="pre">InitialData)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p>Start a controller for an incoming (accept) connection with
-initial data already read from the UART by the accept loop.</p>
-<p><a name="supervisor-2"></a></p>
-</section>
-<section id="supervisor-2">
-<h3>supervisor/2<a class="headerlink" href="#supervisor-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">supervisor(Controller,</span> <span class="pre">Pid)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="terminate-2"></a></p>
-</section>
-<section id="terminate-2">
-<h3>terminate/2<a class="headerlink" href="#terminate-2" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">terminate(Reason,</span> <span class="pre">State)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
-<p><a name="tick-1"></a></p>
-</section>
-<section id="tick-1">
-<h3>tick/1<a class="headerlink" href="#tick-1" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">tick(Controller)</span> <span class="pre">-&gt;</span> <span class="pre">any()</span></code></p>
+<section id="mc-refill-1">
+<h3>mc_refill/1<a class="headerlink" href="#mc-refill-1" title="Link to this heading"></a></h3>
+<pre><code>
+mc_refill(IterMap) -&gt; Iter
+</code></pre>
+<ul class="definitions"><li><code>IterMap = nonempty_improper_list(non_neg_integer() | list(), map())</code></li><li><code>Iter = {term(), term(), <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/maps.md#type-iterator">maps:iterator()</a>} | none</code></li></ul>
+<p><code class="docutils literal notranslate"><span class="pre">IterMap</span></code>: a map iterator to refill<br /></p>
+<p>returns: the next association as <code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">Value,</span> <span class="pre">NextIterator}</span></code> or <code class="docutils literal notranslate"><span class="pre">none</span></code></p>
+<p>Advance a map comprehension iterator.</p>
+<p>This function is a helper called from compiler generated code for map
+comprehensions.  It must be kept compatible as long as code calling this
+helper can still be loaded.</p>
 </section>
 </section>
 </section>
@@ -320,8 +218,8 @@ initial data already read from the UART by the accept loop.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="serial_dist.html" class="btn btn-neutral float-left" title="Module serial_dist" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="sets.html" class="btn btn-neutral float-right" title="Module sets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="erts_debug.html" class="btn btn-neutral float-left" title="Module erts_debug" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ets.html" class="btn btn-neutral float-right" title="Module ets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
