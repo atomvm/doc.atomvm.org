@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programmers Guide &mdash; AtomVM 0.7.0-beta.0+git.57bb9d33 documentation</title>
+  <title>Programmers Guide &mdash; AtomVM 0.7.0-beta.0+git.df0b2a3f documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/programmers-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=647e8f22"></script>
+      <script src="_static/documentation_options.js?v=acf98286"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -136,6 +136,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#spi">SPI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#uart">UART</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#usb-serial-jtag">USB-Serial-JTAG</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#usb-cdc">USB CDC</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#platform-support-and-build-configuration">Platform support and build configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usb-vid-pid-and-string-descriptors">USB VID/PID and string descriptors</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#led-control">LED Control</a></li>
@@ -2233,6 +2238,51 @@ not available on the original ESP32 or ESP32-S2 (which use the OTG controller in
 </pre></div>
 </div>
 <p>Once the UART driver is closed, any calls to <code class="docutils literal notranslate"><span class="pre">uart</span></code> functions using a reference to the UART driver instance should return with the value <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">noproc}</span></code>.</p>
+</section>
+</section>
+<section id="usb-cdc">
+<h3>USB CDC<a class="headerlink" href="#usb-cdc" title="Link to this heading"></a></h3>
+<p>On platforms with a USB device controller, AtomVM can expose a USB CDC (Communications Device Class) ACM interface, which appears on the host as a virtual serial port (<code class="docutils literal notranslate"><span class="pre">/dev/ttyACMx</span></code> on Linux, <code class="docutils literal notranslate"><span class="pre">/dev/cu.usbmodemXXXX</span></code> on macOS, a COM port on Windows). The same byte-stream interface can be used as a UART replacement (logs, REPLs, custom serial protocols) or as the transport for <a class="reference internal" href="distributed-erlang.html#usb-distribution"><span class="std std-ref">distribution over USB CDC</span></a>.</p>
+<p>The Erlang-side API is the platform-specific <code class="docutils literal notranslate"><span class="pre">usb_cdc</span></code> module (<a class="reference external" href="https://github.com/atomvm/AtomVM/blob/main/libs/avm_esp32/src/usb_cdc.erl"><code class="docutils literal notranslate"><span class="pre">libs/avm_esp32/src/usb_cdc.erl</span></code></a>, <a class="reference external" href="https://github.com/atomvm/AtomVM/blob/main/libs/avm_rp2/src/usb_cdc.erl"><code class="docutils literal notranslate"><span class="pre">libs/avm_rp2/src/usb_cdc.erl</span></code></a>, <a class="reference external" href="https://github.com/atomvm/AtomVM/blob/main/libs/avm_stm32/src/usb_cdc.erl"><code class="docutils literal notranslate"><span class="pre">libs/avm_stm32/src/usb_cdc.erl</span></code></a>). It mirrors the <code class="docutils literal notranslate"><span class="pre">uart</span></code> API: <code class="docutils literal notranslate"><span class="pre">open/1,2</span></code>, <code class="docutils literal notranslate"><span class="pre">read/1,2</span></code>, <code class="docutils literal notranslate"><span class="pre">write/2</span></code>, <code class="docutils literal notranslate"><span class="pre">close/1</span></code>.</p>
+<section id="platform-support-and-build-configuration">
+<h4>Platform support and build configuration<a class="headerlink" href="#platform-support-and-build-configuration" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Platform</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ESP32</p></td>
+<td><p>Enable <code class="docutils literal notranslate"><span class="pre">CONFIG_USE_USB_SERIAL</span></code> and <code class="docutils literal notranslate"><span class="pre">CONFIG_AVM_ENABLE_USB_CDC_PORT_DRIVER</span></code> in <code class="docutils literal notranslate"><span class="pre">menuconfig</span></code>. The ESP-IDF <code class="docutils literal notranslate"><span class="pre">esp_tinyusb</span></code> component must be installed.</p></td>
+</tr>
+<tr class="row-odd"><td><p>RP2040/RP2350</p></td>
+<td><p>Set <code class="docutils literal notranslate"><span class="pre">-DAVM_USB_CDC_PORT_DRIVER_ENABLED=ON</span></code> in CMake. You must also disable stdio over USB (<code class="docutils literal notranslate"><span class="pre">pico_enable_stdio_usb(AtomVM</span> <span class="pre">0)</span></code>) so that the CDC interface is available for the port driver.</p></td>
+</tr>
+<tr class="row-even"><td><p>STM32</p></td>
+<td><p>Set <code class="docutils literal notranslate"><span class="pre">-DAVM_USB_CDC_PORT_DRIVER_ENABLED=ON</span></code> in CMake. TinyUSB is fetched automatically by default; set the <code class="docutils literal notranslate"><span class="pre">TINYUSB_PATH</span></code> environment variable to use a local checkout.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="usb-vid-pid-and-string-descriptors">
+<h4>USB VID/PID and string descriptors<a class="headerlink" href="#usb-vid-pid-and-string-descriptors" title="Link to this heading"></a></h4>
+<p>USB CDC ACM is a standard device class, so on chip vendors that ship their own VID with a blessed “standard CDC” PID arrangement, AtomVM uses that pair by default and no override is required for the device class to be correctly identified by the host:</p>
+<ul class="simple">
+<li><p><strong>RP2</strong>: <code class="docutils literal notranslate"><span class="pre">0x2E8A:0x0009</span></code> Raspberry Pi’s registered “Pico SDK CDC UART” PID, chip-agnostic (covers RP2040 and RP2350), per the <a class="reference external" href="https://github.com/raspberrypi/usb-pid">raspberrypi/usb-pid registry</a>. The same pair is used by pico-sdk’s <code class="docutils literal notranslate"><span class="pre">stdio_usb</span></code> and by any other firmware exposing standard CDC under Pi’s VID, so host-side tooling cannot distinguish AtomVM-Pico from other CDC firmwares on this pair. Note that bootrom PIDs (<code class="docutils literal notranslate"><span class="pre">0x0003</span></code> on RP2040, <code class="docutils literal notranslate"><span class="pre">0x000F</span></code> on RP2350) must NOT be reused.</p></li>
+<li><p><strong>ESP32</strong>: <code class="docutils literal notranslate"><span class="pre">0x303A</span></code> (Espressif VID) + TinyUSB-derived class-encoded PID, via the <code class="docutils literal notranslate"><span class="pre">esp_tinyusb</span></code> defaults (<code class="docutils literal notranslate"><span class="pre">CONFIG_TINYUSB_DESC_USE_ESPRESSIF_VID=y</span></code>, <code class="docutils literal notranslate"><span class="pre">CONFIG_TINYUSB_DESC_USE_DEFAULT_PID=y</span></code>). <a class="reference external" href="https://docs.espressif.com/projects/esp-iot-solution/en/latest/usb/usb_overview/usb_vid_pid.html">Espressif’s USB VID/PID guidance</a> explicitly states that USB standard-class devices built on TinyUSB do not need a separate PID under Espressif’s VID.</p></li>
+<li><p><strong>STM32</strong>: <code class="docutils literal notranslate"><span class="pre">0xCAFE:0x4001</span></code> TinyUSB example placeholder, <strong>not</strong> a vendor-issued identity. Production firmware should override this with a real VID/PID. It is possible to apply to ST for a PID.</p></li>
+</ul>
+<p>If you want AtomVM to be distinguishable from other standard-CDC firmwares on the same chip (so host-side udev rules, drivers, or tooling can target it specifically), override the defaults:</p>
+<ul class="simple">
+<li><p><strong>RP2 / STM32</strong>: <code class="docutils literal notranslate"><span class="pre">-DAVM_USB_CDC_VID=0xXXXX</span> <span class="pre">-DAVM_USB_CDC_PID=0xXXXX</span></code> in CMake. RP2 builds may register a project-specific PID for free under Pi’s VID via the <a class="reference external" href="https://github.com/raspberrypi/usb-pid">usb-pid registry</a>.</p></li>
+<li><p><strong>ESP32</strong>: set <code class="docutils literal notranslate"><span class="pre">CONFIG_TINYUSB_DESC_USE_ESPRESSIF_VID=n</span></code> / <code class="docutils literal notranslate"><span class="pre">CONFIG_TINYUSB_DESC_USE_DEFAULT_PID=n</span></code> and provide <code class="docutils literal notranslate"><span class="pre">CONFIG_TINYUSB_DESC_CUSTOM_VID</span></code> / <code class="docutils literal notranslate"><span class="pre">CONFIG_TINYUSB_DESC_CUSTOM_PID</span></code> in <code class="docutils literal notranslate"><span class="pre">menuconfig</span></code>.</p></li>
+</ul>
+<p>The string descriptors can be overridden the same way:</p>
+<ul class="simple">
+<li><p><strong>RP2 / STM32</strong> (CMake): <code class="docutils literal notranslate"><span class="pre">-DAVM_USB_CDC_MANUFACTURER=&quot;Your</span> <span class="pre">Company&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">-DAVM_USB_CDC_PRODUCT=&quot;Your</span> <span class="pre">Product&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">-DAVM_USB_CDC_INTERFACE_NAME=&quot;Your</span> <span class="pre">Product</span> <span class="pre">CDC</span> <span class="pre">ACM&quot;</span></code>.</p></li>
+<li><p><strong>ESP32</strong> (sdkconfig): <code class="docutils literal notranslate"><span class="pre">CONFIG_TINYUSB_DESC_MANUFACTURER_STRING</span></code>, <code class="docutils literal notranslate"><span class="pre">CONFIG_TINYUSB_DESC_PRODUCT_STRING</span></code>, <code class="docutils literal notranslate"><span class="pre">CONFIG_TINYUSB_DESC_CDC_STRING</span></code>.</p></li>
+</ul>
 </section>
 </section>
 <section id="led-control">
