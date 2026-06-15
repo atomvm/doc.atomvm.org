@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.8.0-dev+git.36cb7309 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.8.0-dev+git.efa90df6 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=ae733a38"></script>
+      <script src="_static/documentation_options.js?v=7a927586"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -217,13 +217,17 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <li><p>Added support for <code class="docutils literal notranslate"><span class="pre">nif_start</span></code>, <code class="docutils literal notranslate"><span class="pre">executable_line</span></code> and <code class="docutils literal notranslate"><span class="pre">debug_line</span></code> opcodes</p></li>
 <li><p>Added named variable debugging support in DWARF when modules are compiled with <code class="docutils literal notranslate"><span class="pre">beam_debug_info</span></code></p></li>
 <li><p>Added more reset reasons and ensured <code class="docutils literal notranslate"><span class="pre">esp:reset_reason/0</span></code> doesn’t return <code class="docutils literal notranslate"><span class="pre">undefined</span></code></p></li>
-<li><p>Added I2C and SPI APIs to stm32 platform</p></li>
+<li><p>Added I2C, SPI and UART APIs to stm32 platform</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">Transfer-Encoding:</span> <span class="pre">chunked</span></code> response support to <code class="docutils literal notranslate"><span class="pre">ahttp_client</span></code>, including HTTP trailers</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">proc_lib:init_fail/2,3</span></code></p></li>
 <li><p>Added UART API to rp2 platform</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;USB_SERIAL_JTAG&quot;</span></code> peripheral to the ESP32 <code class="docutils literal notranslate"><span class="pre">uart</span></code> module on chips with a built-in
 USB-Serial-JTAG controller (C3/C5/C6/C61/H2/H21/H4/P4/S3)</p></li>
 <li><p>Added support for the <code class="docutils literal notranslate"><span class="pre">safe</span></code> option in <code class="docutils literal notranslate"><span class="pre">erlang:binary_to_term/2</span></code></p></li>
+<li><p>Added xtensa JIT backend for esp32 platform</p></li>
+<li><p>Added support for configuring pins and width for sdmmc on ESP32</p></li>
+<li><p>Added support for map comprehensions</p></li>
+<li><p>Added USB CDC port drivers for ESP32, RP2, and STM32 platforms</p></li>
 </ul>
 </section>
 <section id="changed">
@@ -269,6 +273,10 @@ trailer lines now return <code class="docutils literal notranslate"><span class=
 <li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">supervisor</span></code> handling of failing child</p></li>
 <li><p>Fixed two bugs related to closing fds in <code class="docutils literal notranslate"><span class="pre">atomvm:subprocess/4</span></code></p></li>
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">erlang:localtime/1</span></code> memory leak, use-after-free, and TZ restore bugs on newlib/picolibc</p></li>
+<li><p>Fixed ESP32 I2C driver resource leaks, half-closed state, and close-during-transmission errors</p></li>
+<li><p>Fixed several underallocation issues that could trigger data corruption on <code class="docutils literal notranslate"><span class="pre">binary:replace</span></code>, <code class="docutils literal notranslate"><span class="pre">zlib:compress</span></code> and bsd socket recv code.</p></li>
+<li><p>Fixed a bug where <code class="docutils literal notranslate"><span class="pre">catch</span></code> would raise on regular atom results</p></li>
+<li><p>Fixed ESP32 socket driver holding the global socket-list lock across blocking TCP connects, leaking the port on connect failure, losing concurrent <code class="docutils literal notranslate"><span class="pre">accept</span></code> waiters, leaking <code class="docutils literal notranslate"><span class="pre">netbuf</span></code> on receive error paths, and a recycled-<code class="docutils literal notranslate"><span class="pre">netconn</span></code> race between socket close and the event handler</p></li>
 </ul>
 </section>
 </section>
