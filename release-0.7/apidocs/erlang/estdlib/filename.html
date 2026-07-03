@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module filename &mdash; AtomVM 0.7.0-beta.0+git.cbe30137 documentation</title>
+  <title>Module filename &mdash; AtomVM 0.7.0-beta.0+git.8cb9b4a2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/filename.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=1b1c9c90"></script>
+      <script src="../../../_static/documentation_options.js?v=d66a8b14"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -173,12 +173,62 @@ interface.<a name="index"></a></p>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#join-1">join/1</a></td><td>    Join a list of path components.</td></tr><tr><td valign="top"><a href="#split-1">split/1</a></td><td>    Split a path into its components.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#basename-1">basename/1</a></td><td>    Return the last component of a file name, ignoring a single
+trailing slash (further ones make the last component empty).</td></tr><tr><td valign="top"><a href="#basename-2">basename/2</a></td><td>    Like <code>basename/1</code>, but also removes the extension Ext when the
+base name ends with it.</td></tr><tr><td valign="top"><a href="#dirname-1">dirname/1</a></td><td>    Return the directory part of a file name, "." if there is none.</td></tr><tr><td valign="top"><a href="#extension-1">extension/1</a></td><td>    Return the file extension of the last path component, "" if the
+last component has no dot.</td></tr><tr><td valign="top"><a href="#join-1">join/1</a></td><td>    Join a list of path components.</td></tr><tr><td valign="top"><a href="#join-2">join/2</a></td><td>    Join two path components, equivalent to <code>join([Name1, Name2])</code>.</td></tr><tr><td valign="top"><a href="#rootname-1">rootname/1</a></td><td>    Remove the extension of the last path component, if any.</td></tr><tr><td valign="top"><a href="#rootname-2">rootname/2</a></td><td>    Remove Ext from Name when it is its extension.</td></tr><tr><td valign="top"><a href="#split-1">split/1</a></td><td>    Split a path into its components.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
 <h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="basename-1"></a></p>
+<section id="basename-1">
+<h3>basename/1<a class="headerlink" href="#basename-1" title="Link to this heading"></a></h3>
+<pre><code>
+basename(Name::string()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: a file name<br /></p>
+<p>returns: the last component of Name</p>
+<p>Return the last component of a file name, ignoring a single
+trailing slash (further ones make the last component empty).</p>
+<p><a name="basename-2"></a></p>
+</section>
+<section id="basename-2">
+<h3>basename/2<a class="headerlink" href="#basename-2" title="Link to this heading"></a></h3>
+<pre><code>
+basename(Name::string(), Ext::string()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: a file name<br /><code class="docutils literal notranslate"><span class="pre">Ext</span></code>: an extension<br /></p>
+<p>returns: the last component of Name, with Ext stripped if it matches</p>
+<p>Like <code class="docutils literal notranslate"><span class="pre">basename/1</span></code>, but also removes the extension Ext when the
+base name ends with it.</p>
+<p><a name="dirname-1"></a></p>
+</section>
+<section id="dirname-1">
+<h3>dirname/1<a class="headerlink" href="#dirname-1" title="Link to this heading"></a></h3>
+<pre><code>
+dirname(Name::string()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: a file name<br /></p>
+<p>returns: the directory part of Name</p>
+<p>Return the directory part of a file name, “.” if there is none.</p>
+<p><a name="extension-1"></a></p>
+</section>
+<section id="extension-1">
+<h3>extension/1<a class="headerlink" href="#extension-1" title="Link to this heading"></a></h3>
+<pre><code>
+extension(Name::string()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: a file name<br /></p>
+<p>returns: the extension of Name, including the dot, or “” if there is none</p>
+<p>Return the file extension of the last path component, “” if the
+last component has no dot.</p>
 <p><a name="join-1"></a></p>
+</section>
 <section id="join-1">
 <h3>join/1<a class="headerlink" href="#join-1" title="Link to this heading"></a></h3>
 <pre><code>
@@ -189,8 +239,42 @@ join(Components::[string()]) -&gt; string()
 <p>returns: the path formed by joining the components with “/”</p>
 <p>Join a list of path components.</p>
 <p>If a component is absolute (starts with “/”), all preceding
-components are discarded.  Redundant directory separators are
-removed from the result.</p>
+components are discarded.  Redundant directory separators and
+“.” components followed by a separator are removed from the
+result.</p>
+<p><a name="join-2"></a></p>
+</section>
+<section id="join-2">
+<h3>join/2<a class="headerlink" href="#join-2" title="Link to this heading"></a></h3>
+<pre><code>
+join(Name1::string(), Name2::string()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name1</span></code>: first path component<br /><code class="docutils literal notranslate"><span class="pre">Name2</span></code>: second path component<br /></p>
+<p>returns: the path formed by joining Name1 and Name2</p>
+<p>Join two path components, equivalent to <code class="docutils literal notranslate"><span class="pre">join([Name1,</span> <span class="pre">Name2])</span></code>.</p>
+<p><a name="rootname-1"></a></p>
+</section>
+<section id="rootname-1">
+<h3>rootname/1<a class="headerlink" href="#rootname-1" title="Link to this heading"></a></h3>
+<pre><code>
+rootname(Name::string()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: a file name<br /></p>
+<p>returns: Name with its extension removed</p>
+<p>Remove the extension of the last path component, if any.</p>
+<p><a name="rootname-2"></a></p>
+</section>
+<section id="rootname-2">
+<h3>rootname/2<a class="headerlink" href="#rootname-2" title="Link to this heading"></a></h3>
+<pre><code>
+rootname(Name::string(), Ext::string()) -&gt; string()
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">Name</span></code>: a file name<br /><code class="docutils literal notranslate"><span class="pre">Ext</span></code>: an extension<br /></p>
+<p>returns: Name with Ext removed if Name ends with Ext</p>
+<p>Remove Ext from Name when it is its extension.</p>
 <p><a name="split-1"></a></p>
 </section>
 <section id="split-1">

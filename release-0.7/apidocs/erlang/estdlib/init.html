@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module init &mdash; AtomVM 0.7.0-beta.0+git.cbe30137 documentation</title>
+  <title>Module init &mdash; AtomVM 0.7.0-beta.0+git.8cb9b4a2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/init.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=1b1c9c90"></script>
+      <script src="../../../_static/documentation_options.js?v=d66a8b14"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -173,7 +173,7 @@ interface.<a name="index"></a></p>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#boot-1">boot/1</a></td><td>Entry point.</td></tr><tr><td valign="top"><a href="#get_argument-1">get_argument/1</a></td><td>Returns values associated with a given command-line user flag.</td></tr><tr><td valign="top"><a href="#get_plain_arguments-0">get_plain_arguments/0</a></td><td>Gets plain command-line arguments.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#boot-1">boot/1</a></td><td>Entry point.</td></tr><tr><td valign="top"><a href="#get_argument-1">get_argument/1</a></td><td>Returns values associated with a given command-line user flag.</td></tr><tr><td valign="top"><a href="#get_arguments-0">get_arguments/0</a></td><td>Returns all command-line flags, as <code>{Flag, Values}</code> tuples.</td></tr><tr><td valign="top"><a href="#get_plain_arguments-0">get_plain_arguments/0</a></td><td>Gets plain command-line arguments.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -200,6 +200,17 @@ get_argument(Flag::atom()) -&gt; {ok, [string()]} | error
 order of the command line</p>
 <p>Returns values associated with a given command-line user flag.
 Currently always returns <code class="docutils literal notranslate"><span class="pre">error</span></code> on AtomVM.</p>
+<p><a name="get_arguments-0"></a></p>
+</section>
+<section id="get-arguments-0">
+<h3>get_arguments/0<a class="headerlink" href="#get-arguments-0" title="Link to this heading"></a></h3>
+<pre><code>
+get_arguments() -&gt; [{atom(), [string()]}]
+</code></pre>
+<br />
+<p>returns: all command-line user flags with their values.</p>
+<p>Returns all command-line flags, as <code class="docutils literal notranslate"><span class="pre">{Flag,</span> <span class="pre">Values}</span></code> tuples.
+AtomVM has no emulator flags, so this always returns <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p>
 <p><a name="get_plain_arguments-0"></a></p>
 </section>
 <section id="get-plain-arguments-0">
