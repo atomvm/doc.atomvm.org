@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>globalcontext.c &mdash; AtomVM 0.7.0-beta.0+git.2903b59b documentation</title>
+  <title>globalcontext.c &mdash; AtomVM 0.7.0-beta.0+git.9e1c16b5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/globalcontext.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=87bcd025"></script>
+      <script src="../../../_static/documentation_options.js?v=bbf6af21"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -548,6 +548,23 @@
 <li><p><strong>glb</strong> – the global context (that owns the process table). </p></li>
 <li><p><strong>process_id</strong> – the local process id. </p></li>
 <li><p><strong>t</strong> – the message to send. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.globalcontext.c.globalcontext_send_message_to_alias">
+<span class="target" id="libatomvmglobalcontext_8c_1ac92d442ed59139a372a1f6742926ca75"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">globalcontext_send_message_to_alias</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">process_id</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">ref</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">message</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.globalcontext.c.globalcontext_send_message_to_alias" title="Link to this definition"></a><br /></dt>
+<dd><p>Send a message to a process alias (process reference). </p>
+<p>Posts an AliasMessageSignal carrying {Ref, <a class="reference internal" href="../../../atomvm-internals.html#libatomvmstruct_message"><span class="std std-ref">Message</span></a>} to the owner process. The owner validates the alias against its own monitors when it drains signals and either delivers <a class="reference internal" href="../../../atomvm-internals.html#libatomvmstruct_message"><span class="std std-ref">Message</span></a> as a normal message or drops it. This avoids touching the owner’s monitor list from the sender.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>glb</strong> – the global context (that owns the process table). </p></li>
+<li><p><strong>process_id</strong> – the local process id of the alias owner. </p></li>
+<li><p><strong>ref</strong> – the process reference (alias) used as the send target. </p></li>
+<li><p><strong>message</strong> – the message to send. </p></li>
 </ul>
 </dd>
 </dl>

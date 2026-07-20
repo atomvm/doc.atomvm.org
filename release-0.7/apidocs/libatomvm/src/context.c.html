@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>context.c &mdash; AtomVM 0.7.0-beta.0+git.2903b59b documentation</title>
+  <title>context.c &mdash; AtomVM 0.7.0-beta.0+git.9e1c16b5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/context.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=87bcd025"></script>
+      <script src="../../../_static/documentation_options.js?v=bbf6af21"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -408,6 +408,11 @@
 <span class="target" id="libatomvmcontext_8c_1a37832d7f6075bff04eadfbe74c01d90b"></span><span class="sig-name descname"><span class="n"><span class="pre">BYTES_PER_TERM</span></span></span> <span class="pre">(</span><a class="reference internal" href="term_typedef.h.html#libatomvmterm__typedef_8h_1ae8ace58dccdbd1bb1de525b726f523aa"><span class="std std-ref"><span class="pre">TERM_BITS</span></span></a> <span class="pre">/</span> <span class="pre">8)</span><a class="headerlink" href="#c.libAtomVM.context.c.BYTES_PER_TERM" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.context.c.ACTIVE_ALIAS_COUNT_SATURATED">
+<span class="target" id="libatomvmcontext_8c_1a6f4039c71eea2427ab4e43bf7d8372af"></span><span class="sig-name descname"><span class="n"><span class="pre">ACTIVE_ALIAS_COUNT_SATURATED</span></span></span> <span class="pre">0xFF</span><a class="headerlink" href="#c.libAtomVM.context.c.ACTIVE_ALIAS_COUNT_SATURATED" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
@@ -572,6 +577,24 @@
 </dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.context.c.context_process_alias_message_signal">
+<span class="target" id="libatomvmcontext_8c_1a44d92b8931b04418909e68bec215c518"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">context_process_alias_message_signal</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">TermSignal</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">signal</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.context_process_alias_message_signal" title="Link to this definition"></a><br /></dt>
+<dd><p>Process an alias message signal. </p>
+<p>The signal term is a 2-tuple {Ref, <a class="reference internal" href="../../../atomvm-internals.html#libatomvmstruct_message"><span class="std std-ref">Message</span></a>}. If Ref is an active alias of this process the <a class="reference internal" href="../../../atomvm-internals.html#libatomvmstruct_message"><span class="std std-ref">Message</span></a> is returned for delivery as a normal message; otherwise an invalid term is returned and the message is dropped. For a reply_demonitor alias the alias is also deactivated and the monitor removed. Runs in the owner’s own context (no race). The caller delivers the returned message in send order so an alias send is not reordered against a plain send.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> – the context being executed </p></li>
+<li><p><strong>signal</strong> – the signal with the {Ref, <a class="reference internal" href="../../../atomvm-internals.html#libatomvmstruct_message"><span class="std std-ref">Message</span></a>} tuple </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the message to deliver, or an invalid term to drop it </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.context.c.context_process_code_server_resume_signal">
 <span class="target" id="libatomvmcontext_8c_1a2a20c88eeae101247e14fee9ebffc744"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">context_process_code_server_resume_signal</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.context_process_code_server_resume_signal" title="Link to this definition"></a><br /></dt>
 <dd><p>Resume execution after module has been loaded. </p>
@@ -670,14 +693,14 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.context.c.monitor_new">
-<span class="target" id="libatomvmcontext_8c_1ae221588869536a1d53f90ec99eec8fe6"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">Monitor</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">monitor_new</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">monitor_pid</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">is_monitoring</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.monitor_new" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmcontext_8c_1ace4feed11572db402908c8d24283ac2a"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">Monitor</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">monitor_new</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">monitor_pid</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="n"><span class="pre">ContextMonitorType</span></span><span class="w"> </span><span class="n"><span class="pre">monitor_type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.monitor_new" title="Link to this definition"></a><br /></dt>
 <dd><p>Create a monitor on a process. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>monitor_pid</strong> – monitored process </p></li>
+<li><p><strong>monitor_pid</strong> – monitored process (or monitoring process when ctx is the monitored one) </p></li>
 <li><p><strong>ref_ticks</strong> – reference of the monitor </p></li>
-<li><p><strong>is_monitoring</strong> – if ctx is the monitoring process </p></li>
+<li><p><strong>monitor_type</strong> – <code class="docutils literal notranslate"><span class="pre">CONTEXT_MONITOR_MONITORING_LOCAL</span></code> for the monitoring process’s half, <code class="docutils literal notranslate"><span class="pre">CONTEXT_MONITOR_MONITORED_LOCAL</span></code> or <code class="docutils literal notranslate"><span class="pre">CONTEXT_MONITOR_MONITORED_LOCAL_ALIAS</span></code> (when the monitor was created with the {alias, _} option) for the monitored process’s half </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -705,6 +728,23 @@
 </dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.context.c.monitor_alias_new">
+<span class="target" id="libatomvmcontext_8c_1a9d8dececedd9f6dd33774244df7d65ab"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">Monitor</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">monitor_alias_new</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span>, <span class="n"><span class="pre">context_monitor_alias_type_t</span></span><span class="w"> </span><span class="n"><span class="pre">alias_type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.monitor_alias_new" title="Link to this definition"></a><br /></dt>
+<dd><p>Create a process alias. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref_ticks</strong> – reference of the alias </p></li>
+<li><p><strong>alias_type</strong> – when the alias is deactivated, see the erlang:monitor/3 alias option </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the allocated monitor or NULL if allocation failed </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.context.c.monitor_resource_monitor_new">
 <span class="target" id="libatomvmcontext_8c_1aeec804bb9cfa7b1100970e69e406a48a"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">Monitor</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">monitor_resource_monitor_new</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">resource</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.monitor_resource_monitor_new" title="Link to this definition"></a><br /></dt>
 <dd><p>Create a resource monitor. </p>
@@ -717,6 +757,20 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the allocated resource monitor or NULL if allocation failed </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.context.c.monitor_destroy">
+<span class="target" id="libatomvmcontext_8c_1aac3be4a94cd4a4993c8a863f2123411b"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">monitor_destroy</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">Monitor</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">monitor</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.monitor_destroy" title="Link to this definition"></a><br /></dt>
+<dd><p>Destroy a monitor that was not installed yet. </p>
+<p>Frees the container struct the monitor is embedded in, recovering it from its monitor type with CONTAINER_OF instead of relying on the monitor being the first member. It doesn’t remove the monitor from any list, so it must only be used on monitors that were never passed to context_add_monitor, e.g. on error paths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monitor</strong> – the monitor to free, or NULL in which case nothing is done </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -801,6 +855,37 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ctx</strong> – the context being executed (monitoring or monitored) </p></li>
 <li><p><strong>ref_ticks</strong> – reference of the monitor to remove </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.context.c.context_find_alias">
+<span class="target" id="libatomvmcontext_8c_1a9605eeb56e34bfd35b03963deec5dafd"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">MonitorAlias</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">context_find_alias</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="n"><span class="pre">ref_ticks</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.context_find_alias" title="Link to this definition"></a><br /></dt>
+<dd><p>Find a process alias. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> – the context being executed </p></li>
+<li><p><strong>ref_ticks</strong> – reference of the alias to find </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>found alias or NULL </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.context.c.context_unalias">
+<span class="target" id="libatomvmcontext_8c_1acb1ed87573aafd0c9bd31ca652a453f0"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">context_unalias</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span>, <span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">MonitorAlias</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">alias</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.context.c.context_unalias" title="Link to this definition"></a><br /></dt>
+<dd><p>Remove an alias of a process. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> – the context owning the alias </p></li>
+<li><p><strong>alias</strong> – The alias to remove, can be obtained using context_find_alias </p></li>
 </ul>
 </dd>
 </dl>

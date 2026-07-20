@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; AtomVM 0.7.0-beta.0+git.2903b59b documentation</title>
+  <title>Functions &mdash; AtomVM 0.7.0-beta.0+git.9e1c16b5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/functions.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=87bcd025"></script>
+      <script src="../../_static/documentation_options.js?v=bbf6af21"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -2051,9 +2051,26 @@ this function requires that at least INET_ADDR4_TUPLE_SIZE terms are free on the
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.mailbox_process_outer_list">
-<span class="target" id="libatomvmmailbox_8h_1a232c5f5999b490255dcb3a18fcb4bff8"></span><span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">mailbox_process_outer_list</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Mailbox" title="Mailbox"><span class="n"><span class="pre">Mailbox</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mbox</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.mailbox_process_outer_list" title="Link to this definition"></a><br /></dt>
-<dd><p>Process the outer list of messages. </p>
-<p>To be called from the process only </p>
+<span class="target" id="libatomvmmailbox_8h_1ac4a79119c9e8967aedcd853193b85355"></span><span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">mailbox_process_outer_list</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ctx</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.mailbox_process_outer_list" title="Link to this definition"></a><br /></dt>
+<dd><p>Process the outer list of messages, delivering alias messages in send order. </p>
+<p>AliasMessageSignals are validated in ctx’s own monitor list and, when the alias is active, converted to normal messages in place so they keep send order relative to plain messages from the same sender. To be called from the process only, while not holding the processes table lock (the reply_demonitor path takes it). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ctx</strong> – the context whose mailbox is processed </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the remaining (non-alias) signal messages in received order. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.functions.mailbox_process_outer_list_native">
+<span class="target" id="libatomvmmailbox_8h_1adc2ec4cc94e9a8763fa144c46b5ba0cd"></span><span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">mailbox_process_outer_list_native</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../atomvm-internals.html#c.Mailbox" title="Mailbox"><span class="n"><span class="pre">Mailbox</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mbox</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.mailbox_process_outer_list_native" title="Link to this definition"></a><br /></dt>
+<dd><p>Process the outer list of messages, ignoring aliases. </p>
+<p>Alias-blind variant of mailbox_process_outer_list, for callers that never own an active alias: native (port) processes, context teardown and crashdump. To be called from the process only. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
