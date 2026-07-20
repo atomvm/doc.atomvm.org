@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.0+git.85e05b06 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.0+git.f7594af1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=829be21e"></script>
+      <script src="_static/documentation_options.js?v=de45276a"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -235,6 +235,7 @@ sending to an alias reference</p></li>
 <li><p>Added support for map comprehensions</p></li>
 <li><p>Added USB CDC port drivers for ESP32, RP2, and STM32 platforms</p></li>
 <li><p>Added a Linux <code class="docutils literal notranslate"><span class="pre">gpio</span></code> driver for the generic_unix port (in <code class="docutils literal notranslate"><span class="pre">avm_unix</span></code>) using sysfs</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">console:print_err/1</span></code> to write to standard error</p></li>
 </ul>
 </section>
 <section id="changed">
@@ -276,6 +277,8 @@ trailer lines now return <code class="docutils literal notranslate"><span class=
 <section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading"></a></h3>
 <ul class="simple">
+<li><p>Route <code class="docutils literal notranslate"><span class="pre">io:put_chars(standard_error,</span> <span class="pre">...)</span></code> and <code class="docutils literal notranslate"><span class="pre">io:format(standard_error,</span> <span class="pre">...)</span></code> to stderr instead
+of aliasing them to standard_io (diagnostics no longer pollute an escript’s stdout)</p></li>
 <li><p>Stop using deprecated <code class="docutils literal notranslate"><span class="pre">term_from_int32</span></code> on STM32 platform</p></li>
 <li><p>Stop using deprecated <code class="docutils literal notranslate"><span class="pre">term_from_int32</span></code> on RP2 platform</p></li>
 <li><p>Stop using deprecated <code class="docutils literal notranslate"><span class="pre">term_from_int32</span></code> on ESP32 platform</p></li>
@@ -291,6 +294,7 @@ trailer lines now return <code class="docutils literal notranslate"><span class=
 <li><p>Fixed a bug where <code class="docutils literal notranslate"><span class="pre">catch</span></code> would raise on regular atom results</p></li>
 <li><p>Fixed ESP32 socket driver holding the global socket-list lock across blocking TCP connects, leaking the port on connect failure, losing concurrent <code class="docutils literal notranslate"><span class="pre">accept</span></code> waiters, leaking <code class="docutils literal notranslate"><span class="pre">netbuf</span></code> on receive error paths, and a recycled-<code class="docutils literal notranslate"><span class="pre">netconn</span></code> race between socket close and the event handler</p></li>
 <li><p>Fixed generic_unix TCP server sockets performing an abortive close that could truncate replies awaiting ack</p></li>
+<li><p>Fixed a JIT crash (<code class="docutils literal notranslate"><span class="pre">EXC_BAD_ACCESS</span></code>/SIGBUS) on Apple Silicon</p></li>
 </ul>
 </section>
 </section>
