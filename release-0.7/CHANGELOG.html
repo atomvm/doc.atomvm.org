@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.0+git.0fbceb45 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.0+git.1d9d50f3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=063a910c"></script>
+      <script src="_static/documentation_options.js?v=c2470dfa"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -303,6 +303,9 @@ readied by a driver (e.g. an active-mode socket message) until the next event or
 <li><p>Fixed a bug where negative or oversized segment sizes were not rejected in binary matching</p></li>
 <li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">network</span></code> mdns configuration to read the documented <code class="docutils literal notranslate"><span class="pre">host</span></code> key; the previously
 required, undocumented <code class="docutils literal notranslate"><span class="pre">hostname</span></code> key is still accepted</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">term_is_uint32</span></code> accepting big integers whose low 64 bits are within range on 32-bit
+builds, which made <code class="docutils literal notranslate"><span class="pre">erlang:crc32/2</span></code>, <code class="docutils literal notranslate"><span class="pre">erlang:crc32_combine/3</span></code> and <code class="docutils literal notranslate"><span class="pre">crypto:pbkdf2_hmac/5</span></code>
+silently truncate huge integer arguments instead of raising <code class="docutils literal notranslate"><span class="pre">badarg</span></code></p></li>
 </ul>
 </section>
 </section>
