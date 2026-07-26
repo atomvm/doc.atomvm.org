@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programmers Guide &mdash; AtomVM 0.7.0-beta.0+git.1d9d50f3 documentation</title>
+  <title>Programmers Guide &mdash; AtomVM 0.7.0-beta.0+git.93098e74 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/programmers-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=c2470dfa"></script>
+      <script src="_static/documentation_options.js?v=d7d0d313"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -811,11 +811,11 @@ currently, this service must be managed manually.</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Pids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nf">processes</span><span class="p">().</span>
 </pre></div>
 </div>
-<p>And for each process, you can get detailed process information via the <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#process-info-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:process_info/2</span></code></span></a> function:</p>
+<p>And for each process, you can get detailed process information via the <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#process-info-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:process_info/1</span></code></span></a> and <a class="reference internal" href="apidocs/erlang/estdlib/erlang.html#process-info-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">erlang:process_info/2</span></code></span></a> functions:</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">&quot;Heap size for Pid </span><span class="si">~p</span><span class="s">: </span><span class="si">~p~n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Pid</span><span class="p">,</span><span class="w"> </span><span class="nn">erlang</span><span class="p">:</span><span class="nb">process_info</span><span class="p">(</span><span class="nv">Pid</span><span class="p">,</span><span class="w"> </span><span class="n">heap_size</span><span class="p">)]).</span>
 </pre></div>
 </div>
-<p>The return value is a tuple containing the key passed into the <code class="docutils literal notranslate"><span class="pre">erlang:process_info/2</span></code> function and its associated value.</p>
+<p>The return value is a tuple containing the key passed into the <code class="docutils literal notranslate"><span class="pre">erlang:process_info/2</span></code> function and its associated value, e.g. <code class="docutils literal notranslate"><span class="pre">{heap_size,</span> <span class="pre">170}</span></code>. A list of keys may be passed instead of a single key, in which case the result is a list with one <code class="docutils literal notranslate"><span class="pre">{Key,</span> <span class="pre">Value}</span></code> tuple per requested key, in request order. <code class="docutils literal notranslate"><span class="pre">erlang:process_info/1</span></code> returns the default key set in one call. As in Erlang/OTP, these functions return <code class="docutils literal notranslate"><span class="pre">undefined</span></code> if the process is not alive, and querying the single key <code class="docutils literal notranslate"><span class="pre">registered_name</span></code> on a process without a registered name returns <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p>
 <p>The currently supported keys are enumerated in the following table:</p>
 <table class="docutils align-default">
 <thead>
@@ -829,17 +829,37 @@ currently, this service must be managed manually.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
 <td><p>Number of terms (in machine words) used in the process heap</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stack_size</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">total_heap_size</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
+<td><p>Number of terms (in machine words) used in the process heap, including heap fragments</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stack_size</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
 <td><p>Number of terms (in machine words) used in the process stack</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">message_queue_len</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">message_queue_len</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
 <td><p>Number of unprocessed messages in the process mailbox</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">memory</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">memory</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
 <td><p>Total number of bytes used by the process (estimate)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">registered_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">atom()</span></code></p></td>
+<td><p>The registered name of the process</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">links</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[pid()]</span></code></p></td>
+<td><p>The processes and ports the process is linked to</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">monitored_by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[pid()</span> <span class="pre">|</span> <span class="pre">port()</span> <span class="pre">|</span> <span class="pre">resource()]</span></code></p></td>
+<td><p>The processes, ports and NIF resources monitoring the process</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">trap_exit</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boolean()</span></code></p></td>
+<td><p>Whether the process is trapping exits</p></td>
 </tr>
 </tbody>
 </table>

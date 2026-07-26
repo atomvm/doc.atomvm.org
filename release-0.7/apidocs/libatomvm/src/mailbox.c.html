@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mailbox.c &mdash; AtomVM 0.7.0-beta.0+git.1d9d50f3 documentation</title>
+  <title>mailbox.c &mdash; AtomVM 0.7.0-beta.0+git.93098e74 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/mailbox.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=c2470dfa"></script>
+      <script src="../../../_static/documentation_options.js?v=d7d0d313"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -492,6 +492,20 @@
 </dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.mailbox.c.mailbox_normal_message_len">
+<span class="target" id="libatomvmmailbox_8c_1a5e65b2349589b2353382bb215bf58deb"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mailbox_normal_message_len</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Mailbox" title="Mailbox"><span class="n"><span class="pre">Mailbox</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mbox</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.mailbox.c.mailbox_normal_message_len" title="Link to this definition"></a><br /></dt>
+<dd><p>Compute the number of queued messages in the mailbox, not counting signals. </p>
+<p>This is what message_queue_len reports: normal messages plus accepted alias messages not yet converted, which OTP counts as queued even if the alias is deactivated before reception. To be called from the process only. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mbox</strong> – the mailbox to get the number of messages of. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.mailbox.c.mailbox_size">
 <span class="target" id="libatomvmmailbox_8c_1a19412a6f8824d916d1df4f91f3d85632"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mailbox_size</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Mailbox" title="Mailbox"><span class="n"><span class="pre">Mailbox</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mbox</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.mailbox.c.mailbox_size" title="Link to this definition"></a><br /></dt>
 <dd><p>Compute the mailbox size, in bytes. </p>
@@ -610,17 +624,21 @@
 </dd></dl>
 
 <dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.mailbox.c.mailbox_send_built_in_atom_request_signal">
-<span class="target" id="libatomvmmailbox_8c_1a310e26845131677e4ac7b084fed9ac5f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mailbox_send_built_in_atom_request_signal</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">c</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="n"><span class="pre">MessageType</span></span><span class="w"> </span><span class="n"><span class="pre">type</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">pid</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">atom</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.mailbox.c.mailbox_send_built_in_atom_request_signal" title="Link to this definition"></a><br /></dt>
-<dd><p>Sends a built-in atom-based request signal to a certain mailbox. </p>
+<dt class="sig sig-object c" id="c.libAtomVM.mailbox.c.mailbox_send_process_info_request_signal">
+<span class="target" id="libatomvmmailbox_8c_1a3e3c5a3b1e614a0c1514541c4211ffef"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mailbox_send_process_info_request_signal</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Context" title="Context"><span class="n"><span class="pre">Context</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">c</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n"><span class="pre">sender_pid</span></span>, <span class="n"><span class="pre">process_info_mode_t</span></span><span class="w"> </span><span class="n"><span class="pre">mode</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">atoms_len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.mailbox.c.mailbox_send_process_info_request_signal" title="Link to this definition"></a><br /></dt>
+<dd><p>Sends a process info request signal to a certain mailbox. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>c</strong> – the process context. </p></li>
-<li><p><strong>type</strong> – the type of the signal </p></li>
 <li><p><strong>sender_pid</strong> – the sender of the signal (to get the answer) </p></li>
-<li><p><strong>atom</strong> – the built-in atom </p></li>
+<li><p><strong>mode</strong> – whether the answer is a single item tuple or a list of them </p></li>
+<li><p><strong>atoms</strong> – array of atom terms to query </p></li>
+<li><p><strong>atoms_len</strong> – number of atoms in the array </p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if the signal was sent, false on allocation failure, in which case no answer will ever be sent back </p>
 </dd>
 </dl>
 </dd></dl>

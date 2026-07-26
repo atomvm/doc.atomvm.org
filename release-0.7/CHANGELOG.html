@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.0+git.1d9d50f3 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.0+git.93098e74 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=c2470dfa"></script>
+      <script src="_static/documentation_options.js?v=d7d0d313"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -236,6 +236,7 @@ sending to an alias reference</p></li>
 <li><p>Added USB CDC port drivers for ESP32, RP2, and STM32 platforms</p></li>
 <li><p>Added a Linux <code class="docutils literal notranslate"><span class="pre">gpio</span></code> driver for the generic_unix port (in <code class="docutils literal notranslate"><span class="pre">avm_unix</span></code>) using sysfs</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">console:print_err/1</span></code> to write to standard error</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">process_info/1</span></code> and <code class="docutils literal notranslate"><span class="pre">process_info/2</span></code> with list argument</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">erlang:term_to_binary/2</span></code>, <code class="docutils literal notranslate"><span class="pre">erlang:is_builtin/3</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:bitstring_to_list/1</span></code></p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">lists:mapfoldr/3</span></code></p></li>
 </ul>
@@ -243,6 +244,10 @@ sending to an alias reference</p></li>
 <section id="changed">
 <h3>Changed<a class="headerlink" href="#changed" title="Link to this heading"></a></h3>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">erlang:process_info/2</span></code> now accepts only pids of local processes, as Erlang/OTP does:
+calling it with a port now raises <code class="docutils literal notranslate"><span class="pre">badarg</span></code> (previous versions accepted any id-carrying
+term, so it could be used to read port information; there is no <code class="docutils literal notranslate"><span class="pre">erlang:port_info/2</span></code>
+in AtomVM yet to migrate such code to)</p></li>
 <li><p>Updated network type db() to dbm() to reflect the actual representation of the type</p></li>
 <li><p>Use ES6 modules for emscripten port, using .mjs suffix</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ahttp_client</span></code> now returns <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">{parser,</span> <span class="pre">incomplete_response}}</span></code> when a socket closes mid-response
@@ -290,6 +295,11 @@ of aliasing them to standard_io (diagnostics no longer pollute an escript’s st
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">ahttp_client</span></code> crash on headers with empty or all-whitespace values</p></li>
 <li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">supervisor</span></code> handling of failing child</p></li>
 <li><p>Fixed two bugs related to closing fds in <code class="docutils literal notranslate"><span class="pre">atomvm:subprocess/4</span></code></p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">message_queue_len</span></code> (as reported by <code class="docutils literal notranslate"><span class="pre">erlang:process_info/2</span></code>): unprocessed signals,
+such as monitor or unlink requests, were counted as queued messages</p></li>
+<li><p>Fixed a process hanging forever after catching an exception raised asynchronously by a
+trapping BIF: the trap flag was left set, so the process parked at the next scheduling
+point and never ran again</p></li>
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">erlang:localtime/1</span></code> memory leak, use-after-free, and TZ restore bugs on newlib/picolibc</p></li>
 <li><p>Fixed ESP32 I2C driver resource leaks, half-closed state, and close-during-transmission errors</p></li>
 <li><p>Fixed several underallocation issues that could trigger data corruption on <code class="docutils literal notranslate"><span class="pre">binary:replace</span></code>, <code class="docutils literal notranslate"><span class="pre">zlib:compress</span></code> and bsd socket recv code.</p></li>
