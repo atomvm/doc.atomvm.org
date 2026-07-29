@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.0+git.40eaa481 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.0+git.e0651636 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=f9db44a5"></script>
+      <script src="_static/documentation_options.js?v=4b4d961d"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -239,6 +239,11 @@ sending to an alias reference</p></li>
 <li><p>Added support for <code class="docutils literal notranslate"><span class="pre">process_info/1</span></code> and <code class="docutils literal notranslate"><span class="pre">process_info/2</span></code> with list argument</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">erlang:term_to_binary/2</span></code>, <code class="docutils literal notranslate"><span class="pre">erlang:is_builtin/3</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:bitstring_to_list/1</span></code></p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">lists:mapfoldr/3</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">emscripten:run_script_tracked/1</span></code> and <code class="docutils literal notranslate"><span class="pre">emscripten:get_tracked/2</span></code> to hold handles to
+JavaScript values from Erlang, tying the JavaScript value lifetime to the Erlang term lifetime.
+The emscripten module object gained <code class="docutils literal notranslate"><span class="pre">trackedObjectsMap</span></code>, <code class="docutils literal notranslate"><span class="pre">nextTrackedObjectKey()</span></code> and the
+<code class="docutils literal notranslate"><span class="pre">onRunTrackedJs</span></code>, <code class="docutils literal notranslate"><span class="pre">onGetTrackedObjects</span></code> and <code class="docutils literal notranslate"><span class="pre">onTrackedObjectDelete</span></code> hooks, which embedders may
+override to customize what tracking means</p></li>
 </ul>
 </section>
 <section id="changed">

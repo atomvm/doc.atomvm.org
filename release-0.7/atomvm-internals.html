@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AtomVM Internals &mdash; AtomVM 0.7.0-beta.0+git.40eaa481 documentation</title>
+  <title>AtomVM Internals &mdash; AtomVM 0.7.0-beta.0+git.e0651636 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/atomvm-internals.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=f9db44a5"></script>
+      <script src="_static/documentation_options.js?v=4b4d961d"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#atomvm-webassembly-port">AtomVM WebAssembly port</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#nodejs-environment-build">NodeJS environment build</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#web-environment-build">Web environment build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tracked-javascript-values">Tracked JavaScript values</a></li>
 </ul>
 </li>
 </ul>
@@ -1551,7 +1552,7 @@ instead on logging or other mechanisms for diagnosing problems in the field.</p>
 <h3>Web environment build<a class="headerlink" href="#web-environment-build" title="Link to this heading"></a></h3>
 <p>The Web environment build of this port is slightly more complex.</p>
 <p>Regarding files, <code class="docutils literal notranslate"><span class="pre">main</span></code> function can load modules (beam or AVM packages) using FetchAPI, which means they can be served by the same HTTP server. This is a fallback and users can preload files using Emscripten <code class="docutils literal notranslate"><span class="pre">file_packager</span></code> tool.</p>
-<p>The port also uses Emscripten’s proxy-to-pthread feature which means AtomVM’s <code class="docutils literal notranslate"><span class="pre">main</span></code> function is run in a web worker. The rationale is the browser thread (or main thread) with WebAssembly cannot run a loop such as AtomVM’s schedulers. Web workers typically cannot manipulate the DOM and do other things that only the browser’s main thread can do. For this purpose, Erlang processes can call <a class="reference internal" href="#./apidocs/erlang/eavmlib/emscripten.md#run_script2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">emscripten:run_script/2</span></code></span></a> function which dispatches the Javascript to execute to the main thread, waiting for completion (with <code class="docutils literal notranslate"><span class="pre">[main_thread]</span></code>) or not waiting for completion  (with <code class="docutils literal notranslate"><span class="pre">[main_thread,</span> <span class="pre">async]</span></code>). Waiting for completion of a script on the main thread does not block the Erlang scheduler, other Erlang processes can be scheduled. Execution of Javascript on the worker thread, however, does block the scheduler.</p>
+<p>The port also uses Emscripten’s proxy-to-pthread feature which means AtomVM’s <code class="docutils literal notranslate"><span class="pre">main</span></code> function is run in a web worker. The rationale is the browser thread (or main thread) with WebAssembly cannot run a loop such as AtomVM’s schedulers. Web workers typically cannot manipulate the DOM and do other things that only the browser’s main thread can do. For this purpose, Erlang processes can call <a class="reference internal" href="apidocs/erlang/avm_emscripten/emscripten.html#run-script-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">emscripten:run_script/2</span></code></span></a> function which dispatches the Javascript to execute to the main thread, waiting for completion (with <code class="docutils literal notranslate"><span class="pre">[main_thread]</span></code>) or not waiting for completion  (with <code class="docutils literal notranslate"><span class="pre">[main_thread,</span> <span class="pre">async]</span></code>). Waiting for completion of a script on the main thread does not block the Erlang scheduler, other Erlang processes can be scheduled. Execution of Javascript on the worker thread, however, does block the scheduler.</p>
 <p>Javascript code can also send messages to Erlang processes using <code class="docutils literal notranslate"><span class="pre">call</span></code> and <code class="docutils literal notranslate"><span class="pre">cast</span></code> functions from <code class="docutils literal notranslate"><span class="pre">main.c</span></code>. These functions are actually wrapped in <code class="docutils literal notranslate"><span class="pre">atomvm.pre.js</span></code>. Usage is demonstrated by <code class="docutils literal notranslate"><span class="pre">call_cast.html</span></code> example.</p>
 <p>Cast is straightforward: the message is enqueued and picked up by the scheduler. It is freed when it is processed.</p>
 <p>Call allows Javascript code to wait for the result and is based on Javascript promises (related to <code class="docutils literal notranslate"><span class="pre">async</span></code>/<code class="docutils literal notranslate"><span class="pre">await</span></code> syntax).</p>
@@ -1562,12 +1563,97 @@ instead on logging or other mechanisms for diagnosing problems in the field.</p>
 <li><p>C code returns the handle of the promise (actually the index in the map) to Javascript Module.call wrapper.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Module.call</span></code> wrapper converts the handle into a Promise object and returns it, so Javascript code can await on the promise.</p></li>
 <li><p>A scheduler dequeues the message with the resource, looks up the target process and sends it the resource as a term</p></li>
-<li><p>The target process eventually calls <a class="reference internal" href="#./apidocs/erlang/eavmlib/emscripten.md#promise_resolve2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">emscripten:promise_resolve/1,2</span></code></span></a> or <a class="reference internal" href="#./apidocs/erlang/eavmlib/emscripten.md#promise_reject2"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">emscripten:promise_reject/1,2</span></code></span></a> to resolve or reject the promise.</p></li>
+<li><p>The target process eventually calls <a class="reference internal" href="apidocs/erlang/avm_emscripten/emscripten.html#promise-resolve-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">emscripten:promise_resolve/1,2</span></code></span></a> or <a class="reference internal" href="apidocs/erlang/avm_emscripten/emscripten.html#promise-reject-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">emscripten:promise_reject/1,2</span></code></span></a> to resolve or reject the promise.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">emscripten:promise_resolve/1,2</span></code> and <code class="docutils literal notranslate"><span class="pre">emscripten:promise_reject/1,2</span></code> nifs dispatch a message in the browser’s main thread.</p></li>
 <li><p>The dispatched function retrieves the promise from its index, resolves or rejects it, with the value passed to <code class="docutils literal notranslate"><span class="pre">emscripten:promise_resolve/2</span></code> or <code class="docutils literal notranslate"><span class="pre">emscripten:promise_reject/2</span></code> and destroys it.</p></li>
 </ol>
 <p>Values currently can only be integers or strings.</p>
 <p>If the scheduler cannot find the target process, the promise is rejected with “noproc” as a value. As the promise is encapsulated into an Erlang resource, if the resource object’s reference count reaches 0, the promise is rejected with “noproc” as the value.</p>
+</section>
+<section id="tracked-javascript-values">
+<h3>Tracked JavaScript values<a class="headerlink" href="#tracked-javascript-values" title="Link to this heading"></a></h3>
+<p>Erlang processes can hold handles to arbitrary JavaScript values using
+<a class="reference internal" href="apidocs/erlang/avm_emscripten/emscripten.html#run-script-tracked-1"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">emscripten:run_script_tracked/1</span></code></span></a>.
+Like <code class="docutils literal notranslate"><span class="pre">emscripten:run_script/2</span></code> with <code class="docutils literal notranslate"><span class="pre">[main_thread]</span></code>, the script is executed on the browser’s main
+thread and the caller waits for completion, but the script is expected to evaluate to a JavaScript
+array, and each element of the array is retained: the default hooks store every element in the
+<code class="docutils literal notranslate"><span class="pre">Module.trackedObjectsMap</span></code> map under a fresh integer key, and the caller gets
+<code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">TrackedObjects}</span></code> with one opaque handle (an Erlang resource) per element, in the same order.
+A script evaluating to <code class="docutils literal notranslate"><span class="pre">null</span></code> or <code class="docutils literal notranslate"><span class="pre">undefined</span></code> yields <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">[]}</span></code>; a script that throws or evaluates
+to anything else yields <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badarg}</span></code>.</p>
+<p>The retained JavaScript value lives as long as the Erlang handle: when a handle is garbage
+collected by the VM, the resource destructor dispatches a call to
+<code class="docutils literal notranslate"><span class="pre">Module.onTrackedObjectDelete(key)</span></code> on the main thread, and the default hook removes the entry
+from <code class="docutils literal notranslate"><span class="pre">Module.trackedObjectsMap</span></code>. This makes it possible to tie non-serializable JavaScript
+values, such as DOM nodes or callback functions, to the lifetime of Erlang terms.</p>
+<p>Returning a key hands it over to the VM until <code class="docutils literal notranslate"><span class="pre">Module.onTrackedObjectDelete</span></code> is called for it,
+so a hook must return each key once and must not return a key that a live handle still owns;
+the VM rejects a key repeated within one result, but cannot detect reuse across calls.</p>
+<p>Whenever a call fails after the hook returned keys, whether it ran out of memory before every
+key got a handle or the keys themselves violated the contract, every returned key is deleted
+again through the same hook, each distinct key once, so a failed call leaves nothing tracked
+behind. Values that a hook tracks under keys it does not return are invisible to the VM and
+stay its own responsibility.</p>
+<p><a class="reference internal" href="apidocs/erlang/avm_emscripten/emscripten.html#get-tracked-2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">emscripten:get_tracked/2</span></code></span></a> maps a
+list of handles back to JavaScript: with <code class="docutils literal notranslate"><span class="pre">key</span></code>, it returns the integer keys
+identifying the entries of <code class="docutils literal notranslate"><span class="pre">Module.trackedObjectsMap</span></code>, without involving the main thread; with
+<code class="docutils literal notranslate"><span class="pre">value</span></code>, it fetches the current values on the main thread, waiting for completion. Fetched
+values must be JavaScript strings: each element of the result is <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Binary}</span></code> with the UTF-8
+bytes of the string, <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badvalue}</span></code> if the stored value is not a string, or
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badkey}</span></code> if the key is no longer in the map (with the default hooks a stored
+<code class="docutils literal notranslate"><span class="pre">undefined</span></code> value is indistinguishable from a missing key). Non-string values are typically
+serialized to JSON, either by the tracked script itself or by an overridden hook. An empty
+list of handles yields an empty list of results, so the <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">[]}</span></code> of a script that tracked
+nothing can be passed on unguarded.</p>
+<p>The JavaScript side is implemented by the following members of the emscripten module object,
+defined in <code class="docutils literal notranslate"><span class="pre">atomvm.pre.js</span></code>, which embedders may override to customize behavior without patching
+AtomVM:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Member</p></th>
+<th class="head"><p>Default behavior</p></th>
+<th class="head"><p>Contract for overrides</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Module.trackedObjectsMap</span></code></p></td>
+<td><p>a <code class="docutils literal notranslate"><span class="pre">Map</span></code> from integer keys to values</p></td>
+<td><p>storage used by the default hooks</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Module.nextTrackedObjectKey()</span></code></p></td>
+<td><p>returns a fresh key from a VM-wide counter</p></td>
+<td><p>must return an unused key in the range 0 to 4294967294; 4294967295 is reserved and means that the key space is exhausted</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Module.onRunTrackedJs(script,</span> <span class="pre">isDebug)</span></code></p></td>
+<td><p>evaluates <code class="docutils literal notranslate"><span class="pre">script</span></code> with an indirect <code class="docutils literal notranslate"><span class="pre">eval</span></code> and tracks each element of the resulting array</p></td>
+<td><p>must return an array of keys in the range above, each of them unique within the array and not owned by a live handle, or <code class="docutils literal notranslate"><span class="pre">null</span></code> on error; must not throw (a throw, a repeated key, or a key outside the range is treated as an evaluation error)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Module.onGetTrackedObjects(keys)</span></code></p></td>
+<td><p>returns <code class="docutils literal notranslate"><span class="pre">keys.map((k)</span> <span class="pre">=&gt;</span> <span class="pre">Module.trackedObjectsMap.get(k))</span></code></p></td>
+<td><p>must return exactly one entry per key: a string, or <code class="docutils literal notranslate"><span class="pre">undefined</span></code> for an unknown key (any other value maps to <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badvalue}</span></code>); must not throw (a throw or a wrong-length result makes every element of the result <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badvalue}</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Module.onTrackedObjectDelete(key)</span></code></p></td>
+<td><p>deletes the key from <code class="docutils literal notranslate"><span class="pre">Module.trackedObjectsMap</span></code></p></td>
+<td><p>called on the main thread when a handle is garbage collected; must not throw (a throw is logged and swallowed)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Hook overrides must be assigned on the module instance returned by the factory
+(<code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">module</span> <span class="pre">=</span> <span class="pre">await</span> <span class="pre">AtomVM(...);</span> <span class="pre">module.onRunTrackedJs</span> <span class="pre">=</span> <span class="pre">...;</span></code>): <code class="docutils literal notranslate"><span class="pre">atomvm.pre.js</span></code> assigns the
+defaults unconditionally when the factory runs, so hooks passed in the factory configuration
+object are overwritten. They must also be assigned <strong>synchronously</strong> once the promise resolves,
+with nothing awaited in between: <code class="docutils literal notranslate"><span class="pre">main</span></code> already runs on its worker by then, and every <code class="docutils literal notranslate"><span class="pre">await</span></code>
+gives the browser main thread a chance to run a tracked call it has already dispatched, which
+would still find the defaults installed. <code class="docutils literal notranslate"><span class="pre">Module.nextTrackedObjectKey()</span></code> and the underlying
+<code class="docutils literal notranslate"><span class="pre">_next_tracked_object_key</span></code> C export read VM state; before AtomVM’s <code class="docutils literal notranslate"><span class="pre">main</span></code> has started they
+report the exhausted key rather than a usable one (the pre-existing <code class="docutils literal notranslate"><span class="pre">_cast</span></code> and <code class="docutils literal notranslate"><span class="pre">_call</span></code> exports
+have no such guard and must not be called that early).</p>
+<p>A script is a sequence of bytes rather than text, so it has to be UTF-8 encoded and free of NUL
+bytes: a binary reaches JavaScript unchanged and is cut at its first NUL, while a character list
+is written one byte per element, so an element above 255 raises <code class="docutils literal notranslate"><span class="pre">badarg</span></code> and one between 128 and
+255 becomes a single byte that decodes as U+FFFD.</p>
+<p><code class="docutils literal notranslate"><span class="pre">isDebug</span></code> is true in builds without <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code>; the default hooks only use it to log diagnostics
+with <code class="docutils literal notranslate"><span class="pre">console.error</span></code>.</p>
 </section>
 </section>
 </section>
