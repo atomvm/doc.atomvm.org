@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module string &mdash; AtomVM 0.7.0-beta.0+git.e0651636 documentation</title>
+  <title>Module string &mdash; AtomVM 0.7.0-beta.0+git.e2cacc99 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/string.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=4b4d961d"></script>
+      <script src="../../../_static/documentation_options.js?v=03b0dd34"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -174,7 +174,8 @@ interface.<a name="index"></a></p>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#find-2">find/2</a></td><td>Equivalent to <a href="#find-3"><tt>find(String, SearchPattern, leading)</tt></a>.</td></tr><tr><td valign="top"><a href="#find-3">find/3</a></td><td></td></tr><tr><td valign="top"><a href="#jaro_similarity-2">jaro_similarity/2</a></td><td>Calculate the Jaro similarity between two strings (stub implementation).</td></tr><tr><td valign="top"><a href="#length-1">length/1</a></td><td>Return the length of the string in characters.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>Equivalent to <a href="#split-3"><tt>split(String, Pattern, leading)</tt></a>.</td></tr><tr><td valign="top"><a href="#split-3">split/3</a></td><td>Splits String where SearchPattern is encountered and return the remaining parts.</td></tr><tr><td valign="top"><a href="#to_lower-1">to_lower/1</a></td><td>Convert string or character to uppercase.</td></tr><tr><td valign="top"><a href="#to_upper-1">to_upper/1</a></td><td>Convert string or character to uppercase.</td></tr><tr><td valign="top"><a href="#trim-1">trim/1</a></td><td>Equivalent to <a href="#trim-2"><tt>trim(String, both)</tt></a>.</td></tr><tr><td valign="top"><a href="#trim-2">trim/2</a></td><td>Returns a string, where leading or trailing, or both, whitespace has been removed.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#find-2">find/2</a></td><td>Equivalent to <a href="#find-3"><tt>find(String, SearchPattern, leading)</tt></a>.</td></tr><tr><td valign="top"><a href="#find-3">find/3</a></td><td></td></tr><tr><td valign="top"><a href="#jaro_similarity-2">jaro_similarity/2</a></td><td>Calculate the Jaro similarity between two strings (stub implementation).</td></tr><tr><td valign="top"><a href="#length-1">length/1</a></td><td>Return the length of the string in characters.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>Equivalent to <a href="#split-3"><tt>split(String, Pattern, leading)</tt></a>.</td></tr><tr><td valign="top"><a href="#split-3">split/3</a></td><td>Splits String where SearchPattern is encountered and return the remaining parts.</td></tr><tr><td valign="top"><a href="#to_integer-1">to_integer/1</a></td><td>Parse a leading (optionally signed) integer from a <code>unicode:chardata()</code>
+value.</td></tr><tr><td valign="top"><a href="#to_lower-1">to_lower/1</a></td><td>Convert string or character to uppercase.</td></tr><tr><td valign="top"><a href="#to_upper-1">to_upper/1</a></td><td>Convert string or character to uppercase.</td></tr><tr><td valign="top"><a href="#trim-1">trim/1</a></td><td>Equivalent to <a href="#trim-2"><tt>trim(String, both)</tt></a>.</td></tr><tr><td valign="top"><a href="#trim-2">trim/2</a></td><td>Returns a string, where leading or trailing, or both, whitespace has been removed.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -254,6 +255,25 @@ split(String::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#t
   [&lt;&lt;&quot;ab&quot;&gt;&gt;,&lt;&lt;&quot;bc&quot;&gt;&gt;,&lt;&lt;&gt;&gt;,&lt;&lt;&quot;cd&quot;&gt;&gt;]
 </pre></div>
 </div>
+<p><a name="to_integer-1"></a></p>
+</section>
+<section id="to-integer-1">
+<h3>to_integer/1<a class="headerlink" href="#to-integer-1" title="Link to this heading"></a></h3>
+<pre><code>
+to_integer(String::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-chardata">unicode:chardata()</a>) -&gt; {integer(), <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-chardata">unicode:chardata()</a>} | {error, no_integer | badarg}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">String</span></code>: a chardata value possibly beginning with an integer<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{Int,</span> <span class="pre">Rest}</span></code> where <code class="docutils literal notranslate"><span class="pre">Rest</span></code> is the unconsumed chardata suffix, or
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">no_integer}</span></code> if it does not begin with an integer, or
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badarg}</span></code> if malformed chardata or invalid UTF-8 is
+encountered while parsing</p>
+<p>Parse a leading (optionally signed) integer from a <code class="docutils literal notranslate"><span class="pre">unicode:chardata()</span></code>
+value. Digits and sign are ASCII. The remainder keeps binary form when the
+original argument is a binary.</p>
+<p>Matching OTP, the maximal leading run of ASCII <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, and digits is
+validated before the integer grammar is applied, so leftover signs in that
+run are examined for chardata errors even when they become part of <code class="docutils literal notranslate"><span class="pre">Rest</span></code>.</p>
 <p><a name="to_lower-1"></a></p>
 </section>
 <section id="to-lower-1">
