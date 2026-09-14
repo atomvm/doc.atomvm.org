@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module erts_internal &mdash; AtomVM 0.7.0-beta.0+git.554981c9 documentation</title>
+  <title>Module erts_internal &mdash; AtomVM 0.7.0-beta.0+git.00257d81 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/erts_internal.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=2b8341a7"></script>
+      <script src="../../../_static/documentation_options.js?v=f2352b0c"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -118,6 +118,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sys.html">Module sys</a></li>
 <li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zlib.html">Module zlib</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
@@ -177,12 +178,27 @@ least OTP 29.<a name="index"></a></p>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#mc_iterator-1">mc_iterator/1</a></td><td>    Start iterating over a map comprehension generator.</td></tr><tr><td valign="top"><a href="#mc_refill-1">mc_refill/1</a></td><td>    Advance a map comprehension iterator.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#cmp_term-2">cmp_term/2</a></td><td>    Compare two terms using the standard exact term ordering.</td></tr><tr><td valign="top"><a href="#mc_iterator-1">mc_iterator/1</a></td><td>    Start iterating over a map comprehension generator.</td></tr><tr><td valign="top"><a href="#mc_refill-1">mc_refill/1</a></td><td>    Advance a map comprehension iterator.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
 <h2>Function Details<a class="headerlink" href="#function-details" title="Link to this heading"></a></h2>
+<p><a name="cmp_term-2"></a></p>
+<section id="cmp-term-2">
+<h3>cmp_term/2<a class="headerlink" href="#cmp-term-2" title="Link to this heading"></a></h3>
+<pre><code>
+cmp_term(A::term(), B::term()) -&gt; -1 | 0 | 1
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">A</span></code>: first term to compare<br /><code class="docutils literal notranslate"><span class="pre">B</span></code>: second term to compare<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">-1</span></code> if <code class="docutils literal notranslate"><span class="pre">A</span></code> is less than <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code> if <code class="docutils literal notranslate"><span class="pre">A</span></code> is greater than <code class="docutils literal notranslate"><span class="pre">B</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">0</span></code> if they are exactly equal</p>
+<p>Compare two terms using the standard exact term ordering.</p>
+<p>Returns a negative, zero or positive indicator rather than a boolean.
+Comparison is exact, so numbers of different types are never equal (as with
+<code class="docutils literal notranslate"><span class="pre">=:=</span></code>). This is an internal helper and is not meant to be called directly.</p>
 <p><a name="mc_iterator-1"></a></p>
+</section>
 <section id="mc-iterator-1">
 <h3>mc_iterator/1<a class="headerlink" href="#mc-iterator-1" title="Link to this heading"></a></h3>
 <pre><code>
