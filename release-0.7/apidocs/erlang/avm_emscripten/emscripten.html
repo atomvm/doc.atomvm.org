@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module emscripten &mdash; AtomVM 0.7.0-beta.0+git.e2cacc99 documentation</title>
+  <title>Module emscripten &mdash; AtomVM 0.7.0-beta.0+git.554981c9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/avm_emscripten/emscripten.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=03b0dd34"></script>
+      <script src="../../../_static/documentation_options.js?v=2b8341a7"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -127,13 +127,13 @@ are only implemented for the emscripten platform.</p>
 for more information about these APIs.</p>
 <p>The counterpart of functions defined in this module are two main Javascript
 functions that can be used to send messages to Erlang.</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">Module</span><span class="p">.</span><span class="n">cast</span><span class="p">(</span><span class="c">&#39;some_proc&#39;, &#39;message&#39;)</span>
-<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Module</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="c">&#39;some_proc&#39;, &#39;message&#39;)</span>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">Module</span><span class="p">.</span><span class="n">cast</span><span class="p">(</span><span class="c">'some_proc', 'message')</span>
+<span class="w">  </span><span class="n">await</span><span class="w"> </span><span class="n">Module</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="c">'some_proc', 'message')</span>
 </pre></div>
 </div>
 <p>These respectively send the following messages to Erlang process registered as <code class="docutils literal notranslate"><span class="pre">some_proc</span></code>:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {cast, &lt;&lt;&quot;message&quot;&gt;&gt;}}
-  {emscripten, {call, Promise, &lt;&lt;&quot;message&quot;&gt;&gt;}}
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {emscripten, {cast, &lt;&lt;"message"&gt;&gt;}}
+  {emscripten, {call, Promise, &lt;&lt;"message"&gt;&gt;}}
 </pre></div>
 </div>
 <p>Promise should be passed to <code class="docutils literal notranslate"><span class="pre">promise_resolve/1,2</span></code> or <code class="docutils literal notranslate"><span class="pre">promise_reject/1,2</span></code> as
@@ -336,7 +336,7 @@ promise_resolve(_Promise::<a href="#type-promise">promise()</a>, _Value::integer
 A promise is currently only obtained through synchronous calls using
 <code class="docutils literal notranslate"><span class="pre">Module.call()</span></code> javascript function.
 If Javascript calls:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  await Module.call(&#39;some_proc&#39;, &#39;message&#39;)
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  await Module.call('some_proc', 'message')
 </pre></div>
 </div>
 <p>and if an Erlang process is registered as <code class="docutils literal notranslate"><span class="pre">some_proc</span></code>, then the process

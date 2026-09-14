@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module serial_dist &mdash; AtomVM 0.7.0-beta.0+git.e2cacc99 documentation</title>
+  <title>Module serial_dist &mdash; AtomVM 0.7.0-beta.0+git.554981c9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/serial_dist.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=03b0dd34"></script>
+      <script src="../../../_static/documentation_options.js?v=2b8341a7"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -180,13 +180,13 @@ This is particularly useful for microcontrollers that lack WiFi/TCP
 for peer connections). This module supports opening several serial ports,
 each connecting to a different peer node. Pass a list of UART
 configurations via the <code class="docutils literal notranslate"><span class="pre">uart_ports</span></code> option:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="err">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="err">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nl">net_kernel</span><span class="p">:</span><span class="k">start</span><span class="p">(</span><span class="s1">&#39;mynode@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">#{</span>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="err">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="err">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nl">net_kernel</span><span class="p">:</span><span class="k">start</span><span class="p">(</span><span class="s1">'mynode@serial.local'</span><span class="p">,</span><span class="w"> </span><span class="err">#{</span>
 <span class="w">      </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
 <span class="w">      </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
 <span class="w">      </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="err">#{</span>
 <span class="w">          </span><span class="n">uart_ports</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">[</span>
-<span class="n">              [{peripheral, &quot;UART1&quot;}, {speed, 115200}, {tx, 17}, {rx, 16}</span><span class="o">]</span><span class="p">,</span>
-<span class="w">              </span><span class="o">[</span><span class="n">{peripheral, &quot;UART2&quot;}, {speed, 115200}, {tx, 4}, {rx, 5}</span><span class="o">]</span>
+<span class="n">              [{peripheral, "UART1"}, {speed, 115200}, {tx, 17}, {rx, 16}</span><span class="o">]</span><span class="p">,</span>
+<span class="w">              </span><span class="o">[</span><span class="n">{peripheral, "UART2"}, {speed, 115200}, {tx, 4}, {rx, 5}</span><span class="o">]</span>
 <span class="w">          </span><span class="err">]</span><span class="p">,</span>
 <span class="w">          </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">uart</span>
 <span class="w">      </span><span class="err">}</span>
@@ -195,7 +195,7 @@ configurations via the <code class="docutils literal notranslate"><span class="p
 </div>
 <p>For a single port, the <code class="docutils literal notranslate"><span class="pre">uart_opts</span></code> key can also be used:</p>
 <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  avm_dist_opts =&gt; #{
-      uart_opts =&gt; [{peripheral, &quot;UART1&quot;}, {speed, 115200}]
+      uart_opts =&gt; [{peripheral, "UART1"}, {speed, 115200}]
   }
 </pre></div>
 </div>
@@ -225,10 +225,10 @@ pre-connection scanning, the buffer is discarded and retried.</p>
 the VM with <code class="docutils literal notranslate"><span class="pre">-proto_dist</span> <span class="pre">serial</span></code> and configure UART options via
 application environment before calling <code class="docutils literal notranslate"><span class="pre">net_kernel:start/1</span></code>:</p>
 <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nl">application</span><span class="p">:</span><span class="n">set_env</span><span class="p">(</span><span class="n">serial_dist</span><span class="p">,</span><span class="w"> </span><span class="n">dist_opts</span><span class="p">,</span><span class="w"> </span><span class="err">#{</span>
-<span class="w">      </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">{peripheral, &quot;/dev/ttyUSB0&quot;}, {speed, 115200}</span><span class="o">]</span><span class="p">,</span>
+<span class="w">      </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">{peripheral, "/dev/ttyUSB0"}, {speed, 115200}</span><span class="o">]</span><span class="p">,</span>
 <span class="w">      </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">my_uart_module</span>
 <span class="w">  </span><span class="err">}</span><span class="p">).</span>
-<span class="w">  </span><span class="nl">net_kernel</span><span class="p">:</span><span class="k">start</span><span class="p">(</span><span class="o">[</span><span class="n">&#39;mynode@serial.local&#39;, longnames</span><span class="o">]</span><span class="p">).</span>
+<span class="w">  </span><span class="nl">net_kernel</span><span class="p">:</span><span class="k">start</span><span class="p">(</span><span class="o">[</span><span class="n">'mynode@serial.local', longnames</span><span class="o">]</span><span class="p">).</span>
 </pre></div>
 </div>
 <p><a name="types"></a></p>

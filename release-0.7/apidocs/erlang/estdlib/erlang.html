@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module erlang &mdash; AtomVM 0.7.0-beta.0+git.e2cacc99 documentation</title>
+  <title>Module erlang &mdash; AtomVM 0.7.0-beta.0+git.554981c9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/erlang.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=03b0dd34"></script>
+      <script src="../../../_static/documentation_options.js?v=2b8341a7"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -336,8 +336,8 @@ apply(Function::function(), Args::[term()]) -&gt; term()
 function is the length of Args. Example:</p>
 <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">              </span><span class="o">&gt;</span><span class="w"> </span><span class="kr">apply</span><span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">lists</span><span class="o">:</span><span class="n">reverse</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="kd">end,</span><span class="w"> </span><span class="p">[[</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">]]).</span>
 <span class="w">           </span><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">]</span>
-<span class="w">           </span><span class="o">&gt;</span><span class="w"> </span><span class="kr">apply</span><span class="p">(</span><span class="n">fun</span><span class="w"> </span><span class="n">erlang</span><span class="o">:</span><span class="n">atom_to_list</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;AtomVM&#39;</span><span class="p">]).</span>
-<span class="w">           </span><span class="s">&quot;AtomVM&quot;</span>
+<span class="w">           </span><span class="o">&gt;</span><span class="w"> </span><span class="kr">apply</span><span class="p">(</span><span class="n">fun</span><span class="w"> </span><span class="n">erlang</span><span class="o">:</span><span class="n">atom_to_list</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">'AtomVM'</span><span class="p">]).</span>
+<span class="w">           </span><span class="s">"AtomVM"</span>
 </pre></div>
 </div>
 <p>If the number of arguments are known at compile time, the call is better
@@ -357,8 +357,8 @@ function must be exported from Module. The arity of the function is the
 length of Args. Example:</p>
 <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="k">              &gt; </span><span class="ge">apply(lists, reverse, [[a, b, c]]).</span>
            [c,b,a]
-<span class="k">           &gt; </span><span class="ge">apply(erlang, atom_to_list, [&#39;AtomVM&#39;]).</span>
-           &quot;AtomVM&quot;
+<span class="k">           &gt; </span><span class="ge">apply(erlang, atom_to_list, ['AtomVM']).</span>
+           "AtomVM"
 </pre></div>
 </div>
 <p>If the number of arguments are known at compile time, the call is better
@@ -433,7 +433,7 @@ binary_to_float(Binary::binary()) -&gt; float()
 <p>Parse the text in a given binary as a floating point number.</p>
 <p>The float string format is the same as the format for Erlang float
 literals except that underscores and based floats are not permitted:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  [+|-] DIGITS &quot;.&quot; DIGITS [(&quot;e&quot;|&quot;E&quot;) [+|-] DIGITS]
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  [+|-] DIGITS "." DIGITS [("e"|"E") [+|-] DIGITS]
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">DIGITS</span></code> is one or more decimal digits (<code class="docutils literal notranslate"><span class="pre">0</span></code>..<code class="docutils literal notranslate"><span class="pre">9</span></code>).</p>
@@ -1534,7 +1534,7 @@ monitor(Type::port, Port::port() | atom()) -&gt; reference()
 <p>Create a monitor on a process or on a port.
 When the process or the port terminates, the following message is sent to
 the caller of this function:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {&#39;DOWN&#39;, MonitorRef, Type, Pid, Reason}
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>  {'DOWN', MonitorRef, Type, Pid, Reason}
 </pre></div>
 </div>
 <p>Unlike Erlang/OTP, monitors are only supported for processes and ports.</p>
@@ -1662,7 +1662,7 @@ process_flag(Flag::trap_exit, Value::boolean()) -&gt; pid()
 <p>returns: Previous value of the flag</p>
 <p>Set a flag for the current process.
 When <code class="docutils literal notranslate"><span class="pre">trap_exit</span></code> is true, exit signals are converted to messages</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>{<span class="s1">&#39;EXIT&#39;</span>,<span class="w"> </span><span class="nv">From</span>,<span class="w"> </span><span class="nv">Reason</span>}
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>{<span class="s1">'EXIT'</span>,<span class="w"> </span><span class="nv">From</span>,<span class="w"> </span><span class="nv">Reason</span>}
 </pre></div>
 </div>
 <p>and the process does not exit if <code class="docutils literal notranslate"><span class="pre">Reason</span></code> is not <code class="docutils literal notranslate"><span class="pre">normal</span></code>.</p>

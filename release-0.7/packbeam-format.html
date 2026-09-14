@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Packbeam Format &mdash; AtomVM 0.7.0-beta.0+git.e2cacc99 documentation</title>
+  <title>Packbeam Format &mdash; AtomVM 0.7.0-beta.0+git.554981c9 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/packbeam-format.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=03b0dd34"></script>
+      <script src="_static/documentation_options.js?v=2b8341a7"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -195,7 +195,7 @@ stripped of any path information.</p>
 <p>Normal files (e.g., text files, data files, etc.) can be stored in packbeam AVM files, as well as BEAM files.  For example, a normal file might contain static configuration information, or data that is interpreted at runtime.</p>
 <p>Normal files contain a 32-bit big-endian size prefix, indicating the size of the file data (without padding).  Note that the <code class="docutils literal notranslate"><span class="pre">size</span></code> field in the file header includes the size of the data with padding, if applicable.</p>
 <p>The AtomVM runtime provides access to data files via the <a class="reference internal" href="apidocs/erlang/eavmlib/atomvm.html#read-priv2"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">atomvm:read_priv/2</span></code></span></a> NIF.  This function will create a path name formed by the <code class="docutils literal notranslate"><span class="pre">App</span></code> (atom) and <code class="docutils literal notranslate"><span class="pre">Path</span></code> (string) terms provided by this function, separated by <code class="docutils literal notranslate"><span class="pre">&quot;/priv/&quot;</span></code>.  For example, the expression</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nn">atomvm</span><span class="p">:</span><span class="nf">read_priv</span><span class="p">(</span><span class="n">mylib</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sample.txt&quot;</span><span class="p">)</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nn">atomvm</span><span class="p">:</span><span class="nf">read_priv</span><span class="p">(</span><span class="n">mylib</span><span class="p">,</span><span class="w"> </span><span class="s">"sample.txt"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>yields a <code class="docutils literal notranslate"><span class="pre">binary</span></code> containing the contents of <code class="docutils literal notranslate"><span class="pre">mylib/priv/sample.txt</span></code>, if it exists, in the AtomVM packbeam file.</p>
