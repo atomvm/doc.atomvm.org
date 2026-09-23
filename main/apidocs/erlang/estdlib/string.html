@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module string &mdash; AtomVM 0.8.0-dev+git.0220c78e documentation</title>
+  <title>Module string &mdash; AtomVM 0.8.0-dev+git.ae55c2cc documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/string.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=021e14fe"></script>
+      <script src="../../../_static/documentation_options.js?v=41693c9d"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -118,11 +118,13 @@
 <li class="toctree-l4"><a class="reference internal" href="sys.html">Module sys</a></li>
 <li class="toctree-l4"><a class="reference internal" href="timer.html">Module timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="unicode.html">Module unicode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zlib.html">Module zlib</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#eavmlib">eavmlib</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#alisp">alisp</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#etest">etest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api-reference-documentation.html#avm-emscripten">avm_emscripten</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-reference-documentation.html#atomvm-c-apis">AtomVM ‘C’ APIs</a></li>
@@ -173,7 +175,8 @@ interface.<a name="index"></a></p>
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#find-2">find/2</a></td><td>Equivalent to <a href="#find-3"><tt>find(String, SearchPattern, leading)</tt></a>.</td></tr><tr><td valign="top"><a href="#find-3">find/3</a></td><td></td></tr><tr><td valign="top"><a href="#jaro_similarity-2">jaro_similarity/2</a></td><td>Calculate the Jaro similarity between two strings (stub implementation).</td></tr><tr><td valign="top"><a href="#length-1">length/1</a></td><td>Return the length of the string in characters.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>Equivalent to <a href="#split-3"><tt>split(String, Pattern, leading)</tt></a>.</td></tr><tr><td valign="top"><a href="#split-3">split/3</a></td><td>Splits String where SearchPattern is encountered and return the remaining parts.</td></tr><tr><td valign="top"><a href="#to_lower-1">to_lower/1</a></td><td>Convert string or character to uppercase.</td></tr><tr><td valign="top"><a href="#to_upper-1">to_upper/1</a></td><td>Convert string or character to uppercase.</td></tr><tr><td valign="top"><a href="#trim-1">trim/1</a></td><td>Equivalent to <a href="#trim-2"><tt>trim(String, both)</tt></a>.</td></tr><tr><td valign="top"><a href="#trim-2">trim/2</a></td><td>Returns a string, where leading or trailing, or both, whitespace has been removed.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#find-2">find/2</a></td><td>Equivalent to <a href="#find-3"><tt>find(String, SearchPattern, leading)</tt></a>.</td></tr><tr><td valign="top"><a href="#find-3">find/3</a></td><td></td></tr><tr><td valign="top"><a href="#jaro_similarity-2">jaro_similarity/2</a></td><td>Calculate the Jaro similarity between two strings (stub implementation).</td></tr><tr><td valign="top"><a href="#length-1">length/1</a></td><td>Return the length of the string in characters.</td></tr><tr><td valign="top"><a href="#split-2">split/2</a></td><td>Equivalent to <a href="#split-3"><tt>split(String, Pattern, leading)</tt></a>.</td></tr><tr><td valign="top"><a href="#split-3">split/3</a></td><td>Splits String where SearchPattern is encountered and return the remaining parts.</td></tr><tr><td valign="top"><a href="#to_integer-1">to_integer/1</a></td><td>Parse a leading (optionally signed) integer from a <code>unicode:chardata()</code>
+value.</td></tr><tr><td valign="top"><a href="#to_lower-1">to_lower/1</a></td><td>Convert string or character to uppercase.</td></tr><tr><td valign="top"><a href="#to_upper-1">to_upper/1</a></td><td>Convert string or character to uppercase.</td></tr><tr><td valign="top"><a href="#trim-1">trim/1</a></td><td>Equivalent to <a href="#trim-2"><tt>trim(String, both)</tt></a>.</td></tr><tr><td valign="top"><a href="#trim-2">trim/2</a></td><td>Returns a string, where leading or trailing, or both, whitespace has been removed.</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -245,14 +248,33 @@ split(String::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#t
 <p>Splits String where SearchPattern is encountered and return the remaining parts.</p>
 <p>Where, default leading, indicates whether the leading, the trailing or all encounters of SearchPattern will split String.</p>
 <p>Example:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>     0&gt; string:split(&quot;ab..bc..cd&quot;, &quot;..&quot;).
-  [&quot;ab&quot;,&quot;bc..cd&quot;]
-  1&gt; string:split(&lt;&lt;&quot;ab..bc..cd&quot;&gt;&gt;, &quot;..&quot;, trailing).
-  [&lt;&lt;&quot;ab..bc&quot;&gt;&gt;,&lt;&lt;&quot;cd&quot;&gt;&gt;]
-  2&gt; string:split(&lt;&lt;&quot;ab..bc....cd&quot;&gt;&gt;, &quot;..&quot;, all).
-  [&lt;&lt;&quot;ab&quot;&gt;&gt;,&lt;&lt;&quot;bc&quot;&gt;&gt;,&lt;&lt;&gt;&gt;,&lt;&lt;&quot;cd&quot;&gt;&gt;]
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>     0&gt; string:split("ab..bc..cd", "..").
+  ["ab","bc..cd"]
+  1&gt; string:split(&lt;&lt;"ab..bc..cd"&gt;&gt;, "..", trailing).
+  [&lt;&lt;"ab..bc"&gt;&gt;,&lt;&lt;"cd"&gt;&gt;]
+  2&gt; string:split(&lt;&lt;"ab..bc....cd"&gt;&gt;, "..", all).
+  [&lt;&lt;"ab"&gt;&gt;,&lt;&lt;"bc"&gt;&gt;,&lt;&lt;&gt;&gt;,&lt;&lt;"cd"&gt;&gt;]
 </pre></div>
 </div>
+<p><a name="to_integer-1"></a></p>
+</section>
+<section id="to-integer-1">
+<h3>to_integer/1<a class="headerlink" href="#to-integer-1" title="Link to this heading"></a></h3>
+<pre><code>
+to_integer(String::<a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-chardata">unicode:chardata()</a>) -&gt; {integer(), <a href="/__w/AtomVM/AtomVM/build/doc/edoc/stdlib/doc/unicode.md#type-chardata">unicode:chardata()</a>} | {error, no_integer | badarg}
+</code></pre>
+<br />
+<p><code class="docutils literal notranslate"><span class="pre">String</span></code>: a chardata value possibly beginning with an integer<br /></p>
+<p>returns: <code class="docutils literal notranslate"><span class="pre">{Int,</span> <span class="pre">Rest}</span></code> where <code class="docutils literal notranslate"><span class="pre">Rest</span></code> is the unconsumed chardata suffix, or
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">no_integer}</span></code> if it does not begin with an integer, or
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badarg}</span></code> if malformed chardata or invalid UTF-8 is
+encountered while parsing</p>
+<p>Parse a leading (optionally signed) integer from a <code class="docutils literal notranslate"><span class="pre">unicode:chardata()</span></code>
+value. Digits and sign are ASCII. The remainder keeps binary form when the
+original argument is a binary.</p>
+<p>Matching OTP, the maximal leading run of ASCII <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, and digits is
+validated before the integer grammar is applied, so leftover signs in that
+run are examined for chardata errors even when they become part of <code class="docutils literal notranslate"><span class="pre">Rest</span></code>.</p>
 <p><a name="to_lower-1"></a></p>
 </section>
 <section id="to-lower-1">
@@ -303,12 +325,12 @@ trim(String::string(), Direction::atom()) -&gt; string() | char()
 <p>Returns a string, where leading or trailing, or both, whitespace has been removed.</p>
 <p>If omitted, Direction is both.</p>
 <p>Example:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>     1&gt; string:trim(&quot;\t  Hello  \n&quot;).
-  &quot;Hello&quot;
-  2&gt; string:trim(&lt;&lt;&quot;\t  Hello  \n&quot;&gt;&gt;, leading).
-  &lt;&lt;&quot;Hello  \n&quot;&gt;&gt;
-  3&gt; string:trim(&lt;&lt;&quot;.Hello.\n&quot;&gt;&gt;, trailing, &quot;\n.&quot;).
-  &lt;&lt;&quot;.Hello&quot;&gt;&gt;
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>     1&gt; string:trim("\t  Hello  \n").
+  "Hello"
+  2&gt; string:trim(&lt;&lt;"\t  Hello  \n"&gt;&gt;, leading).
+  &lt;&lt;"Hello  \n"&gt;&gt;
+  3&gt; string:trim(&lt;&lt;".Hello.\n"&gt;&gt;, trailing, "\n.").
+  &lt;&lt;".Hello"&gt;&gt;
 </pre></div>
 </div>
 </section>
@@ -405,13 +427,13 @@ trim(String::string(), Direction::atom()) -&gt; string() | char()
           <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
           
         
-           <strong> 
-          <dd><a href="/main/">main branch (unstable)</a></dd>
-           </strong> 
-        
           
           <dd><a href="/release-0.7/">release-0.7 branch (unreleased)</a></dd>
           
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
         
       </dl>
       

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Distributed Erlang &mdash; AtomVM 0.8.0-dev+git.0220c78e documentation</title>
+  <title>Distributed Erlang &mdash; AtomVM 0.8.0-dev+git.ae55c2cc documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/distributed-erlang.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=021e14fe"></script>
+      <script src="_static/documentation_options.js?v=41693c9d"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -83,6 +83,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#distribution-features">Distribution features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#known-issues-limitations">Known Issues &amp; Limitations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="differences-with-beam.html">Differences between AtomVM and BEAM</a></li>
@@ -152,8 +153,8 @@ devices appear as standard serial ports. See <a class="reference internal" href=
 <h2>Starting and stopping distribution<a class="headerlink" href="#starting-and-stopping-distribution" title="Link to this heading"></a></h2>
 <p>Distribution has to be started programmatically. Following Erlang/OTP, distribution relies on <code class="docutils literal notranslate"><span class="pre">kernel</span></code> which is started by <code class="docutils literal notranslate"><span class="pre">init:boot/1</span></code>.</p>
 <p>The following lines will start distribution on Unix systems with long name <code class="docutils literal notranslate"><span class="pre">atomvm&#64;127.0.0.1</span></code>.</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">NetKernelPid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;atomvm@127.0.0.1&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">}),</span>
-<span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nb">set_cookie</span><span class="p">(</span><span class="o">&lt;&lt;</span><span class="s">&quot;AtomVM&quot;</span><span class="o">&gt;&gt;</span><span class="p">).</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">NetKernelPid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">'atomvm@127.0.0.1'</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">}),</span>
+<span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nb">set_cookie</span><span class="p">(</span><span class="o">&lt;&lt;</span><span class="s">"AtomVM"</span><span class="o">&gt;&gt;</span><span class="p">).</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">net_kernel:stop/0</span></code> can be used to stop distribution.</p>
@@ -217,11 +218,11 @@ WiFi/TCP (e.g. STM32) but have UART, and for testing distribution
 locally using virtual serial ports.</p>
 <section id="quick-start">
 <h3>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h3>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;mynode@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">'mynode@serial.local'</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
 <span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
 <span class="w">    </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
 <span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span>
-<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UART1&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">},</span>
+<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">"UART1"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">},</span>
 <span class="w">                      </span><span class="p">{</span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">rx</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">}],</span>
 <span class="w">        </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">uart</span>
 <span class="w">    </span><span class="p">}</span>
@@ -313,27 +314,27 @@ restarts the loop, allowing retries.</p>
 <p>This creates two pseudo-terminal devices (e.g. <code class="docutils literal notranslate"><span class="pre">/dev/ttys003</span></code> and
 <code class="docutils literal notranslate"><span class="pre">/dev/ttys004</span></code>) connected back-to-back. Each AtomVM node uses one side:</p>
 <div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="c">%% Node A</span>
-<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;a@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">'a@serial.local'</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
 <span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
 <span class="w">    </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
 <span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span>
-<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/dev/ttys003&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
+<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">"/dev/ttys003"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
 <span class="w">        </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">uart</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}).</span>
 
 <span class="c">%% Node B (separate AtomVM process)</span>
-<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;b@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">'b@serial.local'</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
 <span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
 <span class="w">    </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
 <span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span>
-<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/dev/ttys004&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
+<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">"/dev/ttys004"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
 <span class="w">        </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">uart</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}).</span>
 
 <span class="c">%% From Node B, trigger autoconnect:</span>
-<span class="p">{</span><span class="n">some_registered_name</span><span class="p">,</span><span class="w"> </span><span class="n">&#39;a@serial.local&#39;</span><span class="p">}</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="n">hello</span><span class="p">}.</span>
+<span class="p">{</span><span class="n">some_registered_name</span><span class="p">,</span><span class="w"> </span><span class="n">'a@serial.local'</span><span class="p">}</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="n">self</span><span class="p">(),</span><span class="w"> </span><span class="n">hello</span><span class="p">}.</span>
 </pre></div>
 </div>
 </section>
@@ -376,11 +377,11 @@ Guide for how to enable the port driver on each platform</p>
 </section>
 <section id="quick-start-mcu-side-esp32-s3-example">
 <h3>Quick start, MCU side (ESP32-S3 example)<a class="headerlink" href="#quick-start-mcu-side-esp32-s3-example" title="Link to this heading"></a></h3>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;sensor@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">'sensor@serial.local'</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
 <span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
 <span class="w">    </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
 <span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span>
-<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CDC0&quot;</span><span class="p">}],</span>
+<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">"CDC0"</span><span class="p">}],</span>
 <span class="w">        </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">usb_cdc</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}).</span>
@@ -391,11 +392,11 @@ Guide for how to enable the port driver on each platform</p>
 <h3>Quick start, Unix host side<a class="headerlink" href="#quick-start-unix-host-side" title="Link to this heading"></a></h3>
 <p>On Unix, USB CDC devices are standard serial ports. Use the regular
 <code class="docutils literal notranslate"><span class="pre">uart</span></code> module:</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;host@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">'host@serial.local'</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
 <span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
 <span class="w">    </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
 <span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span>
-<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/dev/ttyACM0&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
+<span class="w">        </span><span class="n">uart_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">"/dev/ttyACM0"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
 <span class="w">        </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">uart</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}).</span>
@@ -407,13 +408,13 @@ Guide for how to enable the port driver on each platform</p>
 <p>USB uses a star topology: one host connects to multiple devices through
 a USB hub. Each device appears as a separate <code class="docutils literal notranslate"><span class="pre">/dev/ttyACMx</span></code> on the host.
 Use <code class="docutils literal notranslate"><span class="pre">uart_ports</span></code> (list of proplists) to connect to multiple devices:</p>
-<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">&#39;host@serial.local&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">net_kernel</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="n">'host@serial.local'</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span>
 <span class="w">    </span><span class="n">name_domain</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">longnames</span><span class="p">,</span>
 <span class="w">    </span><span class="n">proto_dist</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_dist</span><span class="p">,</span>
 <span class="w">    </span><span class="n">avm_dist_opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">#{</span>
 <span class="w">        </span><span class="n">uart_ports</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[</span>
-<span class="w">            </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/dev/ttyACM0&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
-<span class="w">            </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/dev/ttyACM1&quot;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}]</span>
+<span class="w">            </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">"/dev/ttyACM0"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}],</span>
+<span class="w">            </span><span class="p">[{</span><span class="n">peripheral</span><span class="p">,</span><span class="w"> </span><span class="s">"/dev/ttyACM1"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="n">speed</span><span class="p">,</span><span class="w"> </span><span class="mi">115200</span><span class="p">}]</span>
 <span class="w">        </span><span class="p">],</span>
 <span class="w">        </span><span class="n">uart_module</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">uart</span>
 <span class="w">    </span><span class="p">}</span>
@@ -434,6 +435,15 @@ Use <code class="docutils literal notranslate"><span class="pre">uart_ports</spa
 </ul>
 <p>RPC (remote procedure call) from Erlang/OTP to AtomVM is also supported.</p>
 <p>Shell requires several OTP standard library modules. See <a class="reference external" href="https://github.com/pguyot/atomvm_shell">the example project</a>.</p>
+</section>
+<section id="known-issues-limitations">
+<h2>Known Issues &amp; Limitations<a class="headerlink" href="#known-issues-limitations" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Sending to a remote process alias is not supported: a message sent from AtomVM to an alias
+(a reference) of another node is silently dropped instead of being routed over distribution.
+The other direction works: a message sent from a remote BEAM node to an alias of an AtomVM
+process is delivered.</p></li>
+</ul>
 <p>Please do not hesitate to file issues or pull requests for additional features.</p>
 </section>
 </section>
@@ -528,13 +538,13 @@ Use <code class="docutils literal notranslate"><span class="pre">uart_ports</spa
           <dd><a href="/release-0.6/">release-0.6 branch (unreleased)</a></dd>
           
         
-           <strong> 
-          <dd><a href="/main/">main branch (unstable)</a></dd>
-           </strong> 
-        
           
           <dd><a href="/release-0.7/">release-0.7 branch (unreleased)</a></dd>
           
+        
+           <strong> 
+          <dd><a href="/main/">main branch (unstable)</a></dd>
+           </strong> 
         
       </dl>
       
