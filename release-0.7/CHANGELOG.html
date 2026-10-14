@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.c8fbd4c4 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.42abc68e documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=ee80a5c5"></script>
+      <script src="_static/documentation_options.js?v=19ecc73a"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -221,6 +221,11 @@ duplicate keys</p></li>
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">binary_to_term/1,2</span></code> accepting maps with duplicate keys instead of raising <code class="docutils literal notranslate"><span class="pre">badarg</span></code></p></li>
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">erlang:send_after/3</span></code> and <code class="docutils literal notranslate"><span class="pre">timer:send_after/2,3</span></code> returning a timer that could not
 be canceled with <code class="docutils literal notranslate"><span class="pre">erlang:cancel_timer/1</span></code></p></li>
+<li><p>Fixed a VM abort (<code class="docutils literal notranslate"><span class="pre">context_monitors_handle_terminate:</span> <span class="pre">Assertion</span> <span class="pre">'target</span> <span class="pre">!=</span> <span class="pre">NULL'</span></code>) when a
+crashed process was monitored by a process terminating at the same time: printing the crash
+report could drop or reorder signals still pending in the mailbox</p></li>
+<li><p>Fixed messages that drivers send from a task (for example ESP32 network events) arriving in
+reverse order when they went through the global queue, which is always the case without SMP</p></li>
 </ul>
 </section>
 </section>

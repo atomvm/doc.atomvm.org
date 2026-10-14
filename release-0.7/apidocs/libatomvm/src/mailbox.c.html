@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mailbox.c &mdash; AtomVM 0.7.0-beta.1+git.c8fbd4c4 documentation</title>
+  <title>mailbox.c &mdash; AtomVM 0.7.0-beta.1+git.42abc68e documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/mailbox.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=ee80a5c5"></script>
+      <script src="../../../_static/documentation_options.js?v=19ecc73a"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -820,6 +820,21 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>first message or NULL. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.mailbox.c.mailbox_requeue_outer_signals">
+<span class="target" id="libatomvmmailbox_8c_1afa93afb2b2b2ccd4cdcc1eaa8d89ff2f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mailbox_requeue_outer_signals</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../../../atomvm-internals.html#c.Mailbox" title="Mailbox"><span class="n"><span class="pre">Mailbox</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mbox</span></span>, <span class="n"><span class="pre">MailboxMessage</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">signals</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.mailbox.c.mailbox_requeue_outer_signals" title="Link to this definition"></a><br /></dt>
+<dd><p>Put signals detached from the outer list back. </p>
+<p>Signals are stored back behind any message enqueued since they were detached, so they are processed again in received order. To be called from the process only. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mbox</strong> – the mailbox to work with </p></li>
+<li><p><strong>signals</strong> – the signal messages in received order, as returned by mailbox_process_outer_list_native. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
