@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module gen &mdash; AtomVM 0.7.0-beta.1+git.4c32408d documentation</title>
+  <title>Module gen &mdash; AtomVM 0.7.0-beta.1+git.90810d5d documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/gen.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=23ad0032"></script>
+      <script src="../../../_static/documentation_options.js?v=e8e8d9c6"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -169,6 +169,18 @@
 <p><a name="types"></a></p>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<section id="emgr-name">
+<h3><a name="type-emgr_name">emgr_name()</a><a class="headerlink" href="#emgr-name" title="Link to this heading"></a></h3>
+<pre><code>
+emgr_name() = {local, atom()}
+</code></pre>
+</section>
+<section id="linkage">
+<h3><a name="type-linkage">linkage()</a><a class="headerlink" href="#linkage" title="Link to this heading"></a></h3>
+<pre><code>
+linkage() = link | nolink | monitor
+</code></pre>
+</section>
 <section id="server-ref">
 <h3><a name="type-server_ref">server_ref()</a><a class="headerlink" href="#server-ref" title="Link to this heading"></a></h3>
 <pre><code>
@@ -179,7 +191,8 @@ server_ref() = atom() | pid()
 </section>
 <section id="function-index">
 <h2>Function Index<a class="headerlink" href="#function-index" title="Link to this heading"></a></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#call-4">call/4</a></td><td>    Perform a call on a gen server.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#call-4">call/4</a></td><td>    Perform a call on a gen server.</td></tr><tr><td valign="top"><a href="#start-5">start/5</a></td><td>    Start a <code>gen_*</code> process without a registered name.</td></tr><tr><td valign="top"><a href="#start-6">start/6</a></td><td>    Start a <code>gen_*</code> process with a registered name, as called by Elixir
+(<code>:gen.start(:gen_server, Link, {local, Name}, Module, Args, Options)</code>).</td></tr></table>
 <p><a name="functions"></a></p>
 </section>
 <section id="function-details">
@@ -198,6 +211,29 @@ call(ServerRef::<a href="#type-server_ref">server_ref()</a>, Label::atom(), Requ
 <h2>returns: <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Result}</span></code> or raises an exit exception<a class="headerlink" href="#returns-ok-result-or-raises-an-exit-exception" title="Link to this heading"></a></h2>
 <p>Perform a call on a gen server. This API not documented by OTP,
 yet Elixir uses it, so this function matches the current OTP-28 behavior.</p>
+<p><a name="start-5"></a></p>
+<section id="start-5">
+<h3>start/5<a class="headerlink" href="#start-5" title="Link to this heading"></a></h3>
+<pre><code>
+start(GenMod::module(), LinkP::<a href="#type-linkage">linkage()</a>, Module::module(), Args::term(), Options::list()) -&gt; {ok, pid()} | {ok, {pid(), reference()}} | ignore | {error, term()}
+</code></pre>
+<br />
+<p>Start a <code class="docutils literal notranslate"><span class="pre">gen_*</span></code> process without a registered name. This is the
+OTP-private entry point Elixir’s <code class="docutils literal notranslate"><span class="pre">GenServer.start_link/start</span></code> calls
+(<code class="docutils literal notranslate"><span class="pre">:gen.start(:gen_server,</span> <span class="pre">Link,</span> <span class="pre">Module,</span> <span class="pre">Args,</span> <span class="pre">Options)</span></code>). It bridges to the
+AtomVM <code class="docutils literal notranslate"><span class="pre">gen_*</span></code> module’s <code class="docutils literal notranslate"><span class="pre">init_it</span></code> protocol via <a class="reference internal" href="proc_lib.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">proc_lib</span></code></span></a>.</p>
+<p><a name="start-6"></a></p>
+</section>
+<section id="start-6">
+<h3>start/6<a class="headerlink" href="#start-6" title="Link to this heading"></a></h3>
+<pre><code>
+start(GenMod::module(), LinkP::<a href="#type-linkage">linkage()</a>, Name::<a href="#type-emgr_name">emgr_name()</a>, Module::module(), Args::term(), Options::list()) -&gt; {ok, pid()} | {ok, {pid(), reference()}} | ignore | {error, term()}
+</code></pre>
+<br />
+<p>Start a <code class="docutils literal notranslate"><span class="pre">gen_*</span></code> process with a registered name, as called by Elixir
+(<code class="docutils literal notranslate"><span class="pre">:gen.start(:gen_server,</span> <span class="pre">Link,</span> <span class="pre">{local,</span> <span class="pre">Name},</span> <span class="pre">Module,</span> <span class="pre">Args,</span> <span class="pre">Options)</span></code>).</p>
+<p>Only <code class="docutils literal notranslate"><span class="pre">{local,</span> <span class="pre">Name}</span></code> is supported.</p>
+</section>
 </section>
 </section>
 

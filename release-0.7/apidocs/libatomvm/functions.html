@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; AtomVM 0.7.0-beta.1+git.4c32408d documentation</title>
+  <title>Functions &mdash; AtomVM 0.7.0-beta.1+git.90810d5d documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/functions.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=23ad0032"></script>
+      <script src="../../_static/documentation_options.js?v=e8e8d9c6"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -202,19 +202,39 @@
 </dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.functions.avmpack_compute_size">
+<span class="target" id="libatomvmavmpack_8h_1a6d98b9b1d176e0b08593968ba1255bc2"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_compute_size</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">avmpack_binary</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">max_size</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">real_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.avmpack_compute_size" title="Link to this definition"></a><br /></dt>
+<dd><p>Finds the end of an AVM Pack within a region and returns its real size. </p>
+<p>Walks the section chain, validating every header, until the <code class="docutils literal notranslate"><span class="pre">end</span></code> terminator or <code class="docutils literal notranslate"><span class="pre">max_size</span></code> is reached. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>avmpack_binary</strong> – a pointer to an AVM Pack binary. </p></li>
+<li><p><strong>max_size</strong> – the size in bytes of the region containing the AVM Pack. </p></li>
+<li><p><strong>real_size</strong> – <strong>[out]</strong> set to the size in bytes of the AVM Pack on success. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> if the terminator was found within <code class="docutils literal notranslate"><span class="pre">max_size</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.avmpack_find_section_by_flag">
-<span class="target" id="libatomvmavmpack_8h_1ad7e57a316d8dfe40893fa6a6554662f0"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_find_section_by_flag</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">avmpack_binary</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">flags_mask</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">flags_value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ptr</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">size</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.avmpack_find_section_by_flag" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmavmpack_8h_1a48508bb85d22ce0701bfb3cec7060c92"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_find_section_by_flag</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">avmpack_binary</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">avmpack_size</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">flags_mask</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">flags_value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ptr</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">size</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.avmpack_find_section_by_flag" title="Link to this definition"></a><br /></dt>
 <dd><p>Finds an AVM Pack section that has certain flags set. </p>
-<p>Finds an AVM Pack section that has certain flags set and returns a pointer to it, its size and its name. </p>
+<p>Finds an AVM Pack section that has certain flags set and returns a pointer to it, its size and its name. The scan is bounded by <code class="docutils literal notranslate"><span class="pre">avmpack_size</span></code>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>avmpack_binary</strong> – a pointer to valid AVM Pack file data. </p></li>
+<li><p><strong>avmpack_size</strong> – the size in bytes of the AVM Pack. </p></li>
 <li><p><strong>flags_mask</strong> – that will be matched against file sections. </p></li>
 <li><p><strong>flags_value</strong> – that will be matched against file sections. </p></li>
-<li><p><strong>ptr</strong> – will point to the found file section. </p></li>
-<li><p><strong>size</strong> – will be set to the file section size that has been found, if the section has not been found it will not be updated. </p></li>
-<li><p><strong>name</strong> – the section name, as defined in the module header. </p></li>
+<li><p><strong>ptr</strong> – <strong>[out]</strong> will point to the found file section. </p></li>
+<li><p><strong>size</strong> – <strong>[out]</strong> the payload size at <code class="docutils literal notranslate"><span class="pre">ptr</span></code>, without the section header and the padded name; not updated if the section has not been found. </p></li>
+<li><p><strong>name</strong> – <strong>[out]</strong> the section name, as defined in the module header. </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -225,16 +245,17 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.avmpack_find_section_by_name">
-<span class="target" id="libatomvmavmpack_8h_1abdb50996509adc7ac2bbdbe43636f14a"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_find_section_by_name</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">avmpack_binary</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ptr</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.avmpack_find_section_by_name" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmavmpack_8h_1a7965ce21733b6345a1fdaae9f5967cc8"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_find_section_by_name</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">avmpack_binary</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">avmpack_size</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">ptr</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.avmpack_find_section_by_name" title="Link to this definition"></a><br /></dt>
 <dd><p>Finds an AVM Pack section that has certain name. </p>
-<p>Finds an AVM Pack section with a certain name and returns a pointer to it and its size. </p>
+<p>Finds an AVM Pack section with a certain name and returns a pointer to it and its size. The scan is bounded by <code class="docutils literal notranslate"><span class="pre">avmpack_size</span></code>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>avmpack_binary</strong> – a pointer to valid AVM Pack file data. </p></li>
+<li><p><strong>avmpack_size</strong> – the size in bytes of the AVM Pack. </p></li>
 <li><p><strong>name</strong> – the file section name that will be searched. </p></li>
-<li><p><strong>ptr</strong> – will point to the found file section, if the section has not been found it will not be updated. </p></li>
-<li><p><strong>size</strong> – will be set to the file section size that has been found, if the section has not been found it will not be updated. </p></li>
+<li><p><strong>ptr</strong> – <strong>[out]</strong> will point to the found file section; not updated if the section has not been found. </p></li>
+<li><p><strong>size</strong> – <strong>[out]</strong> the payload size at <code class="docutils literal notranslate"><span class="pre">ptr</span></code>, without the section header and the padded name; not updated if the section has not been found. </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -245,14 +266,15 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.avmpack_fold">
-<span class="target" id="libatomvmavmpack_8h_1a50b18f859b6632e8877915e76f9ad956"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_fold</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">accum</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">avmpack_binary</span></span>, <span class="n"><span class="pre">avmpack_fold_fun</span></span><span class="w"> </span><span class="n"><span class="pre">fold_fun</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.avmpack_fold" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmavmpack_8h_1a2339ccd7c14d004fc5e76bd140593004"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_fold</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">accum</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">avmpack_binary</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">avmpack_size</span></span>, <span class="n"><span class="pre">avmpack_fold_fun</span></span><span class="w"> </span><span class="n"><span class="pre">fold_fun</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.avmpack_fold" title="Link to this definition"></a><br /></dt>
 <dd><p>Fold over all the sections in an AVM Pack. </p>
-<p>This function will call the callback on each section of the AVM Pack, passing in the current section of each module in the AVM binary to the supplied fold function. </p>
+<p>This function will call the callback on each section of the AVM Pack, passing in the current section of each module in the AVM binary to the supplied fold function. The scan is bounded by <code class="docutils literal notranslate"><span class="pre">avmpack_size</span></code> and stops on the terminator or on the first invalid section header. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>accum</strong> – The accumulator supplied by the application. </p></li>
 <li><p><strong>avmpack_binary</strong> – a pointer to an AVM Pack binary. </p></li>
+<li><p><strong>avmpack_size</strong> – the size in bytes of the AVM Pack. </p></li>
 <li><p><strong>fold_fun</strong> – function that will be called for each AVM section. </p></li>
 </ul>
 </dd>
@@ -260,10 +282,28 @@
 </dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.functions.avmpack_is_complete">
+<span class="target" id="libatomvmavmpack_8h_1a5846a236702ac7495f6f577f701348fa"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_is_complete</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">avmpack_binary</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">exact_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.avmpack_is_complete" title="Link to this definition"></a><br /></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if an AVM Pack of exactly known size ends with its <code class="docutils literal notranslate"><span class="pre">end</span></code> terminator. </p>
+<p>Reads the header and the last 16 bytes only, so a memory-mapped pack stays lazily paged. Trailing bytes after the terminator and sizes above <code class="docutils literal notranslate"><span class="pre">UINT32_MAX</span></code> are rejected. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>avmpack_binary</strong> – a pointer to an AVM Pack binary. </p></li>
+<li><p><strong>exact_size</strong> – the exact size in bytes of the AVM Pack. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> if the pack is complete, <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.functions.avmpack_is_valid">
 <span class="target" id="libatomvmavmpack_8h_1ae5f71fe251c69cd1a11bc45073c38f0a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">avmpack_is_valid</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">avmpack_binary</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.functions.avmpack_is_valid" title="Link to this definition"></a><br /></dt>
-<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the pointed binary is a valid AVM Pack. </p>
-<p>Returns if the pointed binary is a valid AVM Pack binary or not. </p>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the pointed binary starts with a valid AVM Pack header. </p>
+<p>Checks the 24-byte magic header only; see <code class="docutils literal notranslate"><span class="pre">avmpack_is_complete</span></code> and <code class="docutils literal notranslate"><span class="pre">avmpack_compute_size</span></code> for truncation. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

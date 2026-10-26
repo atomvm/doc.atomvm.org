@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module atomvm &mdash; AtomVM 0.7.0-beta.1+git.4c32408d documentation</title>
+  <title>Module atomvm &mdash; AtomVM 0.7.0-beta.1+git.90810d5d documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/eavmlib/atomvm.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=23ad0032"></script>
+      <script src="../../../_static/documentation_options.js?v=e8e8d9c6"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -668,12 +668,15 @@ Otherwise, the random value is generated using a PRNG.</p>
 <section id="read-priv-2">
 <h3>read_priv/2<a class="headerlink" href="#read-priv-2" title="Link to this heading"></a></h3>
 <pre><code>
-read_priv(App::atom(), Path::list()) -&gt; binary()
+read_priv(App::atom(), Path::list()) -&gt; binary() | undefined
 </code></pre>
 <br />
 <p><code class="docutils literal notranslate"><span class="pre">App</span></code>: application name.<br /><code class="docutils literal notranslate"><span class="pre">Path</span></code>: path to the resource.<br /></p>
-<p>returns: Binary containing the resource content.</p>
-<p>This function allows to fetch priv/ resources content.</p>
+<p>returns: Binary containing the resource content, or <code class="docutils literal notranslate"><span class="pre">undefined</span></code> if it is not in any loaded
+AVM pack.</p>
+<p>This function allows to fetch priv/ resources content.
+Raises <code class="docutils literal notranslate"><span class="pre">invalid_avm</span></code> if the resource is present but its recorded size does not fit
+the AVM pack section holding it.</p>
 <p><a name="subprocess-4"></a></p>
 </section>
 <section id="subprocess-4">

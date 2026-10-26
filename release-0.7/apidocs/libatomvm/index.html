@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>libAtomVM &mdash; AtomVM 0.7.0-beta.1+git.4c32408d documentation</title>
+  <title>libAtomVM &mdash; AtomVM 0.7.0-beta.1+git.90810d5d documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/index.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=23ad0032"></script>
+      <script src="../../_static/documentation_options.js?v=e8e8d9c6"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -217,9 +217,11 @@
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.atom_string_len"><code class="docutils literal notranslate"><span class="pre">atom_string_len()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.atom_string_to_c"><code class="docutils literal notranslate"><span class="pre">atom_string_to_c()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.atom_write_mfa"><code class="docutils literal notranslate"><span class="pre">atom_write_mfa()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.avmpack_compute_size"><code class="docutils literal notranslate"><span class="pre">avmpack_compute_size()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.avmpack_find_section_by_flag"><code class="docutils literal notranslate"><span class="pre">avmpack_find_section_by_flag()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.avmpack_find_section_by_name"><code class="docutils literal notranslate"><span class="pre">avmpack_find_section_by_name()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.avmpack_fold"><code class="docutils literal notranslate"><span class="pre">avmpack_fold()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.avmpack_is_complete"><code class="docutils literal notranslate"><span class="pre">avmpack_is_complete()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.avmpack_is_valid"><code class="docutils literal notranslate"><span class="pre">avmpack_is_valid()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.bitstring_copy_bits"><code class="docutils literal notranslate"><span class="pre">bitstring_copy_bits()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#c.libAtomVM.functions.bitstring_copy_bits_incomplete_bytes"><code class="docutils literal notranslate"><span class="pre">bitstring_copy_bits_incomplete_bytes()</span></code></a></li>
@@ -517,6 +519,7 @@
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.AVMPackData.in_use"><code class="docutils literal notranslate"><span class="pre">in_use</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.AVMPackData.name_atom_id"><code class="docutils literal notranslate"><span class="pre">name_atom_id</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.AVMPackData.data"><code class="docutils literal notranslate"><span class="pre">data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.AVMPackData.size"><code class="docutils literal notranslate"><span class="pre">size</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.CharDataToBytesAcc"><code class="docutils literal notranslate"><span class="pre">CharDataToBytesAcc</span></code></a><ul>
@@ -1295,15 +1298,36 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="src/avmpack.c.html">avmpack.c</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPACK_SIZE"><code class="docutils literal notranslate"><span class="pre">AVMPACK_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPACK_SECTION_HEADER_SIZE"><code class="docutils literal notranslate"><span class="pre">AVMPACK_SECTION_HEADER_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPACK_MIN_SECTION_SIZE"><code class="docutils literal notranslate"><span class="pre">AVMPACK_MIN_SECTION_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPACK_END_MARKER_SIZE"><code class="docutils literal notranslate"><span class="pre">AVMPACK_END_MARKER_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSectionKind"><code class="docutils literal notranslate"><span class="pre">AVMPackSectionKind</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSectionKind.AVMPackSectionInvalid"><code class="docutils literal notranslate"><span class="pre">AVMPackSectionInvalid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSectionKind.AVMPackSectionRegular"><code class="docutils literal notranslate"><span class="pre">AVMPackSectionRegular</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSectionKind.AVMPackSectionEnd"><code class="docutils literal notranslate"><span class="pre">AVMPackSectionEnd</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.pad"><code class="docutils literal notranslate"><span class="pre">pad()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.avmpack_is_valid"><code class="docutils literal notranslate"><span class="pre">avmpack_is_valid()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.is_end_marker_name"><code class="docutils literal notranslate"><span class="pre">is_end_marker_name()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.read_section"><code class="docutils literal notranslate"><span class="pre">read_section()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.avmpack_find_section_by_flag"><code class="docutils literal notranslate"><span class="pre">avmpack_find_section_by_flag()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.avmpack_find_section_by_name"><code class="docutils literal notranslate"><span class="pre">avmpack_find_section_by_name()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.avmpack_fold"><code class="docutils literal notranslate"><span class="pre">avmpack_fold()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.avmpack_is_complete"><code class="docutils literal notranslate"><span class="pre">avmpack_is_complete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.avmpack_compute_size"><code class="docutils literal notranslate"><span class="pre">avmpack_compute_size()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.in_memory_avm_pack_destructor"><code class="docutils literal notranslate"><span class="pre">in_memory_avm_pack_destructor()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.const_avm_pack_destructor"><code class="docutils literal notranslate"><span class="pre">const_avm_pack_destructor()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.in_memory_avm_pack_info"><code class="docutils literal notranslate"><span class="pre">in_memory_avm_pack_info</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.const_avm_pack_info"><code class="docutils literal notranslate"><span class="pre">const_avm_pack_info</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSection"><code class="docutils literal notranslate"><span class="pre">AVMPackSection</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSection.name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSection.data"><code class="docutils literal notranslate"><span class="pre">data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSection.size"><code class="docutils literal notranslate"><span class="pre">size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSection.data_size"><code class="docutils literal notranslate"><span class="pre">data_size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/avmpack.c.html#c.libAtomVM.avmpack.c.AVMPackSection.flags"><code class="docutils literal notranslate"><span class="pre">flags</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="src/avmpack.h.html">avmpack.h</a><ul>
@@ -1317,6 +1341,8 @@
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.avmpack_find_section_by_flag"><code class="docutils literal notranslate"><span class="pre">avmpack_find_section_by_flag()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.avmpack_find_section_by_name"><code class="docutils literal notranslate"><span class="pre">avmpack_find_section_by_name()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.avmpack_is_valid"><code class="docutils literal notranslate"><span class="pre">avmpack_is_valid()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.avmpack_is_complete"><code class="docutils literal notranslate"><span class="pre">avmpack_is_complete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.avmpack_compute_size"><code class="docutils literal notranslate"><span class="pre">avmpack_compute_size()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.avmpack_fold"><code class="docutils literal notranslate"><span class="pre">avmpack_fold()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.in_memory_avm_pack_info"><code class="docutils literal notranslate"><span class="pre">in_memory_avm_pack_info</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.const_avm_pack_info"><code class="docutils literal notranslate"><span class="pre">const_avm_pack_info</span></code></a></li>
@@ -1330,6 +1356,7 @@
 <li class="toctree-l3"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.AVMPackData.in_use"><code class="docutils literal notranslate"><span class="pre">in_use</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.AVMPackData.name_atom_id"><code class="docutils literal notranslate"><span class="pre">name_atom_id</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.AVMPackData.data"><code class="docutils literal notranslate"><span class="pre">data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.AVMPackData.size"><code class="docutils literal notranslate"><span class="pre">size</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src/avmpack.h.html#c.libAtomVM.avmpack.h.InMemoryAVMPack"><code class="docutils literal notranslate"><span class="pre">InMemoryAVMPack</span></code></a><ul>

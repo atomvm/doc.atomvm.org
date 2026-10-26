@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Packbeam Format &mdash; AtomVM 0.7.0-beta.1+git.4c32408d documentation</title>
+  <title>Packbeam Format &mdash; AtomVM 0.7.0-beta.1+git.90810d5d documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/packbeam-format.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=23ad0032"></script>
+      <script src="_static/documentation_options.js?v=e8e8d9c6"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -209,6 +209,7 @@ requirement that the <code class="docutils literal notranslate"><span class="pre
 <section id="end-file">
 <h3><code class="docutils literal notranslate"><span class="pre">end</span></code> file<a class="headerlink" href="#end-file" title="Link to this heading"></a></h3>
 <p>Packbeam files end with a special <code class="docutils literal notranslate"><span class="pre">end</span></code> header.  The <code class="docutils literal notranslate"><span class="pre">size</span></code> field of the <code class="docutils literal notranslate"><span class="pre">end</span></code> header is 0 bytes.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">end</span></code> header is mandatory: the runtime uses it to confirm a pack is complete, and rejects a pack whose terminator is missing (e.g. a truncated flash image) instead of scanning past its data.</p>
 <section id="example-end-header">
 <h4>Example <code class="docutils literal notranslate"><span class="pre">end</span></code> header<a class="headerlink" href="#example-end-header" title="Link to this heading"></a></h4>
 <p>The following sequence of bytes encodes the <code class="docutils literal notranslate"><span class="pre">end</span></code> header:</p>
