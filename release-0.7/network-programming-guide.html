@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Network Programming Guide &mdash; AtomVM 0.7.0-beta.1+git.f316c45e documentation</title>
+  <title>Network Programming Guide &mdash; AtomVM 0.7.0-beta.1+git.8559e0f6 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/network-programming-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=44974077"></script>
+      <script src="_static/documentation_options.js?v=f29d4ad6"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -75,6 +75,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sta-ap-mode">STA+AP mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ethernet-esp32">Ethernet (ESP32)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ethernet-convenience-functions">Ethernet Convenience Functions</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#sntp-support">SNTP Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nvs-credentials">NVS Credentials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stopping-the-network">Stopping the Network</a></li>
@@ -419,9 +423,10 @@ hostname is optional, and <code class="docutils literal notranslate"><span class
 <li><p><code class="docutils literal notranslate"><span class="pre">{ssid,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code>  The SSID to which the device should connect.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{psk,</span> <span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()}</span></code> The password required to authenticate to the network, if required.  Note that this password must be a minimum of 8 characters.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{ap_channel,</span> <span class="pre">wifi_channel()}</span></code> The channel the access point should use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{ap_authmode,</span> <span class="pre">wpa_wpa2_psk</span> <span class="pre">|</span> <span class="pre">wpa2_psk</span> <span class="pre">|</span> <span class="pre">wpa2_wpa3_psk</span> <span class="pre">|</span> <span class="pre">wpa3_psk}</span></code> The security the access point offers when it has a password.</p></li>
 </ul>
 <p>If the SSID is omitted in configuration, the SSID name <code class="docutils literal notranslate"><span class="pre">atomvm-&lt;hexmac&gt;</span></code> will be created, where <code class="docutils literal notranslate"><span class="pre">&lt;hexmac&gt;</span></code> is the hexadecimal representation of the factory-assigned MAC address of the device.  This name should be sufficiently unique to disambiguate it from other reachable ESP32 devices, but it may also be difficult to read or remember.</p>
-<p>If the password is omitted, then an <strong>open network</strong> will be created, and a warning will be printed to the console.  Otherwise, the AP network will be started using WPA+WPA2 authentication.</p>
+<p>If the password is omitted, then an <strong>open network</strong> will be created, and a warning will be printed to the console.  Otherwise, the AP network will be started using WPA+WPA2 authentication, or the mode given in <code class="docutils literal notranslate"><span class="pre">ap_authmode</span></code>: <code class="docutils literal notranslate"><span class="pre">wpa2_psk</span></code> refuses stations that only speak WPA (TKIP), <code class="docutils literal notranslate"><span class="pre">wpa2_wpa3_psk</span></code> lets WPA3 stations use SAE while WPA2 ones still join, and <code class="docutils literal notranslate"><span class="pre">wpa3_psk</span></code> accepts only WPA3 stations. A mode the platform cannot offer, or <code class="docutils literal notranslate"><span class="pre">ap_authmode</span></code> without a <code class="docutils literal notranslate"><span class="pre">psk</span></code>, is refused rather than quietly replaced: the AP is not started, so <code class="docutils literal notranslate"><span class="pre">ap_started</span></code> never comes, and the ESP32 logs why. On the ESP32 the WPA3 modes need <code class="docutils literal notranslate"><span class="pre">CONFIG_ESP_WIFI_SOFTAP_SAE_SUPPORT</span></code>, on by default; on the Pico W, only an explicit <code class="docutils literal notranslate"><span class="pre">wpa_wpa2_psk</span></code> is supported, and <code class="docutils literal notranslate"><span class="pre">wpa2_psk</span></code> is refused because its driver does not enforce WPA2-only authorization; omitting <code class="docutils literal notranslate"><span class="pre">ap_authmode</span></code> keeps its existing default.</p>
 <p>If the channel is omitted the default channel for esp32 is <code class="docutils literal notranslate"><span class="pre">1</span></code>. This setting is only used while a device is operation in AP mode only. If <code class="docutils literal notranslate"><span class="pre">ap_channel</span></code> is configured, it will be temporarily changed to match the associated access point if AP + STA mode is used and the station is associated with an access point. This is a hardware limitation due to the modem radio only being able to operate on a single channel (frequency) at a time.</p>
 <p>The <a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#start1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:start/1</span></code></span></a> will immediately return <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Pid}</span></code>, where <code class="docutils literal notranslate"><span class="pre">Pid</span></code> is the process id of the network server, if the network was properly initialized, or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">Reason}</span></code>, if there was an error in configuration.  However, the application may want to wait for the device to to be ready to accept connections from other devices, or to be notified when other devices connect to this AP.</p>
 <p>Applications can specify callback functions, which get triggered as events emerge from the network layer, including when a station connects or disconnects from the AP, as well as when a station is assigned an IP address.</p>
@@ -493,6 +498,127 @@ hostname is optional, and <code class="docutils literal notranslate"><span class
 <h2>STA+AP mode<a class="headerlink" href="#sta-ap-mode" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module can be started in both STA and AP mode.  In this case, the ESP32 device will both connect to an access point in its STA mode, and will simultaneously serve as an access point in its role in AP mode.</p>
 <p>In order to enable both STA and AP mode, simply provide valid configuration for both modes in the configuration structure supplied to the <a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#start1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:start/1</span></code></span></a> function.</p>
+</section>
+<section id="ethernet-esp32">
+<h2>Ethernet (ESP32)<a class="headerlink" href="#ethernet-esp32" title="Link to this heading"></a></h2>
+<p>On the ESP32 and ESP32-P4, <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> can also bring up the chip’s Ethernet MAC (EMAC) with
+an RMII PHY (LAN8720, IP101, JL1101 and similar), with an <code class="docutils literal notranslate"><span class="pre">eth</span></code> entry in the configuration. It can
+be used alone or next to <code class="docutils literal notranslate"><span class="pre">sta</span></code> and/or <code class="docutils literal notranslate"><span class="pre">ap</span></code>; WiFi is only initialized when <code class="docutils literal notranslate"><span class="pre">sta</span></code> or <code class="docutils literal notranslate"><span class="pre">ap</span></code> is given.
+With both a cable and STA up, the default route goes through Ethernet, unless <code class="docutils literal notranslate"><span class="pre">route_priority</span></code> is
+set below the STA’s 100.</p>
+<p>Ethernet is opt-in: it needs ESP-IDF 5.4 or newer and a build with <code class="docutils literal notranslate"><span class="pre">CONFIG_AVM_ENABLE_ETHERNET=y</span></code>
+(<code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">menuconfig</span></code>, or a line in <code class="docutils literal notranslate"><span class="pre">sdkconfig.defaults</span></code>). WiFi must stay enabled in the sdkconfig,
+since the <code class="docutils literal notranslate"><span class="pre">network</span></code> driver depends on it. On other chips, with an older ESP-IDF, or with the option
+off, an <code class="docutils literal notranslate"><span class="pre">eth</span></code> entry makes <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> return <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">eth_not_supported}</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Value Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mdc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
+<td><p>23 on the ESP32</p></td>
+<td><p>SMI clock GPIO</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mdio</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
+<td><p>18 on the ESP32</p></td>
+<td><p>SMI data GPIO</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rmii_clock</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{in</span> <span class="pre">|</span> <span class="pre">out,</span> <span class="pre">non_neg_integer()}</span></code></p></td>
+<td><p>the sdkconfig choice (<code class="docutils literal notranslate"><span class="pre">CONFIG_ETH_RMII_CLK_*</span></code>)</p></td>
+<td><p>Who drives the 50 MHz RMII clock: <code class="docutils literal notranslate"><span class="pre">{in,</span> <span class="pre">Gpio}</span></code> when the PHY or an oscillator feeds the chip, <code class="docutils literal notranslate"><span class="pre">{out,</span> <span class="pre">Gpio}</span></code> when the chip feeds the PHY. On the ESP32 the clock comes in on GPIO0 only and goes out on GPIO0, 16 or 17</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">power</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
+<td><p>none</p></td>
+<td><p>GPIO driven high before the PHY is probed (PHY power or oscillator enable), and released on stop</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">reset</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
+<td><p>none</p></td>
+<td><p>PHY reset GPIO, pulsed by ESP-IDF during PHY init</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phy_addr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0..31</span></code></p></td>
+<td><p>first PHY found</p></td>
+<td><p>PHY address on the SMI bus</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">route_priority</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0..255</span></code></p></td>
+<td><p>128</p></td>
+<td><p>Default route priority; the interface with the highest one that is up carries the traffic (STA: 100, AP: 10)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dhcp_hostname</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()</span></code></p></td>
+<td><p>none</p></td>
+<td><p>DHCP hostname</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">started</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
+<td><p>none</p></td>
+<td><p>The interface is up, link state unknown</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">connected</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
+<td><p>none</p></td>
+<td><p>Link up</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disconnected</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
+<td><p>none</p></td>
+<td><p>Link down</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">got_ip</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fun((ip_info())</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
+<td><p>none</p></td>
+<td><p>DHCP lease obtained</p></td>
+</tr>
+</tbody>
+</table>
+<p>Invalid pins or a <code class="docutils literal notranslate"><span class="pre">phy_addr</span></code> out of range make <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> return <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badarg}</span></code>.
+<code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> blocks until the PHY answers on the SMI bus; it does not wait for a cable. A
+clock out on GPIO16 or GPIO17 is refused while PSRAM is in use, because WROVER modules use those
+pins for it. <a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#eth_status0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:eth_status/0</span></code></span></a> returns
+<code class="docutils literal notranslate"><span class="pre">inactive</span></code>, <code class="docutils literal notranslate"><span class="pre">started</span></code>, <code class="docutils literal notranslate"><span class="pre">connected</span></code> or <code class="docutils literal notranslate"><span class="pre">disconnected</span></code>. When an <code class="docutils literal notranslate"><span class="pre">mdns</span></code> entry is given, the responder
+binds to the Ethernet address when there is one.</p>
+<p>For example, for a Dingtian DT-R002 (PHY at address 0, clock out on GPIO17, PHY power on GPIO0):</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="n">eth</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="n">mdc</span><span class="p">,</span><span class="w"> </span><span class="mi">23</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">mdio</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">rmii_clock</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">}},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">power</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">phy_addr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">got_ip</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="p">(</span><span class="nv">IpInfo</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">"Ethernet got IP: </span><span class="si">~p~n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">IpInfo</span><span class="p">])</span><span class="w"> </span><span class="k">end</span><span class="p">}</span>
+<span class="w">    </span><span class="p">]}</span>
+<span class="p">],</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">Pid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="nv">Config</span><span class="p">).</span>
+</pre></div>
+</div>
+<section id="ethernet-convenience-functions">
+<h3>Ethernet Convenience Functions<a class="headerlink" href="#ethernet-convenience-functions" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module supports the <a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#wait_for_eth1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:wait_for_eth/1,2</span></code></span></a> convenience functions for applications that do not need robust connection management.  These functions are synchronous and will wait until the link is up and the interface got an address.  Supply the properties list specified in the <code class="docutils literal notranslate"><span class="pre">{eth,</span> <span class="pre">[...]}</span></code> component of the above configuration, in addition to an optional timeout (in milliseconds).</p>
+<p>For example:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="n">rmii_clock</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">}},</span>
+<span class="w">    </span><span class="p">{</span><span class="n">power</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="n">phy_addr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span>
+<span class="p">],</span>
+<span class="k">case</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">wait_for_eth</span><span class="p">(</span><span class="nv">Config</span><span class="p">,</span><span class="w"> </span><span class="mi">15000</span><span class="p">)</span><span class="w"> </span><span class="k">of</span>
+<span class="w">    </span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nv">Address</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">Netmask</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">Gateway</span><span class="p">}}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">"Acquired IP address: </span><span class="si">~p~n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Address</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">{</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="nv">Reason</span><span class="p">}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">"Network initialization failed: </span><span class="si">~p~n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Reason</span><span class="p">])</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="sntp-support">
 <h2>SNTP Support<a class="headerlink" href="#sntp-support" title="Link to this heading"></a></h2>
