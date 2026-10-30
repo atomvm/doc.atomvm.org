@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.d749c4ce documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.f316c45e documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=1a4332ca"></script>
+      <script src="_static/documentation_options.js?v=44974077"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -220,6 +220,7 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">gen:start/5,6</span></code>, used by Elixir’s <code class="docutils literal notranslate"><span class="pre">GenServer</span></code></p></li>
 <li><p>Added ML-KEM-768 (FIPS 203) key encapsulation to <code class="docutils literal notranslate"><span class="pre">crypto</span></code>, requiring libsodium &gt;= 1.0.22</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">AVM_STATIC_LIBSODIUM</span></code> CMake option to statically link libsodium</p></li>
+<li><p>Added support for non-byte-aligned bitstrings</p></li>
 </ul>
 </section>
 <section id="changed">
@@ -229,6 +230,8 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <li><p><code class="docutils literal notranslate"><span class="pre">.avm</span></code> files, binaries and the pack embedded in an escript must now end exactly with the pack
 terminator: data after the end of the pack (for example a padded partition dump passed to
 <code class="docutils literal notranslate"><span class="pre">atomvm:add_avm_pack_binary/2</span></code>) is rejected when loaded</p></li>
+<li><p>STM32 builds now enable <code class="docutils literal notranslate"><span class="pre">AVM_MINIMAL_OPCODES</span></code> by default, so modules compiled with the
+<code class="docutils literal notranslate"><span class="pre">no_bs_create_bin</span></code>, <code class="docutils literal notranslate"><span class="pre">no_bs_match</span></code> or <code class="docutils literal notranslate"><span class="pre">no_ssa_opt_bs_ensure</span></code> compiler options cannot be loaded</p></li>
 </ul>
 </section>
 <section id="fixed">
@@ -282,6 +285,25 @@ other message in the caller’s mailbox as <code class="docutils literal notrans
 and returns <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">timeout}</span></code> after 5 s</p></li>
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">esp:nvs_get_binary/1,2</span></code> leaking an NVS handle on every read of a missing key, which
 slowly ran the ESP32 out of memory</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">rem</span></code> returning wrong results on 32-bit builds when an operand is a big integer with
+a 64-bit magnitude, such as <code class="docutils literal notranslate"><span class="pre">(1</span> <span class="pre">bsl</span> <span class="pre">63)</span> <span class="pre">rem</span> <span class="pre">7</span></code></p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">rem</span></code> crashing the VM when the most negative boxed integer is divided by <code class="docutils literal notranslate"><span class="pre">-1</span></code>, such as
+<code class="docutils literal notranslate"><span class="pre">-(1</span> <span class="pre">bsl</span> <span class="pre">63)</span> <span class="pre">rem</span> <span class="pre">-1</span></code> on x86_64</p></li>
+<li><p>Fixed the xtensa JIT losing a value held across a call when few registers were free, for
+example corrupting a binary built with a <code class="docutils literal notranslate"><span class="pre">little</span></code> utf16 segment followed by other segments</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">erlang:list_to_binary/1</span></code>, <code class="docutils literal notranslate"><span class="pre">erlang:iolist_to_binary/1</span></code>, <code class="docutils literal notranslate"><span class="pre">erlang:iolist_size/1</span></code> and the
+<code class="docutils literal notranslate"><span class="pre">unicode:characters_to_*</span></code> functions accepting an integer improper tail, such as <code class="docutils literal notranslate"><span class="pre">[1</span> <span class="pre">|</span> <span class="pre">2]</span></code></p></li>
+<li><p>Fixed float segments at a bit offset that is not a multiple of 8, which raised <code class="docutils literal notranslate"><span class="pre">badarg</span></code> on
+construction and did not match</p></li>
+<li><p>Fixed the x86_64 JIT failing to compile a float segment of variable size</p></li>
+<li><p>Fixed integer segments wider than 64 bits being written at the end of the binary under
+construction instead of in their own field when other segments followed them, and raising
+<code class="docutils literal notranslate"><span class="pre">badarg</span></code> instead of being truncated when the field was narrower than the value</p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">bs_add</span></code> instruction (binaries built with the <code class="docutils literal notranslate"><span class="pre">no_bs_create_bin</span></code> compiler option)
+scaling the number of bits it is given, which allocated binaries of the wrong size</p></li>
+<li><p>Fixed modules compiled with the <code class="docutils literal notranslate"><span class="pre">no_bs_create_bin</span></code> compiler option failing to load when
+<code class="docutils literal notranslate"><span class="pre">bs_init_bits</span></code> or <code class="docutils literal notranslate"><span class="pre">bs_append</span></code> were followed by the creation of funs, and <code class="docutils literal notranslate"><span class="pre">bs_append</span></code> not
+reserving the extra heap words it is given</p></li>
 </ul>
 </section>
 </section>

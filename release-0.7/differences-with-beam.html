@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Differences between AtomVM and BEAM &mdash; AtomVM 0.7.0-beta.1+git.d749c4ce documentation</title>
+  <title>Differences between AtomVM and BEAM &mdash; AtomVM 0.7.0-beta.1+git.f316c45e documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/differences-with-beam.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=1a4332ca"></script>
+      <script src="_static/documentation_options.js?v=44974077"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -250,17 +250,20 @@ Since <code class="docutils literal notranslate"><span class="pre">-0</span></co
 </section>
 <section id="bit-syntax">
 <h3>Bit syntax<a class="headerlink" href="#bit-syntax" title="Link to this heading"></a></h3>
-<p>AtomVM supports binaries, binary construction and binary pattern matching. Bit syntax (i.e. with
-sizes not a multiple of 8) is only supported as long as they would not generate bitstrings, i.e.
-binaries with a number if bits that are not multiple of 8.</p>
-<p>The following is supported:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;&lt;X:3, Y:5&gt;&gt; = &lt;&lt;N&gt;&gt;
+<p>AtomVM supports binaries and bitstrings, including construction and pattern matching of bitstrings
+whose size in bits is not a multiple of 8:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;&lt;X:3&gt;&gt; = &lt;&lt;1:3&gt;&gt;
 </pre></div>
 </div>
-<p>The following is not:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;&lt;X:3&gt;&gt;
+<p>There is one limitation, which follows from the 256-bit integer limit described above: an integer
+segment that is more than 256 bits wide cannot be matched, and AtomVM raises <code class="docutils literal notranslate"><span class="pre">unsupported</span></code> where
+BEAM would match it, even when the value is small.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;&lt;X:300&gt;&gt; = &lt;&lt;0:300&gt;&gt;
 </pre></div>
 </div>
+<p>Integer segments of up to 256 bits can be constructed and matched at any offset, in either byte
+order, including those that are wider than 64 bits and whose size is not a multiple of 8, such as
+<code class="docutils literal notranslate"><span class="pre">&lt;&lt;Flag:1,</span> <span class="pre">Hash:64&gt;&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;&lt;_:1,</span> <span class="pre">X:72,</span> <span class="pre">_:7&gt;&gt;</span> <span class="pre">=</span> <span class="pre">Bin</span></code>.</p>
 </section>
 <section id="code-reloading">
 <h3>Code reloading<a class="headerlink" href="#code-reloading" title="Link to this heading"></a></h3>

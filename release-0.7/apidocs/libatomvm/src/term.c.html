@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>term.c &mdash; AtomVM 0.7.0-beta.1+git.d749c4ce documentation</title>
+  <title>term.c &mdash; AtomVM 0.7.0-beta.1+git.f316c45e documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/term.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=1a4332ca"></script>
+      <script src="../../../_static/documentation_options.js?v=44974077"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -206,7 +206,7 @@
 </div>
 <p>Include dependency graph for term.c:</p>
 <figure class="align-default">
-<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-7a39b25427c8034f3fff5ac5093b8593dfeb1ea9.svg" type="image/svg+xml" class="graphviz">
+<div align="center" class="align-center"><div class="graphviz"><object data="../../../_images/graphviz-dc8cebfd3b4e1033f290fa1e3f093fca5d06a875.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph {
     graph [bgcolor=&quot;#00000000&quot;]
     node [shape=rectangle style=filled fillcolor=&quot;#FFFFFF&quot; font=Helvetica padding=2]
@@ -341,6 +341,7 @@
     &quot;1&quot; -&gt; &quot;38&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;39&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;11&quot; [dir=forward tooltip=&quot;include&quot;]
+    &quot;1&quot; -&gt; &quot;17&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;40&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;12&quot; [dir=forward tooltip=&quot;include&quot;]
     &quot;1&quot; -&gt; &quot;41&quot; [dir=forward tooltip=&quot;include&quot;]
@@ -645,18 +646,18 @@
 <dt class="sig sig-object c" id="c.libAtomVM.term.c.term_reuse_binary">
 <span class="target" id="libatomvmterm_8c_1ad7205af247e3c88efee0e3dc4796b1fd"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_reuse_binary</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.c.term_reuse_binary" title="Link to this definition"></a><br /></dt>
 <dd><p>Reuse a binary. If the binary is a refc binary with a ref count of 1, try to reuse it. Otherwise, create a new binary and copy the data. </p>
-<p>Try to reuse a binary and return a term pointing to it. </p>
+<p>Try to reuse a binary and return a term pointing to it. If src is a bitstring, its storage is reused as a whole, trailing bits included: src must then be a sub-binary at offset 0 over its own storage, which is what a private_append accumulator always is. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>src</strong> – binary to reuse. </p></li>
-<li><p><strong>size</strong> – size of binary data buffer. </p></li>
+<li><p><strong>src</strong> – binary or bitstring to reuse. </p></li>
+<li><p><strong>size</strong> – size of binary data buffer, in bytes. </p></li>
 <li><p><strong>heap</strong> – the heap to allocate memory in </p></li>
 <li><p><strong>glb</strong> – the global context as refc binaries are global </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a term pointing to the boxed binary pointer. </p>
+<dd class="field-even"><p>a term pointing to the boxed binary pointer, or <code class="docutils literal notranslate"><a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3a169e9a3e0ec70a5303a1fce2a1178f"><span class="std std-ref"><span class="pre">term_invalid_term()</span></span></a></code> if the buffer could not be allocated. </p>
 </dd>
 </dl>
 </dd></dl>
@@ -682,6 +683,37 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>a term (reference) pointing to the newly allocated sub-binary in the process heap. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmterm_8c_1ab7bf17edb63112e158ce60d87a291898"></span><span class="sig-name descname"><span class="pre">_Static_assert</span> <span class="pre">((((SIZE_MAX</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">3)&lt;&lt;</span> <span class="pre">3)|0x7)</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">3==(SIZE_MAX</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">3),</span> <span class="pre">&quot;the</span> <span class="pre">largest</span> <span class="pre">binary</span> <span class="pre">offset</span> <span class="pre">must</span> <span class="pre">round-trip</span> <span class="pre">through</span> <span class="pre">the</span> <span class="pre">packed</span> <span class="pre">encoding&quot;)</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c">
+<span class="target" id="libatomvmterm_8c_1a39ee5b6c17b415e07d4a59868319d639"></span><span class="sig-name descname"><span class="pre">_Static_assert</span> <span class="pre">((SIZE_MAX</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span> <span class="pre">3)&lt;=(SIZE_MAX</span> <span class="pre">-</span> <span class="pre">7)/8,</span> <span class="pre">&quot;term_bit_size</span> <span class="pre">must</span> <span class="pre">not</span> <span class="pre">overflow</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">largest</span> <span class="pre">binary&quot;)</span></span></dt>
+<dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.c.term_alloc_sub_binary_bits">
+<span class="target" id="libatomvmterm_8c_1a1b3282477b46184e3c4ab6e449fc81bd"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_alloc_sub_binary_bits</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">binary_or_state</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span>, <span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">trailing_bits</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.c.term_alloc_sub_binary_bits" title="Link to this definition"></a><br /></dt>
+<dd><p>Allocate a sub-binary that may be non-byte-aligned (a bitstring). </p>
+<p>Same as term_alloc_sub_binary but carries a trailing partial-byte bit count (0..7). When trailing_bits is 0 the result is an ordinary byte-aligned binary; when non-zero the total bit size is len*8 + trailing_bits and the last referenced byte is only partially valid. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>binary</strong> – the referenced binary </p></li>
+<li><p><strong>offset</strong> – the offset (in bytes) into the referenced binary </p></li>
+<li><p><strong>len</strong> – the number of whole bytes of the sub-binary </p></li>
+<li><p><strong>trailing_bits</strong> – number of valid bits (0..7) in the byte following the whole bytes </p></li>
+<li><p><strong>heap</strong> – the heap to allocate the binary in </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a term (reference) pointing to the newly allocated sub-binary. </p>
 </dd>
 </dl>
 </dd></dl>

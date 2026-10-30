@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bitstring.h &mdash; AtomVM 0.7.0-beta.1+git.d749c4ce documentation</title>
+  <title>bitstring.h &mdash; AtomVM 0.7.0-beta.1+git.f316c45e documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/bitstring.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=1a4332ca"></script>
+      <script src="../../../_static/documentation_options.js?v=44974077"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -603,6 +603,49 @@
 <dd></dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_extract_bigint_bytes">
+<span class="target" id="libatomvmbitstring_8h_1a68084bc60bab7e1d1fd71f5e91957a90"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_extract_bigint_bytes</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span>, <span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">256</span></span><span class="w"> </span><span class="o"><span class="pre">/</span></span><span class="w"> </span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_extract_bigint_bytes" title="Link to this definition"></a><br /></dt>
+<dd><p>Extract an integer field of up to 256 bits as whole bytes for intn_from_integer_bytes, sign-extended if signed. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src_bin</strong> – binary to extract from </p></li>
+<li><p><strong>offset</strong> – offset, in bits, to where the field starts </p></li>
+<li><p><strong>n</strong> – size of the field, in bits </p></li>
+<li><p><strong>bs_flags</strong> – flags to decode the integer (little/big/native, signed) </p></li>
+<li><p><strong>out</strong> – the bytes of the integer, on output </p></li>
+<li><p><strong>out_size</strong> – the number of bytes written to out, on output </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> if the field was extracted, <code class="docutils literal notranslate"><span class="pre">false</span></code> if it is too large or out of bounds </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_insert_bigint">
+<span class="target" id="libatomvmbitstring_8h_1a19fe965db8079eb3dc6b3a8ca8755ee3"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_insert_bigint</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">dst_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">intn_digit_t</span></span><span class="w"> </span><span class="n"><span class="pre">big_value</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">big_len</span></span>, <span class="n"><span class="pre">intn_integer_sign_t</span></span><span class="w"> </span><span class="n"><span class="pre">big_sign</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_insert_bigint" title="Link to this definition"></a><br /></dt>
+<dd><p>Insert a big integer, truncated or sign-extended to n bits. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dst_bin</strong> – binary to insert to </p></li>
+<li><p><strong>offset</strong> – offset, in bits, to where to insert the integer </p></li>
+<li><p><strong>big_value</strong> – digits of the big integer </p></li>
+<li><p><strong>big_len</strong> – number of digits </p></li>
+<li><p><strong>big_sign</strong> – sign of the big integer </p></li>
+<li><p><strong>n</strong> – size of the field, in bits </p></li>
+<li><p><strong>bs_flags</strong> – flags to encode the integer (little/big/native) </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> if the field was written, <code class="docutils literal notranslate"><span class="pre">false</span></code> if it does not fit in dst_bin </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_utf8_encode">
 <span class="target" id="libatomvmbitstring_8h_1a4cdb168d961b620ddc471df02a3740fd"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_utf8_encode</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">c</span></span>, <span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">buf</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_utf8_encode" title="Link to this definition"></a><br /></dt>
 <dd><p>Encode a character to UTF-8. </p>
@@ -732,7 +775,7 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_insert_utf8">
-<span class="target" id="libatomvmbitstring_8h_1a729e79d5ed9e46e42cd20ca923258881"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_insert_utf8</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">dst_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">c</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_insert_utf8" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmbitstring_8h_1a249f95718e98c907165a0d55d4e98531"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_insert_utf8</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">dst_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">c</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_insert_utf8" title="Link to this definition"></a><br /></dt>
 <dd><p>Insert a character in UTF-8 format. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -751,7 +794,7 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_match_utf8">
-<span class="target" id="libatomvmbitstring_8h_1ab1f2822bb37cb6a22b6d97b101a4f66e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_match_utf8</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">c</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_match_utf8" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmbitstring_8h_1a1bcaac33b259c0064bdf49dd4415f079"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_match_utf8</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">c</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_match_utf8" title="Link to this definition"></a><br /></dt>
 <dd><p>Match a character in UTF-8 format. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -770,7 +813,7 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_insert_utf16">
-<span class="target" id="libatomvmbitstring_8h_1a2d0281250f750e60aff79f199868ebc5"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_insert_utf16</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">dst_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">c</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_insert_utf16" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmbitstring_8h_1a033edef5ae82f03fecf71ac7439d72b5"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_insert_utf16</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">dst_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">c</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_insert_utf16" title="Link to this definition"></a><br /></dt>
 <dd><p>Insert a character in UTF-&amp;§ format. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -790,7 +833,7 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_match_utf16">
-<span class="target" id="libatomvmbitstring_8h_1a21081894ac1ee0752747612577d4d5bf"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_match_utf16</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">c</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_match_utf16" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmbitstring_8h_1a4c51e398d6ac6a0d184dbed8eae12d1f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_match_utf16</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">c</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_size</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_match_utf16" title="Link to this definition"></a><br /></dt>
 <dd><p>Match a character in UTF-16 format. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -810,7 +853,7 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_insert_utf32">
-<span class="target" id="libatomvmbitstring_8h_1a96b065ae409a51aaeb9226991d9a1fc2"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_insert_utf32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">dst_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">c</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_insert_utf32" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmbitstring_8h_1a21c3cf003558b1ceeec29dc64ffe4369"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_insert_utf32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">dst_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">c</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_insert_utf32" title="Link to this definition"></a><br /></dt>
 <dd><p>Insert a character in UTF-32 format. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -829,7 +872,7 @@
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_match_utf32">
-<span class="target" id="libatomvmbitstring_8h_1a599285890c7343a6686dc0b48ff3d953"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_match_utf32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">c</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_match_utf32" title="Link to this definition"></a><br /></dt>
+<span class="target" id="libatomvmbitstring_8h_1a776fb8e29f163426f8fca162842bdd10"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_match_utf32</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">c</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_match_utf32" title="Link to this definition"></a><br /></dt>
 <dd><p>Match a character in UTF-32 format. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -858,6 +901,23 @@
 <li><p><strong>bits_offset</strong> – offset in bits in destination buffer </p></li>
 <li><p><strong>src</strong> – source buffer </p></li>
 <li><p><strong>bits_count</strong> – number of bits </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_copy_bits_from">
+<span class="target" id="libatomvmbitstring_8h_1a54c3c0df3c8552445f316a9bc9881774"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_copy_bits_from</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">dst</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">src</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">src_offset</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">bits_count</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_copy_bits_from" title="Link to this definition"></a><br /></dt>
+<dd><p>Copy bits_count bits starting at bit src_offset of src into dst[0..]. </p>
+<p>Used to materialize a non-byte-aligned bitstring slice (e.g. a matched tail whose start is not a byte boundary) into a fresh byte-aligned buffer. The destination must be pre-zeroed; only set bits are written.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dst</strong> – destination buffer (pre-zeroed), receiving bits at offset 0 </p></li>
+<li><p><strong>src</strong> – source buffer </p></li>
+<li><p><strong>src_offset</strong> – offset in bits in the source buffer </p></li>
+<li><p><strong>bits_count</strong> – number of bits to copy </p></li>
 </ul>
 </dd>
 </dl>
@@ -913,6 +973,44 @@
 <dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_insert_f64">
 <span class="target" id="libatomvmbitstring_8h_1a6ef3c55475085b8abf5941be8c8f82aa"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_insert_f64</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">dst_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">avm_float_t</span></span><span class="w"> </span><span class="n"><span class="pre">value</span></span>, <span class="k"><span class="pre">enum</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.bitstring.h.BitstringFlags" title="BitstringFlags"><span class="n"><span class="pre">BitstringFlags</span></span></a><span class="w"> </span><span class="n"><span class="pre">bs_flags</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_insert_f64" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_slice_heap_size">
+<span class="target" id="libatomvmbitstring_8h_1a83dcb7284a9e65026169c0f500fb13d7"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_slice_heap_size</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">bs_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len_bits</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_slice_heap_size" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="memory.h.html#libatomvmstruct_heap"><span class="std std-ref">Heap</span></a> words needed to extract a len_bits slice at bit offset offset. </p>
+<p>Worst case: a byte-aligned offset and length shares storage via a sub-binary; otherwise the bits are copied into a fresh (possibly bitstring) binary. Pair with bitstring_slice. </p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_slice">
+<span class="target" id="libatomvmbitstring_8h_1a393487a53d4a06745f1253f37dc9d7ef"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_slice</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">bs_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len_bits</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_slice" title="Link to this definition"></a><br /></dt>
+<dd><p>Extract a len_bits slice of bs_bin starting at bit offset offset. </p>
+<p>Byte-aligned offset+length shares storage via a sub-binary; a non-byte-aligned offset or length copies the bits into a fresh bitstring. <a class="reference internal" href="memory.h.html#libatomvmstruct_heap"><span class="std std-ref">Heap</span></a> must already be reserved (see bitstring_slice_heap_size). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the extracted slice, or <code class="docutils literal notranslate"><a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3a169e9a3e0ec70a5303a1fce2a1178f"><span class="std std-ref"><span class="pre">term_invalid_term()</span></span></a></code> if a refc binary buffer could not be allocated for a copied slice. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_get_tail_heap_size">
+<span class="target" id="libatomvmbitstring_8h_1a90722e34d72f149fa2e235e5a826e0cd"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_get_tail_heap_size</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">bs_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">bs_offset</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_get_tail_heap_size" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="memory.h.html#libatomvmstruct_heap"><span class="std std-ref">Heap</span></a> words needed to extract the tail of a match at bit offset bs_offset. </p>
+<p>Worst case: a byte-aligned start and length shares storage via a sub-binary; otherwise the remaining bits are copied into a fresh (possibly bitstring) binary. Pair with bitstring_get_tail. </p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.bitstring.h.bitstring_get_tail">
+<span class="target" id="libatomvmbitstring_8h_1af5623e7cfea000df835541f62cd9b5a3"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitstring_get_tail</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">bs_bin</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">bs_offset</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.bitstring.h.bitstring_get_tail" title="Link to this definition"></a><br /></dt>
+<dd><p>Materialize the tail of a match at bit offset bs_offset. </p>
+<p>Byte-aligned start+length shares storage via a sub-binary; a non-byte-aligned start or length copies the remaining bits into a fresh bitstring. <a class="reference internal" href="memory.h.html#libatomvmstruct_heap"><span class="std std-ref">Heap</span></a> must already be reserved (see bitstring_get_tail_heap_size). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the tail, or <code class="docutils literal notranslate"><a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3a169e9a3e0ec70a5303a1fce2a1178f"><span class="std std-ref"><span class="pre">term_invalid_term()</span></span></a></code> if a refc binary buffer could not be allocated for a copied tail. </p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 <dl class="c union">

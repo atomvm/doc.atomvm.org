@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>term.h &mdash; AtomVM 0.7.0-beta.1+git.d749c4ce documentation</title>
+  <title>term.h &mdash; AtomVM 0.7.0-beta.1+git.f316c45e documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/term.h.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=1a4332ca"></script>
+      <script src="../../../_static/documentation_options.js?v=44974077"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -966,6 +966,13 @@
 <dd></dd></dl>
 
 <dl class="c macro">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.TERM_MAX_BINARY_SIZE">
+<span class="target" id="libatomvmterm_8h_1a4244f59ee0e0e934d8b23f2302017298"></span><span class="sig-name descname"><span class="n"><span class="pre">TERM_MAX_BINARY_SIZE</span></span></span> <span class="pre">(SIZE_MAX</span> <span class="pre">&gt;&gt;</span> <span class="pre">3)</span><a class="headerlink" href="#c.libAtomVM.term.h.TERM_MAX_BINARY_SIZE" title="Link to this definition"></a><br /></dt>
+<dd><p>Largest representable binary size, in bytes. </p>
+<p>A sub-binary packs its byte offset and its trailing bit count into a single word as <code class="docutils literal notranslate"><span class="pre">(offset</span> <span class="pre">&lt;&lt;</span> <span class="pre">3)</span> <span class="pre">|</span> <span class="pre">trailing_bits</span></code>, and <code class="docutils literal notranslate"><span class="pre">term_bit_size</span></code> computes <code class="docutils literal notranslate"><span class="pre">byte_size</span> <span class="pre">*</span> <span class="pre">8</span> <span class="pre">+</span> <span class="pre">trailing_bits</span></code>. Both require byte sizes and offsets to fit in a word once multiplied by 8. Binaries are therefore capped at <code class="docutils literal notranslate"><span class="pre">SIZE_MAX</span> <span class="pre">&gt;&gt;</span> <span class="pre">3</span></code> bytes: unreachable on 64-bit, slightly under 512 MiB on 32-bit. Larger sizes are rejected with <code class="docutils literal notranslate"><span class="pre">system_limit</span></code>, as OTP does for unrepresentable binaries. </p>
+</dd></dl>
+
+<dl class="c macro">
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.TERM_MAX_LOCAL_PROCESS_ID">
 <span class="target" id="libatomvmterm_8h_1a863c1a21aa6e544072cc05547929d735"></span><span class="sig-name descname"><span class="n"><span class="pre">TERM_MAX_LOCAL_PROCESS_ID</span></span></span> <span class="pre">((1</span> <span class="pre">&lt;&lt;</span> <span class="pre">28)</span> <span class="pre">-</span> <span class="pre">1)</span><a class="headerlink" href="#c.libAtomVM.term.h.TERM_MAX_LOCAL_PROCESS_ID" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
@@ -1370,6 +1377,27 @@
 </dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_alloc_sub_binary_bits">
+<span class="target" id="libatomvmterm_8h_1ab02a3e73490990720b723dbd126bd55b"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_alloc_sub_binary_bits</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">binary</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">len</span></span>, <span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">trailing_bits</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_alloc_sub_binary_bits" title="Link to this definition"></a><br /></dt>
+<dd><p>Allocate a sub-binary that may be non-byte-aligned (a bitstring). </p>
+<p>Same as term_alloc_sub_binary but carries a trailing partial-byte bit count (0..7). When trailing_bits is 0 the result is an ordinary byte-aligned binary; when non-zero the total bit size is len*8 + trailing_bits and the last referenced byte is only partially valid. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>binary</strong> – the referenced binary </p></li>
+<li><p><strong>offset</strong> – the offset (in bytes) into the referenced binary </p></li>
+<li><p><strong>len</strong> – the number of whole bytes of the sub-binary </p></li>
+<li><p><strong>trailing_bits</strong> – number of valid bits (0..7) in the byte following the whole bytes </p></li>
+<li><p><strong>heap</strong> – the heap to allocate the binary in </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a term (reference) pointing to the newly allocated sub-binary. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_to_term_ptr">
 <span class="target" id="libatomvmterm_8h_1aecc101e6f65e588eec094a1ffef0f3c9"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">term_to_term_ptr</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_to_term_ptr" title="Link to this definition"></a><br /></dt>
 <dd><p>Gets a pointer to a term stored on the heap. </p>
@@ -1540,10 +1568,27 @@
 </dd></dl>
 
 <dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_is_bitstring">
+<span class="target" id="libatomvmterm_8h_1a121e6e75c5052e1a099e7c32c6f589fe"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_is_bitstring</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_is_bitstring" title="Link to this definition"></a><br /></dt>
+<dd><p>Checks if a term is a bitstring. </p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if a term is a bitstring (a binary or a sub-binary carrying trailing bits), otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>. This is the predicate behind the is_bitstring/1 BIF. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> – the term that will be checked. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> if check succeeds, <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_is_binary">
 <span class="target" id="libatomvmterm_8h_1a9998a1ce58e8458260efd67735010896"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_is_binary</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_is_binary" title="Link to this definition"></a><br /></dt>
 <dd><p>Checks if a term is a binary. </p>
-<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if a term is a binary stored on the heap, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>. </p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if a term is a byte-aligned binary, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>. A sub-binary carrying trailing bits (a non-byte-aligned bitstring) is not a binary; use <code class="docutils literal notranslate"><span class="pre">term_is_bitstring</span></code> to accept it. This is the predicate behind the is_binary/1 BIF. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -3120,18 +3165,18 @@
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_reuse_binary">
 <span class="target" id="libatomvmterm_8h_1ad7205af247e3c88efee0e3dc4796b1fd"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_reuse_binary</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_reuse_binary" title="Link to this definition"></a><br /></dt>
 <dd><p>Reuse a binary. If the binary is a refc binary with a ref count of 1, try to reuse it. Otherwise, create a new binary and copy the data. </p>
-<p>Try to reuse a binary and return a term pointing to it. </p>
+<p>Try to reuse a binary and return a term pointing to it. If src is a bitstring, its storage is reused as a whole, trailing bits included: src must then be a sub-binary at offset 0 over its own storage, which is what a private_append accumulator always is. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>src</strong> – binary to reuse. </p></li>
-<li><p><strong>size</strong> – size of binary data buffer. </p></li>
+<li><p><strong>src</strong> – binary or bitstring to reuse. </p></li>
+<li><p><strong>size</strong> – size of binary data buffer, in bytes. </p></li>
 <li><p><strong>heap</strong> – the heap to allocate memory in </p></li>
 <li><p><strong>glb</strong> – the global context as refc binaries are global </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a term pointing to the boxed binary pointer. </p>
+<dd class="field-even"><p>a term pointing to the boxed binary pointer, or <code class="docutils literal notranslate"><a class="reference internal" href="#libatomvmterm_8h_1a3a169e9a3e0ec70a5303a1fce2a1178f"><span class="std std-ref"><span class="pre">term_invalid_term()</span></span></a></code> if the buffer could not be allocated. </p>
 </dd>
 </dl>
 </dd></dl>
@@ -3150,26 +3195,6 @@
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_nomatch_binary_pos_len">
 <span class="target" id="libatomvmterm_8h_1a9ddd106ab3e8afa2dce974c058c9cdae"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#c.libAtomVM.term.h.BinaryPosLen" title="BinaryPosLen"><span class="n"><span class="pre">BinaryPosLen</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_nomatch_binary_pos_len</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_nomatch_binary_pos_len" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_bs_insert_binary">
-<span class="target" id="libatomvmterm_8h_1a430e6c4294fc428d63b46ad485280c5f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_bs_insert_binary</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">offset</span></span>, <span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">src</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_bs_insert_binary" title="Link to this definition"></a><br /></dt>
-<dd><p>Insert an binary into a binary (using bit syntax). </p>
-<p>Insert the data from the input binary, starting at the bit position starting in offset. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> – a term pointing to binary data. Fails if t is not a binary term. </p></li>
-<li><p><strong>offset</strong> – the bitwise offset in t at which to start writing the integer value </p></li>
-<li><p><strong>src</strong> – binary source to insert binary data into. </p></li>
-<li><p><strong>n</strong> – the number of low-order bits from value to write. </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>0 on success; non-zero value if: t is not a binary term n is greater than the number of bits in an integer there is insufficient capacity in the binary to write these bits In general, none of these conditions should apply, if this function is being called in the context of generated bit syntax instructions. </p>
-</dd>
-</dl>
-</dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_from_ref_ticks">
@@ -3868,6 +3893,25 @@
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_get_sub_binary_ref">
 <span class="target" id="libatomvmterm_8h_1addf43e1afa0d9503b1284c0f11aa8ca3"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_get_sub_binary_ref</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_get_sub_binary_ref" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_get_sub_binary_num_trailing_bits">
+<span class="target" id="libatomvmterm_8h_1aef674e0c78ef2d84c18b45a53072d0dd"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_get_sub_binary_num_trailing_bits</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_get_sub_binary_num_trailing_bits" title="Link to this definition"></a><br /></dt>
+<dd><p>Number of trailing (partial-byte) bits of a sub-binary (0..7). </p>
+<p>A byte-aligned sub-binary returns 0. A non-byte-aligned bitstring returns 1..7, meaning its total bit size is term_binary_size(t)*8 + this. </p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_get_sub_binary_offset">
+<span class="target" id="libatomvmterm_8h_1af02d7d20349a6a7fdbcb9970b6cfbb88"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_get_sub_binary_offset</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_get_sub_binary_offset" title="Link to this definition"></a><br /></dt>
+<dd><p>Offset (in bytes) of a sub-binary into its parent binary. </p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.h.term_bit_size">
+<span class="target" id="libatomvmterm_8h_1a534d2de6e540459269392a73725420d1"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_bit_size</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="n"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.h.term_bit_size" title="Link to this definition"></a><br /></dt>
+<dd><p>Total size in bits of any bitstring (binary or sub-binary). </p>
+</dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.libAtomVM.term.h.term_from_resource">
