@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Instructions &mdash; AtomVM 0.7.0-beta.1+git.8559e0f6 documentation</title>
+  <title>Build Instructions &mdash; AtomVM 0.7.0-beta.1+git.38adada0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/build-instructions.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=f29d4ad6"></script>
+      <script src="_static/documentation_options.js?v=dc1d610e"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -66,6 +66,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#uf2tool"><code class="docutils literal notranslate"><span class="pre">uf2tool</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#opcodes-for-legacy-compiler-options">Opcodes for legacy compiler options</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#platform-specific-build-instructions">Platform Specific Build Instructions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-for-generic-unix">Building for Generic UNIX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#generic-unix-build-requirements">Generic UNIX Build Requirements</a></li>
@@ -246,6 +247,22 @@ it is optional.</p>
 <p>AtomVM depends on <code class="docutils literal notranslate"><span class="pre">uf2tool</span></code>. It is used to pack both native and Erlang/Elixir/Gleam code for RP2. <code class="docutils literal notranslate"><span class="pre">uf2tool</span></code> source code is downloaded automatically by <code class="docutils literal notranslate"><span class="pre">rebar3</span></code> from <code class="docutils literal notranslate"><span class="pre">hex</span></code> mirrors.</p>
 <p>It is possible to use a local copy of <code class="docutils literal notranslate"><span class="pre">uf2tool</span></code> source code by setting <code class="docutils literal notranslate"><span class="pre">UF2TOOL_PATH</span></code> variable to a path to a source checkout of <a class="reference external" href="https://github.com/pguyot/uf2tool"><code class="docutils literal notranslate"><span class="pre">uf2tool</span></code></a> when invoking CMake.</p>
 </section>
+</section>
+<section id="opcodes-for-legacy-compiler-options">
+<h2>Opcodes for legacy compiler options<a class="headerlink" href="#opcodes-for-legacy-compiler-options" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">AVM_MINIMAL_OPCODES</span></code> CMake option reduces the size of the VM by leaving out the opcodes that
+only the <code class="docutils literal notranslate"><span class="pre">no_bs_create_bin</span></code>, <code class="docutils literal notranslate"><span class="pre">no_bs_match</span></code> and <code class="docutils literal notranslate"><span class="pre">no_ssa_opt_bs_ensure</span></code> Erlang compiler options
+emit. BEAM files compiled with the default compiler options never use them, and neither the Elixir
+nor the Gleam compiler passes those options.</p>
+<p>It is enabled by default on ESP32, STM32 and RP2, and disabled on generic UNIX and emscripten. To
+run modules compiled with those options on a microcontroller, disable it, for example with
+<code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">-DAVM_MINIMAL_OPCODES=OFF</span> <span class="pre">build</span></code> on ESP32 or <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">-DAVM_MINIMAL_OPCODES=OFF</span> <span class="pre">..</span></code> on STM32
+and RP2.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Modules that use the left out opcodes are loaded, but the VM aborts with “Undecoded opcode” when
+it executes one of them.</p>
+</div>
 </section>
 <section id="platform-specific-build-instructions">
 <h2>Platform Specific Build Instructions<a class="headerlink" href="#platform-specific-build-instructions" title="Link to this heading"></a></h2>
