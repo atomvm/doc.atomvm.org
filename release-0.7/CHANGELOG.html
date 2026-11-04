@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.38adada0 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.5cb013fd documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=dc1d610e"></script>
+      <script src="_static/documentation_options.js?v=9950ce9f"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -248,6 +248,8 @@ with default compiler options still load and are still tested, but this will be 
 future release</p></li>
 <li><p>Stopped CI testing on macOS 14, whose GitHub Actions runner image is being retired;
 existing macOS 15 coverage is unchanged</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">erlang:term_to_binary/1,2</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:binary_to_term/1,2</span></code> now process nested lists, tuples
+and maps iteratively</p></li>
 </ul>
 </section>
 <section id="removed">
@@ -264,6 +266,8 @@ existing macOS 15 coverage is unchanged</p></li>
 encoder’s key order, which broke <code class="docutils literal notranslate"><span class="pre">==</span></code> and made <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code> updates on an existing key produce
 duplicate keys</p></li>
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">binary_to_term/1,2</span></code> accepting maps with duplicate keys instead of raising <code class="docutils literal notranslate"><span class="pre">badarg</span></code></p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">binary_to_term/1,2</span></code> decoding a zero-length <code class="docutils literal notranslate"><span class="pre">LIST_EXT</span></code> as <code class="docutils literal notranslate"><span class="pre">[]</span></code> and skipping its tail:
+it now decodes to the tail, like OTP</p></li>
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">erlang:send_after/3</span></code> and <code class="docutils literal notranslate"><span class="pre">timer:send_after/2,3</span></code> returning a timer that could not
 be canceled with <code class="docutils literal notranslate"><span class="pre">erlang:cancel_timer/1</span></code></p></li>
 <li><p>Fixed a VM abort (<code class="docutils literal notranslate"><span class="pre">context_monitors_handle_terminate:</span> <span class="pre">Assertion</span> <span class="pre">'target</span> <span class="pre">!=</span> <span class="pre">NULL'</span></code>) when a
