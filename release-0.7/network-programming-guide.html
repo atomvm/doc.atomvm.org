@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Network Programming Guide &mdash; AtomVM 0.7.0-beta.1+git.86a4175e documentation</title>
+  <title>Network Programming Guide &mdash; AtomVM 0.7.0-beta.1+git.a92ae69f documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/network-programming-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=7ffa935d"></script>
+      <script src="_static/documentation_options.js?v=40fa4118"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#ethernet-convenience-functions">Ethernet Convenience Functions</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#ppp-over-a-uart-esp32">PPP over a UART (ESP32)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sntp-support">SNTP Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nvs-credentials">NVS Credentials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stopping-the-network">Stopping the Network</a></li>
@@ -619,6 +620,84 @@ binds to the Ethernet address when there is one.</p>
 </pre></div>
 </div>
 </section>
+</section>
+<section id="ppp-over-a-uart-esp32">
+<h2>PPP over a UART (ESP32)<a class="headerlink" href="#ppp-over-a-uart-esp32" title="Link to this heading"></a></h2>
+<p>On the ESP32 family, <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> can also run PPP on a UART, with a <code class="docutils literal notranslate"><span class="pre">ppp</span></code> entry in the
+configuration. The other end must already be ready for PPP: typically a cellular modem that the
+application has powered on and dialed over the same UART (<code class="docutils literal notranslate"><span class="pre">ATD*99#</span></code> answered <code class="docutils literal notranslate"><span class="pre">CONNECT</span></code>) before
+calling <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code>. The network driver installs its own driver on that UART, so the
+application closes the port it dialed with (<code class="docutils literal notranslate"><span class="pre">uart:close/1</span></code>) first, and does not use the UART
+while PPP runs. The link negotiates its address and DNS servers. It can be used alone or next
+to <code class="docutils literal notranslate"><span class="pre">sta</span></code>, <code class="docutils literal notranslate"><span class="pre">ap</span></code> and <code class="docutils literal notranslate"><span class="pre">eth</span></code>; the default route goes to the interface that is up with the highest
+<code class="docutils literal notranslate"><span class="pre">route_priority</span></code>, so with its default of 20 PPP carries the traffic only when Ethernet and the
+STA are down.</p>
+<p>PPP is opt-in: it needs a build with <code class="docutils literal notranslate"><span class="pre">CONFIG_AVM_ENABLE_PPP=y</span></code> and <code class="docutils literal notranslate"><span class="pre">CONFIG_LWIP_PPP_SUPPORT=y</span></code>
+(<code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">menuconfig</span></code>, or lines in <code class="docutils literal notranslate"><span class="pre">sdkconfig.defaults</span></code>). With the option off, a <code class="docutils literal notranslate"><span class="pre">ppp</span></code> entry makes
+<code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> return <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">ppp_not_supported}</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Value Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">uart</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
+<td><p>required</p></td>
+<td><p>UART port number</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tx</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
+<td><p>required</p></td>
+<td><p>TX GPIO</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rx</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">non_neg_integer()</span></code></p></td>
+<td><p>required</p></td>
+<td><p>RX GPIO</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">speed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pos_integer()</span></code></p></td>
+<td><p>115200</p></td>
+<td><p>Baud rate (8N1, no flow control)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">route_priority</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0..255</span></code></p></td>
+<td><p>20</p></td>
+<td><p>Default route priority (Ethernet: 128, STA: 100, AP: 10)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">got_ip</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fun((ip_info())</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
+<td><p>none</p></td>
+<td><p>The link is up and has an address</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disconnected</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
+<td><p>none</p></td>
+<td><p>The link ended or could not be negotiated; the application dials again and restarts the network</p></td>
+</tr>
+</tbody>
+</table>
+<p>A missing or invalid <code class="docutils literal notranslate"><span class="pre">uart</span></code>, <code class="docutils literal notranslate"><span class="pre">tx</span></code> or <code class="docutils literal notranslate"><span class="pre">rx</span></code> makes <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> return <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badarg}</span></code>.
+<code class="docutils literal notranslate"><span class="pre">network:stop/0</span></code> closes the link with an LCP terminate, so the modem hangs up, and frees the UART.
+If the other end does not answer the terminate within 3 seconds, <code class="docutils literal notranslate"><span class="pre">network:stop/0</span></code> returns and the
+close finishes in the background (up to about 12 seconds); until then, the UART stays taken.</p>
+<p>For example, for a modem on UART2 (TX on GPIO 33, RX on GPIO 35), already dialed:</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="nv">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="n">ppp</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="n">uart</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="mi">33</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">rx</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">got_ip</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="p">(</span><span class="nv">IpInfo</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">"PPP got IP: </span><span class="si">~p~n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">IpInfo</span><span class="p">])</span><span class="w"> </span><span class="k">end</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">disconnected</span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">"PPP link ended</span><span class="si">~n</span><span class="s">"</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="p">}</span>
+<span class="w">    </span><span class="p">]}</span>
+<span class="p">],</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">Pid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="nv">Config</span><span class="p">).</span>
+</pre></div>
+</div>
 </section>
 <section id="sntp-support">
 <h2>SNTP Support<a class="headerlink" href="#sntp-support" title="Link to this heading"></a></h2>
