@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.a92ae69f documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.439875b6 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=40fa4118"></script>
+      <script src="_static/documentation_options.js?v=56048785"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -342,6 +342,11 @@ the <code class="docutils literal notranslate"><span class="pre">no_ssa_opt</spa
 <code class="docutils literal notranslate"><span class="pre">module.h</span></code></p></li>
 <li><p>Fixed the empty binary being printed as <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&quot;&quot;&gt;&gt;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&gt;&gt;</span></code> by <code class="docutils literal notranslate"><span class="pre">erlang:display/1</span></code>,
 crash reports and <code class="docutils literal notranslate"><span class="pre">io_lib:format/2</span></code> with <code class="docutils literal notranslate"><span class="pre">~p</span></code></p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">binary_to_term/1,2</span></code> corrupting the heap when decoding a zero-length <code class="docutils literal notranslate"><span class="pre">STRING_EXT</span></code>
+(OTP never emits one, but it is valid and decodes to <code class="docutils literal notranslate"><span class="pre">[]</span></code>)</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">unicode:characters_to_list/1,2</span></code> and <code class="docutils literal notranslate"><span class="pre">unicode:characters_to_binary/1,2,3</span></code> returning an
+error tuple with an uninitialized value in place of the rest for a top-level argument that is
+not chardata, such as <code class="docutils literal notranslate"><span class="pre">unicode:characters_to_list(foo)</span></code>; they now raise <code class="docutils literal notranslate"><span class="pre">badarg</span></code></p></li>
 </ul>
 </section>
 </section>
