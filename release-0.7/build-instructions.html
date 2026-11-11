@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Instructions &mdash; AtomVM 0.7.0-beta.1+git.439875b6 documentation</title>
+  <title>Build Instructions &mdash; AtomVM 0.7.0-beta.1+git.5d61a0c5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/build-instructions.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=56048785"></script>
+      <script src="_static/documentation_options.js?v=5a5700fc"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -582,6 +582,14 @@ Use <code class="docutils literal notranslate"><span class="pre">idf.py</span> <
 Use <code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">menuconfig</span></code> in <code class="docutils literal notranslate"><span class="pre">src/platforms/esp32</span></code>
 <code class="docutils literal notranslate"><span class="pre">Component</span> <span class="pre">config</span> <span class="pre">---&gt;</span> <span class="pre">mbedTLS</span>&#160; <span class="pre">---&gt;</span> <span class="pre">Enable</span> <span class="pre">fixed-point</span> <span class="pre">multiplication</span> <span class="pre">optimisations</span></code></p>
 <p>See <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/kconfig-reference.html#config-mbedtls-ecp-fixed-point-optim">MBEDTLS_ECP_FIXED_POINT_OPTIM</a></p>
+<p>Two builds of the same commit report the same version, even when their configuration (sdkconfig,
+partition table) differs. To tell them apart, append a suffix to the version at configure time,
+for example a hash of the configuration:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>idf.py<span class="w"> </span>-DATOMVM_VERSION_SUFFIX<span class="o">=</span>.cfg.1a2b3c4d<span class="w"> </span>build
+</pre></div>
+</div>
+<p>The version, as seen in <code class="docutils literal notranslate"><span class="pre">erlang:system_info(atomvm_version)</span></code> and in the boot log, becomes
+<code class="docutils literal notranslate"><span class="pre">0.7.0-beta.1+git.86a4175e.cfg.1a2b3c4d</span></code>. The same option works with <code class="docutils literal notranslate"><span class="pre">cmake</span></code> on the other platforms.</p>
 </section>
 </section>
 <section id="flash-layout">
@@ -676,7 +684,7 @@ images.</p>
 </div>
 </section>
 <section id="the-boot-avm-and-main-avm-partitions">
-<h3>The <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> and <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partitions<a class="headerlink" href="#the-boot-avm-and-main-avm-partitions" title="Link to this heading"></a></h3>
+<span id="the-bootavm-and-mainavm-partitions"></span><h3>The <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> and <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partitions<a class="headerlink" href="#the-boot-avm-and-main-avm-partitions" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> and <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partitions are intended to store Erlang/Elixir libraries (compiled down to BEAM files, and assembled as AVM files).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> partition is intended for core Erlang/Elixir libraries that are built as part of the AtomVM build.  The release image of AtomVM (see below) includes both the AtomVM virtual machine and the <code class="docutils literal notranslate"><span class="pre">boot.avm</span></code> partition, which includes the BEAM files from the <code class="docutils literal notranslate"><span class="pre">estdlib</span></code> and <code class="docutils literal notranslate"><span class="pre">eavmlib</span></code> libraries.</p>
 <p>In contrast, the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition is intended for user applications.  Currently, the <code class="docutils literal notranslate"><span class="pre">main.avm</span></code> partition starts at address <code class="docutils literal notranslate"><span class="pre">0x250000</span></code>, and it is to that location to which application developers should flash their application AVM files.</p>
