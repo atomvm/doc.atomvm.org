@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.5d61a0c5 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.faf57305 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=5a5700fc"></script>
+      <script src="_static/documentation_options.js?v=22764390"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -236,6 +236,17 @@ with an RMII PHY, alone or next to STA/AP, plus <code class="docutils literal no
 <li><p>Added PPP over a UART to the <code class="docutils literal notranslate"><span class="pre">network</span></code> module on ESP32 (opt-in with <code class="docutils literal notranslate"><span class="pre">CONFIG_AVM_ENABLE_PPP=y</span></code>,
 which needs <code class="docutils literal notranslate"><span class="pre">CONFIG_LWIP_PPP_SUPPORT=y</span></code>): <code class="docutils literal notranslate"><span class="pre">{ppp,</span> <span class="pre">[...]}</span></code> in <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> runs the link on a
 UART whose other end is ready for it, such as a cellular modem the application has dialed</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">enif_select_write</span></code> and <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_CANCEL</span></code> (both previously declared but not
+implemented), and reworked <code class="docutils literal notranslate"><span class="pre">enif_select</span></code>/<code class="docutils literal notranslate"><span class="pre">enif_select_read</span></code>/<code class="docutils literal notranslate"><span class="pre">enif_select_write</span></code> so a resource
+can hold independent pending read and write selects (each with its own ref/message/pid) on the
+same event at the same time</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">socket:nif_select_write/2</span></code>; sockets now keep one selecting process per direction, so a
+process blocked in <code class="docutils literal notranslate"><span class="pre">socket:send/2</span></code> no longer disturbs another process blocked in <code class="docutils literal notranslate"><span class="pre">socket:recv/2,3</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">socket:send/3</span></code> and <code class="docutils literal notranslate"><span class="pre">socket:sendto/4</span></code>, taking a timeout, <code class="docutils literal notranslate"><span class="pre">nowait</span></code> or a select handle, so
+that a send on a socket whose peer does not read can be bounded in time (<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">timeout}</span></code> or
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">{timeout,</span> <span class="pre">RestData}}</span></code>) or made asynchronous (<code class="docutils literal notranslate"><span class="pre">{select,</span> <span class="pre">SelectInfo}</span></code> or
+<code class="docutils literal notranslate"><span class="pre">{select,</span> <span class="pre">{SelectInfo,</span> <span class="pre">RestData}}</span></code>, followed by a <code class="docutils literal notranslate"><span class="pre">{'$socket',</span> <span class="pre">Socket,</span> <span class="pre">select,</span> <span class="pre">SelectHandle}</span></code>
+message when the socket is writable again)</p></li>
 </ul>
 </section>
 <section id="changed">
@@ -349,6 +360,47 @@ crash reports and <code class="docutils literal notranslate"><span class="pre">i
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">unicode:characters_to_list/1,2</span></code> and <code class="docutils literal notranslate"><span class="pre">unicode:characters_to_binary/1,2,3</span></code> returning an
 error tuple with an uninitialized value in place of the rest for a top-level argument that is
 not chardata, such as <code class="docutils literal notranslate"><span class="pre">unicode:characters_to_list(foo)</span></code>; they now raise <code class="docutils literal notranslate"><span class="pre">badarg</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">socket:send/2,3</span></code> now correctly distinguishes transient send backpressure (lwIP <code class="docutils literal notranslate"><span class="pre">ERR_MEM</span></code> / BSD
+<code class="docutils literal notranslate"><span class="pre">EAGAIN</span></code>|<code class="docutils literal notranslate"><span class="pre">EWOULDBLOCK</span></code>) from a closed connection at the NIF level, returning <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">closed}</span></code>
+(rather than <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Data}</span></code>) when the peer has closed the connection, and waits for the socket to
+become writable again and retries internally, so callers get <code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">|</span> <span class="pre">{error,</span> <span class="pre">Reason}</span></code> (or
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">{Reason,</span> <span class="pre">RestData}}</span></code> when an error follows a partial send, as in OTP) and no longer
+need to implement their own retry/backoff for partial sends or backpressure; <code class="docutils literal notranslate"><span class="pre">ssl:send/2</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ssl:recv/2</span></code> and the TLS handshake/close-notify loops likewise wait for write-readiness instead
+of busy-looping on <code class="docutils literal notranslate"><span class="pre">want_write</span></code></p></li>
+<li><p>Fixed Erlang distribution over sockets (<code class="docutils literal notranslate"><span class="pre">socket_dist_controller</span></code>) silently ignoring
+<code class="docutils literal notranslate"><span class="pre">socket:send/2</span></code> errors on <code class="docutils literal notranslate"><span class="pre">tick</span></code> and outgoing distribution data; the connection is now
+terminated instead of continuing to run against a broken socket</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gen_tcp:send/2</span></code> no longer blocks the process serving the socket when the peer does not read:
+sends are queued and completed as the socket becomes writable, so <code class="docutils literal notranslate"><span class="pre">gen_tcp:recv/2,3</span></code>,
+<code class="docutils literal notranslate"><span class="pre">gen_tcp:close/1</span></code> and <code class="docutils literal notranslate"><span class="pre">gen_tcp:controlling_process/2</span></code> keep working meanwhile, and a pending send
+fails with <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">closed}</span></code> when the socket is closed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gen_udp:send/4</span></code> no longer blocks the process serving the socket while the send buffer is full
+on BSD sockets: datagrams are queued and sent as the socket becomes writable, so
+<code class="docutils literal notranslate"><span class="pre">gen_udp:recv/2,3</span></code> and <code class="docutils literal notranslate"><span class="pre">gen_udp:close/1</span></code> keep working meanwhile, and a pending send fails with
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">closed}</span></code> when the socket is closed</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">socket:send/2</span></code> reporting any error other than backpressure as <code class="docutils literal notranslate"><span class="pre">closed</span></code> on BSD sockets:
+the actual error (e.g. <code class="docutils literal notranslate"><span class="pre">epipe</span></code>, <code class="docutils literal notranslate"><span class="pre">enobufs</span></code>) is now returned</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">socket:send/2,3</span></code> and <code class="docutils literal notranslate"><span class="pre">socket:sendto/3,4</span></code> on a socket that was closed now return
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">closed}</span></code>, as in OTP, instead of <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">ebadf}</span></code></p></li>
+<li><p>Fixed a use-after-free in <code class="docutils literal notranslate"><span class="pre">socket:shutdown/2</span></code> with <code class="docutils literal notranslate"><span class="pre">read_write</span></code> on lwIP (Raspberry Pi Pico W):
+lwIP can free the pcb right away, e.g. when there is unread data, and its callbacks were
+detached afterwards</p></li>
+<li><p>Fixed lwIP sockets after a connection error (e.g. a reset from the peer): the freed pcb was
+still used by <code class="docutils literal notranslate"><span class="pre">socket:send/2</span></code>, <code class="docutils literal notranslate"><span class="pre">socket:close/1</span></code> and others, and processes blocked in
+<code class="docutils literal notranslate"><span class="pre">socket:recv/2,3</span></code> or <code class="docutils literal notranslate"><span class="pre">socket:send/2</span></code> were never woken up; they now get <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">closed}</span></code>.
+Accepted sockets did not even register the error callback</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">socket:send/2</span></code> busy looping on lwIP when <code class="docutils literal notranslate"><span class="pre">tcp_write</span></code> fails for lack of memory while the
+send buffer has room (Raspberry Pi Pico W)</p></li>
+<li><p>Fixed a race on the write select flag between the <code class="docutils literal notranslate"><span class="pre">tcp_sent</span></code> callback and
+<code class="docutils literal notranslate"><span class="pre">socket:nif_select_write/2</span></code> on SMP builds (Raspberry Pi Pico W)</p></li>
+<li><p>Fixed selecting for read or write on a socket closed by another process raising <code class="docutils literal notranslate"><span class="pre">badarg</span></code> on
+lwIP, instead of delivering the closed notification as on BSD sockets, and a write select on a
+connecting socket silently dropping the process trapped in <code class="docutils literal notranslate"><span class="pre">socket:connect/2</span></code></p></li>
+<li><p>Fixed selecting on a socket that is already closed leaving the caller as the select owner with
+a monitor that no event would ever release</p></li>
+<li><p>Fixed a lost wake up in the ESP32 select thread: a select event registered while the thread was
+rebuilding its poll set was not polled until another one was registered or unregistered</p></li>
 </ul>
 </section>
 </section>

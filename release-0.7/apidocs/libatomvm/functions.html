@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; AtomVM 0.7.0-beta.1+git.5d61a0c5 documentation</title>
+  <title>Functions &mdash; AtomVM 0.7.0-beta.1+git.faf57305 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/functions.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5a5700fc"></script>
+      <script src="../../_static/documentation_options.js?v=22764390"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -1186,14 +1186,14 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>env</strong> – current environment </p></li>
 <li><p><strong>event</strong> – event object (typically a file descriptor) </p></li>
-<li><p><strong>mode</strong> – select mode (<code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_READ</span></code> and/or <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_WRITE</span></code>) optionally with <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_CANCEL</span></code> to cancel, or <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_STOP</span></code> to stop. </p></li>
+<li><p><strong>mode</strong> – select mode (<code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_READ</span></code> and/or <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_WRITE</span></code>) optionally with <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_CANCEL</span></code> to cancel a pending select of the given direction(s) while keeping the event, or <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_STOP</span></code> to stop. </p></li>
 <li><p><strong>obj</strong> – resource object working as a container of the event object. </p></li>
 <li><p><strong>pid</strong> – process id to send a message to or NULL to use the current process (from <code class="docutils literal notranslate"><span class="pre">env</span></code>) </p></li>
 <li><p><strong>ref</strong> – reference object used in sent messages or <code class="docutils literal notranslate"><span class="pre">undefined</span></code> atom. </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a negative value on failure, 0 or flags on success. </p>
+<dd class="field-even"><p>a negative value on failure, 0 or flags on success. With <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_CANCEL</span></code>, <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_READ_CANCELLED</span></code> and/or <code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_WRITE_CANCELLED</span></code> are set for each pending select that was cancelled. </p>
 </dd>
 </dl>
 </dd></dl>

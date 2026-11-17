@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>libAtomVM &mdash; AtomVM 0.7.0-beta.1+git.5d61a0c5 documentation</title>
+  <title>libAtomVM &mdash; AtomVM 0.7.0-beta.1+git.faf57305 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/index.html" />
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5a5700fc"></script>
+      <script src="../../_static/documentation_options.js?v=22764390"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -875,9 +875,12 @@
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.read"><code class="docutils literal notranslate"><span class="pre">read</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.write"><code class="docutils literal notranslate"><span class="pre">write</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.close"><code class="docutils literal notranslate"><span class="pre">close</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.local_pid"><code class="docutils literal notranslate"><span class="pre">local_pid</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.ref_ticks"><code class="docutils literal notranslate"><span class="pre">ref_ticks</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.message"><code class="docutils literal notranslate"><span class="pre">message</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.read_local_pid"><code class="docutils literal notranslate"><span class="pre">read_local_pid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.write_local_pid"><code class="docutils literal notranslate"><span class="pre">write_local_pid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.read_ref_ticks"><code class="docutils literal notranslate"><span class="pre">read_ref_ticks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.write_ref_ticks"><code class="docutils literal notranslate"><span class="pre">write_ref_ticks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.read_message"><code class="docutils literal notranslate"><span class="pre">read_message</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SelectEvent.write_message"><code class="docutils literal notranslate"><span class="pre">write_message</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#c.libAtomVM.structs.SnprintfFun"><code class="docutils literal notranslate"><span class="pre">SnprintfFun</span></code></a><ul>
@@ -979,6 +982,7 @@
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ErlNifSelectFlags.ERL_NIF_SELECT_READ"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_READ</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ErlNifSelectFlags.ERL_NIF_SELECT_WRITE"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_WRITE</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ErlNifSelectFlags.ERL_NIF_SELECT_STOP"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_STOP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.ErlNifSelectFlags.ERL_NIF_SELECT_CANCEL"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_CANCEL</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#c.libAtomVM.enums.external_term_read_opts_t"><code class="docutils literal notranslate"><span class="pre">external_term_read_opts_t</span></code></a><ul>
@@ -2096,11 +2100,14 @@
 <li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.ErlNifSelectFlags.ERL_NIF_SELECT_READ"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_READ</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.ErlNifSelectFlags.ERL_NIF_SELECT_WRITE"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_WRITE</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.ErlNifSelectFlags.ERL_NIF_SELECT_STOP"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_STOP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.ErlNifSelectFlags.ERL_NIF_SELECT_CANCEL"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_CANCEL</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.&#64;7"><code class="docutils literal notranslate"><span class="pre">&#64;7</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.&#64;7.ERL_NIF_SELECT_STOP_CALLED"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_STOP_CALLED</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.&#64;7.ERL_NIF_SELECT_STOP_SCHEDULED"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_STOP_SCHEDULED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.&#64;7.ERL_NIF_SELECT_READ_CANCELLED"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_READ_CANCELLED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.&#64;7.ERL_NIF_SELECT_WRITE_CANCELLED"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_WRITE_CANCELLED</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.&#64;7.ERL_NIF_SELECT_INVALID_EVENT"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_INVALID_EVENT</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.&#64;7.ERL_NIF_SELECT_FAILED"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_FAILED</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/erl_nif.h.html#c.libAtomVM.erl_nif.h.&#64;7.ERL_NIF_SELECT_BADARG"><code class="docutils literal notranslate"><span class="pre">ERL_NIF_SELECT_BADARG</span></code></a></li>
@@ -4339,6 +4346,7 @@
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.ACCEPT_ATOM"><code class="docutils literal notranslate"><span class="pre">ACCEPT_ATOM</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.RECV_ATOM"><code class="docutils literal notranslate"><span class="pre">RECV_ATOM</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.DEFAULT_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">DEFAULT_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SOCKET_TCP_POLL_INTERVAL"><code class="docutils literal notranslate"><span class="pre">SOCKET_TCP_POLL_INTERVAL</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.MIN"><code class="docutils literal notranslate"><span class="pre">MIN</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SOCKET_MAKE_SELECT_NOTIFICATION_SIZE"><code class="docutils literal notranslate"><span class="pre">SOCKET_MAKE_SELECT_NOTIFICATION_SIZE</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.ShutdownHow"><code class="docutils literal notranslate"><span class="pre">ShutdownHow</span></code></a><ul>
@@ -4369,11 +4377,14 @@
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateSelectingRead"><code class="docutils literal notranslate"><span class="pre">SocketStateSelectingRead</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateConnected"><code class="docutils literal notranslate"><span class="pre">SocketStateConnected</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateListening"><code class="docutils literal notranslate"><span class="pre">SocketStateListening</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateSelectingWrite"><code class="docutils literal notranslate"><span class="pre">SocketStateSelectingWrite</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateUDPIdle"><code class="docutils literal notranslate"><span class="pre">SocketStateUDPIdle</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateUDPSelectingRead"><code class="docutils literal notranslate"><span class="pre">SocketStateUDPSelectingRead</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateTCPNew"><code class="docutils literal notranslate"><span class="pre">SocketStateTCPNew</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateTCPConnected"><code class="docutils literal notranslate"><span class="pre">SocketStateTCPConnected</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateTCPSelectingRead"><code class="docutils literal notranslate"><span class="pre">SocketStateTCPSelectingRead</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateTCPSelectingWrite"><code class="docutils literal notranslate"><span class="pre">SocketStateTCPSelectingWrite</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateTCPSelectingReadWrite"><code class="docutils literal notranslate"><span class="pre">SocketStateTCPSelectingReadWrite</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateTCPListening"><code class="docutils literal notranslate"><span class="pre">SocketStateTCPListening</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketState.SocketStateTCPSelectingAccept"><code class="docutils literal notranslate"><span class="pre">SocketStateTCPSelectingAccept</span></code></a></li>
 </ul>
@@ -4393,13 +4404,25 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcp_recv_cb"><code class="docutils literal notranslate"><span class="pre">tcp_recv_cb()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcp_sent_cb"><code class="docutils literal notranslate"><span class="pre">tcp_sent_cb()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcp_poll_cb"><code class="docutils literal notranslate"><span class="pre">tcp_poll_cb()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.udp_recv_cb"><code class="docutils literal notranslate"><span class="pre">udp_recv_cb()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcp_err_cb"><code class="docutils literal notranslate"><span class="pre">tcp_err_cb()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_lwip_is_alive"><code class="docutils literal notranslate"><span class="pre">socket_lwip_is_alive()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_lwip_is_closed"><code class="docutils literal notranslate"><span class="pre">socket_lwip_is_closed()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_lwip_hold"><code class="docutils literal notranslate"><span class="pre">socket_lwip_hold()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_lwip_release"><code class="docutils literal notranslate"><span class="pre">socket_lwip_release()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_make_select_notification"><code class="docutils literal notranslate"><span class="pre">socket_make_select_notification()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_tcp_detach_callbacks"><code class="docutils literal notranslate"><span class="pre">socket_tcp_detach_callbacks()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_dtor"><code class="docutils literal notranslate"><span class="pre">socket_dtor()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_select_init"><code class="docutils literal notranslate"><span class="pre">socket_select_init()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_init_select_state"><code class="docutils literal notranslate"><span class="pre">socket_init_select_state()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_get_select"><code class="docutils literal notranslate"><span class="pre">socket_get_select()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_select_disown"><code class="docutils literal notranslate"><span class="pre">socket_select_disown()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_down"><code class="docutils literal notranslate"><span class="pre">socket_down()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.select_event_send_notification_from_nif"><code class="docutils literal notranslate"><span class="pre">select_event_send_notification_from_nif()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.select_event_send_notification_from_handler"><code class="docutils literal notranslate"><span class="pre">select_event_send_notification_from_handler()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_tcp_pcb_gone"><code class="docutils literal notranslate"><span class="pre">socket_tcp_pcb_gone()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.otp_socket_init"><code class="docutils literal notranslate"><span class="pre">otp_socket_init()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.get_domain"><code class="docutils literal notranslate"><span class="pre">get_domain()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.get_type"><code class="docutils literal notranslate"><span class="pre">get_type()</span></code></a></li>
@@ -4416,11 +4439,19 @@
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcp_accept_handler"><code class="docutils literal notranslate"><span class="pre">tcp_accept_handler()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcp_accept_cb"><code class="docutils literal notranslate"><span class="pre">tcp_accept_cb()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcp_recv_handler"><code class="docutils literal notranslate"><span class="pre">tcp_recv_handler()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.lwip_tcp_can_send"><code class="docutils literal notranslate"><span class="pre">lwip_tcp_can_send()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcp_sent_handler"><code class="docutils literal notranslate"><span class="pre">tcp_sent_handler()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcp_err_handler"><code class="docutils literal notranslate"><span class="pre">tcp_err_handler()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.udp_recv_handler"><code class="docutils literal notranslate"><span class="pre">udp_recv_handler()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcpip_try_callback_handler"><code class="docutils literal notranslate"><span class="pre">tcpip_try_callback_handler()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.tcpip_try_callback"><code class="docutils literal notranslate"><span class="pre">tcpip_try_callback()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_select"><code class="docutils literal notranslate"><span class="pre">nif_socket_select()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_select_read"><code class="docutils literal notranslate"><span class="pre">nif_socket_select_read()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_select_write"><code class="docutils literal notranslate"><span class="pre">nif_socket_select_write()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_select_stop_internal"><code class="docutils literal notranslate"><span class="pre">nif_socket_select_stop_internal()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_select_stop"><code class="docutils literal notranslate"><span class="pre">nif_socket_select_stop()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_select_read_stop"><code class="docutils literal notranslate"><span class="pre">nif_socket_select_read_stop()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_select_write_stop"><code class="docutils literal notranslate"><span class="pre">nif_socket_select_write_stop()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_getopt"><code class="docutils literal notranslate"><span class="pre">nif_socket_getopt()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_setopt"><code class="docutils literal notranslate"><span class="pre">nif_socket_setopt()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_sockname"><code class="docutils literal notranslate"><span class="pre">nif_socket_sockname()</span></code></a></li>
@@ -4447,6 +4478,7 @@
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_connect"><code class="docutils literal notranslate"><span class="pre">nif_socket_connect()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.nif_socket_shutdown"><code class="docutils literal notranslate"><span class="pre">nif_socket_shutdown()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.otp_socket_nif_get_nif"><code class="docutils literal notranslate"><span class="pre">otp_socket_nif_get_nif()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.lwip_sockets"><code class="docutils literal notranslate"><span class="pre">lwip_sockets</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.addr_atom"><code class="docutils literal notranslate"><span class="pre">addr_atom</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.any_atom"><code class="docutils literal notranslate"><span class="pre">any_atom</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.invalid_option_atom"><code class="docutils literal notranslate"><span class="pre">invalid_option_atom</span></code></a></li>
@@ -4464,6 +4496,8 @@
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_open_nif"><code class="docutils literal notranslate"><span class="pre">socket_open_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_close_nif"><code class="docutils literal notranslate"><span class="pre">socket_close_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_select_stop_nif"><code class="docutils literal notranslate"><span class="pre">socket_select_stop_nif</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_select_read_stop_nif"><code class="docutils literal notranslate"><span class="pre">socket_select_read_stop_nif</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_select_write_stop_nif"><code class="docutils literal notranslate"><span class="pre">socket_select_write_stop_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_getopt_nif"><code class="docutils literal notranslate"><span class="pre">socket_getopt_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_setopt_nif"><code class="docutils literal notranslate"><span class="pre">socket_setopt_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_bind_nif"><code class="docutils literal notranslate"><span class="pre">socket_bind_nif</span></code></a></li>
@@ -4471,6 +4505,7 @@
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_sockname_nif"><code class="docutils literal notranslate"><span class="pre">socket_sockname_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_peername_nif"><code class="docutils literal notranslate"><span class="pre">socket_peername_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_select_read_nif"><code class="docutils literal notranslate"><span class="pre">socket_select_read_nif</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_select_write_nif"><code class="docutils literal notranslate"><span class="pre">socket_select_write_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_accept_nif"><code class="docutils literal notranslate"><span class="pre">socket_accept_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_recv_nif"><code class="docutils literal notranslate"><span class="pre">socket_recv_nif</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.socket_recvfrom_nif"><code class="docutils literal notranslate"><span class="pre">socket_recvfrom_nif</span></code></a></li>
@@ -4496,19 +4531,26 @@
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.UDPReceivedItem.port"><code class="docutils literal notranslate"><span class="pre">port</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketSelect"><code class="docutils literal notranslate"><span class="pre">SocketSelect</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketSelect.process_id"><code class="docutils literal notranslate"><span class="pre">process_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketSelect.monitor"><code class="docutils literal notranslate"><span class="pre">monitor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketSelect.ref_ticks"><code class="docutils literal notranslate"><span class="pre">ref_ticks</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource"><code class="docutils literal notranslate"><span class="pre">SocketResource</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.socket_state"><code class="docutils literal notranslate"><span class="pre">socket_state</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.tcp_pcb"><code class="docutils literal notranslate"><span class="pre">tcp_pcb</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.udp_pcb"><code class="docutils literal notranslate"><span class="pre">udp_pcb</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.&#64;21"><code class="docutils literal notranslate"><span class="pre">&#64;21</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.socket_ref_ticks"><code class="docutils literal notranslate"><span class="pre">socket_ref_ticks</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.select_ref_ticks"><code class="docutils literal notranslate"><span class="pre">select_ref_ticks</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.selecting_process_id"><code class="docutils literal notranslate"><span class="pre">selecting_process_id</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.selecting_process_monitor"><code class="docutils literal notranslate"><span class="pre">selecting_process_monitor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.read_select"><code class="docutils literal notranslate"><span class="pre">read_select</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.write_select"><code class="docutils literal notranslate"><span class="pre">write_select</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.linger_on"><code class="docutils literal notranslate"><span class="pre">linger_on</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.linger_sec"><code class="docutils literal notranslate"><span class="pre">linger_sec</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.pos"><code class="docutils literal notranslate"><span class="pre">pos</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.received_list"><code class="docutils literal notranslate"><span class="pre">received_list</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.tcp_write_mem_err"><code class="docutils literal notranslate"><span class="pre">tcp_write_mem_err</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.lwip_sockets_head"><code class="docutils literal notranslate"><span class="pre">lwip_sockets_head</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.buf_size"><code class="docutils literal notranslate"><span class="pre">buf_size</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.c.html#c.libAtomVM.otp_socket.c.SocketResource.socket_lock"><code class="docutils literal notranslate"><span class="pre">socket_lock</span></code></a></li>
 </ul>
@@ -4538,6 +4580,8 @@
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.h.html#c.libAtomVM.otp_socket.h.LWIPEvent.buf"><code class="docutils literal notranslate"><span class="pre">buf</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.h.html#c.libAtomVM.otp_socket.h.LWIPEvent.err"><code class="docutils literal notranslate"><span class="pre">err</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.h.html#c.libAtomVM.otp_socket.h.LWIPEvent.tcp_recv"><code class="docutils literal notranslate"><span class="pre">tcp_recv</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.h.html#c.libAtomVM.otp_socket.h.LWIPEvent.tcp_sent"><code class="docutils literal notranslate"><span class="pre">tcp_sent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/otp_socket.h.html#c.libAtomVM.otp_socket.h.LWIPEvent.tcp_err"><code class="docutils literal notranslate"><span class="pre">tcp_err</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.h.html#c.libAtomVM.otp_socket.h.LWIPEvent.addr"><code class="docutils literal notranslate"><span class="pre">addr</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.h.html#c.libAtomVM.otp_socket.h.LWIPEvent.port"><code class="docutils literal notranslate"><span class="pre">port</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/otp_socket.h.html#c.libAtomVM.otp_socket.h.LWIPEvent.udp_recv"><code class="docutils literal notranslate"><span class="pre">udp_recv</span></code></a></li>
@@ -4829,6 +4873,7 @@
 <li class="toctree-l2"><a class="reference internal" href="src/resources.c.html#c.libAtomVM.resources.c.enif_select_common"><code class="docutils literal notranslate"><span class="pre">enif_select_common()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/resources.c.html#c.libAtomVM.resources.c.enif_select"><code class="docutils literal notranslate"><span class="pre">enif_select()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/resources.c.html#c.libAtomVM.resources.c.enif_select_read"><code class="docutils literal notranslate"><span class="pre">enif_select_read()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/resources.c.html#c.libAtomVM.resources.c.enif_select_write"><code class="docutils literal notranslate"><span class="pre">enif_select_write()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/resources.c.html#c.libAtomVM.resources.c.select_event_make_notification"><code class="docutils literal notranslate"><span class="pre">select_event_make_notification()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/resources.c.html#c.libAtomVM.resources.c.select_event_send_notification"><code class="docutils literal notranslate"><span class="pre">select_event_send_notification()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/resources.c.html#c.libAtomVM.resources.c.select_event_notify"><code class="docutils literal notranslate"><span class="pre">select_event_notify()</span></code></a></li>
@@ -4892,9 +4937,12 @@
 <li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.read"><code class="docutils literal notranslate"><span class="pre">read</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.write"><code class="docutils literal notranslate"><span class="pre">write</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.close"><code class="docutils literal notranslate"><span class="pre">close</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.local_pid"><code class="docutils literal notranslate"><span class="pre">local_pid</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.ref_ticks"><code class="docutils literal notranslate"><span class="pre">ref_ticks</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.message"><code class="docutils literal notranslate"><span class="pre">message</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.read_local_pid"><code class="docutils literal notranslate"><span class="pre">read_local_pid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.write_local_pid"><code class="docutils literal notranslate"><span class="pre">write_local_pid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.read_ref_ticks"><code class="docutils literal notranslate"><span class="pre">read_ref_ticks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.write_ref_ticks"><code class="docutils literal notranslate"><span class="pre">write_ref_ticks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.read_message"><code class="docutils literal notranslate"><span class="pre">read_message</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.SelectEvent.write_message"><code class="docutils literal notranslate"><span class="pre">write_message</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src/resources.h.html#c.libAtomVM.resources.h.ResourceBinary"><code class="docutils literal notranslate"><span class="pre">ResourceBinary</span></code></a><ul>
@@ -5005,9 +5053,9 @@
 <li class="toctree-l1"><a class="reference internal" href="src/sys.h.html">sys.h</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="src/sys.h.html#c.libAtomVM.sys.h.EventListener"><code class="docutils literal notranslate"><span class="pre">EventListener</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/sys.h.html#c.libAtomVM.sys.h.event_handler_t"><code class="docutils literal notranslate"><span class="pre">event_handler_t</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/sys.h.html#c.libAtomVM.sys.h.&#64;32"><code class="docutils literal notranslate"><span class="pre">&#64;32</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="src/sys.h.html#c.libAtomVM.sys.h.&#64;32.SYS_POLL_EVENTS_DO_NOT_WAIT"><code class="docutils literal notranslate"><span class="pre">SYS_POLL_EVENTS_DO_NOT_WAIT</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="src/sys.h.html#c.libAtomVM.sys.h.&#64;32.SYS_POLL_EVENTS_WAIT_FOREVER"><code class="docutils literal notranslate"><span class="pre">SYS_POLL_EVENTS_WAIT_FOREVER</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/sys.h.html#c.libAtomVM.sys.h.&#64;34"><code class="docutils literal notranslate"><span class="pre">&#64;34</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src/sys.h.html#c.libAtomVM.sys.h.&#64;34.SYS_POLL_EVENTS_DO_NOT_WAIT"><code class="docutils literal notranslate"><span class="pre">SYS_POLL_EVENTS_DO_NOT_WAIT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src/sys.h.html#c.libAtomVM.sys.h.&#64;34.SYS_POLL_EVENTS_WAIT_FOREVER"><code class="docutils literal notranslate"><span class="pre">SYS_POLL_EVENTS_WAIT_FOREVER</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src/sys.h.html#c.libAtomVM.sys.h.OpenAVMResult"><code class="docutils literal notranslate"><span class="pre">OpenAVMResult</span></code></a><ul>
