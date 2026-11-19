@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.faf57305 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.af932ea0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=22764390"></script>
+      <script src="_static/documentation_options.js?v=4c2e18b1"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -252,6 +252,15 @@ message when the socket is writable again)</p></li>
 <section id="changed">
 <h3>Changed<a class="headerlink" href="#changed" title="Link to this heading"></a></h3>
 <ul class="simple">
+<li><p>With BSD sockets (generic_unix, ESP32), <code class="docutils literal notranslate"><span class="pre">socket:connect/2</span></code> returns the reason a connect failed,
+as OTP does (<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">econnrefused}</span></code>, <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">etimedout}</span></code>, <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">ehostunreach}</span></code>…), instead
+of <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">closed}</span></code>. On ESP32, Wi-Fi down gives <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">ehostunreach}</span></code>, and a refused port gives
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">econnreset}</span></code> because lwIP reports a RST during the handshake as a reset. It may also
+return <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">econnreset}</span></code> when the peer accepts and immediately resets, where it previously
+returned <code class="docutils literal notranslate"><span class="pre">ok</span></code> and the error surfaced on the first <code class="docutils literal notranslate"><span class="pre">recv</span></code> or <code class="docutils literal notranslate"><span class="pre">send</span></code>; this is the OTP behaviour</p></li>
+<li><p>Functions that report a POSIX error (such as <code class="docutils literal notranslate"><span class="pre">socket</span></code> and <code class="docutils literal notranslate"><span class="pre">atomvm:posix_*</span></code>) return
+<code class="docutils literal notranslate"><span class="pre">econnrefused</span></code>, <code class="docutils literal notranslate"><span class="pre">econnreset</span></code>, <code class="docutils literal notranslate"><span class="pre">econnaborted</span></code>, <code class="docutils literal notranslate"><span class="pre">etimedout</span></code>, <code class="docutils literal notranslate"><span class="pre">ehostunreach</span></code>, <code class="docutils literal notranslate"><span class="pre">enetunreach</span></code>,
+<code class="docutils literal notranslate"><span class="pre">enetdown</span></code>, <code class="docutils literal notranslate"><span class="pre">eaddrnotavail</span></code>, <code class="docutils literal notranslate"><span class="pre">ealready</span></code> and <code class="docutils literal notranslate"><span class="pre">eisconn</span></code> as atoms instead of the errno number</p></li>
 <li><p>Stopped CI testing on FreeBSD 13, which has reached end of life.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">.avm</span></code> files, binaries and the pack embedded in an escript must now end exactly with the pack
 terminator: data after the end of the pack (for example a padded partition dump passed to
@@ -278,6 +287,10 @@ and maps iteratively</p></li>
 <section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading"></a></h3>
 <ul class="simple">
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">socket:connect/2</span></code> (and so <code class="docutils literal notranslate"><span class="pre">ssl:connect</span></code> and <code class="docutils literal notranslate"><span class="pre">gen_tcp:connect</span></code> with
+<code class="docutils literal notranslate"><span class="pre">{inet_backend,</span> <span class="pre">socket}</span></code>) blocking the scheduler
+with BSD sockets (ESP32, generic_unix) while the peer did not answer: the connect is now
+non-blocking, and only the calling process waits</p></li>
 <li><p>Fixed maps decoded by <code class="docutils literal notranslate"><span class="pre">binary_to_term/1,2</span></code> and received over distribution keeping the
 encoder’s key order, which broke <code class="docutils literal notranslate"><span class="pre">==</span></code> and made <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code> updates on an existing key produce
 duplicate keys</p></li>

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module socket &mdash; AtomVM 0.7.0-beta.1+git.faf57305 documentation</title>
+  <title>Module socket &mdash; AtomVM 0.7.0-beta.1+git.af932ea0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/erlang/estdlib/socket.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=22764390"></script>
+      <script src="../../../_static/documentation_options.js?v=4c2e18b1"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -306,8 +306,12 @@ connect(Socket::<a href="#type-socket">socket()</a>, Address::<a href="#type-soc
 <p>Wait for the socket to connect to an address.</p>
 <p>Wait for the socket to connect to an address.  The socket should
 be a connection-based socket.</p>
-<p>Note that this function will block until a connection is made
-to a server.</p>
+<p>Note that this function will block the calling process until a
+connection is made to a server, or the attempt fails. Only the
+calling process: on platforms with BSD sockets the connect is
+non-blocking, and this waits for the socket to become writable,
+so a peer that never answers does not stop the scheduler, and
+killing the caller abandons the attempt.</p>
 <p>Example:</p>
 <p><code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">=</span> <span class="pre">socket:connect(Socket,</span> <span class="pre">#{family</span> <span class="pre">=&gt;</span> <span class="pre">inet,</span> <span class="pre">addr</span> <span class="pre">=&gt;</span> <span class="pre">loopback,</span> <span class="pre">port</span> <span class="pre">=&gt;</span> <span class="pre">44404})</span></code></p>
 <p><a name="getopt-2"></a></p>
