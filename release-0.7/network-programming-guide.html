@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Network Programming Guide &mdash; AtomVM 0.7.0-beta.1+git.af932ea0 documentation</title>
+  <title>Network Programming Guide &mdash; AtomVM 0.7.0-beta.1+git.b54770b2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/network-programming-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=4c2e18b1"></script>
+      <script src="_static/documentation_options.js?v=e46780ed"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -83,6 +83,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#sntp-support">SNTP Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nvs-credentials">NVS Credentials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stopping-the-network">Stopping the Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tls-connections">TLS connections</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="distributed-erlang.html">Distributed Erlang</a></li>
@@ -743,6 +744,31 @@ encrypted NVS storage.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">network:stop/0</span></code> is called while a WiFi scan is in progress, the scan caller or callback may
 receive either the final scan result or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">scan_canceled}</span></code>.</p>
 </div>
+</section>
+<section id="tls-connections">
+<h2>TLS connections<a class="headerlink" href="#tls-connections" title="Link to this heading"></a></h2>
+<p>AtomVM provides a minimal subset of the OTP <a class="reference internal" href="apidocs/erlang/estdlib/ssl.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">ssl</span></code></span></a>
+API for TLS client connections. On WiFi devices, establish network connectivity
+before opening a TLS connection. Start the SSL service with <code class="docutils literal notranslate"><span class="pre">ssl:start/0</span></code>, then use
+<code class="docutils literal notranslate"><span class="pre">ssl:connect/3</span></code>, <code class="docutils literal notranslate"><span class="pre">ssl:send/2</span></code>, <code class="docutils literal notranslate"><span class="pre">ssl:recv/2</span></code>, and <code class="docutils literal notranslate"><span class="pre">ssl:close/1</span></code>. Connections currently
+require <code class="docutils literal notranslate"><span class="pre">{active,</span> <span class="pre">false}</span></code>, and the supported certificate verification option is
+<code class="docutils literal notranslate"><span class="pre">{verify,</span> <span class="pre">verify_none}</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">verify_none</span></code> disables server certificate verification. The connection is encrypted,
+but the server’s identity is not authenticated, leaving it vulnerable to
+man-in-the-middle attacks. Enabling TLS 1.3 does not fix this limitation.</p>
+</div>
+<p>The TLS version is negotiated automatically according to the linked Mbed TLS
+library’s version and build configuration, and the server’s capabilities. AtomVM
+does not currently implement OTP’s <code class="docutils literal notranslate"><span class="pre">{versions,</span> <span class="pre">[...]}</span></code> option to select or require
+a specific protocol version.</p>
+<p>TLS 1.3 with <code class="docutils literal notranslate"><span class="pre">verify_none</span></code> requires Mbed TLS 3.6.1 or later and TLS 1.3 support
+enabled in that library. Older Mbed TLS builds remain limited to TLS 1.2 for this
+verification mode. See the build instructions for
+<a class="reference internal" href="build-instructions.html#enabling-tls-1-3-on-generic-unix"><span class="std std-ref">Generic UNIX</span></a> and
+<a class="reference internal" href="build-instructions.html#enabling-tls-1-3-on-esp32"><span class="std std-ref">ESP32</span></a>, including the ESP32 stack
+size settings.</p>
 </section>
 </section>
 
