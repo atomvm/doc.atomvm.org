@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Network Programming Guide &mdash; AtomVM 0.7.0-beta.1+git.b54770b2 documentation</title>
+  <title>Network Programming Guide &mdash; AtomVM 0.7.0-beta.1+git.dd3d0ea9 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/network-programming-guide.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=e46780ed"></script>
+      <script src="_static/documentation_options.js?v=6b9fcd47"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -80,6 +80,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ppp-over-a-uart-esp32">PPP over a UART (ESP32)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#esp-now-esp32">ESP-NOW (ESP32)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sntp-support">SNTP Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nvs-credentials">NVS Credentials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stopping-the-network">Stopping the Network</a></li>
@@ -556,34 +557,46 @@ off, an <code class="docutils literal notranslate"><span class="pre">eth</span><
 <td><p>128</p></td>
 <td><p>Default route priority; the interface with the highest one that is up carries the traffic (STA: 100, AP: 10)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dhcp_hostname</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ipv4</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{Address,</span> <span class="pre">Netmask,</span> <span class="pre">Gateway}</span></code></p></td>
+<td><p>none (DHCP)</p></td>
+<td><p>A fixed address instead of DHCP; a gateway of <code class="docutils literal notranslate"><span class="pre">{0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0}</span></code> is none. <code class="docutils literal notranslate"><span class="pre">got_ip</span></code> still fires when the link comes up</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dhcp_hostname</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">string()</span> <span class="pre">|</span> <span class="pre">binary()</span></code></p></td>
 <td><p>none</p></td>
 <td><p>DHCP hostname</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">started</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">started</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
 <td><p>none</p></td>
 <td><p>The interface is up, link state unknown</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">connected</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">connected</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
 <td><p>none</p></td>
 <td><p>Link up</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">disconnected</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disconnected</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">fun(()</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
 <td><p>none</p></td>
 <td><p>Link down</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">got_ip</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">got_ip</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">fun((ip_info())</span> <span class="pre">-&gt;</span> <span class="pre">term())</span></code></p></td>
 <td><p>none</p></td>
-<td><p>DHCP lease obtained</p></td>
+<td><p>IPv4 address ready (DHCP or <code class="docutils literal notranslate"><span class="pre">ipv4</span></code>)</p></td>
 </tr>
 </tbody>
 </table>
-<p>Invalid pins or a <code class="docutils literal notranslate"><span class="pre">phy_addr</span></code> out of range make <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> return <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badarg}</span></code>.
+<p>With <code class="docutils literal notranslate"><span class="pre">ipv4</span></code>, the cable can go to a field network with fixed addresses and no DHCP server (a PLC, a
+pump), while STA or PPP stay the way out: a gateway of <code class="docutils literal notranslate"><span class="pre">{0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0}</span></code> and a <code class="docutils literal notranslate"><span class="pre">route_priority</span></code> below
+theirs keep the default route on them. The DHCP client never starts on the Ethernet netif, since
+starting it clears the DNS servers, which lwIP shares with the other interfaces.</p>
+<p>Invalid pins, a <code class="docutils literal notranslate"><span class="pre">phy_addr</span></code> out of range or an invalid <code class="docutils literal notranslate"><span class="pre">ipv4</span></code> (malformed, or a zero address or
+netmask) make the network server terminate with <code class="docutils literal notranslate"><span class="pre">{start_port_failed,</span> <span class="pre">badarg}</span></code> after
+<code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> returns <code class="docutils literal notranslate"><span class="pre">{ok,</span> <span class="pre">Pid}</span></code>; <code class="docutils literal notranslate"><span class="pre">network:wait_for_eth/2</span></code> monitors the start and returns
+<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">badarg}</span></code> instead.
 <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> blocks until the PHY answers on the SMI bus; it does not wait for a cable. A
 clock out on GPIO16 or GPIO17 is refused while PSRAM is in use, because WROVER modules use those
 pins for it. <a class="reference internal" href="#./apidocs/erlang/eavmlib/network.md#eth_status0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">network:eth_status/0</span></code></span></a> returns
@@ -697,6 +710,55 @@ close finishes in the background (up to about 12 seconds); until then, the UART 
 <span class="w">    </span><span class="p">]}</span>
 <span class="p">],</span>
 <span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="nv">Pid</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">network</span><span class="p">:</span><span class="nf">start</span><span class="p">(</span><span class="nv">Config</span><span class="p">).</span>
+</pre></div>
+</div>
+</section>
+<section id="esp-now-esp32">
+<h2>ESP-NOW (ESP32)<a class="headerlink" href="#esp-now-esp32" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">espnow</span></code> module sends and receives ESP-NOW frames: connectionless frames of up to 1470 bytes
+on ESP-IDF 5.4 or newer (ESP-NOW v2, which peers on an older ESP-IDF cannot receive), 250 before,
+between ESP32 devices, on the WiFi radio, with no access point. It is opt-in, with
+<code class="docutils literal notranslate"><span class="pre">CONFIG_AVM_ENABLE_ESPNOW=y</span></code> (<code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">menuconfig</span></code>, or a line in <code class="docutils literal notranslate"><span class="pre">sdkconfig.defaults</span></code>); without it
+<code class="docutils literal notranslate"><span class="pre">espnow:open/1</span></code> returns an error.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> driver owns the WiFi radio, and ESP-NOW borrows it:</p>
+<ul class="simple">
+<li><p>With no network started, <code class="docutils literal notranslate"><span class="pre">espnow:open/1</span></code> turns WiFi on as a station that does not connect, on
+the channel given with <code class="docutils literal notranslate"><span class="pre">{channel,</span> <span class="pre">1..14}</span></code> (or the current one).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> and <code class="docutils literal notranslate"><span class="pre">network:stop/0</span></code> can be called while ESP-NOW is open: <code class="docutils literal notranslate"><span class="pre">network:stop/0</span></code>
+leaves the radio on, back on the ESP-NOW channel, and ESP-NOW keeps working.</p></li>
+<li><p>While the STA is connected, frames go on the access point’s channel, so the peers must be on it
+too; <code class="docutils literal notranslate"><span class="pre">espnow:set_channel/2</span></code> returns <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">sta_connected}</span></code> until the STA disconnects.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">espnow:close/1</span></code> turns WiFi off, unless the network uses it.</p></li>
+<li><p>An AP-only network (<code class="docutils literal notranslate"><span class="pre">ap</span></code> without <code class="docutils literal notranslate"><span class="pre">sta</span></code>) runs the radio in AP mode, where ESP-NOW frames, which go
+out on the STA, cannot be sent: <code class="docutils literal notranslate"><span class="pre">espnow:open/1</span></code> returns <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">ap_only}</span></code> while one runs, and
+one started while ESP-NOW is open does not start: <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> returns before the driver
+starts WiFi, and the network process then stops with <code class="docutils literal notranslate"><span class="pre">{start_port_failed,</span> <span class="pre">ap_only_held}</span></code>. A
+network with both <code class="docutils literal notranslate"><span class="pre">sta</span></code> and <code class="docutils literal notranslate"><span class="pre">ap</span></code> works.</p></li>
+</ul>
+<p>Only one port can be open (<code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">already_open}</span></code>), linked to the process that opened it before
+ESP-NOW starts: when that process exits abnormally the port terminates, and the next
+<code class="docutils literal notranslate"><span class="pre">espnow:open/1</span></code> reclaims ESP-NOW. A normal exit does not close the port: call <code class="docutils literal notranslate"><span class="pre">espnow:close/1</span></code>
+before returning normally.</p>
+<p><code class="docutils literal notranslate"><span class="pre">espnow:send/3</span></code> waits until the frame is out and returns <code class="docutils literal notranslate"><span class="pre">ok</span></code> (for a unicast frame, the peer
+acknowledged it; for a broadcast, it went out) or <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">fail}</span></code>. The driver gives the radio one
+frame at a time, as the ESP-NOW guide recommends, so concurrent senders wait their turn.</p>
+<p>The receiver (the caller of <code class="docutils literal notranslate"><span class="pre">espnow:open/1</span></code>, or <code class="docutils literal notranslate"><span class="pre">{receiver,</span> <span class="pre">Pid}</span></code>) gets
+<code class="docutils literal notranslate"><span class="pre">{espnow,</span> <span class="pre">rx,</span> <span class="pre">Mac,</span> <span class="pre">Data,</span> <span class="pre">#{rssi</span> <span class="pre">:=</span> <span class="pre">Rssi}}</span></code> for each frame. The Wi-Fi task copies each frame once,
+into the binary the receiver gets; while those waiting for the scheduler hold
+<code class="docutils literal notranslate"><span class="pre">CONFIG_AVM_ESPNOW_RX_BUDGET</span></code> bytes (8192 by default), further frames are dropped and counted in
+<code class="docutils literal notranslate"><span class="pre">espnow:stats/1</span></code> (the receiver’s mailbox itself is not bounded).</p>
+<p>A unicast peer must be added first, optionally with an <code class="docutils literal notranslate"><span class="pre">lmk</span></code> key to encrypt the traffic with it
+(the <code class="docutils literal notranslate"><span class="pre">pmk</span></code> given to <code class="docutils literal notranslate"><span class="pre">espnow:open/1</span></code> encrypts the <code class="docutils literal notranslate"><span class="pre">lmk</span></code> keys); broadcast needs no peer.</p>
+<div class="highlight-erlang notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="nv">Port</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">espnow</span><span class="p">:</span><span class="nf">open</span><span class="p">([{</span><span class="n">channel</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">}]),</span>
+<span class="nv">Peer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="mi">16#94</span><span class="p">,</span><span class="w"> </span><span class="mi">16#E6</span><span class="p">,</span><span class="w"> </span><span class="mi">16#86</span><span class="p">,</span><span class="w"> </span><span class="mi">16#DB</span><span class="p">,</span><span class="w"> </span><span class="mi">16#02</span><span class="p">,</span><span class="w"> </span><span class="mi">16#00</span><span class="o">&gt;&gt;</span><span class="p">,</span>
+<span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">espnow</span><span class="p">:</span><span class="nf">add_peer</span><span class="p">(</span><span class="nv">Port</span><span class="p">,</span><span class="w"> </span><span class="nv">Peer</span><span class="p">),</span>
+<span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">espnow</span><span class="p">:</span><span class="nb">send</span><span class="p">(</span><span class="nv">Port</span><span class="p">,</span><span class="w"> </span><span class="nv">Peer</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="s">"ping"</span><span class="o">&gt;&gt;</span><span class="p">),</span>
+<span class="k">receive</span>
+<span class="w">    </span><span class="p">{</span><span class="n">espnow</span><span class="p">,</span><span class="w"> </span><span class="n">rx</span><span class="p">,</span><span class="w"> </span><span class="nv">From</span><span class="p">,</span><span class="w"> </span><span class="nv">Data</span><span class="p">,</span><span class="w"> </span><span class="p">#{</span><span class="n">rssi</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="nv">Rssi</span><span class="p">}}</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="nn">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="s">"</span><span class="si">~p</span><span class="s"> from </span><span class="si">~p</span><span class="s"> at </span><span class="si">~p</span><span class="s"> dBm</span><span class="si">~n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nv">Data</span><span class="p">,</span><span class="w"> </span><span class="nv">From</span><span class="p">,</span><span class="w"> </span><span class="nv">Rssi</span><span class="p">])</span>
+<span class="k">after</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">no_reply</span>
+<span class="k">end</span><span class="p">,</span>
+<span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">espnow</span><span class="p">:</span><span class="nf">close</span><span class="p">(</span><span class="nv">Port</span><span class="p">).</span>
 </pre></div>
 </div>
 </section>

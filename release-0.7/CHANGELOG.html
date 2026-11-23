@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.b54770b2 documentation</title>
+  <title>Changelog &mdash; AtomVM 0.7.0-beta.1+git.dd3d0ea9 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/CHANGELOG.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=e46780ed"></script>
+      <script src="_static/documentation_options.js?v=6b9fcd47"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -233,6 +233,8 @@ transceiver’s DE</p></li>
 with <code class="docutils literal notranslate"><span class="pre">CONFIG_AVM_ENABLE_ETHERNET=y</span></code>): <code class="docutils literal notranslate"><span class="pre">{eth,</span> <span class="pre">[...]}</span></code> in <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> brings up the EMAC
 with an RMII PHY, alone or next to STA/AP, plus <code class="docutils literal notranslate"><span class="pre">network:wait_for_eth/0,1,2</span></code> and
 <code class="docutils literal notranslate"><span class="pre">network:eth_status/0</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">{ipv4,</span> <span class="pre">{Address,</span> <span class="pre">Netmask,</span> <span class="pre">Gateway}}</span></code> to the Ethernet configuration on ESP32: a fixed
+address instead of DHCP, for a cable to a field network while STA or PPP carry the default route</p></li>
 <li><p>Added PPP over a UART to the <code class="docutils literal notranslate"><span class="pre">network</span></code> module on ESP32 (opt-in with <code class="docutils literal notranslate"><span class="pre">CONFIG_AVM_ENABLE_PPP=y</span></code>,
 which needs <code class="docutils literal notranslate"><span class="pre">CONFIG_LWIP_PPP_SUPPORT=y</span></code>): <code class="docutils literal notranslate"><span class="pre">{ppp,</span> <span class="pre">[...]}</span></code> in <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> runs the link on a
 UART whose other end is ready for it, such as a cellular modem the application has dialed</p></li>
@@ -247,6 +249,9 @@ that a send on a socket whose peer does not read can be bounded in time (<code c
 <code class="docutils literal notranslate"><span class="pre">{error,</span> <span class="pre">{timeout,</span> <span class="pre">RestData}}</span></code>) or made asynchronous (<code class="docutils literal notranslate"><span class="pre">{select,</span> <span class="pre">SelectInfo}</span></code> or
 <code class="docutils literal notranslate"><span class="pre">{select,</span> <span class="pre">{SelectInfo,</span> <span class="pre">RestData}}</span></code>, followed by a <code class="docutils literal notranslate"><span class="pre">{'$socket',</span> <span class="pre">Socket,</span> <span class="pre">select,</span> <span class="pre">SelectHandle}</span></code>
 message when the socket is writable again)</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">espnow</span></code> module on ESP32 (opt-in with <code class="docutils literal notranslate"><span class="pre">CONFIG_AVM_ENABLE_ESPNOW=y</span></code>): ESP-NOW frames to
+a peer or broadcast, on the WiFi radio owned by the <code class="docutils literal notranslate"><span class="pre">network</span></code> driver, so ESP-NOW keeps working
+across <code class="docutils literal notranslate"><span class="pre">network:start/1</span></code> and <code class="docutils literal notranslate"><span class="pre">network:stop/0</span></code></p></li>
 </ul>
 </section>
 <section id="changed">
@@ -275,6 +280,10 @@ future release</p></li>
 existing macOS 15 coverage is unchanged</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">erlang:term_to_binary/1,2</span></code> and <code class="docutils literal notranslate"><span class="pre">erlang:binary_to_term/1,2</span></code> now process nested lists, tuples
 and maps iteratively</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> process keeps the <code class="docutils literal notranslate"><span class="pre">psk</span></code> of its <code class="docutils literal notranslate"><span class="pre">sta</span></code> and <code class="docutils literal notranslate"><span class="pre">ap</span></code> options in closures, so printing its
+stored configuration (for example in a crash report of that process) no longer exposes those
+passwords. Driver messages still carry them in plaintext, and this does not redact credentials in
+pending <code class="docutils literal notranslate"><span class="pre">sta_connect/1</span></code> requests, caller error reports or other diagnostic data</p></li>
 </ul>
 </section>
 <section id="removed">

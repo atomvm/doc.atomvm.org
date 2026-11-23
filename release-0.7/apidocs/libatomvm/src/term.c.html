@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>term.c &mdash; AtomVM 0.7.0-beta.1+git.b54770b2 documentation</title>
+  <title>term.c &mdash; AtomVM 0.7.0-beta.1+git.dd3d0ea9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://doc.atomvm.org/main/apidocs/libatomvm/src/term.c.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=e46780ed"></script>
+      <script src="../../../_static/documentation_options.js?v=6b9fcd47"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -638,6 +638,25 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>a term (reference) pointing to the newly allocated binary in the process heap or <code class="docutils literal notranslate"><a class="reference internal" href="term.h.html#libatomvmterm_8h_1a3a169e9a3e0ec70a5303a1fce2a1178f"><span class="std std-ref"><span class="pre">term_invalid_term()</span></span></a></code> if there isn’t enough memory to allocate the refc buffer. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.libAtomVM.term.c.term_from_refc_binary">
+<span class="target" id="libatomvmterm_8c_1abb4ce273f63de0d7ea05eee04b1581eb"></span><span class="n"><span class="pre">term</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">term_from_refc_binary</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="n"><span class="pre">RefcBinary</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">refc</span></span>, <span class="n"><span class="pre">Heap</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">heap</span></span>, <a class="reference internal" href="../../../atomvm-internals.html#c.GlobalContext" title="GlobalContext"><span class="n"><span class="pre">GlobalContext</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">glb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.libAtomVM.term.c.term_from_refc_binary" title="Link to this definition"></a><br /></dt>
+<dd><p>Wrap a reference-counted binary created outside of the VM into a term. </p>
+<p>The non-const case of <code class="docutils literal notranslate"><span class="pre">term_alloc_refc_binary</span></code> without the allocation: ‘refc’ was created with <code class="docutils literal notranslate"><span class="pre">refc_binary_create_refc</span></code> and filled elsewhere (for example in a driver’s callback, outside of the scheduler), and is not yet listed nor counted. The heap’s MSO list takes it, with a reference count of 1. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>refc</strong> – the reference-counted binary, unlisted, with a count of 0 </p></li>
+<li><p><strong>heap</strong> – the heap to allocate the binary term in </p></li>
+<li><p><strong>glb</strong> – the global context, which lists refc binaries </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a term pointing to the binary, in the heap </p>
 </dd>
 </dl>
 </dd></dl>
